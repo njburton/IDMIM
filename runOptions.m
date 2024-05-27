@@ -47,8 +47,8 @@ if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
 end
 
-%% !!!!!!!!! TO DO !!!!!!!!!!!
-optionsFile.DataFile.choiceMarker   = 'H:';
+%% !!!!!!!!! TO COMPLETE !!!!!!!!!!!
+optionsFile.DataFile.ChoiceMarker   = 'H:';
 optionsFile.DataFile.OutcomeMarker  = '??:'; %Outcome_ABA1
 optionsFile.DataFile.LeverPressTime = '??:'; %LeverPressTime_ABA1
 optionsFile.DataFile.TrialStartTime = '??:';
@@ -97,7 +97,7 @@ optionsFile.DataFile.TrialStartTime = '??:';
 %Create empty table for individual mouse with variable names as columns
 TaskTableVarTypes = {'string','double','double','double','double','double','double','double'};
 TaskTableVarNames = {'TrialCode','RewardingLeverSideABA1','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
-ExperimentTaskTable = table('Size',[181 8],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
+ExperimentTaskTable = table('Size',[180 8],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
 
 %For loop which creates individual mouse tables from rawTaskData file
 %(where each column is a mouse)
@@ -109,12 +109,12 @@ for i = 1:optionsFile.Task.nSize
     currMouse = erase( currMouse{end},".");
 
     data      = readcell(fileName);
-    choiceIdx = find(contains(data(:,1),optionsFile.DataFile.choiceMarker));
+    choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
 
-    ExperimentTaskTable.TrialCode           = nan(optionsFile.Task.nTrials,1);
-    ExperimentTaskTable.Choice              = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials,1+i));  %Choice_ABA1
-    ExperimentTaskTable.Outcome             = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials,1+i));   %Outcome_ABA1
-    ExperimentTaskTable.LeverPressTime      = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials,1+i));  %LeverPressTime_ABA1
+    ExperimentTaskTable.TrialCode           = nan(optionsFile.Task.nTrials,1); % ?? why are they NaNs?
+    ExperimentTaskTable.Choice              = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,1+i));  %Choice_ABA1
+    ExperimentTaskTable.Outcome             = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,1+i));   %Outcome_ABA1
+    ExperimentTaskTable.LeverPressTime      = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,1+i));  %LeverPressTime_ABA1
     ExperimentTaskTable.TrialStartTime      = (0:20:3600)'; %TrialStartTime list every 20seconds
     ExperimentTaskTable.ResponseTime        = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
     ExperimentTaskTable.RecepticalBeamBreak = cell2mat(rawTaskData(725:905,1+i)) - ExperimentTaskTable.TrialStartTime; %RecepticalBeamBreak_ABA1
