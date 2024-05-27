@@ -7,7 +7,7 @@ function optionsFile = runOptions()
 %
 %  SYNTAX:          runAnalysis
 %
-%  OUTPUT:          
+%  OUTPUT:
 %
 %
 % Original: 30/5/2023; Katharina Wellstein
@@ -23,26 +23,35 @@ function optionsFile = runOptions()
 %% SET DIRECTORY PATHS FOR PROJECT, RAWDATA, RESULTS & PLOTS
 % Set paths of directories
 disp('setting paths...');
-optionsFile.paths.projDir = 'C:\Users\c3200098\Desktop\IDMIM';
+optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\IDMIM';
 optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\IDMIM\rawDataStore';
-optionsFile.paths.resultsDir = 'C:\Users\c3200098\Desktop\IDMIM\results';
-optionsFile.paths.plotsDir = 'C:\Users\c3200098\Desktop\IDMIM\plots';
-optionsFile.paths.rawDataDir = ('C:\Users\c3200098\Desktop\data\');
-optionsFile.paths.HGFDir = ('C:\Users\c3200098\Desktop\IDMIM\HGF');
-optionsFile.Task = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
-optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx';
-optionsFile.Task.task1 = 'ABA1_L';
-optionsFile.Task.task2 = 'ABA2_R';
+optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\IDMIM\results';
+optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\IDMIM\plots';
+optionsFile.paths.rawDataDir      = ('C:\Users\c3200098\Desktop\data\');
+optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\IDMIM\HGF';
 
+% task names
+optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
+optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx';
+optionsFile.Task.task1    = 'ABA1_L';
+optionsFile.Task.task2    = 'ABA2_R';
+optionsFile.Task.nTrials  = 180;
+optionsFile.Task.nSize    = 22;
+
+
+% simulation options
+optionsFile.simulations.nSamples      = 100;
 optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\IDMIM\simResults';
-optionsFile.paths.toolbox = 'C:\Users\c3200098\Desktop\IDMIM\HGF';
 
 if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
 end
 
-
-
+%% !!!!!!!!! TO DO !!!!!!!!!!!
+optionsFile.DataFile.choiceMarker   = 'H:';
+optionsFile.DataFile.OutcomeMarker  = '??:'; %Outcome_ABA1
+optionsFile.DataFile.LeverPressTime = '??:'; %LeverPressTime_ABA1
+optionsFile.DataFile.TrialStartTime = '??:';
 
 
 %% DATA EXTRACTION & PREPARATION
@@ -52,38 +61,39 @@ end
 %treatmentGroup, sex, task, task phase (A vs. B), trial, rewardingLeverSide, choice, outcome
 %trialStartTime, leverPressTime, responseTime (create it)
 
-% Locate GetOperant output file in directory
-rawDescriptiveData = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A1:W15');
-rawDescriptiveData(cellfun(@(x) all(ismissing(x)), rawDescriptiveData)) = {NaN};
-rawTaskData = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A197:W1101');
-rawTaskData(cellfun(@(x) all(ismissing(x)), rawTaskData)) = {NaN};
-%Create empty table for descriptive mouse with variable names as columns
+%% !!!!! TO DO, comment out for now...
 
-%% DEESCRIPTIVE TABLE
-varTypes = {'string','string','string','string','double','double','double','double','double'}; %Defines variable type for creating the table
-varNames = {'MouseID','Group','Sex','Age','Omissions','TotalRewards','TotalTimeouts','TotalLeftLeverPresses','TotalRightLeverPresses'};
-ExperimentDescriptiveTable = table('Size',[22 9],'VariableTypes',varTypes,'VariableNames',varNames);
+% %%  EXTRACT AND SAVE DATA IN DESCRIPTIVE TABLE
+% % Locate GetOperant output file in directory
+% rawDescriptiveData = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A1:W15');
+% rawDescriptiveData(cellfun(@(x) all(ismissing(x)), rawDescriptiveData)) = {NaN};
+% 
+% %Create empty table for descriptive mouse with variable names as columns
+% varTypes = {'string','string','string','string','double','double','double','double','double'}; %Defines variable type for creating the table
+% varNames = {'MouseID','Group','Sex','Age','Omissions','TotalRewards','TotalTimeouts','TotalLeftLeverPresses','TotalRightLeverPresses'};
+% ExperimentDescriptiveTable = table('Size',[22 9],'VariableTypes',varTypes,'VariableNames',varNames);
+% 
+% disp('descriptive table created...');
+% 
+% %For loop which creates dscriptive mouse table
+% for i = 1:22
+% 
+%     ExperimentDescriptiveTable.MouseID(i)                = string(rawDescriptiveData{4,1+i});
+%     ExperimentDescriptiveTable.Group(i)                  = 'NaN';
+%     ExperimentDescriptiveTable.Sex(i)                    = 'NaN';
+%     ExperimentDescriptiveTable.Age(i)                    = 0; %find age by writing into csv file to read into matlab (samew folder as descriptivedata)
+%     ExperimentDescriptiveTable.Omissions(i)              = cell2mat(rawDescriptiveData(11,1+i));
+%     ExperimentDescriptiveTable.TotalRewards(i)           = cell2mat(rawDescriptiveData(12,1+i));
+%     ExperimentDescriptiveTable.TotalTimeouts(i)          = cell2mat(rawDescriptiveData(13,1+i));
+%     ExperimentDescriptiveTable.TotalLeftLeverPresses(i)  = cell2mat(rawDescriptiveData(14,1+i));
+%     ExperimentDescriptiveTable.TotalRightLeverPresses(i) = cell2mat(rawDescriptiveData(15,1+i));
+% 
+% end
+% save([char(optionsFile.paths.resultsDir),'\ExperimentDescriptiveTable.mat'],'ExperimentDescriptiveTable');
+% disp('descriptive table filled with data...');
 
-disp('descriptive table created...');
+%%  EXTRACT AND SAVE DATA IN SINGLE MOUSE TABLES
 
-%For loop which creates dscriptive mouse table 
-for i = 1:22
-
-ExperimentDescriptiveTable.MouseID(i)                = string(rawDescriptiveData{4,1+i});
-ExperimentDescriptiveTable.Group(i)                  = 'NaN';
-ExperimentDescriptiveTable.Sex(i)                    = 'NaN';
-ExperimentDescriptiveTable.Age(i)                    = 0; %find age by writing into csv file to read into matlab (samew folder as descriptivedata)
-ExperimentDescriptiveTable.Omissions(i)              = cell2mat(rawDescriptiveData(11,1+i));
-ExperimentDescriptiveTable.TotalRewards(i)           = cell2mat(rawDescriptiveData(12,1+i));
-ExperimentDescriptiveTable.TotalTimeouts(i)          = cell2mat(rawDescriptiveData(13,1+i));
-ExperimentDescriptiveTable.TotalLeftLeverPresses(i)  = cell2mat(rawDescriptiveData(14,1+i));
-ExperimentDescriptiveTable.TotalRightLeverPresses(i) = cell2mat(rawDescriptiveData(15,1+i));
-
-end
-save([char(optionsFile.paths.resultsDir),'\ExperimentDescriptiveTable.mat'],'ExperimentDescriptiveTable');
-disp('descriptive table filled with data...');
-
-%% SINGLE MOUSE TABLES
 %Create empty table for individual mouse with variable names as columns
 TaskTableVarTypes = {'string','double','double','double','double','double','double','double'};
 TaskTableVarNames = {'TrialCode','RewardingLeverSideABA1','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
@@ -91,25 +101,32 @@ ExperimentTaskTable = table('Size',[181 8],'VariableTypes', TaskTableVarTypes,'V
 
 %For loop which creates individual mouse tables from rawTaskData file
 %(where each column is a mouse)
+files = dir(fullfile(optionsFile.paths.rawDataDir,'*Subject *.txt'));
 
+for i = 1:optionsFile.Task.nSize
+    fileName  = string(files(i).name);
+    currMouse = extract(fileName ," "+digitsPattern(3)+".");
+    currMouse = erase( currMouse{end},".");
 
-for i = 1:22
-currMouse    = string(rawDescriptiveData{4,1+i});
-ExperimentTaskTable.TrialCode                   = nan(181,1);
-ExperimentTaskTable.Choice                      = cell2mat(rawTaskData(182:362,1+i));  %Choice_ABA1
-ExperimentTaskTable.Outcome                     = cell2mat(rawTaskData(1:181,1+i));  %Outcome_ABA1
-ExperimentTaskTable.LeverPressTime              = cell2mat(rawTaskData(544:724,1+i));  %LeverPressTime_ABA1
-ExperimentTaskTable.TrialStartTime              =  (0:20:3600)'; %TrialStartTime list every 20seconds
-ExperimentTaskTable.ResponseTime                =  ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
-ExperimentTaskTable.RecepticalBeamBreak         = cell2mat(rawTaskData(725:905,1+i)) - ExperimentTaskTable.TrialStartTime; %RecepticalBeamBreak_ABA1
-optionsFile.MouseID(i) = currMouse;
-%Data correction
-ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  %Replace omissions (3 in Choice) with NaN
-ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.LeverPressTime==0) = NaN; %Replace trials where no lever press with NaN
-ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
+    data      = readcell(fileName);
+    choiceIdx = find(contains(data(:,1),optionsFile.DataFile.choiceMarker));
 
-% mkdir([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)]);
-save([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)],'ExperimentTaskTable');
+    ExperimentTaskTable.TrialCode           = nan(optionsFile.Task.nTrials,1);
+    ExperimentTaskTable.Choice              = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials,1+i));  %Choice_ABA1
+    ExperimentTaskTable.Outcome             = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials,1+i));   %Outcome_ABA1
+    ExperimentTaskTable.LeverPressTime      = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials,1+i));  %LeverPressTime_ABA1
+    ExperimentTaskTable.TrialStartTime      = (0:20:3600)'; %TrialStartTime list every 20seconds
+    ExperimentTaskTable.ResponseTime        = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
+    ExperimentTaskTable.RecepticalBeamBreak = cell2mat(rawTaskData(725:905,1+i)) - ExperimentTaskTable.TrialStartTime; %RecepticalBeamBreak_ABA1
+    optionsFile.MouseID(i) = currMouse;
+
+    %Data correction
+    ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  %Replace omissions (3 in Choice) with NaN
+    ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.LeverPressTime==0) = NaN; %Replace trials where no lever press with NaN
+    ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
+
+    % mkdir([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)]);
+    save([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)],'ExperimentTaskTable');
 end
 
 
@@ -117,15 +134,12 @@ end
 %Need to fix computing responsetime
 %import unique binary sequence for rewarding lever side
 
-%% simulation analysis
-optionsFile.simulations.nSamples = 100;
-
 
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.toolbox));
 
-optionsFile.hgf.opt_config              = eval('tapas_quasinewton_optim_config');
-optionsFile.hgf.opt_config.nRandInit    = 100; %%
+optionsFile.hgf.opt_config           = eval('tapas_quasinewton_optim_config');
+optionsFile.hgf.opt_config.nRandInit = 100; %%
 
 %% seed for random number generator
 optionsFile.rng.idx      = 1; % Set counter for random number states
@@ -282,41 +296,41 @@ optionsFile.modelSpace = modelSpace;
 % --------------------------------------------------------------------------------------------------
     function pr = priorPrep(options)
 
-    % Initialize data structure to be returned
-    pr = struct;
+        % Initialize data structure to be returned
+        pr = struct;
 
-    % Store responses and inputs
-    pr.u  = options;
+        % Store responses and inputs
+        pr.u  = options;
 
-    % Calculate placeholder values for configuration files
+        % Calculate placeholder values for configuration files
 
-    % First input
-    % Usually a good choice for the prior mean of mu_1
-    pr.plh.p99991 = pr.u(1,1);
+        % First input
+        % Usually a good choice for the prior mean of mu_1
+        pr.plh.p99991 = pr.u(1,1);
 
-    % Variance of first 20 inputs
-    % Usually a good choice for the prior variance of mu_1
-    if length(pr.u(:,1)) > 20
-        pr.plh.p99992 = var(pr.u(1:20,1),1);
-    else
-        pr.plh.p99992 = var(pr.u(:,1),1);
-    end
+        % Variance of first 20 inputs
+        % Usually a good choice for the prior variance of mu_1
+        if length(pr.u(:,1)) > 20
+            pr.plh.p99992 = var(pr.u(1:20,1),1);
+        else
+            pr.plh.p99992 = var(pr.u(:,1),1);
+        end
 
-    % Log-variance of first 20 inputs
-    % Usually a good choice for the prior means of log(sa_1) and alpha
-    if length(pr.u(:,1)) > 20
-        pr.plh.p99993 = log(var(pr.u(1:20,1),1));
-    else
-        pr.plh.p99993 = log(var(pr.u(:,1),1));
-    end
+        % Log-variance of first 20 inputs
+        % Usually a good choice for the prior means of log(sa_1) and alpha
+        if length(pr.u(:,1)) > 20
+            pr.plh.p99993 = log(var(pr.u(1:20,1),1));
+        else
+            pr.plh.p99993 = log(var(pr.u(:,1),1));
+        end
 
-    % Log-variance of first 20 inputs minus two
-    % Usually a good choice for the prior mean of omega_1
-    if length(pr.u(:,1)) > 20
-        pr.plh.p99994 = log(var(pr.u(1:20,1),1))-2;
-    else
-        pr.plh.p99994 = log(var(pr.u(:,1),1))-2;
-    end
+        % Log-variance of first 20 inputs minus two
+        % Usually a good choice for the prior mean of omega_1
+        if length(pr.u(:,1)) > 20
+            pr.plh.p99994 = log(var(pr.u(1:20,1),1))-2;
+        else
+            pr.plh.p99994 = log(var(pr.u(:,1),1))-2;
+        end
 
     end % function priorPrep
 % --------------------------------------------------------------------------------------------------
@@ -331,6 +345,6 @@ optionsFile.col.tnub = [0 110 182]/255;
 optionsFile.col.tnuy = [255 166 22]/255;
 optionsFile.col.grn  = [0 0.6 0];
 
-        
+
 
 end
