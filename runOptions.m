@@ -47,11 +47,11 @@ if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
 end
 
-%% !!!!!!!!! TO COMPLETE !!!!!!!!!!!
-optionsFile.DataFile.ChoiceMarker   = 'H:';
-optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA1
-optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA1
-optionsFile.DataFile.TrialStartTimeMarker = 'I:';
+%% Markers used to identify arrays of interest from raw Med-PC data (.txt file). 
+optionsFile.DataFile.ChoiceMarker   = 'H:'; %Choice_ABA2
+optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA2
+optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA2
+optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
 
 
 %% DATA EXTRACTION & PREPARATION
@@ -96,7 +96,7 @@ optionsFile.DataFile.TrialStartTimeMarker = 'I:';
 
 %Create empty table for individual mouse with variable names as columns
 TaskTableVarTypes = {'string','double','double','double','double','double','double','double'};
-TaskTableVarNames = {'TrialCode','RewardingLeverSideABA1','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
+TaskTableVarNames = {'TrialCode','RewardingLeverSideABA2','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
 ExperimentTaskTable = table('Size',[180 8],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
 
 %For loop which creates individual mouse tables from rawTaskData file
@@ -135,7 +135,6 @@ end
 
 
 
-%Need to fix computing responsetime
 %import unique binary sequence for rewarding lever side
 
 
