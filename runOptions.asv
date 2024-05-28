@@ -115,16 +115,12 @@ for i = 1:optionsFile.Task.nSize
     if cols>10 % if yes, based on old version of saving data with the second column saving 4 entries in one cell
     stringCol = string(data(33:end,1));
 
-    if any(strcmp(stringCol,"H"))
+    if 
     choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
     outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+1;
     lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+1;
     TrialStartTime = find(contains(data(:,1),optionsFile.DataFile.TrialStartTimeMarker))+1;
 
-    else
-        disp*'nonvalid mouse').
-
-    end
     else
     choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
     outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+1;
