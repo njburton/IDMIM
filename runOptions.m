@@ -28,6 +28,7 @@ optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\IDMIM\rawDataStor
 optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\IDMIM\results';
 optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\IDMIM\plots';
 optionsFile.paths.rawDataDir      = ('C:\Users\c3200098\Desktop\data\ABA2_R\');
+% optionsFile.paths.rawDataDir      = ('/Users/kwellste/projects/');
 optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\IDMIM\HGF';
 
 % task names
@@ -47,7 +48,7 @@ if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
 end
 
-%% Markers used to identify arrays of interest from raw Med-PC data (.txt file). 
+%% Markers used to identify arrays of interest from raw Med-PC data (.txt file).
 optionsFile.DataFile.ChoiceMarker   = 'H:'; %Choice_ABA2
 optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA2
 optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA2
@@ -67,17 +68,17 @@ optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
 % % Locate GetOperant output file in directory
 % rawDescriptiveData = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A1:W15');
 % rawDescriptiveData(cellfun(@(x) all(ismissing(x)), rawDescriptiveData)) = {NaN};
-% 
+%
 % %Create empty table for descriptive mouse with variable names as columns
 % varTypes = {'string','string','string','string','double','double','double','double','double'}; %Defines variable type for creating the table
 % varNames = {'MouseID','Group','Sex','Age','Omissions','TotalRewards','TotalTimeouts','TotalLeftLeverPresses','TotalRightLeverPresses'};
 % ExperimentDescriptiveTable = table('Size',[22 9],'VariableTypes',varTypes,'VariableNames',varNames);
-% 
+%
 % disp('descriptive table created...');
-% 
+%
 % %For loop which creates dscriptive mouse table
 % for i = 1:22
-% 
+%
 %     ExperimentDescriptiveTable.MouseID(i)                = string(rawDescriptiveData{4,1+i});
 %     ExperimentDescriptiveTable.Group(i)                  = 'NaN';
 %     ExperimentDescriptiveTable.Sex(i)                    = 'NaN';
@@ -87,7 +88,7 @@ optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
 %     ExperimentDescriptiveTable.TotalTimeouts(i)          = cell2mat(rawDescriptiveData(13,1+i));
 %     ExperimentDescriptiveTable.TotalLeftLeverPresses(i)  = cell2mat(rawDescriptiveData(14,1+i));
 %     ExperimentDescriptiveTable.TotalRightLeverPresses(i) = cell2mat(rawDescriptiveData(15,1+i));
-% 
+%
 % end
 % save([char(optionsFile.paths.resultsDir),'\ExperimentDescriptiveTable.mat'],'ExperimentDescriptiveTable');
 % disp('descriptive table filled with data...');
@@ -105,51 +106,53 @@ files = dir(fullfile(optionsFile.paths.rawDataDir,'*Subject *.txt'));
 
 for i = 1:optionsFile.Task.nSize
     fileName  = string(files(i).name);
-    currMouse = extract(fileName ," "+digitsPattern(3)+".");
-    currMouse = erase( currMouse{end},".")
+    currMouse = extract(fileName ," "+digitsPattern(3)+"."); %find three digits between space and .
+    currMouse = erase(currMouse{end},".");%get rid of .
 
     data      = readcell(fullfile(optionsFile.paths.rawDataDir, fileName));
+    [~,cols]  = size(cell2mat(data(50,2)));
 
-     [rows, cols] = size(cell2mat(data(40,2)));
+    if cols<10 % if yes, based on old version of saving data with the second column saving 4 entries in one cell
 
-    if cols>10 % if yes, based on old version of saving data with the second column saving 4 entries in one cell
-    stringCol = string(data(33:end,1));
+        % find array indices
+        choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
+        outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+1;
+        lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+1;
 
-    if any(strcmp(stringCol,"H"))
-    choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
-    outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+1;
-    lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+1;
-    TrialStartTime = find(contains(data(:,1),optionsFile.DataFile.TrialStartTimeMarker))+1;
+       % save arrays into table
+        ExperimentTaskTable.TrialCode           = nan(optionsFile.Task.nTrials,1); % ?? why are they NaNs?
+        ExperimentTaskTable.Choice              = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));  %Choice_ABA1
+        ExperimentTaskTable.Outcome             = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2));   %Outcome_ABA1
+        ExperimentTaskTable.LeverPressTime      = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2));  %LeverPressTime_ABA1
+        ExperimentTaskTable.TrialStartTime      = (0:20:3580)'; %TrialStartTime list every 20seconds
+        ExperimentTaskTable.ResponseTime        = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
+        %ExperimentTaskTable.RecepticalBeamBreak = cell2mat(rawTaskData(725:905,1+i)) - ExperimentTaskTable.TrialStartTime; %RecepticalBeamBreak_ABA1
+        %optionsFile.MouseID(i) = currMouse;
+
+
+        %Data correction
+        ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  %Replace omissions (3 in Choice) with NaN
+        ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.LeverPressTime==0) = NaN; %Replace trials where no lever press with NaN
+        ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
+
+        % mkdir([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)]);
+        save([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)],'ExperimentTaskTable');
 
     else
-        disp*'nonvalid mouse').
+        stringCol = string(data(33:end,1));
+
+        if any(strcmp(stringCol,"H"))
+            choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
+            outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+1;
+            lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+1;
+
+        else
+            disp('nonvalid mouse')
+
+        end
+
 
     end
-    else
-    choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+1;
-    outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+1;
-    lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+1;
-    TrialStartTime = find(contains(data(:,1),optionsFile.DataFile.TrialStartTimeMarker))+1;
-
-    end
-
-    ExperimentTaskTable.TrialCode           = nan(optionsFile.Task.nTrials,1); % ?? why are they NaNs?
-    ExperimentTaskTable.Choice              = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));  %Choice_ABA1
-    ExperimentTaskTable.Outcome             = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2));   %Outcome_ABA1
-    ExperimentTaskTable.LeverPressTime      = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2));  %LeverPressTime_ABA1
-    ExperimentTaskTable.TrialStartTime      = (0:20:3580)'; %TrialStartTime list every 20seconds
-    ExperimentTaskTable.ResponseTime        = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
-    %ExperimentTaskTable.RecepticalBeamBreak = cell2mat(rawTaskData(725:905,1+i)) - ExperimentTaskTable.TrialStartTime; %RecepticalBeamBreak_ABA1
-    %optionsFile.MouseID(i) = currMouse;
-    
-
-    %Data correction
-    ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  %Replace omissions (3 in Choice) with NaN
-    ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.LeverPressTime==0) = NaN; %Replace trials where no lever press with NaN
-    ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
-
-    % mkdir([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)]);
-    save([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)],'ExperimentTaskTable');
 end
 
 
