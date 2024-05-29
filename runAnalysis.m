@@ -62,7 +62,7 @@ for n = 1:1 %optionsFile.Task.nSize
             %Plot standard HGF 
             tapas_ehgf_plotTraj(eHGFFit);
             h = sgtitle(append('Subject ', char(currMouse), ...
-                      partData(subj).subjCondition{nVar})));
+                      partData(subj).subjCondition{nVar}));
             set(h, 'fontweight', 'bold');
 
             %Save model fit

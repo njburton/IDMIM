@@ -38,7 +38,7 @@ optionsFile.Task.task1    = 'ABA1_L';
 optionsFile.Task.task2    = 'ABA2_R';
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 22;
-optionsFile.Task.MouseID = NaN(optionsFile.Task.nSize,1);
+optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
 optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv';
 
 % simulation options
@@ -135,7 +135,7 @@ for i = 1:optionsFile.Task.nSize
         %Load binary sequence for rewardlever side so we can use as input
         %for analysis using hgf.
         %Binary sequence for RewardingLeverSide (1=leftlever, 0=rightlever)
-        seqBinary = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A1:A180')
+        seqBinary = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A1:A180');
         ExperimentTaskTable.RewardingLeverSide = cell2mat(seqBinary(1,1+i)); % Binary sequence for rewarding lever side (1=left, 0=right)
          
         
