@@ -1,0 +1,57 @@
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be becoause it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be becoause it was only training data or there is something wrong with formatting. Please make sure to check manually.
+loading task data...
+splitting tasks into phases...
+{Unrecognized field name "HGFDir".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 45)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',45,0)">line 45</a>)
+addpath(genpath(optionsFile.paths.HGFDir));
+} 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',45,1)">45  </a>addpath(genpath(optionsFile.paths.HGFDir));
+disp(['fitting mouse ', char(optionsFile.MouseID(1)), ' (',num2str(1),' of 22)'])
+{Unrecognized field name "MouseID".
+} 
+disp(['fitting mouse ', char(optionsFile.Task.MouseID(1)), ' (',num2str(1),' of 22)'])
+fitting mouse Ŵ (1 of 22)
+optionsFile.Task.MouseID
+
+ans =
+
+   372
+   382
+   392
+   402
+   412
+   422
+   432
+   NaN
+   NaN
+   462
+   472
+   482
+   215
+   217
+   369
+   370
+   374
+   375
+   426
+   433
+   501
+   506
+
+isnan(optionsFile.Task.MouseID(8))
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+runAnalysis
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',56,42)">File: runAnalysis.m Line: 56 Column: 42</a>
+Incorrect use of '=' operator. Assign a value to a variable using '=' and compare values for equality using '=='.
+} 
+load('C:\Users\c3200098\Desktop\IDMIM\results\mouse432.mat')

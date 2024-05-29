@@ -90,7 +90,7 @@ for subj = 1subjCount
                   
             % Plot standard eHGF parameter trajectories
             tapas_ehgf_plotTraj(eHGFFits{subj, condNum});
-            h = sgtitle(append('Subject ', num2str(subj, '%03d'), '  Condition ', ...
+            h = sgtitle(append('Subject ', num2str(subj, '%03d'), ...
                       partData(subj).subjCondition{nVar}, '  RMSE ', num2str(eHGFFits{subj, condNum}.optim.RMSE, '%.2f'), '  Block ', partData(subj).blockType{condNum}));
             set(h, 'fontweight', 'bold');
             
