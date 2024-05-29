@@ -33,13 +33,13 @@ optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\IDMIM\HGF';
 
 % task names
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
-optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx';
+optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx'; % TO DO: make this more streamlined 
 optionsFile.Task.task1    = 'ABA1_L';
 optionsFile.Task.task2    = 'ABA2_R';
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 22;
 optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
-optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv';
+optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv'; % TO DO: make this more streamlined for when more than one task
 
 % simulation options
 optionsFile.simulations.nSamples      = 100;

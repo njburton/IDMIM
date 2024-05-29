@@ -44,11 +44,13 @@ disp('splitting tasks into phases...');
 % without volatility & perceptual uncertainty, Rescorla-Wagner, Sutton K1
 addpath(genpath(optionsFile.paths.HGFDir));
 
-for n = 1:1 %optionsFile.Task.nSize
-    if ~isnan(optionsFile.Task.MouseID)
-        disp(['fitting mouse ', num2Str(optionsFile.Task.MouseID(n)), ' (',num2str(1),' of 22)']) % hardcode later nums2str(totalSubjs, '%03d')]);
+for n = 1:1 % optionsFile.Task.nSize
+    
+    if ~isnan(optionsFile.Task.MouseID(n))
+        currMouse = optionsFile.Task.MouseID(n);
+        disp(['fitting mouse ', num2Str(currMouse), ' (',num2str(n),' of ',optionsFile.Task.nSize,')']);
 
-        load([char(optionsFile.paths.resultsDir),'\mouse',num2str(optionsFile.Task.MouseID(n))]);
+        load([char(optionsFile.paths.resultsDir),'\mouse',num2Str(currMouse)]);
 
         try
             %% Perceptual inference models
@@ -61,12 +63,12 @@ for n = 1:1 %optionsFile.Task.nSize
 
             %Plot standard HGF 
             tapas_ehgf_plotTraj(eHGFFit);
-            h = sgtitle(append('Subject ', char(currMouse), ...
+            h = sgtitle(append('Subject ', char(currMouse), ... % why do you call that subject?
                       partData(subj).subjCondition{nVar}));
             set(h, 'fontweight', 'bold');
 
             %Save model fit
-            save([char(optionsFile.paths.HGFDir),'\HGFFitABA1.mat'],'HGFFitABA1');
+            save([char(optionsFile.paths.resultsDir),'\mouse',num2Str(currMouse),'HGFFitABA1.mat'],'eHGFFit'); % TO DO: Softcode the filename extension
 
             % eHGF without volatility Fit - est = tapas_fitModel(responses, inputs)
             %             eHGF_noVolatility_ABA1 = tapas_fitModel(ExperimentTaskTable.Choice,ExperimentTaskTable.RewardingLeverSideABA1, ...
@@ -154,7 +156,7 @@ end
 
 %% Model recovery analysis
 % Recover model parameters, model convergence &
-
+parameter_recovery(optionsFile);
 
 %% plotting
 % Generate heat map showing LME for each model comparison
