@@ -36,7 +36,7 @@ disp('loading task data...');
 % without volatility & perceptual uncertainty, Rescorla-Wagner, Sutton K1
 %addpath(genpath(optionsFile.paths.HGFDir));
 
-for n = 1:optionsFile.Task.nSize
+for n = 1:1 % optionsFile.Task.nSize
     
     if ~isnan(optionsFile.Task.MouseID(n))
         currMouse = optionsFile.Task.MouseID(n);
@@ -55,14 +55,18 @@ for n = 1:optionsFile.Task.nSize
 
             %Plot standard HGF 
             tapas_hgf_plotTraj_mod(eHGFFit);
-            figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1']);
+            figdir = fullfile([save_path,options.task.acronym,'simulation_agent', num2str(n),'_trajectories']);
             save([figdir,'.fig'])
             print([figdir,'.png'], '-dpng')
             
-           
+            
+            
+%             h = sgtitle(append('Mouse ', char(currMouse), ... % why do you call that subject?
+%                       partData(subj).subjCondition{nVar}));
+%             set(h, 'fontweight', 'bold');
 
             %Save model fit
-            save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat'],'eHGFFit'); % TO DO: Softcode the filename extension
+            save([char(optionsFile.paths.resultsDir),'\mouse',num2Str(currMouse),'HGFFitABA1.mat'],'eHGFFit'); % TO DO: Softcode the filename extension
 
             % eHGF without volatility Fit - est = tapas_fitModel(responses, inputs)
             %             eHGF_noVolatility_ABA1 = tapas_fitModel(ExperimentTaskTable.Choice,ExperimentTaskTable.RewardingLeverSideABA1, ...

@@ -28,9 +28,10 @@ function [] = parameter_recovery(optionsFile)
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
-if ~exist(optionsFile)
-    optionsFile = runOptions; % specifications for this analysis
-end
+
+% if ~exist(optionsFile)
+%     optionsFile = runOptions; % specifications for this analysis
+% end
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
