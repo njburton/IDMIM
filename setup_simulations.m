@@ -76,6 +76,7 @@ for m = 1:numel(optionsFile.model.space)
                     optionsFile.rng.settings.State(optionsFile.rng.idx, 1));
                 stable = 1;
 
+                
             catch
                 fprintf('simulation failed for synth. agent %1.0f \n',n);
             end

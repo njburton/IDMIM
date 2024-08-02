@@ -29,9 +29,9 @@ function [] = parameter_recovery(optionsFile)
 
 %% INITIALIZE Variables for running this function
 
-% if ~exist(optionsFile)
-%     optionsFile = runOptions; % specifications for this analysis
-% end
+if ~exist('optionsFile', 'var')
+    optionsFile = runOptions; % specifications for this analysis
+end
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
@@ -50,24 +50,39 @@ for n = 1:optionsFile.Task.nSize
             fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
             for m_est = 1:size(optionsFile.model.space, 2)
                 % load results from simulated agents' model inversion
-                rec.sim.agent(n,m_in).data = fullfile(optionsFile.simulations.simResultsDir, ...
-                    [optionsFile.Task.task1,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
+                rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                    [optionsFile.Task.task1,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
 
                 % load results from real data model inversion
-                rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2Str(currMouse),'HGFFitABA1.mat']));
+                rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
             end
 
             % param values in transformed space (assumption of Gaussian prior)
-            rec.param.prc(m_in).sim(n,:) = res.sim.agent(n,m_in).input.prc.transInp(optionsFile.modelSpace(m_in).prc_idx);
-            rec.param.obs(m_in).sim(n,:) = res.sim.agent(n,m_in).input.obs.transInp(optionsFile.modelSpace(m_in).obs_idx);
-            rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
-            rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+            rec.param.prc(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+            rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
         end
     else
         disp('skipped...invalid mouse');
     end
+    
+    params = rec.param.prc.est;
+        invalidMiceList = [];
 
+        for i = 1:size(params,1)         
+            if any(params(i,:) == 0)
+                fprintf('Row %d:', i)
+                disp(params(i,:));
 
+                invalidMiceList = [invalidMiceList; i];
+            end
+                
+        end
+        disp('Rows containing mice invalid for analysis:');
+        disp(invalidMiceList);
+
+end
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
 
     for m_in = 1:size(optionsFile.model.space, 2)
@@ -75,6 +90,32 @@ for n = 1:optionsFile.Task.nSize
         rec.param.obs(m_in).pcc = diag(corr(rec.param.obs(m_in).sim, rec.param.obs(m_in).est));
     end
 
+
+
+
+
+%% Plot est mice (X axis are mice/sim) Yaxis=values; 
+% "scattterplot" (try "plot") with seperate plots for sim mice and real mice in different
+% colours (should I circle outliers?)
+%Realmice
+
+loop through realMousefiles in folder to load HGFFit data
+add data to plot with hold on
+
+    for k = 1:optionsFile.Task.nSize;
+        if ~isnana(optionsFile.Task.MouseID(k));
+            CurrentMouse = optionsFile.Task.MouseID(k);
+            
+            load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse)]);
+            DataFile = rec.est.data;
+            Xaxis = optionsFile.Task.nSize(k);
+            Yaxis = DataFile.eHGFFit.p_prc.ptrans;
+            plot(Xaxis,Yaxis);
+        
+            hold on
+        else 
+            disp('skipping invalid mouse');
+     end    
 
 %% PLOT correlation plot
 
@@ -87,7 +128,7 @@ for n = 1:optionsFile.Task.nSize
             scatter(rec.param.prc(m_in).sim(:,p),rec.param.prc(m_in).est(:,p),'filled');
             refline(1,0);
             ylim([(min(rec.param.prc(m_in).est(:,p))-0.1) (max(rec.param.prc(m_in).est(:,p))+0.1)]);
-            [t,s] = title(res.main.ModSpace(m_in).free_expnms_mu_prc(p),{'rho = ' rec.param.prc(m_in).pcc(p)});
+            [t,s] = title([optionsFile.model.space(m_in),optionsFile.modelSpace.free_expnms_mu_prc(p),'rho = ' num2str(rec.param.prc(m_in).pcc(p))]);
             t.FontSize = 18;
             s.FontSize = 14;
             s.FontAngle = 'italic'; hold on;
@@ -96,12 +137,12 @@ for n = 1:optionsFile.Task.nSize
             hold on;
         end
 
-        for p2 = 1:size(rec.param.obs(m_in).sim,2)
+        for p2Obs = 1:size(rec.param.obs(m_in).sim,2)
             nexttile;
-            scatter(rec.param.obs(m_in).sim(:,p2),rec.param.obs(m_in).est(:,p2),'filled');
+            scatter(rec.param.obs(m_in).sim(:,p2Obs),rec.param.obs(m_in).est(:,p2Obs),'filled');
             refline(1,0);
-            ylim([(min(rec.param.obs(m_in).est(:,p2))-0.1) (max(rec.param.obs(m_in).est(:,p2))+0.1)]);
-            [t,s] = title(res.main.ModSpace(m_in).free_expnms_mu_obs(p2),{'rho = ' rec.param.obs(m_in).pcc(p2)});
+            ylim([(min(rec.param.obs(m_in).est(:,p2Obs))-0.1) (max(rec.param.obs(m_in).est(:,p2Obs))+0.1)]);
+            [t,s] = title([optionsFile.model.space(m_in),optionsFile.modelSpace.free_expnms_mu_obs(p2Obs),'rho = ' num2str(rec.param.obs(m_in).pcc(p2Obs))]);
             t.FontSize = 18;
             s.FontSize = 14;
             s.FontAngle = 'italic';
@@ -110,11 +151,24 @@ for n = 1:optionsFile.Task.nSize
             ylabel('estimated data')
             hold on;
         end
+% 
+%         for
+%             plot(rec.param.obs.sim,'.');
+%             yline(mean_corr_T1,'Color',[1.0000 0.5529 0.1608]);
+%             hold on
+%             ylim([0.3 0.8]) % soft code!
+%             %if simP.includeOutliers
+%             %hold on
+%             plot(outlierIdx_T1,RQ01_correctness_dataTable.correctness_Traj1(outlierIdx_T1),'o','Color',[1.0000 0.5529 0.1608]);
+%         end
+
 
         sgtitle([optionsFile.modelSpace(m_in).name], 'FontSize', 18);
         figdir = fullfile([optionsFile.paths.plotsDir, ...
             '/Parameter_recovery_',optionsFile.modelSpace(m_in).name]);
         print(figdir, '-dpng');
+
+        save([figdir,'.fig'])
     end
 
     %% SAVE results as struct
@@ -124,5 +178,6 @@ for n = 1:optionsFile.Task.nSize
     save(save_path, '-struct', 'res');
 
     disp('recovery analysis complete.')
-
 end
+
+

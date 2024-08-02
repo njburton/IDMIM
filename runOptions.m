@@ -1,4 +1,7 @@
 function optionsFile = runOptions()
+clear all %Empties workspace
+close all %Close any open  windows like fig windows
+clc %Clear cmd window
 
 %% runOptions
 % - set all relevant paths, global variables
@@ -16,20 +19,18 @@ function optionsFile = runOptions()
 %
 % Copyright (C) 2024 - need to fill in details
 %
-%
 % _________________________________________________________________________
 % =========================================================================
 
 %% SET DIRECTORY PATHS FOR PROJECT, RAWDATA, RESULTS & PLOTS
 % Set paths of directories
 disp('setting paths...');
-optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\IDMIM';
-optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\IDMIM\rawDataStore';
-optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\IDMIM\results';
-optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\IDMIM\plots';
+optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
+optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
+optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\results';
+optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\plots';
 optionsFile.paths.rawDataDir      = ('C:\Users\c3200098\Desktop\data\ABA2_R\');
-% optionsFile.paths.rawDataDir      = ('/Users/kwellste/projects/');
-optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\IDMIM\HGF';
+optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
 
 % task names
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
@@ -43,7 +44,7 @@ optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv'; % TO DO: make this more
 
 % simulation options
 optionsFile.simulations.nSamples      = 100;
-optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\IDMIM\simResults';
+optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\simResults';
 
 if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
@@ -55,47 +56,8 @@ optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA2
 optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA2
 optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
 
-
 %% DATA EXTRACTION & PREPARATION
 % Extract data from MED-PC output file (.xlsx) and save as matlab file.
-% Individual subject data stored as a table.
-%mouseID, totalSubjs = length(unique(mouseID));  % Total number of subjects in  cohort
-%treatmentGroup, sex, task, task phase (A vs. B), trial, rewardingLeverSide, choice, outcome
-%trialStartTime, leverPressTime, responseTime (create it)
-
-%% !!!!! TO DO, comment out for now...
-
-% %%  EXTRACT AND SAVE DATA IN DESCRIPTIVE TABLE
-% % Locate GetOperant output file in directory
-% rawDescriptiveData = readcell([optionsFile.paths.rawDataDir,'\', optionsFile.Task.task2,'\', optionsFile.Task.FileName],'Range','A1:W15');
-% rawDescriptiveData(cellfun(@(x) all(ismissing(x)), rawDescriptiveData)) = {NaN};
-%
-% %Create empty table for descriptive mouse with variable names as columns
-% varTypes = {'string','string','string','string','double','double','double','double','double'}; %Defines variable type for creating the table
-% varNames = {'MouseID','Group','Sex','Age','Omissions','TotalRewards','TotalTimeouts','TotalLeftLeverPresses','TotalRightLeverPresses'};
-% ExperimentDescriptiveTable = table('Size',[22 9],'VariableTypes',varTypes,'VariableNames',varNames);
-%
-% disp('descriptive table created...');
-%
-% %For loop which creates dscriptive mouse table
-% for i = 1:22
-%
-%     ExperimentDescriptiveTable.MouseID(i)                = string(rawDescriptiveData{4,1+i});
-%     ExperimentDescriptiveTable.Group(i)                  = 'NaN';
-%     ExperimentDescriptiveTable.Sex(i)                    = 'NaN';
-%     ExperimentDescriptiveTable.Age(i)                    = 0; %find age by writing into csv file to read into matlab (samew folder as descriptivedata)
-%     ExperimentDescriptiveTable.Omissions(i)              = cell2mat(rawDescriptiveData(11,1+i));
-%     ExperimentDescriptiveTable.TotalRewards(i)           = cell2mat(rawDescriptiveData(12,1+i));
-%     ExperimentDescriptiveTable.TotalTimeouts(i)          = cell2mat(rawDescriptiveData(13,1+i));
-%     ExperimentDescriptiveTable.TotalLeftLeverPresses(i)  = cell2mat(rawDescriptiveData(14,1+i));
-%     ExperimentDescriptiveTable.TotalRightLeverPresses(i) = cell2mat(rawDescriptiveData(15,1+i));
-%
-% end
-% save([char(optionsFile.paths.resultsDir),'\ExperimentDescriptiveTable.mat'],'ExperimentDescriptiveTable');
-% disp('descriptive table filled with data...');
-
-%%  EXTRACT AND SAVE DATA IN SINGLE MOUSE TABLES
-
 %Create empty table for individual mouse with variable names as columns
 TaskTableVarTypes = {'string','double','double','double','double','double','double','double'};
 TaskTableVarNames = {'TrialCode','RewardingLeverSide','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
@@ -113,7 +75,8 @@ for i = 1:optionsFile.Task.nSize
     data      = readcell(fullfile(optionsFile.paths.rawDataDir, fileName));
     [~,cols]  = size(cell2mat(data(50,2)));
 
-    if cols<10 % if yes, based on old version of saving data with the second column saving 4 entries in one cell
+    if cols<10 % if yes, based on old version of saving data with the 
+        %second column saving 4 entries in one cell
 
         % find array indices
         choiceIdx = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+2;
@@ -127,17 +90,13 @@ for i = 1:optionsFile.Task.nSize
         ExperimentTaskTable.LeverPressTime      = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2));  %LeverPressTime_ABA1
         ExperimentTaskTable.TrialStartTime      = (0:20:3580)'; %TrialStartTime list every 20seconds
         ExperimentTaskTable.ResponseTime        = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
-        %ExperimentTaskTable.RecepticalBeamBreak = cell2mat(rawTaskData(725:905,1+i)) - ExperimentTaskTable.TrialStartTime; %RecepticalBeamBreak_ABA1
         optionsFile.Task.MouseID(i,:) = string(currMouse);
         
-
-        %% TO COMPLETE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        %Load binary sequence for rewardlever side so we can use as input
+        %% Load binary sequence for rewardlever side so we can use as input
         %for analysis using hgf.
         %Binary sequence for RewardingLeverSide (1=leftlever, 0=rightlever)
         seqBinary = readcell([optionsFile.paths.projDir,'\', optionsFile.Task.BinarySeq],'Range','A1:A180');
         ExperimentTaskTable.RewardingLeverSide = cell2mat(seqBinary); % Binary sequence for rewarding lever side (1=left, 0=right)
-         
         
         %Data correction
         ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  %Replace omissions (3 in Choice) with NaN
@@ -151,9 +110,6 @@ for i = 1:optionsFile.Task.nSize
                 'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
     end
 end
-
-%import unique binary sequence for rewarding lever side
-
 
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.toolbox));
@@ -282,7 +238,7 @@ for i = 1:numel(optionsFile.model.space)
     modelSpace(i).expnms_sa_obs=expnms_sa_obs(~cellfun('isempty',expnms_sa_obs));
 end
 
-%% find free parameters & convert parameters to native space
+%% Find free parameters & convert parameters to native space
 
 for i = 1:size(modelSpace,2)
 
@@ -312,7 +268,7 @@ end
 
 optionsFile.modelSpace = modelSpace;
 
-% NOTE: THIS IS A COPY from hgf function tapas_fitModel:
+%% NOTE: THIS IS A COPY from hgf function tapas_fitModel:
 % --------------------------------------------------------------------------------------------------
     function pr = priorPrep(options)
 
