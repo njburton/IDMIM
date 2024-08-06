@@ -1,6 +1,6 @@
 function [] = parameter_recovery(optionsFile)
 
-%% WBEST_recovery_analysis
+%% parameter_recovery
 %  Parameter recovery analysis based on simulations. This step will be
 %  executed if simP.doSimulations = 1;
 %
@@ -38,9 +38,11 @@ disp('*');
 disp('*');
 
 
-%% LOAD results from model inversion
+% in the future this should happen in the getData function
 optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
+optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
 
+%% LOAD results from model inversion
 for n = 1:length(optionsFile.Task.MouseID)
     currMouse = optionsFile.Task.MouseID(n);
     for m_in = 1:size(optionsFile.model.space, 2)
@@ -77,10 +79,10 @@ end
 % loop through realMousefiles in folder to load HGFFit data
 % add data to plot with hold on
 
-%Create table to store free params
+% Create table to store free params
 pTransTableVarTypes = {'string','double','double','double'};
 pTransTableVarNames = {'mouseIDs','PerceptParam1', 'PerceptParam2', 'ObservParam1'};
-pTransTable = table('Size', [22 4], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
+pTransTable = table('Size', [optionsFile.Task.nSize 4], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
 
 
 %Plot free perceptual model parameters
@@ -121,7 +123,7 @@ for m_in = 1:size(optionsFile.model.space, 2)
     for p = 1:size(rec.param.prc(m_in).sim,2)
         nexttile;
         scatter(rec.param.prc(m_in).sim(:,p),rec.param.prc(m_in).est(:,p),'filled');
-        refline(1,0);
+        %refline(1,0);
         ylim([(min(rec.param.prc(m_in).est(:,p))-0.1) (max(rec.param.prc(m_in).est(:,p))+0.1)]);
         [t,s] = title([optionsFile.model.space(m_in),optionsFile.modelSpace.free_expnms_mu_prc(p),'rho = ' num2str(rec.param.prc(m_in).pcc(p))]);
         t.FontSize = 18;
@@ -135,7 +137,7 @@ for m_in = 1:size(optionsFile.model.space, 2)
     for p2Obs = 1:size(rec.param.obs(m_in).sim,2)
         nexttile;
         scatter(rec.param.obs(m_in).sim(:,p2Obs),rec.param.obs(m_in).est(:,p2Obs),'filled');
-        refline(1,0);
+        % refline(1,0);
         ylim([(min(rec.param.obs(m_in).est(:,p2Obs))-0.1) (max(rec.param.obs(m_in).est(:,p2Obs))+0.1)]);
         [t,s] = title([optionsFile.model.space(m_in),optionsFile.modelSpace.free_expnms_mu_obs(p2Obs),'rho = ' num2str(rec.param.obs(m_in).pcc(p2Obs))]);
         t.FontSize = 18;
