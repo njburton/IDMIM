@@ -35,8 +35,7 @@ optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HG
 % task names
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
 optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx'; % TO DO: make this more streamlined 
-optionsFile.Task.task1    = 'ABA1_L';
-optionsFile.Task.task2    = 'ABA2_R';
+optionsFile.Task.task    = 'ABA1_L';   %Recode to ABA2_R
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 22;
 optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);

@@ -64,6 +64,7 @@ for n = 1:length(optionsFile.Task.MouseID)
 end
 
 
+end
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
 
 for m_in = 1:size(optionsFile.model.space, 2)
@@ -77,27 +78,27 @@ end
 % loop through realMousefiles in folder to load HGFFit data
 % add data to plot with hold on
 
-%Create table to store free params
 pTransTableVarTypes = {'string','double','double','double'};
 pTransTableVarNames = {'mouseIDs','PerceptParam1', 'PerceptParam2', 'ObservParam1'};
 pTransTable = table('Size', [22 4], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
 
 
-%Plot free perceptual model parameters
+
+%listwithoutInvalid = optionsFile.Task.MouseIDs - remove invalid mice List rows
 xAxis = 1:length(optionsFile.Task.MouseID);
+
 for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
-    for k = 1:length(optionsFile.Task.MouseID)
+    for k = 1:optionsFile.Task.nSize
         PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
-        fig = plot(xAxis(k),PostPerceptParam,'Marker', 'o','Color','b');
+
+        fig = plot(PostPerceptParam, ,'Marker', 'o');
         hold on
     end
-    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',num2str(p)]);
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
     save([figdir,'.fig']);
     print([figdir,'.png'], '-dpng');
 end
 
-
-%Plot free observational model parameters
 for j = 1:optionsFile.Task.nSize
     PostObsParam = rec.est(j).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
     figObsParam = plot(PostObsParam,'Marker','o');

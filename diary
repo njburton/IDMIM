@@ -64003,3 +64003,3994 @@ ans =
 git status
 {Unrecognized function or variable 'git'.
 } 
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Unrecognized field name "task1".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 54)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',54,0)">line 54</a>)
+                    [optionsFile.Task.task1,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+} 
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Unrecognized field name "task2".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 54)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',54,0)">line 54</a>)
+                    [optionsFile.Task.task2,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+runOptions
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          paths: [1×1 struct]
+           Task: [1×1 struct]
+    simulations: [1×1 struct]
+       DataFile: [1×1 struct]
+            hgf: [1×1 struct]
+            rng: [1×1 struct]
+          model: [1×1 struct]
+           plot: [1×1 struct]
+     modelSpace: [1×1 struct]
+            col: [1×1 struct]
+
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Unrecognized field name "task2".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 54)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',54,0)">line 54</a>)
+                    [optionsFile.Task.task2,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+} 
+matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 54)
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\simResults\ABA2_Rsimulation_agent1model_in1_model_est1.mat'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 53)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',53,0)">line 53</a>)
+                rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+} 
+matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 53)
+if system_dependent('IsDebugMode')==1, dbquit; end
+setup_simulations
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** SETUP_SIMULATIONS **************************************
+*
+*
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+simulated data successfully created.
+setup_simulations
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** SETUP_SIMULATIONS **************************************
+*
+*
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+simulated data successfully created.
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\simResults\ABA2_Rsimulation_agent1model_in1_model_est1.mat'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 53)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',53,0)">line 53</a>)
+                rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+runOptions
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          paths: [1×1 struct]
+           Task: [1×1 struct]
+    simulations: [1×1 struct]
+       DataFile: [1×1 struct]
+            hgf: [1×1 struct]
+            rng: [1×1 struct]
+          model: [1×1 struct]
+           plot: [1×1 struct]
+     modelSpace: [1×1 struct]
+            col: [1×1 struct]
+
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+optionsFile.Task.nSize
+
+ans =
+
+    22
+
+for k = 1:optionsFile.Task.nSize;
+        if ~isnana(optionsFile.Task.MouseID(k));
+            CurrentMouse = optionsFile.Task.MouseID(k)
+CurrentMouse = optionsFile.Task.MouseID(k)
+CurrentMouse
+for k = 1:optionsFile.Task.nSize;
+        if ~isnana(optionsFile.Task.MouseID(k));
+            CurrentMouse = optionsFile.Task.MouseID(k);
+            
+            testt = load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse)]);
+DataFile = rec.est.data
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\testframework\ui\toolstrip\+matlab\+unittest\+internal\+ui\+toolstrip\getFileInfoForToolstrip.m',8,1)">8   </a>    isClassBasedTest = false;
+if system_dependent('IsDebugMode')==1, dbquit; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+DataFile
+{Unrecognized function or variable 'DataFile'.
+} 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Unrecognized function or variable 'isnana'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 106)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',106,0)">line 106</a>)
+        if ~isnana(optionsFile.Task.MouseID(k));
+} 
+if system_dependent('IsDebugMode')==1, dbstep; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Unrecognized function or variable 'isnana'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 102)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',102,0)">line 102</a>)
+        if ~isnana(k);
+} 
+isnan help
+
+ans =
+
+  1×4 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+   0   0   0   0
+
+isnana(k)
+{Unrecognized function or variable 'isnana'.
+} 
+isnan(k)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse1'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 105)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',105,0)">line 105</a>)
+            load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse)]);
+} 
+[char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse)]
+
+ans =
+
+    'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse1'
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+for k = 1:optionsFile.Task.nSize;
+        for mouseInList = optionsFile.Task.MouseID;
+            CurrentMouse = mouseInList;
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\testframework\ui\toolstrip\+matlab\+unittest\+internal\+ui\+toolstrip\getFileInfoForToolstrip.m',8,1)">8   </a>    isClassBasedTest = false;
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+{Error: <a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',106,38)">File: parameter_recovery.m Line: 106 Column: 38</a>
+Invalid expression. Check for missing or extra characters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',106,38)
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+for mouseInList = optionsFile.Task.MouseID;
+    CurrentMouse = mouseInList;
+if system_dependent('IsDebugMode')==1, dbquit all; end
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\general\onCleanup.m',8,1)">8   </a>            narginchk(1, 1);
+if system_dependent('IsDebugMode')==1, dbquit; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+{Error: <a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',104,26)">File: parameter_recovery.m Line: 104 Column: 26</a>
+Invalid expression. Check for missing or extra characters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',104,26)
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+mouseInList = optionsFile.Task.MouseID
+
+mouseInList =
+
+   372
+   382
+   392
+   402
+   412
+   422
+   432
+   NaN
+   NaN
+   462
+   472
+   482
+   215
+   217
+   369
+   370
+   374
+   375
+   426
+   433
+   501
+   506
+
+mouseList(1,1)
+{Unrecognized function or variable 'mouseList'.
+} 
+mouseInList(1,1)
+
+ans =
+
+   372
+
+mouseList = optionsFile.Task.MouseID
+
+mouseList =
+
+   372
+   382
+   392
+   402
+   412
+   422
+   432
+   NaN
+   NaN
+   462
+   472
+   482
+   215
+   217
+   369
+   370
+   374
+   375
+   426
+   433
+   501
+   506
+
+mouseList(1,1)
+
+ans =
+
+   372
+
+CurrentMouse = mouseList(1,1)
+
+CurrentMouse =
+
+   372
+
+~isnan(CurrentMouse)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+[char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse)]
+
+ans =
+
+    'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse372'
+
+test = load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse)])
+
+test = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    ExperimentTaskTable: [180×8 table]
+
+[char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse), 'HGFFitABA1.mat']
+
+ans =
+
+    'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse372HGFFitABA1.mat'
+
+test = load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse), 'HGFFitABA1.mat']);
+CurrentMouseHGFFit = load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse), 'HGFFitABA1.mat'])
+
+CurrentMouseHGFFit = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+CurrentMouseHGFFit.eHGFFit.c_prc.transp_prc_fun
+
+ans =
+
+  <a href="matlab:helpPopup function_handle" style="font-weight:bold">function_handle</a> with value:
+
+    @tapas_ehgf_binary_transp
+
+CurrentMouseHGFFit.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+pTrans = CurrentMouseHGFFit.eHGFFit.p_prc.ptrans;
+                
+        Xaxis = CurrentMouse; %Mice/simAgents along Xaxis
+        Yaxis = pTrans;  %PTrans values along Yaxis
+        plot(Xaxis,Yaxis);
+pllot doc
+{Unrecognized function or variable 'pllot'.
+} 
+plot doc
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('plot')" style="font-weight:bold">plot</a>
+Invalid first data argument.
+} 
+doc plot
+plot(pTrans)
+area(pTrans)
+bar(pTrans)
+bar(pTrans)
+histogram(pTrans)
+histogram(pTrans)
+semilogx(pTrans)
+loglog(pTrans)
+[Warning: Negative data ignored] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('internal.matlab.plotpicker.focusCurrentFigure', 'C:\Program Files\MATLAB\R2022b\toolbox\matlab\codetools\+internal\+matlab\+plotpicker\focusCurrentFigure.m', 8)" style="font-weight:bold">internal.matlab.plotpicker.focusCurrentFigure</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\codetools\+internal\+matlab\+plotpicker\focusCurrentFigure.m',8,0)">line 8</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 91)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',91,0)">line 91</a>)] 
+barh(pTrans)
+barh(pTrans)
+histogram(pTrans)
+histogram(CurrentMouse)
+histogram(optionsFile.Task.MouseID)
+histogram(Y=optionsFile.Task.MouseID)
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('histogram>parseinput')" style="font-weight:bold">histogram>parseinput</a>
+Expected input to match one of these values:
+
+'BinCounts', 'BinCountsMode', 'BinEdges', 'BinLimits', 'BinLimitsMode', 'BinMethod', 'BinWidth', 'BusyAction', 'ButtonDownFcn', 'ContextMenu', 'CreateFcn', 'Data',
+'DataTipTemplate', 'DeleteFcn', 'DisplayName', 'DisplayStyle', 'EdgeAlpha', 'EdgeColor', 'FaceAlpha', 'FaceColor', 'HandleVisibility', 'HitTest', 'Interruptible', 'LineStyle',
+'LineWidth', 'Normalization', 'NumBins', 'Orientation', 'Parent', 'PickableParts', 'Selected', 'SelectionHighlight', 'SeriesIndex', 'Tag', 'UserData', 'Visible', 'Categories'
+
+The input, 'Y', did not match any of the valid values.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('histogram', 'C:\Program Files\MATLAB\R2022b\toolbox\matlab\graphics\math\histogram.m', 145)" style="font-weight:bold">histogram</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\graphics\math\histogram.m',145,0)">line 145</a>)
+[opts,passthrough,dispatchToCategorical] = parseinput(args,firstaxesinput);
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\graphics\math\histogram.m',316,1)">316 </a>            name = validatestring(input{i},names);
+histogram(mouseList);
+{Unrecognized function or variable 'mouseList'.
+} 
+histogram(mouseList)
+{Unrecognized function or variable 'mouseList'.
+} 
+for mouseList = optionsFile.Task.MouseID;
+    CurrentMouse = mouseList(1,1);
+    if ~isnan(CurrentMouse);   %If CurrentMouse is not a NaN value
+        CurrentMouseHGFFit = load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse), 'HGFFitABA1.mat']);
+        
+                p_prc_pTrans = CurrentMouseHGFFit.eHGFFit.p_prc.ptrans;
+                
+        Xaxis = CurrentMouse; %Mice/simAgents along Xaxis
+        Yaxis = pTrans;  %PTrans values along Yaxis
+        histogram(mouseList);
+summary(mouseList)
+{Unrecognized function or variable 'mouseList'.
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+mouseList = optionsFile.Task.MouseID
+
+mouseList =
+
+   372
+   382
+   392
+   402
+   412
+   422
+   432
+   NaN
+   NaN
+   462
+   472
+   482
+   215
+   217
+   369
+   370
+   374
+   375
+   426
+   433
+   501
+   506
+
+CurrentMouse = mouseList(1,1)
+
+CurrentMouse =
+
+   372
+
+CurrentMouseHGFFit = load([char(optionsFile.paths.resultsDir),'\mouse',num2str(CurrentMouse), 'HGFFitABA1.mat'])
+
+CurrentMouseHGFFit = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+p_prc_pTrans = CurrentMouseHGFFit.eHGFFit.p_prc.ptrans;
+mouseList = categorical(mouseList);
+summary(mouseList)
+     <strong>215</strong>              1 
+     <strong>217</strong>              1 
+     <strong>369</strong>              1 
+     <strong>370</strong>              1 
+     <strong>372</strong>              1 
+     <strong>374</strong>              1 
+     <strong>375</strong>              1 
+     <strong>382</strong>              1 
+     <strong>392</strong>              1 
+     <strong>402</strong>              1 
+     <strong>412</strong>              1 
+     <strong>422</strong>              1 
+     <strong>426</strong>              1 
+     <strong>432</strong>              1 
+     <strong>433</strong>              1 
+     <strong>462</strong>              1 
+     <strong>472</strong>              1 
+     <strong>482</strong>              1 
+     <strong>501</strong>              1 
+     <strong>506</strong>              1 
+     <strong><undefined></strong>      2 
+histogram(mouseList);
+doc histogram
+Xaxis = mouseList; %Mice/simAgents along Xaxis
+        Yaxis = p_prc_pTrans;
+histogram(Xaxis,Yaxis);
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('histogram')" style="font-weight:bold">histogram</a>
+Expected input number 2, categories, to be one of these types:
+
+string, cell, categorical, pattern
+
+Instead its type was double.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\graphics\math\histogram.m',156,1)">156 </a>        throw(ME);
+histogram(Yaxis,Xaxis);
+{Unrecognized function or variable 'Yaxis'.
+} 
+p_prc_pTrans = CurrentMouseHGFFit.eHGFFit.p_prc.ptrans;
+{Unable to resolve the name 'CurrentMouseHGFFit.eHGFFit.p_prc.ptrans'.
+} 
+mouseList = optionsFile.Task.MouseID;
+{Unable to resolve the name 'optionsFile.Task.MouseID'.
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+histogram(Yaxis,Xaxis);
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('histogram')" style="font-weight:bold">histogram</a>
+X must be a categorical array.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\graphics\math\histogram.m',156,1)">156 </a>        throw(ME);
+histogram(Xaxis);
+{Unrecognized function or variable 'Xaxis'.
+} 
+histogram(Yaxis);
+{Unrecognized function or variable 'Yaxis'.
+} 
+mouseList = optionsFile.Task.MouseID;
+{Unable to resolve the name 'optionsFile.Task.MouseID'.
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+histogram(Yaxis);
+histogram(Xaxis);
+pTransTable = tbl(Xaxis,Yaxis);
+{Unrecognized function or variable 'tbl'.
+} 
+pTransTable = table(Xaxis,Yaxis);
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('table')" style="font-weight:bold">table</a>
+All table variables must have the same number of rows.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@table\table.m',252,1)">252 </a>                [numVars,numRows,nvpairs] = tabular.countVarInputs(varargin,'MATLAB:table:StringParamNameNotSupported',numNamedArguments);
+if system_dependent('IsDebugMode')==1, dbquit; end
+pTransTable = table;
+        pTransTable.mouseList = mouseList;
+        pTransTable.pTrans = p_prc_pTrans;
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('tabular/dotAssign')" style="font-weight:bold"> . </a>
+To assign to or create a variable in a table, the number of rows must match the height of the table.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@tabular\dotAssign.m',501,1)">501 </a>    throw(ME);
+if system_dependent('IsDebugMode')==1, dbquit; end
+pTransTableVarTypes = {'double','double'};
+        pTransTableVarNames = {'mouseIDs','pTransValues'};
+        pTransTable = table('Size', [ 2], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('table')" style="font-weight:bold">table</a>
+Size must be a two-element vector of nonnegative integer values specifying the number of rows and the number of variables.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@table\table.m',297,1)">297 </a>                        error(message('MATLAB:table:InvalidSize'));
+if system_dependent('IsDebugMode')==1, dbquit; end
+pTransTableVarTypes = {'double','double'};
+        pTransTableVarNames = {'mouseIDs','pTransValues'};
+        pTransTable = table('Size', [20 2], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
+        pTransTable.mouseList = mouseList;
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('tabular/dotAssign')" style="font-weight:bold"> . </a>
+To assign to or create a variable in a table, the number of rows must match the height of the table.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@tabular\dotAssign.m',501,1)">501 </a>    throw(ME);
+if system_dependent('IsDebugMode')==1, dbquit; end
+histogram(Xaxis);
+histogram(Yaxis);
+params
+
+params =
+
+    0.3166    5.6157
+   -2.7065    5.5591
+   -3.1780    6.1172
+   -0.9532    5.3933
+   -5.8106    1.8514
+   -2.3570    4.2611
+   -4.0659    4.2238
+         0         0
+         0         0
+   -3.3300    1.2523
+   -2.2488    5.1756
+   -2.5260    4.8227
+   -3.2538    5.7380
+   -6.5812    2.1206
+   -2.2348    4.5460
+   -4.3986    2.0435
+   -5.1736    2.0910
+   -4.3590    7.4750
+   -2.8339    7.0228
+   -0.6864    5.6791
+   -0.1663    5.0669
+   -4.8749    2.3591
+
+optionsFile.modelSpace.prc_idx
+
+ans =
+
+    13    14
+
+p_prc_pTrans(optionsFile.modelSpace.prc_idx
+ p_prc_pTrans(optionsFile.modelSpace.prc_idx
+                                            ↑
+{Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+p_prc_pTrans(optionsFile.modelSpace.prc_idx)\
+ p_prc_pTrans(optionsFile.modelSpace.prc_idx)\
+                                              ↑
+{Error: Invalid expression. Check for missing or extra characters.
+} 
+p_prc_pTrans(optionsFile.modelSpace.prc_idx)
+
+ans =
+
+    0.3166    5.6157
+
+p_prc_pTrans
+
+p_prc_pTrans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+p_prc_pTrans
+
+p_prc_pTrans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+CurrentMouseHGFFit.eHGFFit.c_prc
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+                  model: 'ehgf_binary'
+               n_levels: 3
+    irregular_intervals: 0
+                 mu_0mu: [NaN 0 1]
+                 mu_0sa: [NaN 0 0]
+              logsa_0mu: [NaN -2.3026 0]
+              logsa_0sa: [NaN 0 0]
+                  rhomu: [NaN 0 0]
+                  rhosa: [NaN 0 0]
+                logkamu: [0 0]
+                logkasa: [0 0]
+                   ommu: [NaN -3 2]
+                   omsa: [NaN 4 4]
+               priormus: [NaN 0 1 NaN -2.3026 0 NaN 0 0 0 0 NaN -3 2]
+               priorsas: [NaN 0 0 NaN 0 0 NaN 0 0 0 0 NaN 4 4]
+                prc_fun: @tapas_ehgf_binary
+         transp_prc_fun: @tapas_ehgf_binary_transp
+
+rec.est.data.eHGFFit
+{Intermediate dot '.' indexing produced a comma-separated list with 22 values, but it must produce a single value when followed by subsequent indexing operations.
+
+<a href="matlab:helpview('matlab','error_index_expected_one_output_from_intermediate_indexing')" style="font-weight:bold">Related documentation</a>
+} 
+rec.sim.agent(1).data.c_obs
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+        predorpost: 1
+             model: 'tapas_unitsq_sgm'
+           logzemu: 3.8712
+           logzesa: 1
+          priormus: 3.8712
+          priorsas: 1
+           obs_fun: @tapas_unitsq_sgm
+    transp_obs_fun: @tapas_unitsq_sgm_transp
+
+rec.sim.agent(15).data.c_obs
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+        predorpost: 1
+             model: 'tapas_unitsq_sgm'
+           logzemu: 3.8712
+           logzesa: 1
+          priormus: 3.8712
+          priorsas: 1
+           obs_fun: @tapas_unitsq_sgm
+    transp_obs_fun: @tapas_unitsq_sgm_transp
+
+rec.sim.agent(15).data.p_prc
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+      mu_0: [NaN 0 1]
+      sa_0: [NaN 0.1000 1]
+       rho: [NaN 0 0]
+        ka: [1 1]
+        om: [NaN -6.0354 2.1892]
+         p: [NaN 0 1 NaN 0.1000 1 NaN 0 0 1 1 NaN -6.0354 2.1892]
+    ptrans: [NaN 0 1 NaN -2.3026 0 NaN 0 0 0 0 NaN -6.0354 2.1892]
+
+rec.sim.agent(1).data.p_prc
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+      mu_0: [NaN 0 1]
+      sa_0: [NaN 0.1000 1]
+       rho: [NaN 0 0]
+        ka: [1 1]
+        om: [NaN -1.8589 -0.1947]
+         p: [NaN 0 1 NaN 0.1000 1 NaN 0 0 1 1 NaN -1.8589 -0.1947]
+    ptrans: [NaN 0 1 NaN -2.3026 0 NaN 0 0 0 0 NaN -1.8589 -0.1947]
+
+rec.est(1).data.p_prc
+{Unrecognized field name "p_prc".
+} 
+rec.est(1).data
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+rec.est(1).data.eHGFFit.p_prc
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+      mu_0: [NaN 0 1]
+      sa_0: [NaN 0.1000 1]
+       rho: [NaN 0 0]
+        ka: [1 1]
+        om: [NaN 0.3166 5.6157]
+         p: [NaN 0 1 NaN 0.1000 1 NaN 0 0 1 1 NaN 0.3166 5.6157]
+    ptrans: [NaN 0 1 NaN -2.3026 0 NaN 0 0 0 0 NaN 0.3166 5.6157]
+
+rec.est(15).data.eHGFFit.p_prc
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+      mu_0: [NaN 0 1]
+      sa_0: [NaN 0.1000 1]
+       rho: [NaN 0 0]
+        ka: [1 1]
+        om: [NaN -2.2348 4.5460]
+         p: [NaN 0 1 NaN 0.1000 1 NaN 0 0 1 1 NaN -2.2348 4.5460]
+    ptrans: [NaN 0 1 NaN -2.3026 0 NaN 0 0 0 0 NaN -2.2348 4.5460]
+
+optionsFile.modelSpace.prc_idx
+
+ans =
+
+    13    14
+
+length(optionsFile.modelSpace.prc_idx)
+
+ans =
+
+     2
+
+rec.est(15).data.eHGFFit.p_obs
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+        ze: 0.7649
+         p: 0.7649
+    ptrans: -0.2680
+
+optionsFile.modelSpace.obs_idx
+
+ans =
+
+     1
+
+fig1 = plot(PostPerceptParam,'Marker,o')
+{Unrecognized function or variable 'PostPerceptParam'.
+} 
+PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+{Unrecognized function or variable 'k'.
+} 
+rec.est(1).data.eHGFFit.
+ rec.est(1).data.eHGFFit.
+                         ↑
+{Error: Invalid expression. Check for missing or extra characters.
+} 
+rec.est(1).data.eHGFFit.p_obs.ptrans
+
+ans =
+
+    0.3830
+
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig('p') = plot(PostPerceptParam,'Marker,o');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'SimMouseResponsePriorPostParamPlot']);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+
+end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('plot')" style="font-weight:bold">plot</a>
+Invalid color, marker, or line style.
+} 
+matlab.internal.language.introspective.errorDocCallback('plot')
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig('p') = plot(PostPerceptParam,'Marker,o');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'SimMouseResponsePriorPostParamPlot']);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+
+end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('plot')" style="font-weight:bold">plot</a>
+Invalid color, marker, or line style.
+} 
+optionsFile.modelSpace.obs_idx
+
+ans =
+
+     1
+
+PostObsParam = rec.est(k).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace.obs_idx(j))
+{Array indices must be positive integers or logical values.
+} 
+optionsFile.modelSpace.obs_idx
+
+ans =
+
+     1
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+{Error: <a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',144,1)">File: parameter_recovery.m Line: 144 Column: 1</a>
+This statement is not inside any function.
+ (It follows the END that terminates the definition of the function "parameter_recovery".)
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',144,1)
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(PostPerceptParam,'Marker,o');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('plot')" style="font-weight:bold">plot</a>
+Invalid color, marker, or line style.
+} 
+matlab.internal.language.introspective.errorDocCallback('plot')
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(PostPerceptParam,'Marker', o);
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+end
+{Unrecognized function or variable 'o'.
+} 
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(PostPerceptParam,'Marker', 'o');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+end
+{Dot indexing is not supported for variables of this type.
+} 
+PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+{Dot indexing is not supported for variables of this type.
+} 
+PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+{Dot indexing is not supported for variables of this type.
+} 
+PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+{Dot indexing is not supported for variables of this type.
+} 
+histogram(PostPerceptParam)
+histogram(C,PostPerceptParam')
+{Unrecognized function or variable 'C'.
+} 
+histogram(C,PostPerceptParam)
+{Unrecognized function or variable 'C'.
+} 
+histogram(Categories=PostPerceptParam)
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('histogram')" style="font-weight:bold">histogram</a>
+Expected input number 2, categories, to be one of these types:
+
+string, cell, categorical, pattern
+
+Instead its type was double.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\graphics\math\histogram.m',156,1)">156 </a>        throw(ME);
+if system_dependent('IsDebugMode')==1, dbquit; end
+uiopen('C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse382HGFFitABA1.fig',1)
+optionsFile.Task.MouseIDs
+{Unrecognized field name "MouseIDs".
+} 
+optionsFile.Task.MouseID
+
+ans =
+
+   372
+   382
+   392
+   402
+   412
+   422
+   432
+   NaN
+   NaN
+   462
+   472
+   482
+   215
+   217
+   369
+   370
+   374
+   375
+   426
+   433
+   501
+   506
+
+pTransTableVarTypes = {'string','double','double','double'};
+pTransTableVarNames = {'mouseIDs','PerceptParam1', 'PerceptParam2', 'ObservParam1'};
+pTransTable = table('Size', [22 4], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
+pTransTable.PerceptParam1 = PostPerceptParam;
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('tabular/dotAssign')" style="font-weight:bold"> . </a>
+To assign to or create a variable in a table, the number of rows must match the height of the table.
+} 
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@tabular\dotAssign.m',501,1)">501 </a>    throw(ME);
+if system_dependent('IsDebugMode')==1, dbquit; end
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        pTransTable.PerceptParam1 = PostPerceptParam;
+num2string((p)+1)
+num2string(p+1)
+num2str(p+1)
+testColumn = p+1
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        testColumn = p+1
+pTransTable.PerceptParam1[1,2] = PostPerceptParam;
+ pTransTable.PerceptParam1[1,2] = PostPerceptParam;
+                          ↑
+{Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        pTransTable.PerceptParam1[1,2] = PostPerceptParam;
+         pTransTable.PerceptParam1[1,2] = PostPerceptParam;
+                                  ↑
+{Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        pTransTable.PerceptParam1 = PostPerceptParam;
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        pTransTable.PerceptParam1 = PostPerceptParam;
+pTransTable.PerceptParam1 = pTransTable.PerceptParam1(PostPerceptParam);
+<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\general\onCleanup.m',8,1)">8   </a>            narginchk(1, 1);
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Array indices must be positive integers or logical values.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('tabular/dotParenReference', 'C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@tabular\dotParenReference.m', 111)" style="font-weight:bold">tabular/dotParenReference</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\datatypes\tabular\@tabular\dotParenReference.m',111,0)">line 111</a>)
+    b = b(rowIndices);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 110)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',110,0)">line 110</a>)
+        pTransTable.PerceptParam1 = pTransTable.PerceptParam1(PostPerceptParam);
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+doc plot
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Dot indexing is not supported for variables of this type.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 109)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',109,0)">line 109</a>)
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+} 
+if system_dependent('IsDebugMode')==1, dbstep; end
+matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 109)
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Dot indexing is not supported for variables of this type.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 109)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',109,0)">line 109</a>)
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=2, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=3, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=4, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=5, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=6, m=1 
+Rows containing mice invalid for analysis:
+current iteration: n=7, m=1 
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+skipped...invalid mouse
+Rows containing mice invalid for analysis:
+current iteration: n=10, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=11, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=12, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=13, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=14, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=15, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=16, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=17, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=18, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=19, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=20, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=21, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+current iteration: n=22, m=1 
+Row 8:     0     0
+
+Row 9:     0     0
+
+Rows containing mice invalid for analysis:
+     8
+     9
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Dot indexing is not supported for variables of this type.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 109)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',109,0)">line 109</a>)
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+} 
+rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p))
+{Dot indexing is not supported for variables of this type.
+} 
+rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx
+ rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx
+                                                                    ↑
+{Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx)
+{Dot indexing is not supported for variables of this type.
+} 
+rec.est(k).data.eHGFFit.p_prc.ptrans
+{Dot indexing is not supported for variables of this type.
+} 
+rec.est(k)
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    data: []
+
+rec.est(k)
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    data: []
+
+isempty(rec.est(k).data)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+rec.est(k).data = []
+
+rec = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+      sim: [1×1 struct]
+      est: [1×22 struct]
+    param: [1×1 struct]
+
+rec.est(k).data
+
+ans =
+
+     []
+
+isnan(optionsFile.Task.MouseID(8)
+ isnan(optionsFile.Task.MouseID(8)
+                                  ↑
+{Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+isnan(optionsFile.Task.MouseID(8))
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+~isnan(optionsFile.Task.MouseID(8))
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   0
+
+clear all
+if ~exist('optionsFile', 'var')
+    optionsFile = runOptions; % specifications for this analysis
+end
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+
+disp('************************************** PARAMETER RECOVERY **************************************');
+************************************** PARAMETER RECOVERY **************************************
+disp('*');
+*
+disp('*');
+*
+
+
+%% LOAD results from model inversion
+
+for n = 1:optionsFile.Task.nSize
+
+    if isnan(optionsFile.Task.MouseID(n))
+        disp('invalid mouse, skipping ...')
+    else
+        currMouse = optionsFile.Task.MouseID(n);
+        for m_in = 1:size(optionsFile.model.space, 2)
+
+            fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
+            for m_est = 1:size(optionsFile.model.space, 2)
+                % load results from simulated agents' model inversion
+                rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                    [optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+
+                % load results from real data model inversion
+                rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+            end
+
+            % param values in transformed space (assumption of Gaussian prior)
+            rec.param.prc(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+            rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        end
+    end
+end
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+invalid mouse, skipping ...
+invalid mouse, skipping ...
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+rec.est.data
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans =
+
+     []
+
+
+ans =
+
+     []
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+rec.est
+
+ans = 
+
+  1×22 <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> array with fields:
+
+    data
+
+rec.est(8).data
+
+ans =
+
+     []
+
+n=8
+
+n =
+
+     8
+
+isnan(optionsFile.Task.MouseID(n))
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+disp('invalid mouse, skipping ...')
+invalid mouse, skipping ...
+if system_dependent('IsDebugMode')==1, dbquit all; end
+
+if ~exist('optionsFile', 'var')
+    optionsFile = runOptions; % specifications for this analysis
+end
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+
+disp('************************************** PARAMETER RECOVERY **************************************');
+************************************** PARAMETER RECOVERY **************************************
+disp('*');
+*
+disp('*');
+*
+
+
+%% LOAD results from model inversion
+
+for n = 1:optionsFile.Task.nSize
+    if isnan(optionsFile.Task.MouseID(n))
+        disp('invalid mouse, skipping ...')
+        optionsFile.Task.MouseID(n)=[];
+        n = n-1;
+    else
+        currMouse = optionsFile.Task.MouseID(n);
+        for m_in = 1:size(optionsFile.model.space, 2)
+
+            fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
+            for m_est = 1:size(optionsFile.model.space, 2)
+                % load results from simulated agents' model inversion
+                rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                    [optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+
+                % load results from real data model inversion
+                rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+            end
+
+            % param values in transformed space (assumption of Gaussian prior)
+            rec.param.prc(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+            rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        end
+    end
+for n = 1:optionsFile.Task.nSize
+    if isnan(optionsFile.Task.MouseID(n))
+        disp('invalid mouse, skipping ...')
+        optionsFile.Task.MouseID(n)=[];
+        n = n-1;
+    else
+        currMouse = optionsFile.Task.MouseID(n);
+        for m_in = 1:size(optionsFile.model.space, 2)
+
+            fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
+            for m_est = 1:size(optionsFile.model.space, 2)
+                % load results from simulated agents' model inversion
+                rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                    [optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+
+                % load results from real data model inversion
+                rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+            end
+
+            % param values in transformed space (assumption of Gaussian prior)
+            rec.param.prc(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+            rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+            rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        end
+    end
+end
+
+if ~exist('optionsFile', 'var')
+    optionsFile = runOptions; % specifications for this analysis
+end
+
+disp('************************************** PARAMETER RECOVERY **************************************');
+************************************** PARAMETER RECOVERY **************************************
+disp('*');
+*
+disp('*');
+*
+isnan(optionsFile.Task.MouseID)
+
+ans =
+
+  22×1 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   1
+   1
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+
+find(isnan(optionsFile.Task.MouseID))
+
+ans =
+
+     8
+     9
+
+  optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[]
+
+optionsFile = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          paths: [1×1 struct]
+           Task: [1×1 struct]
+    simulations: [1×1 struct]
+       DataFile: [1×1 struct]
+            hgf: [1×1 struct]
+            rng: [1×1 struct]
+          model: [1×1 struct]
+           plot: [1×1 struct]
+     modelSpace: [1×1 struct]
+            col: [1×1 struct]
+
+isnan(optionsFile.Task.MouseID
+ isnan(optionsFile.Task.MouseID
+                               ↑
+{Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+isnan(optionsFile.Task.MouseID)
+
+ans =
+
+  20×1 <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a> array
+
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+   0
+
+optionsFile.Task.MouseID
+
+ans =
+
+   372
+   382
+   392
+   402
+   412
+   422
+   432
+   462
+   472
+   482
+   215
+   217
+   369
+   370
+   374
+   375
+   426
+   433
+   501
+   506
+
+size(optionsFile.Task.MouseID)
+
+ans =
+
+    20     1
+
+for n = 1:length(optionsFile.Task.MouseID)
+    currMouse = optionsFile.Task.MouseID(n);
+    for m_in = 1:size(optionsFile.model.space, 2)
+
+        fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
+        for m_est = 1:size(optionsFile.model.space, 2)
+            % load results from simulated agents' model inversion
+            rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                [optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+
+            % load results from real data model inversion
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+        end
+
+        % param values in transformed space (assumption of Gaussian prior)
+        rec.param.prc(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+        rec.param.obs(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+        rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+    end
+end
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+size(optionsFile.model.space, 2)
+
+ans =
+
+     1
+
+for m_in = 1:size(optionsFile.model.space, 2)
+    rec.param.prc(m_in).pcc = diag(corr(rec.param.prc(m_in).sim, rec.param.prc(m_in).est));
+    rec.param.obs(m_in).pcc = diag(corr(rec.param.obs(m_in).sim, rec.param.obs(m_in).est));
+end
+xAxis = 1:length(optionsFile.Task.MouseID)
+
+xAxis =
+
+     1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17    18    19    20
+
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+
+        fig = plot(PostPerceptParam,xAxis(n),'Marker', 'o');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+end
+{Index exceeds the number of array elements. Index must not exceed 20.
+} 
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for k = 1:optionsFile.Task.nSize
+        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+
+        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+end
+{Index exceeds the number of array elements. Index must not exceed 20.
+} 
+clear all
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit all; end
+close all
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',95,1)">95  </a>    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',(p)]);
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('save')" style="font-weight:bold">save</a>
+Unable to write file C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse506_PerceptualmodelParamplot_param.fig: Invalid argument.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 96)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',96,0)">line 96</a>)
+    save([figdir,'.fig']);
+} 
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',num2str(p)])
+
+figdir =
+
+    'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse506_PerceptualmodelParamplot_param1'
+
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng')
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',97,1)">97  </a>    print([figdir,'.png'], '-dpng');
+if system_dependent('IsDebugMode')==1, dbcont; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',97,1)">97  </a>    print([figdir,'.png'], '-dpng');
