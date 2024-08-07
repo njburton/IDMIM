@@ -29,7 +29,13 @@ function [] = sim_data_modelinversion()
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
-optionsFile = runOptions; % specifications for this analysis
+% specifications for this analysis
+try
+    load('optionsFile.mat',optionsFile);
+catch
+    optionsFile = runOptions; % specifications for this analysis
+end
+
 
 disp('************************************** SIM_DATA_MODELINVERSION **************************************');
 disp('*');

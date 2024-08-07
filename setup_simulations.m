@@ -26,8 +26,13 @@ function [] = setup_simulations
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
-% options = set_options;   % specifications for this analysis
-optionsFile = runOptions; % specifications for this analysis
+% specifications for this analysis
+try
+    load('optionsFile.mat',optionsFile);
+catch
+    optionsFile = runOptions; % specifications for this analysis
+end
+
 
 addpath(genpath(optionsFile.paths.toolbox));
 disp('************************************** SETUP_SIMULATIONS **************************************');

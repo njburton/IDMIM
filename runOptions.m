@@ -1,7 +1,4 @@
 function optionsFile = runOptions()
-clear all %Empties workspace
-close all %Close any open  windows like fig windows
-clc %Clear cmd window
 
 %% runOptions
 % - set all relevant paths, global variables
@@ -27,8 +24,8 @@ clc %Clear cmd window
 disp('setting paths...');
 optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
 optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
-optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\results';
-optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\plots';
+optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\results';
+optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\plots';
 optionsFile.paths.rawDataDir      = 'C:\Users\c3200098\Desktop\data\ABA2_R\'; 
 optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
 
@@ -43,7 +40,7 @@ optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv'; % TO DO: make this more
 
 % simulation options
 optionsFile.simulations.nSamples      = 100;
-optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\simResults';
+optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\sdata\imResults';
 
 if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)

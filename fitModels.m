@@ -15,6 +15,14 @@ function fitModels(optionsFile)
 %
 % _________________________________________________________________________
 % =========================================================================
+
+try
+    load('optionsFile.mat',optionsFile);
+catch
+    optionsFile = runOptions; % specifications for this analysis
+end
+
+
 for n = 1:optionsFile.Task.nSize
   
     if ~isnan(optionsFile.Task.MouseID(n))
