@@ -34,7 +34,7 @@ for n = 1:optionsFile.Task.nSize
 
             %Plot standard HGF trajectory plot
             tapas_hgf_plotTraj_mod(eHGFFit);
-            figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFit']);
+            figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'HGFFit']);
             save([figdir,'.fig']);
             print([figdir,'.png'], '-dpng');
                       
@@ -69,116 +69,15 @@ for n = 1:optionsFile.Task.nSize
 
             %Plot standard RW trajectory plot
             tapas_rw_binary_plotTraj(RWFit);
-            figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'RWFit']);
+            figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'RWFit']);
             save([figdir,'.fig']);
             print([figdir,'.png'], '-dpng');
             
             %Save RW LME
 
             %Save model fit
-            save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'RWFit.mat'],'RWFit'); % TO DO: Softcode the filename extension
+            save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'RWFit.mat'],'RWFit'); % TO DO: Softcode the filename extension    
             
-           %% I assume this is not relevant any longer? :
-            %%HGF- Plot responses, perceptualModel prior & posterior params
-
-            ResponsePriorPostParamPlot = tiledlayout(2,4,'TileSpacing','Compact');
-            title(ResponsePriorPostParamPlot, 'Real mouse');
-
-            %Tile1 - Response of currMouse
-            ax1 = nexttile([1,2]);
-            histogram(eHGFFit.y);
-            title('Responses');
-
-            %Tile2 - Omega percModel prior values of 3 levels of currMouse
-            ax2 = nexttile([1,2]);
-            X = categorical({'FirstLevel','SecondLevel','ThirdLevel'});
-            X = reordercats(X,{'FirstLevel','SecondLevel','ThirdLevel'});
-            Y = eHGFFit.c_prc.ommu; %perceptual Omega priors NEED TO INCLUDE VARIANCES
-            bar(X,Y,0.5);
-            %ylim([-5.0 5.0]); %ideally softcoded
-
-%             if mouse.Omissions
-%                 hold on
-%                 plot(omissions over the bar graph in yellow with thicker width)
-%             end
-            title('omega prior of perc model');
-            
-            %Tile3 - Omega percModel posterior values of 3 levels of currMouse
-            nexttile(6,[1,2]);
-            X = categorical({'FirstLevel','SecondLevel','ThirdLevel'});
-            X = reordercats(X,{'FirstLevel','SecondLevel','ThirdLevel'});
-            Y = eHGFFit.p_prc.om; %perceptual omega posteriors
-            bar(X,Y,0.5);
-            %hold on
-            %ylim([-5.0 5.0]); %ideally softcoded
-            title('Omega posterior perc');
-            
-            %Save ResponsePriorPostParamPlot
-            figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'ResponsePriorPostParamPlot']);
-            save([figdir,'.fig']);
-            print([figdir,'.png'], '-dpng');         
-            
-            %% Create task performance graph tiles
-            %Ommissions, responseTimes,
-            mousePerformanceTile = tiledlayout(2,3);
-            title(mousePerformanceTile, 'Mouse task performance graph','FontSize',20);
-
-            %Tile1 - Response of currMouse
-            ax1 = nexttile;
-            histogram(eHGFFit.y);
-            %ylim([0.3 0.8]);
-            title('Responses');
-            
-            %Tile2 - Omissions
-            ax2 = nexttile;
-            Omits = length(eHGFFit.irr);
-            Y = Omits;
-            bar(Omits,Y,0.5);
-            %ylim([0.3 0.8]);
-            title('Omissions');
-
-            %Tile3 - omissions over task timeline
-            ax3 = nexttile;
-            eHGFFit.irr;
-            %Y = 
-            title('omissions over task timeline');
-                        
-            %Tile 4 - responseTimes over Trial stemplot
-            ax4 = nexttile([1 3]);
-            responseTimes = ExperimentTaskTable.ResponseTime; 
-            responseTimes(responseTimes(:,1) < 0.0) = 0.0;
-            stem(responseTimes,'filled');
-            %ylim([0.0 15]);
-            title('ResponseTimes (TrialStartTime - LeverPressTime');
-         
-            %Save tiledPlot      
-            figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1']);
-            save([figdir,'.fig'])
-            print([figdir,'.png'], '-dpng')
-
-            %% Compute CoarseChoiceStrategies 
-            % lose-switch, lose-stay, win-switch, win-stay stickiness
-            % explore/exploit
-            % and plot on graph
-            mouseCoarseChoiceStratTile = tiledlayout(2,4,'TileSpacing','Compact');
-            %Tile 1 - lose-switch, lose-stay, win-switch, win-stay
-            %Omits)
-            nexttile([1,2])
-            histogram(ChoiceColumn.Choices);
-
-            %Tile 1 - 
-            %Omits)
-            nexttile([1,2])
-            histogram(ChoiceColumn.Choices);
-
-            %Tile 3 - 
-            %Omits)
-            nexttile(6,[1,2])
-            histogram(ChoiceColumn.Choices);
-
-            %%Win-stay
-            % Initialize counters
-            count_stay_win = 0; % Counter for P(stay | win)
             
          
 

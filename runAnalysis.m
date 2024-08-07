@@ -31,6 +31,7 @@ optionsFile = runOptions;
 
 %% Get,Organize, and save data into tables
 optionsFile = getData(optionsFile);
+save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")
 
 %% Simulate synthetic agends
 % create agents that act like a specific model woul expect them to act and
@@ -49,54 +50,6 @@ fitModels(optionsFile);
 
 %% Plot parameter recovery and data plots
 parameter_recovery(optionsFile);
-
-%% IS THIS RELEVANT/WORKING?
-%% Plot responses, perceptualModel prior & posterior params
-disp('plotting sim mice...');
-for k = 1:optionsFile.simulations.nSamples
-    simData = load('C:\Users\c3200098\Desktop\projects\IDMIM\simResults\ABA1_Lsimulation_agent(k)model_in1_model_est1.mat'); %agent1model
-    histogram(simData.rec.sim.agent(k).data.y);
-
-
-    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'RWFit']);
-
-
-    simMouseResponsePriorPostParamPlot = tiledlayout(2,4,'TileSpacing','Compact');
-    title(ResponsePriorPostParamPlot, 'sim mouse XXX');
-
-    %Tile1 - Responses of simMouse
-    ax1 = nexttile([1,2]);
-    histogram(simData.y);
-    ylim([0.0 maxResponses]);
-    title('Responses');
-
-    %Tile2 - Omega percModel prior values of 3 levels of currMouse
-    ax2 = nexttile([1,2]);
-    X = categorical({'FirstLevel','SecondLevel','ThirdLevel'});
-    X = reordercats(X,{'FirstLevel','SecondLevel','ThirdLevel'});
-    Y = simData.c_prc.ommu; %perceptual Omega priors
-    bar(X,Y,0.5);
-    ylim([0.3 0.8]);
-    title('omega prior of perc');
-
-
-    %Tile3 - Omega percModel posterior values of 3 levels of currMouse
-    nexttile(6,[1,2]);
-    X = categorical({'FirstLevel','SecondLevel','ThirdLevel'});
-    X = reordercats(X,{'FirstLevel','SecondLevel','ThirdLevel'});
-    Y = simData.p_prc.om; %perceptual omega posteriors
-    bar(X,Y,0.5);
-    ylim([0.3 0.8]);
-    title('Omega posterior perc');
-
-
-    %Save ResponsePriorPostParamPlot
-    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'SimMouseResponsePriorPostParamPlot']);
-    save([figdir,'.fig']);
-    print([figdir,'.png'], '-dpng');
-
-
-end
 
 %% Compare HGF & RW LME across mice
 % % % % for matFile = file List;

@@ -1,0 +1,3557 @@
+initialising options...
+setting paths...
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+setting paths...
+************************************** SETUP_SIMULATIONS **************************************
+*
+*
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+simulated data successfully created.
+{Error: <a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\sim_data_modelinversion.m',58,13)">File: sim_data_modelinversion.m Line: 58 Column: 13</a>
+Invalid text character. Check for unsupported symbol, invisible character, or pasting of non-ASCII characters.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 39)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',39,0)">line 39</a>)
+sim_data_modelinversion;
+} 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',39,1)">39  </a>sim_data_modelinversion;
+if system_dependent('IsDebugMode')==1, dbstep; end
+runAnalysis
+starting analysis pipeline...
+initialising options...
+setting paths...
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+setting paths...
+************************************** SETUP_SIMULATIONS **************************************
+*
+*
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+Ignored trials: none
+simulated data successfully created.
+{Error: <a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\sim_data_modelinversion.m',58,13)">File: sim_data_modelinversion.m Line: 58 Column: 13</a>
+Invalid text character. Check for unsupported symbol, invisible character, or pasting of non-ASCII characters.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 39)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',39,0)">line 39</a>)
+sim_data_modelinversion;
+} 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',39,1)">39  </a>sim_data_modelinversion;
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',88,1)">88  </a>xAxis = 1:length(optionsFile.Task.MouseID);
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+setting paths...
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+{Unrecognized function or variable 'rec'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 71)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',71,0)">line 71</a>)
+    rec.param.prc(m_in).pcc = diag(corr(rec.param.prc(m_in).sim, rec.param.prc(m_in).est));
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+length(optionsFile.Task.MouseID)
+
+ans =
+
+     0
+
+optionsFile
+
+optionsFile = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          paths: [1×1 struct]
+           Task: [1×1 struct]
+    simulations: [1×1 struct]
+       DataFile: [1×1 struct]
+            hgf: [1×1 struct]
+            rng: [1×1 struct]
+          model: [1×1 struct]
+           plot: [1×1 struct]
+     modelSpace: [1×1 struct]
+            col: [1×1 struct]
+
+optionsFile.Task.MouseID
+
+ans =
+
+  0×1 empty <a href="matlab:helpPopup double" style="font-weight:bold">double</a> column vector
+
+clear all
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+setting paths...
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+optionsFile.Task.MouseID
+
+ans =
+
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+   NaN
+
+optionsFile.paths.projDir
+
+ans =
+
+    'C:\Users\c3200098\Desktop\projects\IDMIM'
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+runAnalysis
+starting analysis pipeline...
+initialising options...
+setting paths...
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',76,1)">76  </a>    optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+~exist('optionsFile', 'var')
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+load([optionsFile.paths.projDir,'\optionsFile.mat'])
+{Unable to resolve the name 'optionsFile.paths.projDir'.
+} 
+load(optionsFile.mat)
+{Unable to resolve the name 'optionsFile.mat'.
+} 
+load('optionsFile.mat')
+optionsFile
+
+optionsFile = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+          paths: [1×1 struct]
+           Task: [1×1 struct]
+    simulations: [1×1 struct]
+       DataFile: [1×1 struct]
+            hgf: [1×1 struct]
+            rng: [1×1 struct]
+          model: [1×1 struct]
+           plot: [1×1 struct]
+     modelSpace: [1×1 struct]
+            col: [1×1 struct]
+
+clear all
+parameter_recovery
+setting paths...
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouseNaNHGFFitABA1.mat'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 58)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',58,0)">line 58</a>)
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+} 
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+setting paths...
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouseNaNHGFFit.mat'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 58)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',58,0)">line 58</a>)
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFit.mat']));
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+runAnalysis
+starting analysis pipeline...
+initialising options...
+setting paths...
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',76,1)">76  </a>    optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
+if system_dependent('IsDebugMode')==1, dbcont; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse372HGFFit.mat'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 58)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',58,0)">line 58</a>)
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFit.mat']));
+} 
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load')" style="font-weight:bold">load</a>
+Unable to find file or directory 'C:\Users\c3200098\Desktop\projects\IDMIM\results\mouse372eHGFFitABA1.mat'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 58)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',58,0)">line 58</a>)
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'eHGFFitABA1.mat']));
+} 
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbquit all; end
+runAnalysis
+starting analysis pipeline...
+initialising options...
+setting paths...
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+Mouse: 442is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+Mouse: 452is not saved in the right format for this analysis. ...This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 69)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',69,0)">line 69</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 33)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',33,0)">line 33</a>)] 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',76,1)">76  </a>    optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
+if system_dependent('IsDebugMode')==1, dbcont; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',100,1)">100 </a>end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbcont; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',100,1)">100 </a>    close all;
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+rec.sim
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    agent: [20×1 struct]
+
+optionsFile.simulations.nSamples
+
+ans =
+
+   100
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',112,1)">112 </a>    close all;
+if system_dependent('IsDebugMode')==1, dbcont; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',112,1)">112 </a>    close all;
+if system_dependent('IsDebugMode')==1, dbcont; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',130,1)">130 </a>xAxis = 1:optionsFile.simulations.nSamples;
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+rec.est.data
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+rec.est.data.eHGFFit
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+        y: [180×1 double]
+        u: [180×1 double]
+      ign: []
+      irr: [4 36 37 60 89 115 143]
+    c_prc: [1×1 struct]
+    c_obs: [1×1 struct]
+    c_opt: [1×1 struct]
+    optim: [1×1 struct]
+    p_prc: [1×1 struct]
+    p_obs: [1×1 struct]
+     traj: [1×1 struct]
+
+rec.est(n).data.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+current iteration: n=2, m=1 
+if system_dependent('IsDebugMode')==1, dbcont; end
+current iteration: n=3, m=1 
+rec.est(n).data.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -3.1780    6.1172
+
+if system_dependent('IsDebugMode')==1, dbcont; end
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+rec.est(1).data
+
+ans = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    eHGFFit: [1×1 struct]
+
+rec.est(1).data.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+rec.est(10).data.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -2.5260    4.8227
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbcont; end
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',112,1)">112 </a>    close all;
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+rec.est(n).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p))
+
+ans =
+
+    5.6157
+
+rec.est(n).data.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+rec.est(n).data.eHGFFit.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN    0.3166    5.6157
+
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbcont; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',112,1)">112 </a>    close all;
+for j = 1:optionsFile.Task.nSize
+    PostObsParam = rec.est(j).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
+    figObsParam = plot(PostObsParam,'Marker','o','Color','b');
+    hold on
+end
+rec.est(1).data.eHGFFit.p_obs.ptrans
+
+ans =
+
+    0.3830
+
+rec.est(10).data.eHGFFit.p_obs.ptrans
+
+ans =
+
+   -0.5116
+
+for j = 1:optionsFile.Task.nSize
+    PostObsParam = rec.est(j).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
+    figObsParam = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
+    hold on
+end
+for j = 1:optionsFile.Task.nSize
+    PostObsParam = rec.est(j).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
+    figObsParam = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
+    hold on
+end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+current iteration: n=20, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('corr')" style="font-weight:bold">corr</a>
+X and Y must have the same number of rows.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 84)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',84,0)">line 84</a>)
+    rec.param.prc(m_in).pcc = diag(corr(rec.param.prc(m_in).sim, rec.param.prc(m_in).est));
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',84,0)
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',130,1)">130 </a>xAxis = 1:optionsFile.simulations.nSamples;
+rec.sim.agent(1).data.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -1.7339    0.0426
+
+xAxis = 1:optionsFile.simulations.nSamples;
+
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for n = 1:optionsFile.simulations.nSamples
+        PostPerceptParam = rec.sim.agent(n).data.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+        hold on
+    end
+    figdir = fullfile([char(optionsFile.paths.resultsDir),'SimulationsPerceptualmodelParamplot_param',num2str(p)]);
+    save([figdir,'.fig']);
+    print([figdir,'.png'], '-dpng');
+    close all;
+end
+
+
+%Plot free observational model parameters
+for j = 1:optionsFile.Task.nSize
+    PostObsParam = rec.sim.agent(j).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
+    figObsParam = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
+    hold on
+end
+
+fig2dir = fullfile([char(optionsFile.paths.resultsDir),'\SimulationsObservationalmodelParamplot_param',num2str(p)]);
+save([fig2dir,'.fig']);
+print([fig2dir,'.png'], '-dpng');
+close all;
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',155,1)">155 </a>close all;
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+if system_dependent('IsDebugMode')==1, dbcont; end
+[char(optionsFile.paths.resultsDir),'SimulationsPerceptualmodelParamplot_param',num2str(p)]
+
+ans =
+
+    'C:\Users\c3200098\Desktop\projects\IDMIM\resultsSimulationsPerceptualmodelParamplot_param1'
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+if system_dependent('IsDebugMode')==1, dbcont; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',155,1)">155 </a>close all;
+if system_dependent('IsDebugMode')==1, dbcont; end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('scatter')" style="font-weight:bold">scatter</a>
+X and Y must be vectors of the same length, matrices of the same size, or a combination of a vector and a matrix where the length of the vector matches either the number of rows or columns of
+the matrix.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 166)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',166,0)">line 166</a>)
+        scatter(rec.param.prc(m_in).sim(:,p),rec.param.prc(m_in).est(:,p),'filled');
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',166,0)
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',155,1)">155 </a>close all;
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',155,1)">155 </a>close all;
+rec.sim.agent(1).data.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -1.7339    0.0426
+
+rec.sim.agent(2).data.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -2.3448    1.0980
+
+rec.sim.agent(3).data.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -4.4416    1.7915
+
+rec.sim.agent(4).data.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -2.4517    4.6813
+
+rec.sim.agent(5).data.p_prc.ptrans
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -8.7767    1.0112
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',155,1)">155 </a>close all;
+uiopen('C:\Users\c3200098\Desktop\projects\IDMIM\results\SimulationsObservationalmodelParamplot_param2.fig',1)
+rec.est(1).data.eHGFFit.c_prc.priormus
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -3.0000    2.0000
+
+rec.sim.agent(1).data.eHGFFit.c_prc.priormus
+{Unrecognized field name "eHGFFit".
+} 
+rec.sim.agent(1).data.c_prc.priormus
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -3.0000    2.0000
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+close all force
+clear
+clc
+
+%%
+% Create binary sequences both an ABA and a BAB, all probabilities are in
+% terms of the left lever, right lever = 1 - left lever
+
+randSeed = 100;
+rng(randSeed);
+
+numTrials = 60;
+
+probASection1 = 0.8;
+probASection2 = 0.8;
+
+probsBSection1 = [0.5, 0.65, 0.3, 0.45, 0.75, 0.55, 0.25];
+probsBSection2 = [0.25, 0.55, 0.75, 0.45, 0.3, 0.65, 0.5];
+numTrialsBSection1 = [10, 5, 8, 12, 6, 11, 8]; % These must sum to numTrials
+numTrialsBSection2 = [8, 11, 6, 12, 8, 5, 10]; % These must sum to numTrials
+
+
+stableABASeq1 = rand(numTrials, 1) < probASection1;
+stableABASeq2 = rand(numTrials, 1) < probASection2;
+
+unstableABASeq1 = vertcat(rand(numTrialsBSection1(1), 1) < probsBSection1(1), ...
+                                               rand(numTrialsBSection1(2), 1) < probsBSection1(2), ...
+                                               rand(numTrialsBSection1(3), 1) < probsBSection1(3), ...
+                                               rand(numTrialsBSection1(4), 1) < probsBSection1(4), ...
+                                               rand(numTrialsBSection1(5), 1) < probsBSection1(5), ...
+                                               rand(numTrialsBSection1(6), 1) < probsBSection1(6), ...
+                                               rand(numTrialsBSection1(7), 1) < probsBSection1(7));
+                                           
+unstableABASeq2 = vertcat(rand(numTrialsBSection2(1), 1) < probsBSection2(1), ...
+                                               rand(numTrialsBSection2(2), 1) < probsBSection2(2), ...
+                                               rand(numTrialsBSection2(3), 1) < probsBSection2(3), ...
+                                               rand(numTrialsBSection2(4), 1) < probsBSection2(4), ...
+                                               rand(numTrialsBSection2(5), 1) < probsBSection2(5), ...
+                                               rand(numTrialsBSection2(6), 1) < probsBSection2(6), ...
+                                               rand(numTrialsBSection2(7), 1) < probsBSection2(7));
+
+  
+%%
+% Made each of the sections now paste them together and plot the results
+ 
+seqABALeftLever = vertcat(stableABASeq1, unstableABASeq1, stableABASeq2);
+seqABARightLever = ~seqABALeftLever;
+ 
+probSeqABA = vertcat(zeros(numTrials, 1) + probASection1, ...
+                                      zeros(numTrialsBSection1(1), 1) + probsBSection1(1), ...
+                                      zeros(numTrialsBSection1(2), 1) + probsBSection1(2), ...
+                                      zeros(numTrialsBSection1(3), 1) + probsBSection1(3), ...
+                                      zeros(numTrialsBSection1(4), 1) + probsBSection1(4), ...
+                                      zeros(numTrialsBSection1(5), 1) + probsBSection1(5), ...
+                                      zeros(numTrialsBSection1(6), 1) + probsBSection1(6), ...
+                                      zeros(numTrialsBSection1(7), 1) + probsBSection1(7), ...
+                                      zeros(numTrials, 1) + probASection2);
+                                    
+
+seqBABLeftLever = vertcat(unstableABASeq1, stableABASeq1, unstableABASeq2);
+seqBABRightLever = ~seqBABLeftLever;
+ 
+probSeqBAB = vertcat(zeros(numTrialsBSection1(1), 1) + probsBSection1(1), ...
+                                      zeros(numTrialsBSection1(2), 1) + probsBSection1(2), ...
+                                      zeros(numTrialsBSection1(3), 1) + probsBSection1(3), ...
+                                      zeros(numTrialsBSection1(4), 1) + probsBSection1(4), ...
+                                      zeros(numTrialsBSection1(5), 1) + probsBSection1(5), ...
+                                      zeros(numTrialsBSection1(6), 1) + probsBSection1(6), ...
+                                      zeros(numTrialsBSection1(7), 1) + probsBSection1(7), ...
+                                      zeros(numTrials, 1) + probASection1, ...
+                                      zeros(numTrialsBSection2(1), 1) + probsBSection2(1), ...
+                                      zeros(numTrialsBSection2(2), 1) + probsBSection2(2), ...
+                                      zeros(numTrialsBSection2(3), 1) + probsBSection2(3), ...
+                                      zeros(numTrialsBSection2(4), 1) + probsBSection2(4), ...
+                                      zeros(numTrialsBSection2(5), 1) + probsBSection2(5), ...
+                                      zeros(numTrialsBSection2(6), 1) + probsBSection2(6), ...
+                                      zeros(numTrialsBSection2(7), 1) + probsBSection2(7));
+ 
+%% 
+% Plot the sequences
+figure;
+plot(seqABALeftLever, '.', 'MarkerSize', 25); ylim([-0.1, 1.1]);
+hold on;
+stairs(probSeqABA, '-.', 'Color', 'r', 'LineWidth', 2);
+legend({'Rewarding Lever', 'Pr(Left lever)'});
+title('ABA sequence, Left Lever = 1, Right Lever = 0', 'FontWeight', 'bold', 'FontSize', 12);
+ 
+figure;
+plot(seqBABLeftLever, '.', 'MarkerSize', 25); ylim([-0.1, 1.1]);
+hold on;
+stairs(probSeqBAB, '-.', 'Color', 'r', 'LineWidth', 2);
+legend({'Rewarding Lever', 'Pr(Left lever)'});
+title('BAB sequence, Left Lever = 1, Right Lever = 0', 'FontWeight', 'bold', 'FontSize', 12);
+
+%% Write out the sequences to a .csv file
+
+tempTable = array2table([seqABALeftLever, seqABARightLever]);
+tempTable.Properties.VariableNames = {'ABA Left Lever', 'ABA Right Lever'};
+writetable(tempTable, [pwd, filesep, 'seqABABothLevers.csv']);
+ 
+ tempTable = array2table([seqBABLeftLever, seqBABRightLever]);
+tempTable.Properties.VariableNames = {'BAB Left Lever', 'BAB Right Lever'};
+writetable(tempTable, [pwd, filesep, 'seqBABBothLevers.csv']);
+ 
+ 
+ 
+ 
+gen_trajectory
+
+ans =
+
+  Columns 1 through 19
+
+    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000
+
+  Columns 20 through 38
+
+    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000
+
+  Columns 39 through 57
+
+    0.8000    0.8000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000
+
+  Columns 58 through 76
+
+    0.2000    0.2000    0.2000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000    0.8000
+
+  Columns 77 through 95
+
+    0.8000    0.8000    0.8000    0.8000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000
+
+  Columns 96 through 114
+
+    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000
+
+  Columns 115 through 133
+
+    0.2000    0.2000    0.2000    0.2000    0.2000    0.2000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000
+
+  Columns 134 through 152
+
+    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000
+
+  Columns 153 through 160
+
+    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000    0.6000
+
+gen_trajectory
+[Warning: Directory already exists.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gen_trajectory', 'C:\Users\c3200098\Downloads\gen_trajectory.m', 13)" style="font-weight:bold">gen_trajectory</a> (<a href="matlab: opentoline('C:\Users\c3200098\Downloads\gen_trajectory.m',13,0)">line 13</a>)] 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',155,1)">155 </a>close all;
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',135,76)">File: parameter_recovery.m Line: 135 Column: 76</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',135,76)
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+simFig = plot([rec.est(1).data.eHGFFit.c_prc.priormus], '--')
+
+simFig = 
+
+  <a href="matlab:helpPopup matlab.graphics.chart.primitive.Line" style="font-weight:bold">Line</a> with properties:
+
+              Color: [0 0.4470 0.7410]
+          LineStyle: '--'
+          LineWidth: 0.5000
+             Marker: 'none'
+         MarkerSize: 6
+    MarkerFaceColor: 'none'
+              XData: [1 2 3 4 5 6 7 8 9 10 11 12 13 14]
+              YData: [NaN 0 1 NaN -2.3026 0 NaN 0 0 0 0 NaN -3 2]
+
+  Show <a href="matlab:if exist('simFig', 'var'), matlab.graphics.internal.getForDisplay('simFig', simFig, 'matlab.graphics.chart.primitive.Line'), else, matlab.graphics.internal.getForDisplay('simFig'), end">all properties</a>
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',96,1)">96  </a>        fig = plot(fig, Y, rec.est(k).data.eHGFFit.c_prc.priormus);
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Unrecognized function or variable 'Y'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 96)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',96,0)">line 96</a>)
+        fig = plot(fig, Y, rec.est(k).data.eHGFFit.c_prc.priormus);
+} 
+if system_dependent('IsDebugMode')==1, dbstep; end
+parameter_recovery
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',99,65)">File: parameter_recovery.m Line: 99 Column: 65</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',99,65)
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('matlab.graphics.primitive.Text/set')" style="font-weight:bold">matlab.graphics.primitive.Text/set</a>
+Error setting property 'String' of class '<a href="matlab:doc matlab.graphics.primitive.Text">Text</a>':
+Value must be a character vector, categorical array, string array, numeric array, or cell array of character vectors.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('title', 'C:\Program Files\MATLAB\R2022b\toolbox\matlab\graph2d\title.m', 81)" style="font-weight:bold">title</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2022b\toolbox\matlab\graph2d\title.m',81,0)">line 81</a>)
+   set(h, 'String', titlestr, pvpairs{:});
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parameter_recovery', 'C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m', 96)" style="font-weight:bold">parameter_recovery</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\parameter_recovery.m',96,0)">line 96</a>)
+        title(fig,'TitleHere');
+} 
+if system_dependent('IsDebugMode')==1, dbquit; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for n = 1:length(optionsFile.Task.MouseID)
+        PostPerceptParam = rec.est(n).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for n = 1:length(optionsFile.Task.MouseID)
+        PostPerceptParam = rec.est(n).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+if system_dependent('IsDebugMode')==1, dbquit all; end
+parameter_recovery
+************************************** PARAMETER RECOVERY **************************************
+*
+*
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=1, m=1 
+current iteration: n=2, m=1 
+current iteration: n=3, m=1 
+current iteration: n=4, m=1 
+current iteration: n=5, m=1 
+current iteration: n=6, m=1 
+current iteration: n=7, m=1 
+current iteration: n=8, m=1 
+current iteration: n=9, m=1 
+current iteration: n=10, m=1 
+current iteration: n=11, m=1 
+current iteration: n=12, m=1 
+current iteration: n=13, m=1 
+current iteration: n=14, m=1 
+current iteration: n=15, m=1 
+current iteration: n=16, m=1 
+current iteration: n=17, m=1 
+current iteration: n=18, m=1 
+current iteration: n=19, m=1 
+current iteration: n=20, m=1 
+current iteration: n=21, m=1 
+current iteration: n=22, m=1 
+current iteration: n=23, m=1 
+current iteration: n=24, m=1 
+current iteration: n=25, m=1 
+current iteration: n=26, m=1 
+current iteration: n=27, m=1 
+current iteration: n=28, m=1 
+current iteration: n=29, m=1 
+current iteration: n=30, m=1 
+current iteration: n=31, m=1 
+current iteration: n=32, m=1 
+current iteration: n=33, m=1 
+current iteration: n=34, m=1 
+current iteration: n=35, m=1 
+current iteration: n=36, m=1 
+current iteration: n=37, m=1 
+current iteration: n=38, m=1 
+current iteration: n=39, m=1 
+current iteration: n=40, m=1 
+current iteration: n=41, m=1 
+current iteration: n=42, m=1 
+current iteration: n=43, m=1 
+current iteration: n=44, m=1 
+current iteration: n=45, m=1 
+current iteration: n=46, m=1 
+current iteration: n=47, m=1 
+current iteration: n=48, m=1 
+current iteration: n=49, m=1 
+current iteration: n=50, m=1 
+current iteration: n=51, m=1 
+current iteration: n=52, m=1 
+current iteration: n=53, m=1 
+current iteration: n=54, m=1 
+current iteration: n=55, m=1 
+current iteration: n=56, m=1 
+current iteration: n=57, m=1 
+current iteration: n=58, m=1 
+current iteration: n=59, m=1 
+current iteration: n=60, m=1 
+current iteration: n=61, m=1 
+current iteration: n=62, m=1 
+current iteration: n=63, m=1 
+current iteration: n=64, m=1 
+current iteration: n=65, m=1 
+current iteration: n=66, m=1 
+current iteration: n=67, m=1 
+current iteration: n=68, m=1 
+current iteration: n=69, m=1 
+current iteration: n=70, m=1 
+current iteration: n=71, m=1 
+current iteration: n=72, m=1 
+current iteration: n=73, m=1 
+current iteration: n=74, m=1 
+current iteration: n=75, m=1 
+current iteration: n=76, m=1 
+current iteration: n=77, m=1 
+current iteration: n=78, m=1 
+current iteration: n=79, m=1 
+current iteration: n=80, m=1 
+current iteration: n=81, m=1 
+current iteration: n=82, m=1 
+current iteration: n=83, m=1 
+current iteration: n=84, m=1 
+current iteration: n=85, m=1 
+current iteration: n=86, m=1 
+current iteration: n=87, m=1 
+current iteration: n=88, m=1 
+current iteration: n=89, m=1 
+current iteration: n=90, m=1 
+current iteration: n=91, m=1 
+current iteration: n=92, m=1 
+current iteration: n=93, m=1 
+current iteration: n=94, m=1 
+current iteration: n=95, m=1 
+current iteration: n=96, m=1 
+current iteration: n=97, m=1 
+current iteration: n=98, m=1 
+current iteration: n=99, m=1 
+current iteration: n=100, m=1 
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+rec.est(1).data.eHGFFit.c_prc.priormus
+
+ans =
+
+       NaN         0    1.0000       NaN   -2.3026         0       NaN         0         0         0         0       NaN   -3.0000    2.0000
+

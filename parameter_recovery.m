@@ -29,7 +29,9 @@ function [] = parameter_recovery(optionsFile)
 
 %% INITIALIZE Variables for running this function
 
-if ~exist('optionsFile', 'var')
+try
+    load('optionsFile.mat');
+catch
     optionsFile = runOptions; % specifications for this analysis
 end
 
@@ -39,8 +41,7 @@ disp('*');
 
 
 % in the future this should happen in the getData function
-optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
-optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
+
 
 %% LOAD results from model inversion
 for n = 1:length(optionsFile.Task.MouseID)
@@ -49,70 +50,106 @@ for n = 1:length(optionsFile.Task.MouseID)
 
         fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
         for m_est = 1:size(optionsFile.model.space, 2)
-            % load results from simulated agents' model inversion
-            rec.sim.agent(n,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
-                [optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
 
             % load results from real data model inversion
-            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),optionsFile.fileName.rawFile,'.mat']));
         end
 
         % param values in transformed space (assumption of Gaussian prior)
-        rec.param.prc(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
-        rec.param.obs(m_in).sim(n,:) = rec.sim.agent(n,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
         rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
         rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
     end
 end
 
+% simulated agents
+for i = 1:optionsFile.simulations.nSamples
+    for m_in = 1:size(optionsFile.model.space, 2)
 
-%% CALCULATE Pearson's Correlation Coefficient (pcc)
+        fprintf('current iteration: n=%1.0f, m=%1.0f \n', i,m_in);
+        for m_est = 1:size(optionsFile.model.space, 2)
 
-for m_in = 1:size(optionsFile.model.space, 2)
-    rec.param.prc(m_in).pcc = diag(corr(rec.param.prc(m_in).sim, rec.param.prc(m_in).est));
-    rec.param.obs(m_in).pcc = diag(corr(rec.param.obs(m_in).sim, rec.param.obs(m_in).est));
+            % load results from simulated agents' model inversion
+            rec.sim.agent(i,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                [optionsFile.Task.task,'simulation_agent', num2str(i),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+        end
+    end
+
+    rec.param.prc(m_in).sim(i,:) = rec.sim.agent(i,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+    rec.param.obs(m_in).sim(i,:) = rec.sim.agent(i,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
 end
 
+%% CALCULATE Pearson's Correlation Coefficient (pcc)
+% 
+% for m_in = 1:size(optionsFile.model.space, 2)
+%     rec.param.prc(m_in).pcc = diag(corr(rec.param.prc(m_in).sim, rec.param.prc(m_in).est));
+%     rec.param.obs(m_in).pcc = diag(corr(rec.param.obs(m_in).sim, rec.param.obs(m_in).est));
+% end
+
 %% Plot est mice (X axis are mice/sim) Yaxis=values;
-% "scattterplot" (try "plot") with seperate plots for sim mice and real mice in different
-% colours (should I circle outliers?)
-% loop through realMousefiles in folder to load HGFFit data
-% add data to plot with hold on
-
-% Create table to store free params
-pTransTableVarTypes = {'string','double','double','double'};
-pTransTableVarNames = {'mouseIDs','PerceptParam1', 'PerceptParam2', 'ObservParam1'};
-pTransTable = table('Size', [optionsFile.Task.nSize 4], 'VariableTypes', pTransTableVarTypes,'VariableNames',pTransTableVarNames);
-
-
 %Plot free perceptual model parameters
 xAxis = 1:length(optionsFile.Task.MouseID);
+
 for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
-    for k = 1:length(optionsFile.Task.MouseID)
-        PostPerceptParam = rec.est(k).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
-        fig = plot(xAxis(k),PostPerceptParam,'Marker', 'o','Color','b');
+    for n = 1:length(optionsFile.Task.MouseID)
+        PostPerceptParam = rec.est(n).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+        hold on
+        fig = plot(xAxis(n),rec.est(n).data.eHGFFit.c_prc.priormus,'Marker', 'o','Color','r');
+        hold on
+        %line using this values rec.est(k).data.eHGFFit.c_prc.priormus
         hold on
     end
-    figdir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_PerceptualmodelParamplot_param',num2str(p)]);
+    figdir = fullfile([char(optionsFile.paths.plotsDir),'\RealMicePercModelFreeParam',num2str(p)]);
     save([figdir,'.fig']);
     print([figdir,'.png'], '-dpng');
+    close all;
 end
 
 
 %Plot free observational model parameters
 for j = 1:optionsFile.Task.nSize
     PostObsParam = rec.est(j).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
-    figObsParam = plot(PostObsParam,'Marker','o');
+    figObsParam = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
     hold on
 end
 
-fig2dir = fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_ObservationalmodelParamplot']);
+fig2dir = fullfile([char(optionsFile.paths.plotsDir),'\RealMiceObsModelFreeParam',num2str(p)]);
 save([fig2dir,'.fig']);
 print([fig2dir,'.png'], '-dpng');
-
+close all;
 
 %% Plot simAgent's Perceptual & Observational Free Parameter values
+%Plot free perceptual model parameters
+xAxis = 1:optionsFile.simulations.nSamples;
 
+for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
+    for n = 1:optionsFile.simulations.nSamples
+        PostPerceptParam = rec.sim.agent(n).data.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        simFig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+        hold on
+        simFig = plot(xAxis(n),rec.est(1).data.eHGFFit.c_prc.priormus, 'Marker', '.', 'Color', 'r')
+        
+    end
+    %simFig = plot([rec.est(1).data.eHGFFit.c_prc.priormus], '--')
+    fig3dir = fullfile([char(optionsFile.paths.plotsDir),'\simAgentsPercModelFreeParam',num2str(p)]);
+    
+    save([fig3dir,'.fig']);
+    print([fig3dir,'.png'], '-dpng');
+    close all;
+end
+
+
+%Plot free observational model parameters
+for j = 1:optionsFile.simulations.nSamples;
+    PostObsParam = rec.sim.agent(j).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
+    simFigObsParam = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
+    hold on
+end
+
+fig4dir = fullfile([char(optionsFile.paths.plotsDir),'\simAgentsObsModelFreeParam',num2str(p)]);
+save([fig4dir,'.fig']);
+print([fig4dir,'.png'], '-dpng');
+close all;
 
 
 %% PLOT correlation plot

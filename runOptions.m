@@ -29,13 +29,13 @@ optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
 optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
 optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\results';
 optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\plots';
-optionsFile.paths.rawDataDir      = ('C:\Users\c3200098\Desktop\data\ABA2_R\');
+optionsFile.paths.rawDataDir      = 'C:\Users\c3200098\Desktop\data\ABA2_R\'; 
 optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
 
 % task names
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
 optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx'; % TO DO: make this more streamlined 
-optionsFile.Task.task    = 'ABA1_L';   %Recode to ABA2_R
+optionsFile.Task.task     = 'ABA1_L';   %Recode to ABA2_R
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 22;
 optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
@@ -55,7 +55,7 @@ optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA2
 optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA2
 optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
 
-
+optionsFile.fileName.rawFile = 'HGFFitABA1';
 
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.toolbox));
@@ -257,8 +257,6 @@ optionsFile.modelSpace = modelSpace;
     end % function priorPrep
 % --------------------------------------------------------------------------------------------------
 
-
-
 %% colors for plotting
 % define colors
 optionsFile.col.wh   = [1 1 1];
@@ -266,7 +264,5 @@ optionsFile.col.gry  = [0.5 0.5 0.5];
 optionsFile.col.tnub = [0 110 182]/255;
 optionsFile.col.tnuy = [255 166 22]/255;
 optionsFile.col.grn  = [0 0.6 0];
-
-
 
 end

@@ -72,11 +72,8 @@ for i = 1:optionsFile.Task.nSize
         disp(['Mouse: ', char(currMouse), 'is not saved in the right format for this analysis. ...' ...
             'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
     end
-
-    %%FUTURE CODE: WE need to delete the invalid mice from
-    %%optionsFile.Task.mouseID HERE and also delete them from the tables if
-    %%they are in it.
-    % plus adjust optionsFile.Task.nSize
 end
+    optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
+   optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
 
 end

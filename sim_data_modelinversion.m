@@ -55,8 +55,8 @@ for n = 1:optionsFile.simulations.nSamples
 
 
             %% SAVE model fit as struct
-            save_path = fullfile(optionsFile.simulations.simResultsDir, ...
-                [optionsFile.Task.task1,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
+            modelinvsave_path = fullfile(optionsFile.simulations.simResultsDir, ...
+                [optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
             save(save_path, '-struct', 'est');
         end
     end    
