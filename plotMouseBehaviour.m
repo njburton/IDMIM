@@ -1,8 +1,11 @@
 function plotMouseBehaviour
 
 % read data in - task tables
-
-optionsFile = runOptions;
+try
+    load('optionsFile.mat');
+catch
+    optionsFile = runOptions; % specifications for this analysis
+end
 
 for n = 1:optionsFile.Task.nSize
 

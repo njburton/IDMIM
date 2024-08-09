@@ -14,11 +14,6 @@ function runAnalysis
 % =========================================================================
 
 %% STARTUP
-try
-    load('optionsFile.mat',optionsFile);
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
 
 % some of these may be unnecessary, if you are running the function as a whole
 close all % Close any open  windows like fig windows

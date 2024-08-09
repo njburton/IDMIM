@@ -28,7 +28,7 @@ function [] = setup_simulations
 %% INITIALIZE Variables for running this function
 % specifications for this analysis
 try
-    load('optionsFile.mat',optionsFile);
+    load('optionsFile.mat');
 catch
     optionsFile = runOptions; % specifications for this analysis
 end
@@ -44,11 +44,9 @@ disp('*');
 %Save input seq as variable in workspace so that I can subsititute it in
 %the code when running this funcition
 
-
-
 inputs = readtable('C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories\genTraj_NJB_BinarySeq.csv','NumHeaderLines',1);
 inputs = rows2vars(inputs);
-inputs = inputs(:,2)
+inputs = inputs(:,2);
 
 
 %% GENERATE synthetic agents using default priors from toolbox
