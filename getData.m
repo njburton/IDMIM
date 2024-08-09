@@ -18,24 +18,29 @@ function optionsFile = getData(optionsFile)
 %
 % _________________________________________________________________________
 % =========================================================================
+try
+    load('optionsFile.mat',optionsFile);
+catch
+    optionsFile = runOptions; % specifications for this analysis
+end
 
 %% DATA EXTRACTION & PREPARATION
 % Extract data from MED-PC output file (.xlsx) and save as matlab file.
 % Create empty table for individual mouse with variable names as columns
 TaskTableVarTypes = {'string','double','double','double','double','double','double','double'};
 TaskTableVarNames = {'TrialCode','RewardingLeverSide','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
-ExperimentTaskTable = table('Size',[optionsFile.Task.nTrials 8],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
+ExperimentTaskTable = table('Size',[180 length(TaskTableVarNames)],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
 
 % For loop which creates individual mouse tables from rawTaskData file
 % (where each column is a mouse)
-files = dir(fullfile(optionsFile.paths.rawDataDir,'*Subject *.txt'));
+files = dir(fullfile(optionsFile.paths.rawMouseDataDir,'*Subject *.txt'));
 
 for i = 1:optionsFile.Task.nSize
     fileName  = string(files(i).name);
     currMouse = extract(fileName ," "+digitsPattern(3)+"."); %find three digits between space and .
     currMouse = erase(currMouse{end}," ");
     currMouse = erase(currMouse,".");
-    data      = readcell(fullfile(optionsFile.paths.rawDataDir, fileName));
+    data      = readcell(fullfile(optionsFile.paths.rawMouseDataDir, fileName));
     [~,cols]  = size(cell2mat(data(50,2)));
 
     if cols<10 % if yes, based on old version of saving data with the
@@ -47,18 +52,19 @@ for i = 1:optionsFile.Task.nSize
         lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+2;
 
         % save arrays into table
-        ExperimentTaskTable.TrialCode      = nan(optionsFile.Task.nTrials,1); % ?? why are they NaNs
+        %ExperimentTaskTable.TrialCode      = optionsFile.Task.nTrials,1;
+        %%Can code this later for co-ordinating multiple tasks for analysis
         ExperimentTaskTable.Choice         = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));   %Choice_ABA1
         ExperimentTaskTable.Outcome        = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2)); %Outcome_ABA1
         ExperimentTaskTable.LeverPressTime = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2)); %LeverPressTime_ABA1
         ExperimentTaskTable.TrialStartTime = (0:20:3580)'; %TrialStartTime list every 20seconds
         ExperimentTaskTable.ResponseTime   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
-        optionsFile.Task.MouseID(i,:) = string(currMouse);
+        optionsFile.Task.MouseID(i,:) = string(currMouse); 
 
         %% Load binary sequence for rewardlever side so we can use as input
         % for analysis using hgf.
         % Binary sequence for RewardingLeverSide (1=leftlever, 0=rightlever)
-        seqBinary = readcell([optionsFile.paths.projDir,'\', optionsFile.Task.BinarySeq],'Range','A1:A180');
+        seqBinary = readcell([optionsFile.paths.utilsDir,'\', optionsFile.Task.BinarySeq],'Range','A1:A180');
         ExperimentTaskTable.RewardingLeverSide = cell2mat(seqBinary); % Binary sequence for rewarding lever side (1=left, 0=right)
 
         %Data correction
@@ -73,7 +79,7 @@ for i = 1:optionsFile.Task.nSize
             'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
     end
 end
-    optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
-   optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
+optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
+optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
 
 end

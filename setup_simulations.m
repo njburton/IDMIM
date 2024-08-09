@@ -34,10 +34,22 @@ catch
 end
 
 
-addpath(genpath(optionsFile.paths.toolbox));
+addpath(genpath(optionsFile.paths.HGFtoolboxDir));
 disp('************************************** SETUP_SIMULATIONS **************************************');
 disp('*');
 disp('*');
+
+
+%% Add in input sequence that has been generated
+%Save input seq as variable in workspace so that I can subsititute it in
+%the code when running this funcition
+
+
+
+inputs = readtable('C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories\genTraj_NJB_BinarySeq.csv','NumHeaderLines',1);
+inputs = rows2vars(inputs);
+inputs = inputs(:,2)
+
 
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
@@ -73,7 +85,7 @@ for m = 1:numel(optionsFile.model.space)
 
         while stable == 0
             try %tapas_simModel(inputs, prc_model, prc_pvec, varargin)
-                sim_est = tapas_simModel(optionsFile.Task.seqABALeftLever,...
+                sim_est = tapas_simModel(inputs,... %optionsFile.Task.seqABALeftLever,...
                     optionsFile.modelSpace(m).prc,...
                     input.prc.nativeInp,...
                     optionsFile.modelSpace(m).obs,...
@@ -81,7 +93,7 @@ for m = 1:numel(optionsFile.model.space)
                     optionsFile.rng.settings.State(optionsFile.rng.idx, 1));
                 stable = 1;
 
-                
+
             catch
                 fprintf('simulation failed for synth. agent %1.0f \n',n);
             end

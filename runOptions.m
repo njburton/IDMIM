@@ -26,13 +26,17 @@ optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
 optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
 optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\results';
 optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\plots';
-optionsFile.paths.rawDataDir      = 'C:\Users\c3200098\Desktop\data\ABA2_R\'; 
-optionsFile.paths.toolbox         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
+optionsFile.paths.rawMouseDataDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\rawMouseData\'; 
+optionsFile.paths.HGFtoolboxDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
+optionsFile.paths.utilsDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\utils';
+optionsFile.paths.genTrajDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories';
 
 % task names
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
-optionsFile.Task.FileName = 'testResults2_ABA2_R_corrrectedVariables.xlsx'; % TO DO: make this more streamlined 
-optionsFile.Task.task     = 'ABA1_L';   %Recode to ABA2_R
+%optionsFile.Task.FileName =
+%'GETOPERANTOutput_UCMS2Cohort2024TestResults.xlsx'; % 8/8/24 Commented out
+%as no longer use GETOPERANT python script to extract raw data. NB
+optionsFile.Task.task     = 'ABA';
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 22;
 optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
@@ -40,7 +44,7 @@ optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv'; % TO DO: make this more
 
 % simulation options
 optionsFile.simulations.nSamples      = 100;
-optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\sdata\imResults';
+optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\simResults';
 
 if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
@@ -52,10 +56,10 @@ optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA2
 optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA2
 optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
 
-optionsFile.fileName.rawFile = 'HGFFitABA1';
+optionsFile.fileName.rawFitFile = 'eHGFFit'; %Need to change to 'eHGFFit'
 
 %% optimization algorithm
-addpath(genpath(optionsFile.paths.toolbox));
+addpath(genpath(optionsFile.paths.HGFtoolboxDir));
 
 optionsFile.hgf.opt_config           = eval('tapas_quasinewton_optim_config');
 optionsFile.hgf.opt_config.nRandInit = 100; %%

@@ -42,12 +42,13 @@ for n = 1:optionsFile.Task.nSize
 
             %Plot standard HGF trajectory plot
             tapas_hgf_plotTraj_mod(eHGFFit);
-            figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'HGFFit']);
+            figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'_HGFFit']);
             save([figdir,'.fig']);
             print([figdir,'.png'], '-dpng');
+            close all;
                       
             %Save model fit
-            save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFit.mat'],'eHGFFitTrajPlot'); % TO DO: Softcode the filename extension
+            save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse), optionsFile.fileName.rawFitFile],'eHGFFit'); % TO DO: Softcode the filename extension
             
                         %Create table and save HGF LME
 %             LMEdiffVarTypes = {'string','double','double'};
@@ -77,10 +78,10 @@ for n = 1:optionsFile.Task.nSize
 
             %Plot standard RW trajectory plot
             tapas_rw_binary_plotTraj(RWFit);
-            figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'RWFit']);
+            figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'_RWFit']);
             save([figdir,'.fig']);
             print([figdir,'.png'], '-dpng');
-            
+            close all;
             %Save RW LME
 
             %Save model fit

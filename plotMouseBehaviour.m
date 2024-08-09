@@ -39,7 +39,7 @@ title('omissions over task timeline');
 %Tile 4 - responseTimes over Trial stemplot
 ax4 = nexttile([1 3]);
 responseTimes = ExperimentTaskTable.ResponseTime;
-responseTimes(responseTimes(:,1) < 0.0) = 0.0;
+responseTimes(responseTimes(:,1) < 0.0) = 0.0; %Change any negative values to 0.0
 stem(responseTimes,'filled');
 %ylim([0.0 15]);
 title('ResponseTimes (TrialStartTime - LeverPressTime');
