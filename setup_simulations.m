@@ -51,7 +51,7 @@ inputs = inputs(:,2);
 
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
-input      = struct();
+inputs      = struct();
 
 for m = 1:numel(optionsFile.model.space)
 
