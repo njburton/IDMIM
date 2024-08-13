@@ -14,42 +14,131 @@ savepath = ['C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories',date
 %savepath = [pwd,'/simulations_',date];
 mkdir(savepath)
 
-% setup phases
+% setup phases 1_ABABA
+% pPhase1  = 0.8; %A1  probability of "1" in curr phase
+% lPhase1  = 50;  %A1 n trials of curr phase
+% pPhase2  = 0.3; %B1
+% lPhase2  = 15; %B1
+% pPhase3  = 0.55; %B2
+% lPhase3  = 20;%B2
+% pPhase4  = 0.45; %B3
+% lPhase4  = 15; %B3
+% pPhase5  = 0.20; %A2
+% lPhase5  = 50; %A2
+% pPhase6  = 0.6; %B4
+% lPhase6  = 15; %B4
+% pPhase7  = 0.3; %B5
+% lPhase7  = 20; %B5
+% pPhase8  = 0.5; %B6
+% lPhase8  = 16; %B6
+% pPhase9  = 0.8; %A3
+% lPhase9  = 50; %A3
+% pPhase10 = 0.4; %B7 
+% lPhase10 = 15; %B7
+% pPhase11  = 0.60; %B8
+% lPhase11  = 16; %B8
+% pPhase12  = 0.3; %B9
+% lPhase12  = 15; %B9
+% pPhase13  = .20; %A4
+% lPhase13  = 50; %A4
+% pPhase14  = 0.55; %B10
+% lPhase14  = 15; %B10
+% pPhase15  = 0.3; %B11
+% lPhase15  = 20; %B11
+% pPhase16 = 0.5; %B12
+% lPhase16 = 15; %B12
+% pPhase17  = 0.8; %A5
+% lPhase17  = 50; %A5
 
+% 
+% % setup phases 2_ABABA with 2 intraBphases
+% pPhase1  = 0.8; %A1  probability of "1" in curr phase
+% lPhase1  = 40;  %A1 n trials of curr phase
+% pPhase2  = 0.3; %B1
+% lPhase2  = 20; %B1
+% pPhase3  = 0.5; %B2
+% lPhase3  = 20;%B2
+% pPhase4  = 0.2; %A2
+% lPhase4  = 40; %A2
+% pPhase5  = 0.6; %B3
+% lPhase5  = 20; %B3
+% pPhase6  = 0.3; %B4
+% lPhase6  = 20; %B4
+% pPhase7  = 0.8; %A3
+% lPhase7  = 40; %A3
+% pPhase8  = 0.3; %B5
+% lPhase8  = 20; %B5
+% pPhase9  = 0.5; %B6
+% lPhase9  = 20; %B6
+% pPhase10 = 0.2; %A4 
+% lPhase10 = 40; %A4
+% pPhase11  = 0.5; %B7
+% lPhase11  = 20; %B7
+% pPhase12  = 0.3; %B8
+% lPhase12  = 20; %B8
+% pPhase13  = .8; %A5
+% lPhase13  = 40; %A5
+
+
+% 
+% % setup phases 6_ABABA Aphases are 40trials long
 pPhase1  = 0.8; %A1  probability of "1" in curr phase
-lPhase1  = 50;  %A1 n trials of curr phase
+lPhase1  = 40;  %A1 n trials of curr phase
 pPhase2  = 0.3; %B1
-lPhase2  = 15; %B1
-pPhase3  = 0.55; %B2
+lPhase2  = 20; %B1
+pPhase3  = 0.7; %B2
 lPhase3  = 20;%B2
-pPhase4  = 0.45; %B3
-lPhase4  = 15; %B3
-pPhase5  = 0.20; %A2
-lPhase5  = 50; %A2
-pPhase6  = 0.6; %B4
-lPhase6  = 15; %B4
-pPhase7  = 0.3; %B5
-lPhase7  = 20; %B5
-pPhase8  = 0.5; %B6
-lPhase8  = 16; %B6
-pPhase9  = 0.8; %A3
-lPhase9  = 50; %A3
-pPhase10 = 0.4; %B7 
-lPhase10 = 15; %B7
-pPhase11  = 0.60; %B8
-lPhase11  = 16; %B8
-pPhase12  = 0.3; %B9
-lPhase12  = 15; %B9
-pPhase13  = .20; %A4
-lPhase13  = 50; %A4
-pPhase14  = 0.55; %B10
-lPhase14  = 15; %B10
-pPhase15  = 0.3; %B11
-lPhase15  = 20; %B11
-pPhase16 = 0.5; %B12
-lPhase16 = 15; %B12
-pPhase17  = 0.8; %A5
-lPhase17  = 50; %A5
+pPhase4  = 0.3; %A2
+lPhase4  = 40; %A2
+pPhase5  = 0.7; %B3
+lPhase5  = 20; %B3
+pPhase6  = 0.3; %B4
+lPhase6  = 20; %B4
+pPhase7  = 0.8; %A3
+lPhase7  = 40; %A3
+pPhase8  = 0.3; %B5
+lPhase8  = 20; %B5
+pPhase9  = 0.7; %B6
+lPhase9  = 20; %B6
+pPhase10 = 0.2; %A4 
+lPhase10 = 40; %A4
+pPhase11  = 0.7; %B7
+lPhase11  = 20; %B7
+pPhase12  = 0.3; %B8
+lPhase12  = 25; %B8
+pPhase13  = 0.8; %A5
+lPhase13  = 40; %A5
+
+
+% setup phases 7_BABA Aphases are 40trials long
+% pPhase1  = 0.3; %B1
+% lPhase1  = 20; %B1
+% pPhase2  = 0.7; %B2
+% lPhase2  = 20;%B2
+% pPhase3  = 0.2; %A2
+% lPhase3  = 40; %A2
+% pPhase4  = 0.7; %B3
+% lPhase4  = 20; %B3
+% pPhase5  = 0.3; %B4
+% lPhase5  = 20; %B4
+% pPhase6  = 0.8; %A3
+% lPhase6  = 40; %A3
+% pPhase7  = 0.3; %B5
+% lPhase7  = 20; %B5
+% pPhase8  = 0.7; %B6
+% lPhase8  = 20; %B6
+% pPhase9 = 0.2; %A4 
+% lPhase9 = 40; %A4
+% pPhase10  = 0.7; %B7
+% lPhase10  = 20; %B7
+% pPhase11  = 0.3; %B8
+% lPhase11  = 25; %B8
+% pPhase12  = 0.8; %A5
+% lPhase12  = 40; %A5
+% pPhase13  = 0.3; %B9
+% lPhase13  = 20; %B9
+% pPhase14  = 0.7; %B10
+% lPhase14  = 20;%B10
 
 % outcomes
 phase1  = ones(1,lPhase1);
@@ -92,41 +181,42 @@ phase10  = ones(1,lPhase10);
 iIncIdx = randperm(lPhase10,floor((1-pPhase10)*lPhase10));
 phase10(1,iIncIdx) = 0;
 
-phase11  = ones(1,lPhase4);
+phase11  = ones(1,lPhase11);
 iIncIdx = randperm(lPhase11,floor((1-pPhase11)*lPhase11));
 phase11(1,iIncIdx) = 0;
 
-phase12  = ones(1,lPhase5);
+phase12  = ones(1,lPhase12);
 iIncIdx = randperm(lPhase12,floor((1-pPhase12)*lPhase12));
 phase12(1,iIncIdx) = 0;
 
-phase13  = ones(1,lPhase6);
+phase13  = ones(1,lPhase13);
 iIncIdx = randperm(lPhase13,floor((1-pPhase13)*lPhase13));
 phase13(1,iIncIdx) = 0;
 
-phase14  = ones(1,lPhase14);
-iIncIdx = randperm(lPhase14,floor((1-pPhase14)*lPhase14));
-phase14(1,iIncIdx) = 0;
+% phase14  = ones(1,lPhase14);
+% iIncIdx = randperm(lPhase14,floor((1-pPhase14)*lPhase14));
+% phase14(1,iIncIdx) = 0;
+% 
+% phase15  = ones(1,lPhase15);
+% iIncIdx = randperm(lPhase15,floor((1-pPhase15)*lPhase15));
+% phase15(1,iIncIdx) = 0;
+% 
+% phase16  = ones(1,lPhase16);
+% iIncIdx = randperm(lPhase16,floor((1-pPhase16)*lPhase16));
+% phase16(1,iIncIdx) = 0;
+% 
+% phase17  = ones(1,lPhase17);
+% iIncIdx = randperm(lPhase17,floor((1-pPhase17)*lPhase17));
+% phase17(1,iIncIdx) = 0;
 
-phase15  = ones(1,lPhase15);
-iIncIdx = randperm(lPhase15,floor((1-pPhase15)*lPhase15));
-phase15(1,iIncIdx) = 0;
-
-phase16  = ones(1,lPhase16);
-iIncIdx = randperm(lPhase16,floor((1-pPhase16)*lPhase16));
-phase16(1,iIncIdx) = 0;
-
-phase17  = ones(1,lPhase17);
-iIncIdx = randperm(lPhase17,floor((1-pPhase17)*lPhase17));
-phase17(1,iIncIdx) = 0;
 % create input trajectory
-u = [phase1,phase2,phase3,phase4,phase5,phase6,phase7,phase8,phase9,phase10,phase11,phase12,phase13,phase14,phase15,phase16,phase17];
+u = [phase1,phase2,phase3,phase4,phase5,phase6,phase7,phase8,phase9,phase10,phase11,phase12,phase13]; %,phase14,phase15,phase16,phase17];
 
 % underlying probability structure
 probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2),pPhase3*ones(1,lPhase3),pPhase4*ones(1,lPhase4),pPhase5*ones(1,lPhase5),...
-    pPhase6*ones(1,lPhase6),pPhase7*ones(1,lPhase7),pPhase8*ones(1,lPhase8),pPhase9*ones(1,lPhase9),pPhase10*ones(1,lPhase10),...
-    pPhase11*ones(1,lPhase11),pPhase12*ones(1,lPhase12),pPhase13*ones(1,lPhase13),pPhase14*ones(1,lPhase14),pPhase15*ones(1,lPhase15),...
-    pPhase16*ones(1,lPhase16),pPhase17*ones(1,lPhase17)];
+     pPhase6*ones(1,lPhase6),pPhase7*ones(1,lPhase7),pPhase8*ones(1,lPhase8),pPhase9*ones(1,lPhase9),pPhase10*ones(1,lPhase10),...
+     pPhase11*ones(1,lPhase11),pPhase12*ones(1,lPhase12),pPhase13*ones(1,lPhase13)]; %,pPhase14*ones(1,lPhase14)]; %,pPhase15*ones(1,lPhase15),...
+%     pPhase16*ones(1,lPhase16),pPhase17*ones(1,lPhase17)];
 
 
 %% PLOTTING
@@ -136,12 +226,10 @@ hold on;
 stairs(probStr, '-.', 'Color', 'r', 'LineWidth', 2);
 legend({'RewardingLeverSide', 'Prob(Reward)'});
 title('ABABA sequence', 'FontWeight', 'bold', 'FontSize', 12);
+save(pwd,'fig', 'BinarySequenceTrajectoryPlot.fig')
  
 tempTable = array2table([u]);
 writetable(tempTable, [pwd,filesep, 'genTraj_NJB_BinarySeq.csv'])
 
-% save([savepath,'/inputs.mat'],'u');
-% save([savepath,'/probStr.mat'],'probStr');
-% save([savepath,'/traj.fig'],'fig');
 
 end

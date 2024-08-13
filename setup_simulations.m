@@ -45,13 +45,13 @@ disp('*');
 %the code when running this funcition
 % inputs = readmatrix([pwd,'/generateTrajectories/genTraj_NJB_BinarySeq.csv']);
 inputs = readmatrix('C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories\genTraj_NJB_BinarySeq.csv');
-% inputs = rows2vars(inputs);
+inputs = inputs'
 % inputs = inputs(:,2);
 
 
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
-inputs      = struct();
+input      = struct();
 
 for m = 1:numel(optionsFile.model.space)
 

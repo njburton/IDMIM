@@ -32,7 +32,7 @@ optionsFile = runOptions;
 
 %% Get,Organize, and save data into tables
 optionsFile = getData(optionsFile);
-save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")
+save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")  %%Breakpoint here to troubleshoot
 
 %% Simulate synthetic agends
 % create agents that act like a specific model woul expect them to act and
