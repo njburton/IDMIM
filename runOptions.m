@@ -26,16 +26,15 @@ optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
 optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
 optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\results';
 optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\plots';
-optionsFile.paths.rawMouseDataDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\rawMouseData\'; 
+optionsFile.paths.rawMouseDataDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\rawMouseData'; 
 optionsFile.paths.HGFtoolboxDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
 optionsFile.paths.utilsDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\utils';
 optionsFile.paths.genTrajDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories';
 
+
+
 % task names
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
-%optionsFile.Task.FileName =
-%'GETOPERANTOutput_UCMS2Cohort2024TestResults.xlsx'; % 8/8/24 Commented out
-%as no longer use GETOPERANT python script to extract raw data. NB
 optionsFile.Task.task     = 'ABA';
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 22;
@@ -51,12 +50,15 @@ if ~exist(optionsFile.simulations.simResultsDir,'dir')
 end
 
 %% Markers used to identify arrays of interest from raw Med-PC data (.txt file).
-optionsFile.DataFile.ChoiceMarker   = 'H:'; %Choice_ABA2
-optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome_ABA2
-optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime_ABA2
-optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime_ABA2
+% optionsFile.DataFile.TrialCodeMarker   = 'MSN: ICNB_';
+% optionsFile.DataFile.TaskDateMarker   = 'Start Date: ';
+optionsFile.DataFile.RLSMarker   = 'F:'; %RewardingLeverSide for HGF_RL task
+optionsFile.DataFile.ChoiceMarker   = 'H:'; %Choice
+optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome
+optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime
+optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime
 
-optionsFile.fileName.rawFitFile = 'eHGFFit'; %Need to change to 'eHGFFit'
+optionsFile.fileName.rawFitFile = 'eHGFFit'; 
 
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));

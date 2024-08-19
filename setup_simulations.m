@@ -43,10 +43,10 @@ disp('*');
 %% Add in input sequence that has been generated
 %Save input seq as variable in workspace so that I can subsititute it in
 %the code when running this funcition
-% inputs = readmatrix([pwd,'/generateTrajectories/genTraj_NJB_BinarySeq.csv']);
+
 inputs = readmatrix('C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories\genTraj_NJB_BinarySeq.csv');
 inputs = inputs'
-% inputs = inputs(:,2);
+
 
 
 %% GENERATE synthetic agents using default priors from toolbox
