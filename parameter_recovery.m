@@ -42,19 +42,19 @@ disp('*');
 %% LOAD results from model inversion
 for n = 1:length(optionsFile.Task.MouseID)
     currMouse = optionsFile.Task.MouseID(n);
-    for m_in = 1:size(optionsFile.model.space, 2)
-
+    for m_in = 1:size(optionsFile.model.space, 2) %For each model in our model space (",2" meaning by the 2nd dimension? 
+                                                                        %but found only have 1 index in that vector, "RW_binary 
         fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
         for m_est = 1:size(optionsFile.model.space, 2)
 
             % load results from real data model inversion
             %             rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),optionsFile.fileName.rawFitFile,'.mat']));
-            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'RWFit.mat']));
         end
 
         % param values in transformed space (assumption of Gaussian prior)
-        rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
-        rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.eHGFFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.RWFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+        rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.RWFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
     end
 end
 

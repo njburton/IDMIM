@@ -32,52 +32,32 @@ optionsFile = runOptions;
 
 %% Get,Organize, and save data into tables
 optionsFile = getData(optionsFile);
-save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")  %%Breakpoint here to troubleshoot
+save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")  %Breakpoint here to troubleshoot
 
 %% Simulate synthetic agends
-% create agents that act like a specific model woul expect them to act and
-% then fit models
-% setup_simulations;
-% sim_data_modelinversion;
+% create agents that act like a specific model would expect them to act and then fit models
+addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+disp('setting up simulations...');
+%setup_simulations;
+%disp('performing model inversion on simulated agents...');
+%sim_data_modelinversion;
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
-
-%addpath(genpath(optionsFile.paths.HGFDir));
-% disp('preparing to fit model to task data...');
-% 
-% fitModels(optionsFile);
-
-
-%% Categorise mice into ExperimentalGroups
-ExperimentalGroups = zeros(optionsFile.Task.nSize,2);
-ExperimentalGroups(:,1) = optionsFile.Task.MouseID(:,1)
-
-ExperimentGroupVarTypes = {'string','double'};
-ExperimentGroupVarNames = {'MouseID','ExperimentGroup'};
-ExperimentGroupTable = table('Size',[optionsFile.Task.nSize 2],'VariableTypes', ExperimentGroupVarTypes,'VariableNames',TaskTableVarNames);
-
-ExperimentGroupTable.MouseID = optionsFile.Task.MouseID(:,1)
-
-% for i = 1:optionsFile.Task.nSize
-% 
-%     CurrentMouseID = ExperimentalGroups(1,1);
-%     CurrentMouseID = string(CurrentMouseID);
-%     EndsWithCheck = endsWith("CurrentMouseID"),"2")
-%     if EndsWithCheck == 1
-%         ExperimentGroups(i,2) = 2
-%     else
-%         ExperimentGroups(i,2) = 1
-% end
-
+disp('preparing to fit model to task data...');
+fitModels(optionsFile);
 
 %% Plot parameter recovery and data plots
+disp('preparing for parameter recovery to task data...');
 parameter_recovery(optionsFile);
 
+%% PlotByTreatmentGroup
+disp('preparing to plot mice by their treatment groups...');
+plotByTreatmentGroup(optionsFile);
 
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
-
+%disp('preparing for Bayesian Model Comparison and model identifiability...');
 
 % % % % for matFile = file List;
 % % % %     load(file)

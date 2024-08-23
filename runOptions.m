@@ -37,7 +37,7 @@ optionsFile.paths.genTrajDir           = 'C:\Users\c3200098\Desktop\projects\IDM
 optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
 optionsFile.Task.task     = 'ABA';
 optionsFile.Task.nTrials  = 180;
-optionsFile.Task.nSize    = 22;
+optionsFile.Task.nSize    = 10; %Need to change to indicate how many MedPCRawOperantData files you want to anaylse
 optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
 optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv'; % TO DO: make this more streamlined for when more than one task
 
@@ -52,11 +52,12 @@ end
 %% Markers used to identify arrays of interest from raw Med-PC data (.txt file).
 % optionsFile.DataFile.TrialCodeMarker   = 'MSN: ICNB_';
 % optionsFile.DataFile.TaskDateMarker   = 'Start Date: ';
-optionsFile.DataFile.RLSMarker   = 'F:'; %RewardingLeverSide for HGF_RL task
+% optionsFile.DataFile.RLSMarker   = 'F:'; %RewardingLeverSide for HGF_RL task
 optionsFile.DataFile.ChoiceMarker   = 'H:'; %Choice
 optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome
 optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime
 optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime
+%optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
 optionsFile.fileName.rawFitFile = 'eHGFFit'; 
 
@@ -71,14 +72,16 @@ optionsFile.rng.idx      = 1; % Set counter for random number states
 optionsFile.rng.settings = rng(123, 'twister');
 
 %% define model and its related functions
-optionsFile.model.space      = {'eHGF binary'};
-optionsFile.model.prc        = {'tapas_ehgf_binary'};
-optionsFile.model.prc_config = {'tapas_ehgf_binary_config'};
+optionsFile.model.space      = {'RW_binary'};    %eHGF binary
+optionsFile.model.prc        = {'tapas_rw_binary'}; %tapas_ehgf_binary
+optionsFile.model.prc_config = {'tapas_rw_binary_config'};  %tapas_ehgf_binary_config
 optionsFile.model.obs	     = {'tapas_unitsq_sgm'};
 optionsFile.model.obs_config = {'tapas_unitsq_sgm_config'};
 optionsFile.model.optim      = {'tapas_quasinewton_optim_config'};
 optionsFile.model.hgf_plot   = {'tapas_ehgf_binary_plotTraj'};
-optionsFile.plot.plot_fits   = @tapas_ehgf_binary_plotTraj;
+optionsFile.model.rw_plot   = {'tapas_rw_binary_plotTraj'};
+optionsFile.plot.hgfplot_fits   = @tapas_ehgf_binary_plotTraj;
+optionsFile.plot.rwplot_fits   = @tapas_rw_binary_plotTraj;
 
 modelSpace = struct();
 

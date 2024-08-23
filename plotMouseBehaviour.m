@@ -12,39 +12,25 @@ OmittedTrialsCounter =zeros(180,1);
 for n = 1:optionsFile.Task.nSize
 
     currMouse = optionsFile.Task.MouseID(n);
-    load([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse)])
     load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
-
-
-    %Create vector to calculate statistics with each row as a mouse
-
-    
 
 
     %% Create task performance graph tiles
     %Ommissions, responseTimes,
     mousePerformanceTile = tiledlayout(3,2);
-    title(mousePerformanceTile, 'Mouse task performance graph','FontSize',20);
+    title(mousePerformanceTile, char(['Mousetask', num2str(currMouse),'performance graph']),'FontSize',20);
 
     %Tile1 - Response of currMouse
     ax1 = nexttile([1 1]);
-    h = histogram(eHGFFit.y)
+    h = histogram(eHGFFit.y);
     ylim([-0.1, 200]);
     title('Lever responses');
     xlabel('LeftLever, RightLever');
     ylabel('# of lever presses');
     xticks([0 1])
     yticks([0 50 100 150 200])
-   
-    %Inlude # of responses above histogram in future
-%     % Compute center of bins
-%     binCnt = h.BinEdges(2:end) - h.BinWidth/2;
-%     % Get bar heights
-%     barHeights = h.Values;
-%     % plot count at top of bins
-%     hold on
-%     plot(binCnt, barHeights, '')
-    
+
+
     %Tile2 - Omissions
     ax2 = nexttile([1 1]);
     Omits = length(eHGFFit.irr);
@@ -54,37 +40,33 @@ for n = 1:optionsFile.Task.nSize
     title('Omission Count');
     xlabel('Trial');
     ylabel('# of omissions');
-    
+
 
     %Tile3 - omissions over task timeline
     ax3 = nexttile([1 2]);
     trials = 1:180;
-    responseList = eHGFFit.y;
-    OmitMatrix = zeros(180,1);
-    for k = eHGFFit.irr
-        OmitMatrix((k),1) = 1;
-    end
+    omissionTrials = zeros(1,180);
+    omissionTrials(eHGFFit.irr) = 1;
 
-    omissionTrials = zeros(1,180)
-    omissionTrials(eHGFFit.irr) = 1
+    omissionTrialsAvg = zeros(1,180);
+    omissionTrialAvg = ((sum(eHGFFit.irr)) / length(eHGFFit.irr));
+    omissionTrialsAvg(round(omissionTrialAvg)) = 1;
+
     bar(trials,omissionTrials,0.5, "red")
+    hold on;
+
+    bar(trials,omissionTrialsAvg,0.7,"green")
+
     xlabel('Trials');
     ylabel('');
-    title('Omissions over time');
-    xlabel('Trial');
-    ylabel('');
+    title('Omissions over time - GreenBar is Avg omission');
 
-    %Add omitted trials to OmittedTrialCounter
-    OmittedTrialsCounter = (OmittedTrialsCounter + OmitMatrix)
-    
-
-    %Tile 4 - responseTimes over Trial stemplot   %Reduce size of ball
-    %point top on stem plot 15/8/24 NB
+    %Tile 4 - responseTimes >5sec over Trial stemplot   
     ax4 = nexttile([1 2]);
     responseTimes = ExperimentTaskTable.ResponseTime;
-    responseTimes(responseTimes(:,1) < 0.0) = 0.0; %Change any negative values to 0.0
-    s = stem(responseTimes,'filled');
-    title('ResponseTime (TrialStartTime - LeverPressTime)');
+    responseTimes(responseTimes(:,1) < 5.0) = 0.0; %Change any negative values to 0.0
+    s = stem(responseTimes,'filled',MarkerSize=6,Marker='.');
+    title('ResponseTimes (TrialStartTime - LeverPressTime) longer than 5secs ');
     xlabel('Trial');
     ylabel('Time (sec)');
 
@@ -93,13 +75,29 @@ for n = 1:optionsFile.Task.nSize
     save([figdir,'.fig'])
     print([figdir,'.png'], '-dpng')
 
+    %Create empy vector with same amount of trials
+    OmitMatrix = zeros(180,1); %fill with zeros
+    %Add each omission trial to OmitMatrix to plot later
+    for k = eHGFFit.irr %For each omitted trial
+        OmitMatrix((k),1) = 1; %Add a 1 to the corresponding row/trial in OmitMatrix
+    end
+
+    %Add OmitMatrix to Counter if currMouse passes our criteria of <20%
+    %ommissions
+    if length(eHGFFit.irr) >= 36   %Ommissions criteria is 20% of total trials, 180, which is 36
+        disp("Detected mouse with too many omissions and broken omission criteria of 20%");
+    else
+        %Add omitted trials to OmittedTrialCounter
+        OmittedTrialsCounter = (OmittedTrialsCounter + OmitMatrix)
+    end
+
 end
 
 close all;
 
 %Plot omissions over trials for all mice
 fig = bar(OmittedTrialsCounter)
-title('Omission distribution over task');
+title('Omission distribution over task. Outliers have been removed from this plot');
 xlabel('Trial');
 ylabel('Number of omissions');
 
@@ -107,30 +105,3 @@ ylabel('Number of omissions');
 figdir = fullfile([char(optionsFile.paths.plotsDir),'OverallOmissionDistributionPlot']);
 save([figdir,'.fig'])
 print([figdir,'.png'], '-dpng')
-
-
-% %% Compute CoarseChoiceStrategies
-% % lose-switch, lose-stay, win-switch, win-stay stickiness
-% % explore/exploit
-% % and plot on graph
-% mouseCoarseChoiceStratTile = tiledlayout(2,4,'TileSpacing','Compact');
-% %Tile 1 - lose-switch, lose-stay, win-switch, win-stay
-% %Omits)
-% nexttile([1,2])
-% histogram(ChoiceColumn.Choices);
-%
-% %Tile 1 -
-% %Omits)
-% nexttile([1,2])
-% histogram(ChoiceColumn.Choices);
-%
-% %Tile 3 -
-% %Omits)
-% nexttile(6,[1,2])
-% histogram(ChoiceColumn.Choices);
-%
-% %%Win-stay
-% % Initialize counters
-% count_stay_win = 0; % Counter for P(stay | win)
-%
-% end
