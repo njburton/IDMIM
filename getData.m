@@ -98,12 +98,12 @@ for i = 1:10  %optionsFile.Task.nSize
 
     else
         disp(['Mouse: ', char(currMouse), 'is not saved in the right format for this analysis. ...' ...
-           'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
+            'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
     end
 
 end
 
-%Search MouseIDs for any index's that are 'NaN's and remove them 
+%Search MouseIDs for any index's that are 'NaN's and remove them
 optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
 %Adjust index value of Task.nSize if mouseIDs were removed by above process
 optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
@@ -111,11 +111,12 @@ optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
 % %Use data from arrays to fill below Table for saving/printing
 % %Create table of Control mouse data
 % %Long response time classified as greater than 5 seconds
-TableVarTypes = {'double','double','double','double','double'};
-TableVarNames = {'AvgOmissionCount','AvgOmissionTrialNumber','AvgLongResponseCount','AvgLongResponseTrialNumber','AvgLongResponseTime'};
-ControlMouseTable = table('Size',[1 length(TableVarNames)],'VariableTypes', TableVarTypes,'VariableNames',TableVarNames);
+TableVarTypes = {'string','double','double','double','double','double'};
+TableVarNames = {'MouseID','OmissionCount','AvgOmissionTrialNumber','LongResponseCount','AvgLongResponseTrialNumber','AvgLongResponseTime'};
+ControlMouseTable = table('Size',[10 length(TableVarNames)],'VariableTypes', TableVarTypes,'VariableNames',TableVarNames);
 
-
+%MouseIDS in first column
+ControlMouseTable.MouseID = optionsFile.Task.MouseID(11:20);
 %% ResponseTime
 % %array values so that ResponseTimes less than 5 secs are zero'd
 ResponseTimeArray(ResponseTimeArray<=5.0) = NaN
@@ -125,7 +126,7 @@ LongResponseCountArray = zeros(1,10);
 
 %Count how many longResponse's (>5sec) there are for each mouse (column)
 for i = 1:width(LongResponseCountArray)
-LongResponseCountArray(1,i) = nnz(~isnan(ResponseTimeArray(:,i)))
+    LongResponseCountArray(1,i) = nnz(~isnan(ResponseTimeArray(:,i)))
 end
 
 %%Find average >5 sec responseTime trial #
@@ -140,7 +141,7 @@ end
 %Mean LongResponseTime
 AvgLongResponseTimeArray = zeros(1,10);
 for i = 1:width(ResponseTimeArray)
-AvgLongResponseTimeArray(1,i) = mean(ResponseTimeArray(:,i),'omitnan')
+    AvgLongResponseTimeArray(1,i) = mean(ResponseTimeArray(:,i),'omitnan')
 end
 
 
@@ -156,15 +157,17 @@ AvgOmissionTrialNumber = zeros(1,10);
 for i = 1:width(AvgOmissionTrialNumber)
     currOmissionTrials = OmissionArray(:,i);
     currOmissionTrialNumbers= find(currOmissionTrials==3);
-    currMouseSumOmissionTrialNumbers = sum(currOmissionTrialNumbers);    
+    currMouseSumOmissionTrialNumbers = sum(currOmissionTrialNumbers);
     AvgOmissionTrialNumber(1,i) = currMouseSumOmissionTrialNumbers / length(currOmissionTrialNumbers)
 end
 
-ControlMouseTable.AvgOmissionCount = mean(OmissionCountArray);
-ControlMouseTable.AvgOmissionTrialNumber = mean(AvgOmissionTrialNumber);
-ControlMouseTable.AvgLongResponseCount = mean(LongResponseCountArray);
-ControlMouseTable.AvgLongResponseTrialNumber = mean(AvgLongResponseTrialNumber);
-ControlMouseTable.AvgLongResponseTime = mean(AvgLongResponseTimeArray)
+ControlMouseTable.OmissionCount = OmissionCountArray';
+ControlMouseTable.AvgOmissionTrialNumber = AvgOmissionTrialNumber';
+ControlMouseTable.LongResponseCount = LongResponseCountArray';
+ControlMouseTable.AvgLongResponseTrialNumber = AvgLongResponseTrialNumber';
+ControlMouseTable.AvgLongResponseTime = AvgLongResponseTimeArray'
+
+writetable(ControlMouseTable,[optionsFile.paths.resultsDir, filesep, 'Controls_Omissions&&LongResponseTime_SummaryTable.csv'])
 
 end
 
