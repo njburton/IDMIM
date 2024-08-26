@@ -44,7 +44,7 @@ disp('*');
 % simulation setup
 sim = load(fullfile([optionsFile.simulations.simResultsDir,'/sim.mat']));
 
-for n = 1:1 %optionsFile.simulations.nSamples
+for n = 1:optionsFile.simulations.nSamples
     for m_in = 1:numel(optionsFile.model.space)
         for m_est = 1:numel(optionsFile.model.space)
 
@@ -62,7 +62,7 @@ for n = 1:1 %optionsFile.simulations.nSamples
 
             %% SAVE model fit as struct
             modelinvsave_path = fullfile(char(optionsFile.simulations.simResultsDir),...
-                [optionsFile.model.space,optionsFile.Task.Task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
+                ['\',char(optionsFile.model.space),'_simAgent_', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
             save(modelinvsave_path, '-struct', 'est');
 
 
