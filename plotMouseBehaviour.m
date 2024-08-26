@@ -12,7 +12,7 @@ OmittedTrialsCounter =zeros(180,1);
 for n = 1:optionsFile.Task.nSize
 
     currMouse = optionsFile.Task.MouseID(n);
-    load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'HGFFitABA1.mat']));
+    load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'eHGFFit.mat']));
 
 
     %% Create task performance graph tiles

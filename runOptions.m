@@ -26,16 +26,15 @@ optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
 optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
 optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\results';
 optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\plots';
-optionsFile.paths.rawMouseDataDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\rawMouseData'; 
+optionsFile.paths.rawMouseDataDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\rawMouseData';
 optionsFile.paths.HGFtoolboxDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
 optionsFile.paths.utilsDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\utils';
 optionsFile.paths.genTrajDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories';
 
+% Set Task info
+%optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat','seqABALeftLever'); I don't think this is being used/needed  
 
-
-% task names
-optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat', 'seqABALeftLever');
-optionsFile.Task.task     = 'ABA';
+optionsFile.Task.Task     = 'ABA';
 optionsFile.Task.nTrials  = 180;
 optionsFile.Task.nSize    = 10; %Need to change to indicate how many MedPCRawOperantData files you want to anaylse
 optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
@@ -57,9 +56,10 @@ optionsFile.DataFile.ChoiceMarker   = 'H:'; %Choice
 optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome
 optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime
 optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime
-%optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
+optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
-optionsFile.fileName.rawFitFile = 'eHGFFit'; 
+
+optionsFile.fileName.rawFitFile = 'eHGFFit';
 
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
@@ -79,9 +79,9 @@ optionsFile.model.obs	     = {'tapas_unitsq_sgm'};
 optionsFile.model.obs_config = {'tapas_unitsq_sgm_config'};
 optionsFile.model.optim      = {'tapas_quasinewton_optim_config'};
 optionsFile.model.hgf_plot   = {'tapas_ehgf_binary_plotTraj'};
-optionsFile.model.rw_plot   = {'tapas_rw_binary_plotTraj'};
+optionsFile.model.rw_plot    = {'tapas_rw_binary_plotTraj'};
 optionsFile.plot.hgfplot_fits   = @tapas_ehgf_binary_plotTraj;
-optionsFile.plot.rwplot_fits   = @tapas_rw_binary_plotTraj;
+optionsFile.plot.rwplot_fits    = @tapas_rw_binary_plotTraj;
 
 modelSpace = struct();
 
@@ -89,7 +89,7 @@ modelSpace = struct();
 for i = 1:numel(optionsFile.model.space)
     modelSpace(i).prc        = optionsFile.model.prc{i};
     modelSpace(i).prc_config = eval(optionsFile.model.prc_config{i});
-    pr = priorPrep(optionsFile.Task.seqABALeftLever);
+    pr = priorPrep(optionsFile.Task.BinarySeq);
 
     % Replace placeholders in parameter vectors with their calculated values
     modelSpace(i).prc_config.priormus(modelSpace(i).prc_config.priormus==99991) = pr.plh.p99991;

@@ -47,7 +47,7 @@ sim = load(fullfile([optionsFile.simulations.simResultsDir,'/sim.mat']));
 for n = 1:optionsFile.simulations.nSamples
     for m_in = 1:numel(optionsFile.model.space)
         for m_est = 1:numel(optionsFile.model.space)
-            
+
             %% MODEL INVERSION
             disp(['Model inversion for agent: ', num2str(n), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);
 
@@ -61,11 +61,13 @@ for n = 1:optionsFile.simulations.nSamples
 
 
             %% SAVE model fit as struct
-            modelinvsave_path = fullfile(optionsFile.simulations.simResultsDir, ...
-                [optionsFile.model.space,optionsFile.Task.task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
+            modelinvsave_path = fullfile(optionsFile.simulations.simResultsDir,...
+                [optionsFile.model.space,optionsFile.Task.Task,'simulation_agent', num2str(n),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
             save(modelinvsave_path, '-struct', 'est');
+
+
         end
-    end    
+    end
 end
 
 end
