@@ -29,7 +29,7 @@ ModelFitTableVarNames = {'MouseID','eHGFFitLME','RWFitLME','RWFit_Alpha'};
 ModelFitTable = table('Size',[optionsFile.Task.nSize length(ModelFitTableVarNames)],'VariableTypes', ModelFitTableVarTypes,'VariableNames',ModelFitTableVarNames);
 
 
-for n = 1:optionsFile.Task.nSize
+for n = 10:optionsFile.Task.nSize
 
     if ~isnan(optionsFile.Task.MouseID(n))
         currMouse = optionsFile.Task.MouseID(n);

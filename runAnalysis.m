@@ -38,9 +38,9 @@ save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")  %Breakpoint 
 % create agents that act like a specific model would expect them to act and then fit models
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
 disp('setting up simulations...');
-%setup_simulations;
+setup_simulations;
 %disp('performing model inversion on simulated agents...');
-%sim_data_modelinversion;
+sim_data_modelinversion;
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
@@ -51,20 +51,14 @@ fitModels(optionsFile);
 disp('preparing for parameter recovery to task data...');
 parameter_recovery(optionsFile);
 
-%% PlotByTreatmentGroup
-disp('preparing to plot mice by their treatment groups...');
-plotByTreatmentGroup(optionsFile);
+% %% PlotByTreatmentGroup
+% disp('preparing to plot mice by their treatment groups...');
+% plotByTreatmentGroup(optionsFile);
 
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
 %disp('preparing for Bayesian Model Comparison and model identifiability...');
 
-% % % % for matFile = file List;
-% % % %     load(file)
-% % % %     create table for with colums, treatmet, HGFvs.RW
-% % % %         add files to tables
-% % % %     heatmap table
-% % % %
 
 diary off
 save(diaryName)
