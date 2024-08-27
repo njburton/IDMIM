@@ -68,8 +68,7 @@ for i = 1:optionsFile.Task.nSize
 
         %% Load binary sequence for rewardlever side so we can use as input for analysis using hgf.
         % HGF Binary sequence for RewardingLeverSide (1=leftlever, 0=rightlever)
-        seqBinary = readcell([optionsFile.paths.utilsDir,'\', optionsFile.Task.BinarySeq],'Range','A1:A180');
-        ExperimentTaskTable.RewardingLeverSide = cell2mat(seqBinary); % Binary sequence for rewarding lever side (1=left, 0=right)
+        ExperimentTaskTable.RewardingLeverSide = optionsFile.Task.inputs; % Binary sequence for rewarding lever side (1=left, 0=right)
 
         %Data correction
         ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  % Replace omissions (3 in Choice) with NaN

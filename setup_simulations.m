@@ -42,10 +42,6 @@ disp('*');
 %Save input seq as variable in workspace so that I can subsititute it in
 %the code when running this funcition
 
-% inputs = readmatrix('C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories\genTraj_NJB_BinarySeq.csv');
-% inputs = inputs'
-% 
-
 
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
@@ -81,7 +77,7 @@ for m = 1:numel(optionsFile.model.space)
 
         while stable == 0
             try %tapas_simModel(inputs, prc_model, prc_pvec, varargin)
-                sim_est = tapas_simModel(optionsFile.Task.seqABALeftLever,...   %change to inputs if trialing different binSequences
+                sim_est = tapas_simModel(optionsFile.Task.inputs,...   %change to inputs if trialing different binSequences
                     optionsFile.modelSpace(m).prc,...
                     input.prc.nativeInp,...
                     optionsFile.modelSpace(m).obs,...

@@ -24,13 +24,13 @@ end
 
 %CreatemodelFit table to capture LME's and other important free parameters
 %in models
+% TO DO, adaptive to m models
 ModelFitTableVarTypes = {'string','double','double','double'};
 ModelFitTableVarNames = {'MouseID','eHGFFitLME','RWFitLME','RWFit_Alpha'};
 ModelFitTable = table('Size',[optionsFile.Task.nSize length(ModelFitTableVarNames)],'VariableTypes', ModelFitTableVarTypes,'VariableNames',ModelFitTableVarNames);
 
 
-for n = 10:optionsFile.Task.nSize
-
+for n = 1:optionsFile.Task.nSize
     if ~isnan(optionsFile.Task.MouseID(n))
         currMouse = optionsFile.Task.MouseID(n);
         disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.Task.nSize),')']);

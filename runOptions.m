@@ -22,23 +22,24 @@ function optionsFile = runOptions()
 %% SET DIRECTORY PATHS FOR PROJECT, RAWDATA, RESULTS & PLOTS
 % Set paths of directories
 disp('setting paths...');
-optionsFile.paths.projDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM';
-optionsFile.paths.rawDataStoreDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\rawDataStore';
-optionsFile.paths.resultsDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\results';
-optionsFile.paths.plotsDir        = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\plots';
-optionsFile.paths.rawMouseDataDir      = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\rawMouseData';
-optionsFile.paths.HGFtoolboxDir         = 'C:\Users\c3200098\Desktop\projects\IDMIM\HGF';
-optionsFile.paths.utilsDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\utils';
-optionsFile.paths.genTrajDir           = 'C:\Users\c3200098\Desktop\projects\IDMIM\generateTrajectories';
+optionsFile.paths.projDir         = [pwd,'/'];
+optionsFile.paths.dataDir         = [optionsFile.paths.projDir,'data/'];
+optionsFile.paths.rawDataStoreDir = [optionsFile.paths.projDir,'rawDataStore'];
+optionsFile.paths.resultsDir      = [optionsFile.paths.dataDir,'results'];
+optionsFile.paths.plotsDir        = [optionsFile.paths.dataDir,'plots'];
+optionsFile.paths.rawMouseDataDir = [optionsFile.paths.dataDir,'rawMouseData'];
+optionsFile.paths.HGFtoolboxDir   = '/Users/kwellste/projects/Toolboxes/tapas-6.0.1/HGF';
+% optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,'\HGF'];
+optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
+optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
 
 % Set Task info
-%optionsFile.Task          = load('C:\Users\c3200098\Desktop\results\resultsANS\HGF-ANS-latest.mat','seqABALeftLever'); I don't think this is being used/needed  
-
-optionsFile.Task.Task     = 'ABA';
-optionsFile.Task.nTrials  = 180;
-optionsFile.Task.nSize    = 10; %Need to change to indicate how many MedPCRawOperantData files you want to anaylse
-optionsFile.Task.MouseID  = NaN(optionsFile.Task.nSize,1);
-optionsFile.Task.BinarySeq = 'binSeqABA_BothLevers.csv'; % TO DO: make this more streamlined for when more than one task
+optionsFile.Task.Task      = 'ABA';
+optionsFile.Task.nTrials   = 180;
+optionsFile.Task.nSize     = 20;
+optionsFile.Task.MouseID   = NaN(optionsFile.Task.nSize,1);
+optionsFile.Task.inputName = 'binSeqABA_BothLevers.csv'; % TO DO: make this more streamlined for when more than one task
+optionsFile.Task.inputs    = readmatrix([optionsFile.paths.utilsDir,'/',optionsFile.Task.inputName]); %I don't think this is being used/needed  
 
 % simulation options
 optionsFile.simulations.nSamples      = 100;
@@ -59,8 +60,6 @@ optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime
 optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
 
-optionsFile.fileName.rawFitFile = 'eHGFFit';
-
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
 
@@ -72,24 +71,24 @@ optionsFile.rng.idx      = 1; % Set counter for random number states
 optionsFile.rng.settings = rng(123, 'twister');
 
 %% define model and its related functions
-optionsFile.model.space      = {'RW_binary'};    %eHGF binary
-optionsFile.model.prc        = {'tapas_rw_binary'}; %tapas_ehgf_binary
-optionsFile.model.prc_config = {'tapas_rw_binary_config'};  %tapas_ehgf_binary_config
-optionsFile.model.obs	     = {'tapas_unitsq_sgm'};
-optionsFile.model.obs_config = {'tapas_unitsq_sgm_config'};
-optionsFile.model.optim      = {'tapas_quasinewton_optim_config'};
-optionsFile.model.hgf_plot   = {'tapas_ehgf_binary_plotTraj'};
-optionsFile.model.rw_plot    = {'tapas_rw_binary_plotTraj'};
-optionsFile.plot.hgfplot_fits   = @tapas_ehgf_binary_plotTraj;
-optionsFile.plot.rwplot_fits    = @tapas_rw_binary_plotTraj;
+optionsFile.model.space      = {'eHGF binary','RW binary'};% all models in modelspace
+optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_rw_binary'};
+optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_rw_binary_config'};
+optionsFile.model.obs	     = {'tapas_unitsq_sgm','tapas_unitsq_sgm'};
+optionsFile.model.obs_config = {'tapas_unitsq_sgm_config','tapas_unitsq_sgm_config'};
+optionsFile.model.optim      = {'tapas_quasinewton_optim_config','tapas_quasinewton_optim_config'};
+optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
+optionsFile.plot(2).plot_fits = @tapas_rw_binary_plotTraj;
 
 modelSpace = struct();
+
+optionsFile.fileName.rawFitFile = {'eHGFFit','RWFit'};
 
 %% SETUP config files for Perceptual models
 for i = 1:numel(optionsFile.model.space)
     modelSpace(i).prc        = optionsFile.model.prc{i};
     modelSpace(i).prc_config = eval(optionsFile.model.prc_config{i});
-    pr = priorPrep(optionsFile.Task.BinarySeq);
+    pr = priorPrep(optionsFile.Task.inputs);
 
     % Replace placeholders in parameter vectors with their calculated values
     modelSpace(i).prc_config.priormus(modelSpace(i).prc_config.priormus==99991) = pr.plh.p99991;

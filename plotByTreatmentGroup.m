@@ -24,7 +24,7 @@ TreatmentGroupOmissionArray = zeros(TotalTrials,20);
 %Perform omission criteria check. If passed, fill arrays with each column being a mouse and each row is a trial in the
 %task
 for j = 1:length(optionsFile.Task.MouseID)
-    currMouse = optionsFile.Task.MouseID(j); %Create currMouse vector
+    currMouse = optionsFile.Task.MouseID(j); % read out current mouse ID
     currMouseData = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'eHGFFit.mat'])); %Load currMouse eHGFFit.mat file in resultsDirectory
 
     if length(currMouseData.eHGFFit.irr) > 36 %Check to see if currMouse had more than 20% (36) omissions. If less than 20%, load data into arrays
