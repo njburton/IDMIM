@@ -22,14 +22,13 @@ function optionsFile = runOptions()
 %% SET DIRECTORY PATHS FOR PROJECT, RAWDATA, RESULTS & PLOTS
 % Set paths of directories
 disp('setting paths...');
-optionsFile.paths.projDir         = [pwd,'/'];
-optionsFile.paths.dataDir         = [optionsFile.paths.projDir,'data/'];
+optionsFile.paths.projDir         = [pwd,filesep];
+optionsFile.paths.dataDir         = [optionsFile.paths.projDir,'data',filesep];
 optionsFile.paths.rawDataStoreDir = [optionsFile.paths.projDir,'rawDataStore'];
 optionsFile.paths.resultsDir      = [optionsFile.paths.dataDir,'results'];
 optionsFile.paths.plotsDir        = [optionsFile.paths.dataDir,'plots'];
 optionsFile.paths.rawMouseDataDir = [optionsFile.paths.dataDir,'rawMouseData'];
-optionsFile.paths.HGFtoolboxDir   = '/Users/kwellste/projects/Toolboxes/tapas-6.0.1/HGF';
-% optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,'\HGF'];
+optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,filesep,'HGF'];
 optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
 optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
 
@@ -39,11 +38,11 @@ optionsFile.Task.nTrials   = 180;
 optionsFile.Task.nSize     = 20;
 optionsFile.Task.MouseID   = NaN(optionsFile.Task.nSize,1);
 optionsFile.Task.inputName = 'binSeqABA_BothLevers.csv'; % TO DO: make this more streamlined for when more than one task
-optionsFile.Task.inputs    = readmatrix([optionsFile.paths.utilsDir,'/',optionsFile.Task.inputName]); %I don't think this is being used/needed  
+optionsFile.Task.inputs    = readmatrix([optionsFile.paths.utilsDir,filesep,optionsFile.Task.inputName]); %I don't think this is being used/needed  
 
 % simulation options
 optionsFile.simulations.nSamples      = 100;
-optionsFile.simulations.simResultsDir = 'C:\Users\c3200098\Desktop\projects\IDMIM\data\simResults';
+optionsFile.simulations.simResultsDir = [optionsFile.paths.dataDir,'simResults'];
 
 if ~exist(optionsFile.simulations.simResultsDir,'dir')
     mkdir(optionsFile.simulations.simResultsDir)
@@ -71,7 +70,7 @@ optionsFile.rng.idx      = 1; % Set counter for random number states
 optionsFile.rng.settings = rng(123, 'twister');
 
 %% define model and its related functions
-optionsFile.model.space      = {'eHGF binary','RW binary'};% all models in modelspace
+optionsFile.model.space      = {'HGF_binary','RW_binary'};% all models in modelspace
 optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_rw_binary'};
 optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_rw_binary_config'};
 optionsFile.model.obs	     = {'tapas_unitsq_sgm','tapas_unitsq_sgm'};

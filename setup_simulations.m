@@ -129,7 +129,7 @@ end
 optionsFile.rng.idx = 1;
 
 %% SAVE model simulation specs as struct
-save([optionsFile.simulations.simResultsDir,'/sim'], '-struct', 'sim');
+save([optionsFile.simulations.simResultsDir,filesep,'sim'], '-struct', 'sim');
 
 disp('simulated data successfully created.')
 

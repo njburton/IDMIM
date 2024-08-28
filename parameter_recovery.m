@@ -48,29 +48,26 @@ for n = 1:length(optionsFile.Task.MouseID)
         for m_est = 1:size(optionsFile.model.space, 2)
 
             % load results from real data model inversion
-            %             rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),optionsFile.fileName.rawFitFile,'.mat']));
-            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'RWFit.mat']));
+            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m_in},'.mat']));
         end
 
         % param values in transformed space (assumption of Gaussian prior)
-        rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.RWFit.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
-        rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.RWFit.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.est.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
+        rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.est.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
     end
 end
 
 % simulated agents
-for i = 1:20 % MAYBE ONLY LOAD 20?
+for i = 1:length(optionsFile.Task.MouseID)
     for m_in = 1:size(optionsFile.model.space, 2)
-
+m_est = m_in;
         fprintf('current iteration: n=%1.0f, m=%1.0f \n', i,m_in);
-        for m_est = 1:size(optionsFile.model.space, 2)
+        % for m_est = 1:size(optionsFile.model.space, 2)
 
             % load results from simulated agents' model inversion
-            %             rec.sim.agent(i,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
-            %                 [optionsFile.Task.task,'simulation_agent', num2str(i),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
-            rec.sim.agent(i,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
-                ['ABAsimulation_agent', num2str(i),'model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
-        end
+           rec.sim.agent(i,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                            [optionsFile.model.space{m_in},'_simAgent_', num2str(i),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']));
+        % end
     end
 
     rec.param.prc(m_in).sim(i,:) = rec.sim.agent(i,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
@@ -78,32 +75,33 @@ for i = 1:20 % MAYBE ONLY LOAD 20?
 end
 
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
+for m = 1:numel(optionsFile.model.space)
+    for p = 1:length(optionsFile.modelSpace(m).prc_idx)
 
-% for m = 1:length(optionsFile.modelSpace.prc_idx)
-%     % prc model
-%     [prc_coef, prc_p] = corr(rec.param.prc(m_in).sim, rec.param.prc(m_in).est);
-%     rec.param.prc(m_in).pcc  = diag(prc_coef);
-%     rec.param.prc(m_in).pval = diag(prc_p);
-%     % obs model
-%     [obs_coef, obs_p] = corr(rec.param.obs(m_in).sim, rec.param.obs(m_in).est);
-%     rec.param.obs(m_in).pcc  = diag(obs_coef);
-%     rec.param.obs(m_in).pval = diag(obs_p);
-% end
-
+        % prc model
+        [prc_coef, prc_p] = corr(rec.param.prc(m).sim(:,p), rec.param.prc(m).est(:,p));
+        rec.param.prc(m).pcc  = diag(prc_coef);
+        rec.param.prc(m).pval = diag(prc_p);
+        % obs model
+        [obs_coef, obs_p] = corr(rec.param.obs(m_in).sim(:,p), rec.param.obs(m_in).est(:,p));
+        rec.param.obs(m).pcc  = diag(obs_coef);
+        rec.param.obs(m).pval = diag(obs_p);
+    end
+end
 %% Plot est mice (X axis are mice/sim) Yaxis=values;
 %Plot free perceptual model parameters
 xAxis = 1:length(optionsFile.Task.MouseID);
 
 for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
     for n = 1:length(optionsFile.Task.MouseID)
-        PostPerceptParam = rec.est(n).data.eHGFFit.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
+        PostPerceptParam = rec.est(n).data.est.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
         fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
         hold on
 
     end %TO DO, check if this type of indexing works here
-    yline(rec.est(n).data.eHGFFit.c_prc.priormus(optionsFile.modelSpace.prc_idx),'Color','r');
+    yline(rec.est(n).data.est.c_prc.priormus(optionsFile.modelSpace.prc_idx),'Color','r');
     %     title(fig,['mice perceptual parameters',num2str(p)]);
-    figDir = fullfile([char(optionsFile.paths.plotsDir),'\mice_prc_param',num2str(p)]);
+    figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mice_prc_param',num2str(p)]);
     save([figDir,'.fig']);
     print([figDir,'.png'], '-dpng');
     close all;
@@ -119,19 +117,19 @@ for j = 1:optionsFile.Task.nSize
     
 end
 %TO DO, check if this type of indexing works here
-yline(rec.est(n).data.eHGFFit.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
+yline(rec.est(n).data.est.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
 % title(fig,['mice observational parameters',num2str(p)]);
-figDir = fullfile([char(optionsFile.paths.plotsDir),'\mice_obs_param',num2str(p)]);
+figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mice_obs_param',num2str(p)]);
 save([figDir,'.fig']);
 print([figDir,'.png'], '-dpng');
 close all;
 
 %% Plot simAgent's Perceptual & Observational Free Parameter values
 %Plot free perceptual model parameters
-xAxis = 1:20;
+xAxis = 1:length(optionsFile.Task.MouseID);
 
 for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
-    for n = 1:20
+    for n = 1:length(optionsFile.Task.MouseID)
         PostPerceptParam = rec.sim.agent(n).data.p_prc.ptrans(optionsFile.modelSpace.prc_idx(p));
         fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
         hold on
@@ -139,7 +137,7 @@ for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in pe
     %TO DO, check if this type of indexing works here
     yline(rec.sim.agent(n).data.c_prc.priormus(optionsFile.modelSpace.prc_idx),'Color','r');
     %     title(fig,['simulated observational parameters',num2str(p)]);
-    figDir = fullfile([char(optionsFile.paths.plotsDir),'\simAgents_prc_param',num2str(p)]);
+    figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'simAgents_prc_param',num2str(p)]);
     save([figDir,'.fig']);
     print([figDir,'.png'], '-dpng');
     close all;
@@ -147,7 +145,7 @@ end
 
 
 %Plot free observational model parameters
-for j = 1:20
+for j = 1:length(optionsFile.Task.MouseID)
     PostObsParam = rec.sim.agent(j).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
     fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
     hold on
@@ -155,7 +153,7 @@ end
 %TO DO, check if this type of indexing works here
 yline(rec.sim.agent(n).data.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
 % title(fig,['simulated observational parameters',num2str(p)]);
-figDir = fullfile([char(optionsFile.paths.plotsDir),'\simAgents_obs_param',num2str(p)]);
+figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'simAgents_obs_param',num2str(p)]);
 save([figDir,'.fig']);
 print([figDir,'.png'], '-dpng');
 close all;
@@ -197,7 +195,7 @@ for m_in = 1:size(optionsFile.model.space, 2)
 
     sgtitle([optionsFile.modelSpace(m_in).name], 'FontSize', 18);
     figDir = fullfile([optionsFile.paths.plotsDir, ...
-        '/Parameter_recovery_',optionsFile.modelSpace(m_in).name]);
+        filesep,'Parameter_recovery_',optionsFile.modelSpace(m_in).name]);
     print(figDir, '-dpng');
 
     save([figDir,'.fig'])
@@ -206,7 +204,7 @@ end
 %% SAVE results as struct
 res.rec = rec;
 
-save_path = fullfile(optionsFile.paths.plotsDir,'\sim_and_realData.mat');
+save_path = fullfile(optionsFile.paths.plotsDir,filesep,'sim_and_realData.mat');
 save(save_path, '-struct', 'res');
 
 disp('recovery analysis complete.')
