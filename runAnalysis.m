@@ -32,15 +32,15 @@ optionsFile = runOptions;
 
 %% Get,Organize, and save data into tables
 optionsFile = getData(optionsFile);
-save([optionsFile.paths.projDir,'\optionsFile.mat'],"optionsFile")  %Breakpoint here to troubleshoot
+save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 
 %% Simulate synthetic agends
 % create agents that act like a specific model would expect them to act and then fit models
-addpath(genpath(optionsFile.paths.HGFtoolboxDir));
-disp('setting up simulations...');
-setup_simulations;
-%disp('performing model inversion on simulated agents...');
-sim_data_modelinversion;
+% addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+% disp('setting up simulations...');
+% setup_simulations;
+% %disp('performing model inversion on simulated agents...');
+% sim_data_modelinversion;
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison

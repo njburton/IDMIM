@@ -15,7 +15,7 @@ function fitModels(optionsFile)
 %
 % _________________________________________________________________________
 % =========================================================================
-disp('fitting HGF to data...');
+
 try
     load('optionsFile.mat');
 catch
@@ -29,22 +29,23 @@ ModelFitTableVarTypes = {'string','double','double','double'};
 ModelFitTableVarNames = {'MouseID','eHGFFitLME','RWFitLME','RWFit_Alpha'};
 ModelFitTable = table('Size',[optionsFile.Task.nSize length(ModelFitTableVarNames)],'VariableTypes', ModelFitTableVarTypes,'VariableNames',ModelFitTableVarNames);
 
-for m = 1:numel(optionsFile.model.space)
+for m = 2:numel(optionsFile.model.space)
     disp(['fitting  ', optionsFile.model.space{m},' to data...']);
-    for n = 1:optionsFile.Task.nSize
-        if ~isnan(optionsFile.Task.MouseID(n))
+
+    for n = optionsFile.Task.nSize-1:optionsFile.Task.nSize
             currMouse = optionsFile.Task.MouseID(n);
             disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.Task.nSize),')']);
 
             load([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse)]);
-
+            responses = ExperimentTaskTable.Choice;
+            
             try
                 %% model fit
-                est = tapas_fitModel(ExperimentTaskTable.Choice, ...
-                    ExperimentTaskTable.RewardingLeverSide, ...
+                est = tapas_fitModel(responses, ...
+                    optionsFile.Task.inputs, ...
                     optionsFile.model.prc_config{m}, ...
-                    optionsFile.model.obs{m}, ...
-                    optionsFile.model.optim{m});
+                    optionsFile.model.obs_config{m}, ...
+                    optionsFile.model.opt_config);
 
                 %Plot standard HGF trajectory plot
                 optionsFile.plot(m).plot_fits(est);
@@ -54,46 +55,22 @@ for m = 1:numel(optionsFile.model.space)
                 close all;
 
                 %Save model fit
-                save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse), optionsFile.fileName.rawFitFile],optionsFile.fileName.rawFitFile{m});
+                save([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m},'.mat'], 'est');
 
                 % TO DO, this has to be done differently, just a hack for now.
                 if optionsFile.model.space{m}
                     %Add currMouse ID to ModelFitTable column
                     ModelFitTable.MouseID(n)  = currMouse;
                     %Save LME to ModelFitTable
-                    ModelFitTable.eHGFFitLME(n) = est.optim.LME
+                    ModelFitTable.eHGFFitLME(n) = est.optim.LME;
                 else
                     %Save RW LME to vector with mice as rows
-                    ModelFitTable.RWFitLME(n)   = est.optim.LME
+                    ModelFitTable.RWFitLME(n)   = est.optim.LME;
 
                     %Save RWFit alpha (learning rate)
-                    ModelFitTable.RWFit_Alpha(n) = est.p_prc.al
+                    ModelFitTable.RWFit_Alpha(n) = est.p_prc.al;
 
                 end
-
-                %             %plot da
-                %             area(RWFit.traj.da)
-                %             title('PredictionError');
-                %             xlabel('Trial');
-                %             ylabel('prediction error delta ');
-                %             %Save plot
-                %             figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'_RW_PredictionErrorPlot']);
-                %             save([figdir,'.fig']);
-                %             print([figdir,'.png'], '-dpng');
-                %             close all;
-                %
-                %             %plot value
-                %             area(RWFit.traj.v)
-                %             title('Value of RightLever');
-                %             xlabel('Trial');
-                %             ylabel('Value');
-                %             %Save plot
-                %             figdir = fullfile([char(optionsFile.paths.plotsDir),'\mouse',num2str(currMouse),'_RW_ValuePlot']);
-                %             save([figdir,'.fig']);
-                %             print([figdir,'.png'], '-dpng');
-                %             close all;
-
-
 
             catch
                 disp('fit failed in some way...');
@@ -102,21 +79,9 @@ for m = 1:numel(optionsFile.model.space)
                 %             badFitCount = badFitCount + 1;
                 %             listBadFits(badFitCount) = MouseID;
             end
-
-        else
-            disp('invalid mouse. Could be allocated as a NaN in the MouseID vector');
-        end
     end
 end
 
-%Plot RWFit alpha (learning rate values per treatmentgroup)
-% for m = 1:length(optionsFile.Task.MouseID)
-%     if endsWith(num2str(ModelFitTable.MouseID(m)),"2")  %If MouseID ends in "2" and is UCMS
-%         bar(ModelFitTable,ModelFitTable.RWFit_Alpha(m,4),Color="#7E2F8E"); hold on  %Plot alpha value in purple
-%     else   %Or if MouseID doesn't end in 2 and is considered control
-%         bar(ModelFitTable,ModelFitTable.RWFit_Alpha(m),Color="#000000"); hold on %Plot alpha value in black
-%     end
-% end
 
 p = bar(ModelFitTable.RWFit_Alpha,0.5, "FaceColor","flat");
 for k = 1:10
@@ -130,6 +95,3 @@ save([figdir,'.fig']);
 print([figdir,'.png'], '-dpng');
 close all;
 
-
-%Plot LMEs
-%LMEHeatMap = heatmap(ModelFitTable,"eHGFFitLME","RWFitLME")

@@ -78,7 +78,7 @@ for i = 1:optionsFile.Task.nSize
 %             mkdir([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)]);
 %         end
 
-        save([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)],'ExperimentTaskTable');
+        save([char(optionsFile.paths.resultsDir),'/mouse',char(currMouse)],'ExperimentTaskTable');
 
     else
         disp(['Mouse: ', char(currMouse), 'is not saved in the right format for this analysis. ...' ...

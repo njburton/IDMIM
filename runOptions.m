@@ -76,7 +76,7 @@ optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_rw_binary'};
 optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_rw_binary_config'};
 optionsFile.model.obs	     = {'tapas_unitsq_sgm','tapas_unitsq_sgm'};
 optionsFile.model.obs_config = {'tapas_unitsq_sgm_config','tapas_unitsq_sgm_config'};
-optionsFile.model.optim      = {'tapas_quasinewton_optim_config','tapas_quasinewton_optim_config'};
+optionsFile.model.opt_config = 'tapas_quasinewton_optim_config';
 optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(2).plot_fits = @tapas_rw_binary_plotTraj;
 
