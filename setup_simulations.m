@@ -99,38 +99,44 @@ for m = 1:numel(optionsFile.model.space)
                 optionsFile.rng.idx = 1;
             end
         end
-
     end
 end
 
 %% PLOT predictions
 
-% for n = 1:optionsFile.simulations.nSamples
-%     any(strcmp('muhat',fieldnames(sim.agent(1).data.traj)));
-%     %plot(sim.agent(n).data.traj.muhat(:,1), 'color', optionsFile.col.tnub) % Use this line when using HGF model for simulations. check other synethc agents traj's
-%     plot(sim.agent(n).data.traj.vhat(:,1), 'color', optionsFile.col.tnub) % Use this line when using RW model for simulations. check other synethc agents traj's
-%     ylabel('$\hat{\mu}_{1}$', 'Interpreter', 'Latex')
-%     hold on;
-% end
-% 
-% ylim([-0.1 1.1])
-% plot(sim.agent(1).data.u,'o','Color','b');
-% %plot(optionsFile.task.probStr,'Color','b');
-% xlabel('trials')
-% txt = ['model: ', optionsFile.model.prc];
-% title(txt)
-% 
-% figdir = fullfile([char(optionsFile.simulations.simResultsDir),'/predictions_RW']);
-% save([figdir,'.fig'])
-% print(figdir, '-dpng');
-% close;
+for m = 1:numel(optionsFile.model.space)
+for n = 1:optionsFile.simulations.nSamples
+
+   if any(strcmp('muhat',fieldnames(sim.agent(n,m).data.traj)))
+    plot(sim.agent(n,m).data.traj.muhat(:,1), 'color', optionsFile.col.tnub);
+    ylabel('$\hat{\mu}_{1}$', 'Interpreter', 'Latex')
+   else
+    plot(sim.agent(n,m).data.traj.vhat(:,1), 'color', optionsFile.col.tnub);
+    ylabel('v_hat')
+   end
+
+    hold on;
+end
+
+ylim([-0.1 1.1])
+plot(sim.agent(1).data.u,'o','Color','b');
+%plot(optionsFile.task.probStr,'Color','b');
+xlabel('trials')
+txt = ['model: ', optionsFile.model.prc{m}];
+title(txt)
+
+figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{m},'_predictions']);
+save([figdir,'.fig'])
+print(figdir, '-dpng');
+close;
 
 % reset rng state idx
 optionsFile.rng.idx = 1;
 
 %% SAVE model simulation specs as struct
-save([optionsFile.simulations.simResultsDir,filesep,'sim'], '-struct', 'sim');
+save([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m},'_sim'], '-struct', 'sim');
 
 disp('simulated data successfully created.')
+end
 
 end

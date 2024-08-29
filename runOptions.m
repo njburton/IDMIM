@@ -41,7 +41,7 @@ optionsFile.Task.inputName = 'binSeqABA_BothLevers.csv'; % TO DO: make this more
 optionsFile.Task.inputs    = readmatrix([optionsFile.paths.utilsDir,filesep,optionsFile.Task.inputName]); %I don't think this is being used/needed  
 
 % simulation options
-optionsFile.simulations.nSamples      = 100;
+optionsFile.simulations.nSamples      = 50;
 optionsFile.simulations.simResultsDir = [optionsFile.paths.dataDir,'simResults'];
 
 if ~exist(optionsFile.simulations.simResultsDir,'dir')
