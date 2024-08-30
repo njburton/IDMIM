@@ -22,7 +22,7 @@ clc % Clear cmd window
 disp('starting analysis pipeline...');
 restoredefaultpath();
 
-diaryName = ['diary_', datestr(datetime('now'))];
+diaryName = ['diary_']' %, datestr(datetime('now'))];
 diary on
 
 
@@ -34,13 +34,13 @@ optionsFile = runOptions;
 optionsFile = getData(optionsFile);
 save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 
-%% Simulate synthetic agends
+%% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
-addpath(genpath(optionsFile.paths.HGFtoolboxDir));
-disp('setting up simulations...');
-setup_simulations;
-disp('performing model inversion on simulated agents...');
-sim_data_modelinversion;
+% addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+% disp('setting up simulations...');
+% setup_simulations;
+% disp('performing model inversion on simulated agents...');
+% sim_data_modelinversion;
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
@@ -48,8 +48,8 @@ sim_data_modelinversion;
 % fitModels(optionsFile);
 
 %% Plot parameter recovery and data plots
-disp('preparing for parameter recovery to task data...');
-parameter_recovery(optionsFile);
+% disp('preparing for parameter recovery to task data...');
+% parameter_recovery(optionsFile);
 
 % %% PlotByTreatmentGroup
 % disp('preparing to plot mice by their treatment groups...');
@@ -62,4 +62,5 @@ parameter_recovery(optionsFile);
 
 diary off
 save(diaryName)
+disp('pipeline finished...');
 end

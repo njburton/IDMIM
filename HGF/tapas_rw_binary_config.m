@@ -62,11 +62,11 @@ c.model = 'tapas_rw_binary';
 
 % Initial v
 c.logitv_0mu = tapas_logit(0.5, 1);
-c.logitv_0sa = 0;
+c.logitv_0sa = 0;  %starting point was 0
 
 % Alpha
 c.logitalmu = tapas_logit(0.5, 1);
-c.logitalsa = 1;
+c.logitalsa = 1; %starting point was 1
 
 % Gather prior settings in vectors
 c.priormus = [
