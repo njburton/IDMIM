@@ -61,13 +61,12 @@ optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
 %% optimization algorithm
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
-
-optionsFile.hgf.opt_config           = eval('tapas_quasinewton_optim_config');
-optionsFile.hgf.opt_config.nRandInit = 100; %%
+optionsFile.hgf.opt_config = eval('tapas_quasinewton_optim_config');
 
 %% seed for random number generator
-optionsFile.rng.idx      = 1; % Set counter for random number states
-optionsFile.rng.settings = rng(123, 'twister');
+optionsFile.rng.idx        = 1; % Set counter for random number states
+optionsFile.rng.settings   = rng(123, 'twister');
+optionsFile.rng.nRandInit  = 100; 
 
 %% define model and its related functions
 optionsFile.model.space      = {'HGF_binary','RW_binary'};% all models in modelspace

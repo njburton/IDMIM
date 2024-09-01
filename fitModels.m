@@ -16,18 +16,17 @@ function fitModels(optionsFile)
 % _________________________________________________________________________
 % =========================================================================
 
-try
-    load('optionsFile.mat');
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+% try
+     load('optionsFile.mat');
+% catch
+%     optionsFile = runOptions; % specifications for this analysis
+% end
+
+addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+optionsFile.hgf.opt_config = eval('tapas_quasinewton_optim_config')
 
 %CreatemodelFit table to capture LME's and other important free parameters
 %in models
-% TO DO, adaptive to m models
-ModelFitTableVarTypes = {'string','double','double','double'};
-ModelFitTableVarNames = {'MouseID','eHGFFitLME','RWFitLME','RWFit_Alpha'};
-ModelFitTable = table('Size',[optionsFile.Task.nSize length(ModelFitTableVarNames)],'VariableTypes', ModelFitTableVarTypes,'VariableNames',ModelFitTableVarNames);
 
 for m = 1:numel(optionsFile.model.space)
     disp(['fitting  ', optionsFile.model.space{m},' to data...']);
@@ -39,12 +38,18 @@ for m = 1:numel(optionsFile.model.space)
         load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]);
         responses = ExperimentTaskTable.Choice;
 
+        %optionsFile.model.opt_config.maxStep = Inf;
+        strct=eval(optionsFile.model.opt_config);
+        strct.maxStep      = inf;
+        strct.nRandInit    = 100 %optionsFile.rng.nRandInit;
+        strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
+        
         %% model fit
         est = tapas_fitModel(responses, ...
             optionsFile.Task.inputs, ...
             optionsFile.model.prc_config{m}, ...
-            optionsFile.model.obs_config{m}, ...
-            optionsFile.model.opt_config);
+            optionsFile.model.obs_config{m}, ...             
+            strct); % info for optimization and multistart
 
         %Plot standard HGF trajectory plot
         optionsFile.plot(m).plot_fits(est);

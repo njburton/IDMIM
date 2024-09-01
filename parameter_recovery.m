@@ -97,72 +97,74 @@ end
 xAxis = 1:length(optionsFile.Task.MouseID);
 
 for m = 1:numel(optionsFile.model.space)
-for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
-    for n = 1:length(optionsFile.Task.MouseID)
-        PostPerceptParam = rec.est(m,n,m).data.est.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
-        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
+    for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
+        for n = 1:length(optionsFile.Task.MouseID)
+            PostPerceptParam = rec.est(m,n,m).data.est.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
+            fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
+            hold on
+
+        end %TO DO, check if this type of indexing works here
+        yline(rec.est(m,n,m).data.est.c_prc.priormus(optionsFile.modelSpace(m).prc_idx),'Color','r');
+        %     title(fig,['mice perceptual parameters',num2str(p)]);
+        figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_prc_param',num2str(p)]);
+        save([figDir,'.fig']);
+        print([figDir,'.png'], '-dpng');
+        close all;
+        %remove first yline
+    end
+
+
+    %Plot free observational model parameters
+    for j = 1:optionsFile.Task.nSize
+        PostObsParam = rec.est(m,j,m).data.est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);   % Plot single free param in observation model
+        fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
         hold on
 
-    end %TO DO, check if this type of indexing works here
-    yline(rec.est(m,n,m).data.est.c_prc.priormus(optionsFile.modelSpace(m).prc_idx),'Color','r');
-    %     title(fig,['mice perceptual parameters',num2str(p)]);
-    figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mice_prc_param',num2str(p)]);
+    end
+    %TO DO, check if this type of indexing works here
+    yline(rec.est(m,n,m).data.est.c_obs.priormus(optionsFile.modelSpace(m).obs_idx),'Color','r');
+    % title(fig,['mice observational parameters',num2str(p)]);
+    figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_obs_param',num2str(p)]);
     save([figDir,'.fig']);
     print([figDir,'.png'], '-dpng');
     close all;
-    %remove first yline
-end
-
-
-%Plot free observational model parameters
-for j = 1:optionsFile.Task.nSize
-    PostObsParam = rec.est(m,j,m).data.est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);   % Plot single free param in observation model
-    fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
-    hold on
-
-end
-%TO DO, check if this type of indexing works here
-yline(rec.est(m,n,m).data.est.c_obs.priormus(optionsFile.modelSpace(m).obs_idx),'Color','r');
-% title(fig,['mice observational parameters',num2str(p)]);
-figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mice_obs_param',num2str(p)]);
-save([figDir,'.fig']);
-print([figDir,'.png'], '-dpng');
-close all;
 end
 
 %% Plot simAgent's Perceptual & Observational Free Parameter values
 %Plot free perceptual model parameters
 xAxis = 1:length(optionsFile.Task.MouseID);
+for m = 1:numel(optionsFile.model.space)
+    for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
+        for n = 1:length(optionsFile.Task.MouseID)
+            PostPerceptParam = rec.sim.agent(n,m).data.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
+            fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+            hold on
+        end
+        %TO DO, check if this type of indexing works here
+        yline(rec.sim.agent(n,m).data.c_prc.priormus(optionsFile.modelSpace(m).prc_idx(p)),'Color','r');
+        %     title(fig,['simulated observational parameters',num2str(p)]);
+        figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_simAgents_prc_param',num2str(p)]);
+        save([figDir,'.fig']);
+        print([figDir,'.png'], '-dpng');
+        close all;
+    end
+end
 
-for p = 1:length(optionsFile.modelSpace.prc_idx)   % Plot both free params in perceptual model
-    for n = 1:length(optionsFile.Task.MouseID)
-        PostPerceptParam = rec.sim.agent(m,n,m).data.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
-        fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
+%Plot free observational model parameters
+for m = 1:numel(optionsFile.model.space)
+    for j = 1:length(optionsFile.Task.MouseID)
+        PostObsParam = rec.sim.agent(j,m).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
+        fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
         hold on
     end
     %TO DO, check if this type of indexing works here
-    yline(rec.sim.agent(n).data.c_prc.priormus(optionsFile.modelSpace.prc_idx),'Color','r');
-    %     title(fig,['simulated observational parameters',num2str(p)]);
-    figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'simAgents_prc_param',num2str(p)]);
+    yline(rec.sim.agent(n,m).data.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
+    % title(fig,['simulated observational parameters',num2str(p)]);
+    figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_simAgents_obs_param',num2str(p)]);
     save([figDir,'.fig']);
     print([figDir,'.png'], '-dpng');
     close all;
 end
-
-
-%Plot free observational model parameters
-for j = 1:length(optionsFile.Task.MouseID)
-    PostObsParam = rec.sim.agent(j).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
-    fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
-    hold on
-end
-%TO DO, check if this type of indexing works here
-yline(rec.sim.agent(n).data.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
-% title(fig,['simulated observational parameters',num2str(p)]);
-figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'simAgents_obs_param',num2str(p)]);
-save([figDir,'.fig']);
-print([figDir,'.png'], '-dpng');
-close all;
 
 
 %% PLOT correlation plot
@@ -170,29 +172,29 @@ for m_in = 1:size(optionsFile.model.space, 2)
     t = tiledlayout('flow');
     figure('Color',[1,1,1],'pos',[10 10 1050 500]);
 
-    for pPrc = 1:size(rec.param.prc(m_in).sim,2)
+    for pPrc = 1:size(optionsFile.modelSpace(m_in).prc_idx,2)
         nexttile;
         scatter(rec.param.prc(m_in).sim(:,pPrc),rec.param.prc(m_in).est(:,pPrc),'filled');
         refline(1,0);
-        %         ylim([(min(rec.param.prc(m_in).est(:,pPrc))-0.1) (max(rec.param.prc(m_in).est(:,p))+0.1)]);
-        [t,s] = title([optionsFile.model.space(m_in),optionsFile.modelSpace.free_expnms_mu_prc(pPrc),'rho = ' num2str(rec.param.prc(m_in).pcc(pPrc))]);
+        ylim([(min(rec.param.prc(m_in).est(:,pPrc))-0.1) (max(rec.param.prc(m_in).est(:,pPrc))+0.1)]);
+        [t,s] = title([optionsFile.model.space{m_in},optionsFile.modelSpace(m).expnms_mu_prc{pPrc},'rho = ' num2str(rec.param.prc(m_in).pcc(pPrc))]);
         t.FontSize = 18;
-        s.FontSize = 14;
-        s.FontAngle = 'italic'; hold on;
+        % s.FontSize = 14;
+        % s.FontAngle = 'italic'; hold on;
         xlabel('simulated data')
         ylabel('estimated data')
         hold on;
     end
 
-    for pObs = 1:size(rec.param.obs(m_in).sim,2)
+    for pObs = 1:size(optionsFile.modelSpace(m_in).obs_idx,2)
         nexttile;
         scatter(rec.param.obs(m_in).sim(:,pObs),rec.param.obs(m_in).est(:,pObs),'filled');
-        % refline(1,0);
-        %         ylim([(min(rec.param.obs(m_in).est(:,pObs))-0.1) (max(rec.param.obs(m_in).est(:,pObs))+0.1)]);
-        [t,s] = title([optionsFile.model.space(m_in),optionsFile.modelSpace.free_expnms_mu_obs(pObs),'rho = ' num2str(rec.param.obs(m_in).pcc(pObs))]);
+        refline(1,0);
+        ylim([(min(rec.param.obs(m_in).est(:,pObs))-0.1) (max(rec.param.obs(m_in).est(:,pObs))+0.1)]);
+        [t,s] = title([optionsFile.model.space{m_in},optionsFile.modelSpace(m).expnms_mu_prc{pObs},'rho = ' num2str(rec.param.obs(m_in).pcc(pObs))]);
         t.FontSize = 18;
-        s.FontSize = 14;
-        s.FontAngle = 'italic';
+        % s.FontSize = 14;
+        % s.FontAngle = 'italic';
         hold on;
         xlabel('simulated data')
         ylabel('estimated data')
