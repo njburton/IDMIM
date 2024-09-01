@@ -34,7 +34,7 @@ for n = 1:length(optionsFile.Task.MouseID)
     dataTbl.HGF_omega2(n)  = allMice(n,1).est.p_prc.om(3);
     dataTbl.omissions(n)   = length(allMice(n,1).est.irr);
 end
-save([optionsFile.paths.resultsDir,'dataTable_widerZeta.mat'],'dataTbl');
+save([optionsFile.paths.resultsDir,'dataTable.mat'],'dataTbl');
 
 %% PLOT
 fig = boxplot(dataTbl.RW_alpha,dataTbl.group, ...

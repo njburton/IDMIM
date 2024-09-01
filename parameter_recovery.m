@@ -121,7 +121,6 @@ for m = 1:numel(optionsFile.model.space)
         hold on
 
     end
-    %TO DO, check if this type of indexing works here
     yline(rec.est(m,n,m).data.est.c_obs.priormus(optionsFile.modelSpace(m).obs_idx),'Color','r');
     % title(fig,['mice observational parameters',num2str(p)]);
     figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_obs_param',num2str(p)]);
@@ -140,7 +139,6 @@ for m = 1:numel(optionsFile.model.space)
             fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
             hold on
         end
-        %TO DO, check if this type of indexing works here
         yline(rec.sim.agent(n,m).data.c_prc.priormus(optionsFile.modelSpace(m).prc_idx(p)),'Color','r');
         %     title(fig,['simulated observational parameters',num2str(p)]);
         figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_simAgents_prc_param',num2str(p)]);
@@ -157,7 +155,6 @@ for m = 1:numel(optionsFile.model.space)
         fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
         hold on
     end
-    %TO DO, check if this type of indexing works here
     yline(rec.sim.agent(n,m).data.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
     % title(fig,['simulated observational parameters',num2str(p)]);
     figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_simAgents_obs_param',num2str(p)]);
