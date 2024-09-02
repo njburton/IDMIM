@@ -13,7 +13,7 @@ dataTbl = table('Size',[length(optionsFile.Task.MouseID) 12],...
     'VariableNames',{'mouseID','group','RW_zeta','RW_alpha','HGF_zeta','HGF_omega1','HGF_omega2','sumRLeverPress','avgRLeverPress','omissions','avgResponseTime','avgBeamBreakTime'});
 
 dataTbl.mouseID = optionsFile.Task.MouseID; %Load mouseIDs into table
-dataTbl.group = logical(groupCodes); % Load groups based on groupCodes (0=control,1=ucms)
+dataTbl.group   = logical(groupCodes); % Load groups based on groupCodes (0=control,1=ucms)
 
 %Load responses into vector
 responses = zeros(180,length(optionsFile.Task.MouseID));
@@ -22,13 +22,13 @@ for n = 1:length(optionsFile.Task.MouseID)
 end
 
 % Load responsetime & beamBreak
-responseTime = zeros(180,length(optionsFile.Task.MouseID));
+responseTime  = zeros(180,length(optionsFile.Task.MouseID));
 beamBreakTime = zeros(180,length(optionsFile.Task.MouseID));
 for n = 1:length(optionsFile.Task.MouseID)
-    currMouse = optionsFile.Task.MouseID(n)
-    currMouseData = load(fullfile([char('C:\Users\c3200098\Desktop\projects\IDMIM\data\results'),'\mouse',num2str(currMouse),'.mat']));
-    responseTime(:,n) = currMouseData.ExperimentTaskTable.ResponseTime
-    beamBreakTime(:,n) = currMouseData.ExperimentTaskTable.RecepticalBeamBreak;
+    currMouse     = optionsFile.Task.MouseID(n);
+    load(fullfile([optionsFile.paths.resultsDir,filesep,'mouse',num2str(currMouse),'.mat']));
+    responseTime(:,n)  = ExperimentTaskTable.ResponseTime;
+    beamBreakTime(:,n) = ExperimentTaskTable.RecepticalBeamBreak;
     
 end
 
@@ -49,8 +49,10 @@ for n = 1:length(optionsFile.Task.MouseID)
     dataTbl.avgBeamBreakTime(n) = mean(beamBreakTime(:,n),'omitnan');
 end
 
+% [optionsFile,exclIdx] = excludeDataSets(optionsFile,dataTbl.omissions);
+% dataTbl(exclIdx,:)    = [];
 
-%save([optionsFile.paths.resultsDir,'dataTable.mat'],'dataTbl');
+save([optionsFile.paths.resultsDir,'dataTable.mat'],'dataTbl');
 
 %% PLOT
 %Check omissions and if below threshold plot the following!!!!

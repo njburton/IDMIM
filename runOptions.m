@@ -23,7 +23,7 @@ function optionsFile = runOptions()
 %% what steps to do?
 optionsFile.doOptions     = 1;
 optionsFile.doGetData     = 0;
-optionsFile.doGetPaths    = 0;
+optionsFile.doGetPaths    = 1;
 optionsFile.doSimulations = 0;
 optionsFile.doModelInversion = 0;
 optionsFile.doParamRecovery  = 0;
@@ -42,8 +42,15 @@ if optionsFile.doGetPaths
     optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,filesep,'HGF'];
     optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
     optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
-    
+
+    optionsFile.doOptions     = 0;
+    optionsFile.doGetData     = 0;
     optionsFile.doGetPaths    = 0;
+    optionsFile.doSimulations = 0;
+    optionsFile.doModelInversion = 0;
+    optionsFile.doParamRecovery  = 0;
+    optionsFile.doParamInvestig  = 0;
+    optionsFile.doBMS = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 end
 
@@ -246,7 +253,7 @@ if optionsFile.doOptions
 
     optionsFile.modelSpace = modelSpace;
 
-   
+
     %% colors for plotting
     % define colors
     optionsFile.col.wh   = [1 1 1];
@@ -260,31 +267,31 @@ if optionsFile.doOptions
 else
     load('optionsFile.mat');
     optionsFile.doOptions     = 0;
-optionsFile.doGetData     = 0;
-optionsFile.doGetPaths    = 0;
-optionsFile.doSimulations = 0;
-optionsFile.doModelInversion = 0;
-optionsFile.doParamRecovery  = 0;
-optionsFile.doParamInvestig  = 0;
-optionsFile.doBMS = 0;
+    optionsFile.doGetData     = 0;
+    optionsFile.doGetPaths    = 0;
+    optionsFile.doSimulations = 0;
+    optionsFile.doModelInversion = 0;
+    optionsFile.doParamRecovery  = 0;
+    optionsFile.doParamInvestig  = 0;
+    optionsFile.doBMS = 0;
 end
 
 if optionsFile.doGetData
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
     optionsFile.doOptions     = 0;
-optionsFile.doGetData     = 0;
-optionsFile.doGetPaths    = 0;
-optionsFile.doSimulations = 0;
-optionsFile.doModelInversion = 0;
-optionsFile.doParamRecovery  = 0;
-optionsFile.doParamInvestig  = 0;
-optionsFile.doBMS = 0;
+    optionsFile.doGetData     = 0;
+    optionsFile.doGetPaths    = 0;
+    optionsFile.doSimulations = 0;
+    optionsFile.doModelInversion = 0;
+    optionsFile.doParamRecovery  = 0;
+    optionsFile.doParamInvestig  = 0;
+    optionsFile.doBMS = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile")
 end
 
- %% NOTE: THIS IS A COPY from hgf function tapas_fitModel:
-    % --------------------------------------------------------------------------------------------------
+%% NOTE: THIS IS A COPY from hgf function tapas_fitModel:
+% --------------------------------------------------------------------------------------------------
     function pr = priorPrep(options)
 
         % Initialize data structure to be returned
@@ -324,6 +331,6 @@ end
         end
 
     end % function priorPrep
-    % --------------------------------------------------------------------------------------------------
+% --------------------------------------------------------------------------------------------------
 
 end
