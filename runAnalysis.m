@@ -45,7 +45,7 @@ save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
 % disp('preparing to fit model to task data...');
-fitModels(optionsFile);
+%fitModels(optionsFile);
 
 %% Plot parameter recovery and data plots
 % disp('preparing for parameter recovery to task data...');
@@ -62,5 +62,5 @@ fitModels(optionsFile);
 
 diary off
 save(diaryName)
-disp('pipeline finished...');
+disp('pipeline finished.');
 end

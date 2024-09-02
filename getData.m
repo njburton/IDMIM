@@ -18,11 +18,11 @@ function optionsFile = getData(optionsFile)
 %
 % _________________________________________________________________________
 % =========================================================================
-try
-    load('optionsFile.mat'); %,optionsFile);
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+% try
+  load('optionsFile.mat'); %,optionsFile);
+% catch
+%     optionsFile = runOptions; % specifications for this analysis
+% end
 
 %% DATA EXTRACTION & PREPARATION
 % Extract data from MED-PC output file (.xlsx) and save as matlab file.
