@@ -21,14 +21,14 @@ function optionsFile = runOptions()
 
 
 %% what steps to do?
-optionsFile.doOptions     = 0;
+optionsFile.doOptions     = 1;
 optionsFile.doGetData     = 0;
 optionsFile.doGetPaths    = 0;
 optionsFile.doSimulations = 0;
 optionsFile.doModelInversion = 0;
 optionsFile.doParamRecovery  = 0;
 optionsFile.doParamInvestig  = 0;
-optionsFile.doBMS = 0;
+optionsFile.doBMS = 1;
 
 if optionsFile.doGetPaths
     load('optionsFile.mat')

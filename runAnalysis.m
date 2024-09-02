@@ -54,11 +54,6 @@ if optionsFile.doParamRecovery
     parameter_recovery(optionsFile);
 end
 
-% %% PlotByTreatmentGroup
-% KW: DO WE NEED THIS?????
-% disp('preparing to plot mice by their treatment groups...');
-% plotByTreatmentGroup(optionsFile);
-
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
 %disp('preparing for Bayesian Model Comparison and model identifiability...');
