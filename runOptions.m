@@ -259,12 +259,27 @@ if optionsFile.doOptions
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 else
     load('optionsFile.mat');
+    optionsFile.doOptions     = 0;
+optionsFile.doGetData     = 0;
+optionsFile.doGetPaths    = 0;
+optionsFile.doSimulations = 0;
+optionsFile.doModelInversion = 0;
+optionsFile.doParamRecovery  = 0;
+optionsFile.doParamInvestig  = 0;
+optionsFile.doBMS = 0;
 end
 
 if optionsFile.doGetData
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
-    optionsFile.doGetData = 0;
+    optionsFile.doOptions     = 0;
+optionsFile.doGetData     = 0;
+optionsFile.doGetPaths    = 0;
+optionsFile.doSimulations = 0;
+optionsFile.doModelInversion = 0;
+optionsFile.doParamRecovery  = 0;
+optionsFile.doParamInvestig  = 0;
+optionsFile.doBMS = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile")
 end
 
