@@ -42,6 +42,8 @@ if optionsFile.doGetPaths
     optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,filesep,'HGF'];
     optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
     optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
+    
+    optionsFile.doGetPaths    = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 end
 
@@ -253,6 +255,7 @@ if optionsFile.doOptions
     optionsFile.col.tnuy = [255 166 22]/255;
     optionsFile.col.grn  = [0 0.6 0];
 
+    optionsFile.doOptions = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 else
     load('optionsFile.mat');
@@ -261,6 +264,7 @@ end
 if optionsFile.doGetData
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
+    optionsFile.doGetData = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile")
 end
 
