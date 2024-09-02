@@ -1,10 +1,7 @@
 function groupCodes = dummyCodeGroups
 
-try
-    load('optionsFile.mat');
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+
+optionsFile = runOptions; % specifications for this analysis
 
 % initialize groupCodes array
 groupCodes = zeros(numel(optionsFile.Task.MouseID),1);

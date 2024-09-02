@@ -30,28 +30,32 @@ diary on
 disp('initialising options...');
 optionsFile = runOptions;
 
-%% Get,Organize, and save data into tables
-optionsFile = getData(optionsFile);
-save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
-
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
-% addpath(genpath(optionsFile.paths.HGFtoolboxDir));
-% disp('setting up simulations...');
-% setup_simulations;
-% disp('performing model inversion on simulated agents...');
-% sim_data_modelinversion;
+if optionsFile.doSimulations
+    addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+    disp('setting up simulations...');
+    setup_simulations;
+    disp('performing model inversion on simulated agents...');
+    sim_data_modelinversion;
+end
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
-% disp('preparing to fit model to task data...');
-%fitModels(optionsFile);
 
+if optionsFile.doModelInversion
+    disp('preparing to fit model to task data...');
+    fitModels(optionsFile);
+end
 %% Plot parameter recovery and data plots
-% disp('preparing for parameter recovery to task data...');
-% parameter_recovery(optionsFile);
+
+if optionsFile.doParamRecovery
+    disp('preparing for parameter recovery to task data...');
+    parameter_recovery(optionsFile);
+end
 
 % %% PlotByTreatmentGroup
+% KW: DO WE NEED THIS?????
 % disp('preparing to plot mice by their treatment groups...');
 % plotByTreatmentGroup(optionsFile);
 
@@ -59,6 +63,9 @@ save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 % (compare different model fits to see which explains the data the best)
 %disp('preparing for Bayesian Model Comparison and model identifiability...');
 
+if optionsFile.doBMS
+    performBMS
+end
 
 diary off
 save(diaryName)

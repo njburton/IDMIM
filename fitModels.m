@@ -16,17 +16,10 @@ function fitModels(optionsFile)
 % _________________________________________________________________________
 % =========================================================================
 
-% try
-     load('optionsFile.mat');
-% catch
-%     optionsFile = runOptions; % specifications for this analysis
-% end
 
+optionsFile = runOptions; % specifications for this analysis
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
-optionsFile.hgf.opt_config = eval('tapas_quasinewton_optim_config')
 
-%CreatemodelFit table to capture LME's and other important free parameters
-%in models
 
 for m = 1:numel(optionsFile.model.space)
     disp(['fitting  ', optionsFile.model.space{m},' to data...']);

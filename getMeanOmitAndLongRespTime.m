@@ -1,8 +1,6 @@
-try
-    load('optionsFile.mat'); %,optionsFile);
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+
+optionsFile = runOptions; % specifications for this analysis
+
 
 %% Create empty arrays for logging individual mouse data
 OmissionArray = zeros(180,10);

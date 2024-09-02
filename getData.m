@@ -1,4 +1,4 @@
-function optionsFile = getData(optionsFile)
+function optionsFile = getData
 %% runOptions
 % - set all relevant paths, global variables
 % - specify what analysis steps should be executed when running "runAnalysis"
@@ -18,11 +18,9 @@ function optionsFile = getData(optionsFile)
 %
 % _________________________________________________________________________
 % =========================================================================
-% try
-  load('optionsFile.mat'); %,optionsFile);
-% catch
-%     optionsFile = runOptions; % specifications for this analysis
-% end
+
+ optionsFile = runOptions; % specifications for this analysis
+
 
 %% DATA EXTRACTION & PREPARATION
 % Extract data from MED-PC output file (.xlsx) and save as matlab file.
@@ -91,7 +89,6 @@ end
 optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
 %Adjust index value of Task.nSize if mouseIDs were removed by above process
 optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
-
 
 end
 

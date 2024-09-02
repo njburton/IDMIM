@@ -1,13 +1,9 @@
 function investigateParameters
 
-% try
-     load('optionsFile.mat');
-% catch
-%     optionsFile = runOptions; % specifications for this analysis
-% end
 
-%load([optionsFile.paths.resultsDir,filesep,'modelInv.mat']);
-load('C:\Users\c3200098\Desktop\projects\IDMIM\data\results\modelInv.mat')
+optionsFile = runOptions; % specifications for this analysis
+
+load([optionsFile.paths.resultsDir,filesep,'modelInv.mat']);
 
 groupCodes = dummyCodeGroups;
 

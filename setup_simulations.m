@@ -27,11 +27,8 @@ function [] = setup_simulations
 
 %% INITIALIZE Variables for running this function
 % specifications for this analysis
-try
-    load('optionsFile.mat');
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+
+optionsFile = runOptions; % specifications for this analysis
 
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
 disp('************************************** SETUP_SIMULATIONS **************************************');

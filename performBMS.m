@@ -2,21 +2,18 @@ function performBMS
 
 %% INITIALIZE Variables for running this function
 
-try
-    load('optionsFile.mat');
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+optionsFile = runOptions; % specifications for this analysis
+
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
 disp('*');
 
-res.modelSelection = load(fullfile([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m_in},'.mat']));
+res.bms = load(fullfile([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m_in},'.mat']));
 for n = 1:simP.nS_main
     for iTraj = 1:simP.nTraj
         r = load([paths.mainRes{n,iTraj},'/',simP.singleMainDataFitNamePart,options.model.space{1},'.mat']);
-        res.main.(eHGFCont3Field).est(n,iTraj)   = r.main.est;
+        res.bms.(eHGFCont3Field).est(n,iTraj)   = r.main.est;
         res.main.(eHGFCont3Field).LME(n,iTraj)   = r.main.est.optim.LME;
         res.main.(eHGFCont3Field).prc_param(n,iTraj).ptrans = r.main.est.p_prc.ptrans(main.ModSpace(1).prc_idx);
         res.main.(eHGFCont3Field).obs_param(n,iTraj).ptrans = r.main.est.p_obs.ptrans(main.ModSpace(1).obs_idx);

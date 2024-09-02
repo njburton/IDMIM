@@ -29,11 +29,7 @@ function [] = parameter_recovery(optionsFile)
 
 %% INITIALIZE Variables for running this function
 
-% try
-    load('optionsFile.mat');
-% catch
-%     optionsFile = runOptions; % specifications for this analysis
-% end
+optionsFile = runOptions; % specifications for this analysis
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
