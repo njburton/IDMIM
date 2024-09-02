@@ -2,7 +2,7 @@ close all force
 clear
 clc
 
-%%
+%% Create test task binInputSequence
 % Create binary sequences both an ABA and a BAB, all probabilities are in
 % terms of the left lever, right lever = 1 - left lever
 

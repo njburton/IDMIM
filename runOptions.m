@@ -32,6 +32,8 @@ optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,filesep,'HGF'];
 optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
 optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
 
+
+
 % Set Task info
 optionsFile.Task.Task      = 'ABA';
 optionsFile.Task.nTrials   = 180;
