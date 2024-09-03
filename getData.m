@@ -1,4 +1,4 @@
-function optionsFile = getData
+function optionsFile = getData(optionsFile)
 %% runOptions
 % - set all relevant paths, global variables
 % - specify what analysis steps should be executed when running "runAnalysis"
@@ -18,8 +18,6 @@ function optionsFile = getData
 %
 % _________________________________________________________________________
 % =========================================================================
-
- optionsFile = runOptions; % specifications for this analysis
 
 
 %% DATA EXTRACTION & PREPARATION

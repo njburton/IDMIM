@@ -22,15 +22,15 @@ function optionsFile = runOptions()
 
 %% what steps to do?
 optionsFile.doOptions     = 1;
-optionsFile.doGetData     = 0;
-optionsFile.doGetPaths    = 1;
+optionsFile.doGetData     = 1;
+optionsFile.doGetPaths    = 0;
 optionsFile.doSimulations = 0;
 optionsFile.doModelInversion = 0;
 optionsFile.doParamRecovery  = 0;
 optionsFile.doParamInvestig  = 0;
 optionsFile.doBMS = 1;
 
-if optionsFile.doGetPaths
+while optionsFile.doGetPaths
     load('optionsFile.mat')
     disp('setting new paths...');
     optionsFile.paths.projDir         = [pwd,filesep];
@@ -45,16 +45,16 @@ if optionsFile.doGetPaths
 
     optionsFile.doOptions     = 0;
     optionsFile.doGetData     = 0;
-    optionsFile.doGetPaths    = 0;
     optionsFile.doSimulations = 0;
     optionsFile.doModelInversion = 0;
     optionsFile.doParamRecovery  = 0;
     optionsFile.doParamInvestig  = 0;
     optionsFile.doBMS = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
+    optionsFile.doGetPaths    = 0;
 end
 
-if optionsFile.doOptions
+while optionsFile.doOptions
     %% SET DIRECTORY PATHS FOR PROJECT, RAWDATA, RESULTS & PLOTS
     % Set paths of directories
     disp('setting paths...');
@@ -261,33 +261,23 @@ if optionsFile.doOptions
     optionsFile.col.tnub = [0 110 182]/255;
     optionsFile.col.tnuy = [255 166 22]/255;
     optionsFile.col.grn  = [0 0.6 0];
+    save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 
     optionsFile.doOptions = 0;
-    save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
-else
-    load('optionsFile.mat');
-    optionsFile.doOptions     = 0;
-    optionsFile.doGetData     = 0;
-    optionsFile.doGetPaths    = 0;
-    optionsFile.doSimulations = 0;
-    optionsFile.doModelInversion = 0;
-    optionsFile.doParamRecovery  = 0;
-    optionsFile.doParamInvestig  = 0;
-    optionsFile.doBMS = 0;
 end
 
-if optionsFile.doGetData
+while optionsFile.doGetData
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
     optionsFile.doOptions     = 0;
-    optionsFile.doGetData     = 0;
     optionsFile.doGetPaths    = 0;
     optionsFile.doSimulations = 0;
     optionsFile.doModelInversion = 0;
     optionsFile.doParamRecovery  = 0;
     optionsFile.doParamInvestig  = 0;
     optionsFile.doBMS = 0;
-    save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile")
+    save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
+    optionsFile.doGetData     = 0;
 end
 
 %% NOTE: THIS IS A COPY from hgf function tapas_fitModel:
