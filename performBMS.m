@@ -67,6 +67,8 @@ h_leg2    = legend(optionsFile.model.space{1}, optionsFile.model.space{2}, 'Loca
 set(h_leg2,'box','off','FontSize', 13);
 
 sgtitle('Bayesian Model Selection', 'FontSize', 18);
+set(gcf, 'color', 'none');   
+set(gca, 'color', 'none');
 
 figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'BMS']);
 print(figdir, '-dpng');

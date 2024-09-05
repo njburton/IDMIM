@@ -25,8 +25,7 @@ lPhase11  = 20; %B8
 
 % TestTask_2 outcomes 
 phase1  = ones(1,lPhase1);
-iIncIdx = randperm(37,floor((1-pPhase1)*lPhase1))+3; % ! first 3 trials need to be "1" trials
-phase1(1,iIncIdx) = 0;
+iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1));
 
 phase2  = ones(1,lPhase2);
 iIncIdx = randperm(lPhase2,floor((1-pPhase2)*lPhase2));
@@ -75,6 +74,13 @@ probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2),pPhase3*ones(1,lPhase
      pPhase6*ones(1,lPhase6),pPhase7*ones(1,lPhase7),pPhase8*ones(1,lPhase8),pPhase9*ones(1,lPhase9),pPhase10*ones(1,lPhase10),...
      pPhase11*ones(1,lPhase11)];
 
+%Create second row for left lever sequence
+k = zeros(1,length(u))
+for i = 1:length(k)
+    if u(1,i) == 0
+        k(1,i) = 1;
+    end
+end
 
 %% PLOTTING
 figure;
@@ -83,7 +89,9 @@ hold on;
 stairs(probStr, '-.', 'Color', 'r', 'LineWidth', 2);
 legend({'RewardingLeverSide', 'Prob(Reward)'});
 title('binInputSeq_TestTaskB', 'FontWeight', 'bold', 'FontSize', 12);
-figdir = fullfile("binInputSeq_TestTaskB_TrajPlot");
+figdir = fullfile('binInputSeq_TestTaskB_TrajPlot');
 save([figdir,'.fig'])
 print([figdir,'.png'], '-dpng')
-writematrix(u, [pwd,filesep, 'binInputSeq_TestTaskB.txt'],"Delimiter",',')
+
+writematrix(u, [pwd,filesep, 'binInputSeq_TestTaskB_RightLeverList.txt'],"Delimiter",',')
+writematrix(k, [pwd,filesep,'binInputSeq_TestTaskB_LeftLeverList.txt'],"Delimiter",',')

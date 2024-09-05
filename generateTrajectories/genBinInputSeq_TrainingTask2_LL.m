@@ -7,7 +7,7 @@ lPhase2  = 140; %A2
 
 % TrainingTask_ - Outcomes
 phase1  = ones(1,lPhase1);
-iIncIdx = randperm(37,floor((1-pPhase1)*lPhase1))+3; % ! first 3 trials need to be "1" trials
+iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1)); %floor rounds the number to prevent errors 
 phase1(1,iIncIdx) = 0;
 
 phase2  = ones(1,lPhase2);
@@ -19,6 +19,13 @@ u = [phase1,phase2];
 % TrainingTask - underlying probability structure
 probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2)];
 
+%Create second row for left lever sequence
+k = zeros(1,length(u))
+for i = 1:length(k)
+    if u(1,i) == 0
+        k(1,i) = 1;
+    end
+end
 
 %% PLOTTING
 figure;
@@ -30,5 +37,6 @@ title('binInputSeq_TrainingTask2_L', 'FontWeight', 'bold', 'FontSize', 12);
 figdir = fullfile('binInputSeq_TrainingTask2_LL_TrajPlot');
 save([figdir,'.fig'])
 print([figdir,'.png'], '-dpng')
-writematrix(u, [pwd,filesep, 'binInputSeq_TrainingTask2_LL.txt'],"Delimiter",',')
 
+writematrix(u, [pwd,filesep, 'binInputSeq_TrainingTask2_LLFirst_RightLeverList.txt'],"Delimiter",',')
+writematrix(k, [pwd,filesep,'binInputSeq_TrainingTask2_LLFirst_LeftLeverList.txt'],"Delimiter",',')

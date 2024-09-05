@@ -258,7 +258,7 @@ while optionsFile.doOptions
     % define colors
     optionsFile.col.wh   = [1 1 1];
     optionsFile.col.gry  = [0.5 0.5 0.5];
-    optionsFile.col.tnub = [0 110 182]/255;
+    optionsFile.col.tnub = [186 85 211]/255;  %186,85,211 purple %blue 0 110 182
     optionsFile.col.tnuy = [255 166 22]/255;
     optionsFile.col.grn  = [0 0.6 0];
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");

@@ -38,7 +38,7 @@ disp('*');
 %% Add in input sequence that has been generated
 %Save input seq as variable in workspace so that I can subsititute it in
 %the code when running this funcition
-
+%newInputs = xlsread('C:\Users\c3200098\Desktop\ImprovedInputSequence.csv');
 
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
@@ -101,7 +101,7 @@ end
 
 %% PLOT predictions
 
-for m = 1:numel(optionsFile.model.space)
+for m = 2:numel(optionsFile.model.space)
 for n = 1:optionsFile.simulations.nSamples
 
    if any(strcmp('muhat',fieldnames(sim.agent(n,m).data.traj)))
@@ -116,27 +116,28 @@ for n = 1:optionsFile.simulations.nSamples
 end
 
 ylim([-0.1 1.1])
-plot(sim.agent(1).data.u,'o','Color','b');
+%plot(sim.agent(1).data.u,'o','Color','b');
 %plot(optionsFile.task.probStr,'Color','b');
 xlabel('Trials');
 ylabel('Reward Probability (%)');
-txt = ['Simulation results (n=100) using ', optionsFile.model.prc{m}];
+txt = ['Simulation results (n=50) using ', optionsFile.model.prc{m}];
 title(txt)
 hold on
+set(gcf, 'color', 'none');   
+set(gca, 'color', 'none');
+xticks([0 40 80 120 160 200 240 280])
+hold on;
 
-%Create red line for single agent
-plot(sim.agent(2).data.traj.muhat(:,1), 'color', 'red')
-
-figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{m},'_predictions']);
-save([figdir,'.fig'])
-print(figdir, '-dpng');
-close;
-
-% reset rng state idx
-optionsFile.rng.idx = 1;
-
-%% SAVE model simulation specs as struct
-save([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m},'_sim'], '-struct', 'sim');
+% figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{m},'_predictions']);
+% save([figdir,'.fig'])
+% print(figdir, '-dpng');
+% close;
+% 
+% % reset rng state idx
+% optionsFile.rng.idx = 1;
+% 
+% %% SAVE model simulation specs as struct
+% save([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m},'_sim'], '-struct', 'sim');
 
 disp('simulated data successfully created.')
 end

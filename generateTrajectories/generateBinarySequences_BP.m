@@ -82,25 +82,29 @@ figure;
 plot(seqABALeftLever, '.', 'MarkerSize', 25); ylim([-0.1, 1.1]);
 hold on;
 stairs(probSeqABA, '-.', 'Color', 'r', 'LineWidth', 2);
-legend({'Rewarding Lever', 'Pr(Left lever)'});
+%legend({'Rewarding Lever', 'Pr(Left lever)'});
 title('ABA sequence, Left Lever = 1, Right Lever = 0', 'FontWeight', 'bold', 'FontSize', 12);
- 
-figure;
-plot(seqBABLeftLever, '.', 'MarkerSize', 25); ylim([-0.1, 1.1]);
+set(gcf, 'color', 'none');   
+set(gca, 'color', 'none');
+%xticks([0 40 80 120 160 200 240 280])
 hold on;
-stairs(probSeqBAB, '-.', 'Color', 'r', 'LineWidth', 2);
-legend({'Rewarding Lever', 'Pr(Left lever)'});
-title('BAB sequence, Left Lever = 1, Right Lever = 0', 'FontWeight', 'bold', 'FontSize', 12);
 
-%% Write out the sequences to a .csv file
+% figure;
+% plot(seqBABLeftLever, '.', 'MarkerSize', 25); ylim([-0.1, 1.1]);
+% hold on;
+% stairs(probSeqBAB, '-.', 'Color', 'r', 'LineWidth', 2);
+% legend({'Rewarding Lever', 'Pr(Left lever)'});
+% title('BAB sequence, Left Lever = 1, Right Lever = 0', 'FontWeight', 'bold', 'FontSize', 12);
 
-tempTable = array2table([seqABALeftLever, seqABARightLever]);
-tempTable.Properties.VariableNames = {'ABA Left Lever', 'ABA Right Lever'};
-writetable(tempTable, [pwd, filesep, 'seqABABothLevers.csv']);
- 
- tempTable = array2table([seqBABLeftLever, seqBABRightLever]);
-tempTable.Properties.VariableNames = {'BAB Left Lever', 'BAB Right Lever'};
-writetable(tempTable, [pwd, filesep, 'seqBABBothLevers.csv']);
+% %% Write out the sequences to a .csv file
+% 
+% tempTable = array2table([seqABALeftLever, seqABARightLever]);
+% tempTable.Properties.VariableNames = {'ABA Left Lever', 'ABA Right Lever'};
+% writetable(tempTable, [pwd, filesep, 'seqABABothLevers.csv']);
+%  
+%  tempTable = array2table([seqBABLeftLever, seqBABRightLever]);
+% tempTable.Properties.VariableNames = {'BAB Left Lever', 'BAB Right Lever'};
+% writetable(tempTable, [pwd, filesep, 'seqBABBothLevers.csv']);
  
  
  
