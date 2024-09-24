@@ -73,8 +73,6 @@ probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2),pPhase3*ones(1,lPhase
 
 
 
-
-
 %Create second row for left lever sequence
 k = zeros(1,length(u))
 for i = 1:length(k)
