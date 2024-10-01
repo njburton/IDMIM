@@ -4,7 +4,6 @@ function performBMS
 
 optionsFile = runOptions; % specifications for this analysis
 
-
 disp('************************************** BAYESIAN MODEL SELECTION **************************************');
 disp('*');
 disp('*');
@@ -12,7 +11,6 @@ disp('*');
 load([optionsFile.paths.resultsDir,filesep,'modelInv.mat']);
 groupCodes = dummyCodeGroups;
 groups = [find(groupCodes==1) find(groupCodes==0)];
-
 
 addpath(genpath([pwd,filesep,'spm12']));
 

@@ -1,6 +1,5 @@
 function investigateParameters
 
-
 optionsFile = runOptions; % specifications for this analysis
 
 load([optionsFile.paths.resultsDir,filesep,'modelInv.mat']);
@@ -148,10 +147,6 @@ figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'HGF_omega2_plot']);
 save([figDir,'.fig']);
 print([figDir,'.png'], '-dpng');
 close all;
-
-
-
-
 
 %% STATS
 

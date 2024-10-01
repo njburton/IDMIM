@@ -1,7 +1,6 @@
 
 optionsFile = runOptions; % specifications for this analysis
 
-
 %% Create empty arrays for logging individual mouse data
 OmissionArray = zeros(180,10);
 ResponseTimeArray = zeros(180,10);
@@ -16,10 +15,8 @@ for n = 1:optionsFile.Task.nSize
     ResponseTimeArray(:,n) = ExperimentTaskTable.ResponseTime;
 end
 
-
 %% Use data from arrays to fill below Table for saving/printing
 % %Create table of Control mouse data
-% %Long response time classified as greater than 5 seconds
 TableVarTypes = {'string','double','double','double','double','double'};
 TableVarNames = {'MouseID','OmissionCount','AvgOmissionTrialNumber','LongResponseCount','AvgLongResponseTrialNumber','AvgLongResponseTime'};
 ControlMouseTable = table('Size',[10 length(TableVarNames)],'VariableTypes', TableVarTypes,'VariableNames',TableVarNames);
@@ -31,6 +28,7 @@ ControlMouseTable.MouseID = optionsFile.Task.MouseID;
 ResponseTimeArray(ResponseTimeArray<=5.0) = NaN;
 
 %Create empty array to count per mouse how many LongResponses they had
+%Long response time classified as greater than 5 seconds
 LongResponseCountArray = zeros(1,10);
 
 %Count how many longResponse's (>5sec) there are for each mouse (column)
@@ -52,7 +50,6 @@ AvgLongResponseTimeArray = zeros(1,10);
 for i = 1:width(ResponseTimeArray)
     AvgLongResponseTimeArray(1,i) = mean(ResponseTimeArray(:,i),'omitnan')
 end
-
 
 %% Omission
 % Find average omissionCount for each control mouse
@@ -76,10 +73,5 @@ ControlMouseTable.LongResponseCount = LongResponseCountArray';
 ControlMouseTable.AvgLongResponseTrialNumber = AvgLongResponseTrialNumber';
 ControlMouseTable.AvgLongResponseTime = AvgLongResponseTimeArray'
 
-
-
 %Save Table data to .csv file
 writetable(ControlMouseTable,[optionsFile.paths.resultsDir, filesep, 'Controls_Omissions&&LongResponseTime_SummaryTable.csv'])
-
-
-

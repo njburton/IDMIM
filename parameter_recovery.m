@@ -28,7 +28,6 @@ function [] = parameter_recovery(optionsFile)
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
-
 optionsFile = runOptions; % specifications for this analysis
 
 disp('************************************** PARAMETER RECOVERY **************************************');
@@ -159,7 +158,6 @@ for m = 1:numel(optionsFile.model.space)
     close all;
 end
 
-
 %% PLOT correlation plot
 for m_in = 1:size(optionsFile.model.space, 2)
     t = tiledlayout('flow');
@@ -172,8 +170,6 @@ for m_in = 1:size(optionsFile.model.space, 2)
         ylim([(min(rec.param.prc(m_in).est(:,pPrc))-0.1) (max(rec.param.prc(m_in).est(:,pPrc))+0.1)]);
         [t,s] = title([optionsFile.model.space{m_in},optionsFile.modelSpace(m).expnms_mu_prc{pPrc},'rho = ' num2str(rec.param.prc(m_in).pcc(pPrc))]);
         t.FontSize = 18;
-        % s.FontSize = 14;
-        % s.FontAngle = 'italic'; hold on;
         xlabel('simulated data')
         ylabel('estimated data')
         hold on;
@@ -186,8 +182,6 @@ for m_in = 1:size(optionsFile.model.space, 2)
         ylim([(min(rec.param.obs(m_in).est(:,pObs))-0.1) (max(rec.param.obs(m_in).est(:,pObs))+0.1)]);
         [t,s] = title([optionsFile.model.space{m_in},optionsFile.modelSpace(m).expnms_mu_prc{pObs},'rho = ' num2str(rec.param.obs(m_in).pcc(pObs))]);
         t.FontSize = 18;
-        % s.FontSize = 14;
-        % s.FontAngle = 'italic';
         hold on;
         xlabel('simulated data')
         ylabel('estimated data')
@@ -204,11 +198,8 @@ end
 
 %% SAVE results as struct
 res.rec = rec;
-
 save_path = fullfile(optionsFile.paths.plotsDir,filesep,'sim_and_realData.mat');
 save(save_path, '-struct', 'res');
 
 disp('recovery analysis complete.')
 end
-
-

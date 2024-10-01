@@ -1,6 +1,5 @@
 function groupCodes = dummyCodeGroups
 
-
 optionsFile = runOptions; % specifications for this analysis
 
 % initialize groupCodes array

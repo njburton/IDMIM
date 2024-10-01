@@ -16,9 +16,20 @@ function optionsFile = getData(optionsFile)
 %
 % Copyright (C) 2024 - need to fill in details
 %
+% This file is released under the terms of the GNU General Public Licence
+% (GPL), version 3. You can redistribute it and/or modify it under the
+% terms of the GPL (either version 3 or, at your option, any later version).
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
-
 
 %% DATA EXTRACTION & PREPARATION
 % Extract data from MED-PC output file (.xlsx) and save as matlab file.
@@ -42,18 +53,12 @@ for i = 1:optionsFile.Task.nSize
     if cols<10 % if yes, based on old version of saving data with the
         % second column saving 4 entries in one cell
         % find array indices
-        %         TrialCodeIdx = find(contains(data(:,2),optionsFile.DataFile.TrialCodeMarker))+2;
-        %         TaskDateIdx = find(contains(data(:,1),optionsFile.DataFile.TaskDateMarker))+2;
-        %         RLSIdx = find(contains(data(:,1),optionsFile.DataFile.RLSMarker))+2;
         choiceIdx  = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+2;
         outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+2;
         lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+2;
         RBBIdx = find(contains(data(:,1),optionsFile.DataFile.RecepticalBeamBreakMarker))+2;
 
         % save arrays into table
-        %ExperimentTaskTable.TrialCode      = optionsFile.Task.nTrials,1;
-        %%Can code this later for co-ordinating multiple tasks for analysis
-        %         ExperimentTaskTable.RewardingLeverSide = cell2mat(data(choiceIdx:RLSIdx+optionsFile.Task.nTrials-1,2)); %RewardingLeverSide for HGF_RL task
         ExperimentTaskTable.Choice         = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));   %Choice_ABA1
         ExperimentTaskTable.Outcome        = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2)); %Outcome_ABA1
         ExperimentTaskTable.LeverPressTime = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2)); %LeverPressTime_ABA1
@@ -70,10 +75,6 @@ for i = 1:optionsFile.Task.nSize
         ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  % Replace omissions (3 in Choice) with NaN
         ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
 
-%         if ~exist([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)])
-%             mkdir([char(optionsFile.paths.resultsDir),'\mouse',char(currMouse)]);
-%         end
-
         save([char(optionsFile.paths.resultsDir),'/mouse',char(currMouse)],'ExperimentTaskTable');
 
     else
@@ -89,5 +90,3 @@ optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
 optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
 
 end
-
-

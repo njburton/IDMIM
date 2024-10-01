@@ -10,12 +10,10 @@ end
 OmittedTrialsCounter =zeros(180,1);
 
 for n = 1:optionsFile.Task.nSize
-
     currMouse = optionsFile.Task.MouseID(n);
     load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'eHGFFit.mat']));
 
-
-    %% Create task performance graph tiles
+    % Create task performance graph tiles
     %Ommissions, responseTimes,
     mousePerformanceTile = tiledlayout(3,2);
     title(mousePerformanceTile, char(['Mousetask', num2str(currMouse),'performance graph']),'FontSize',20);
@@ -30,7 +28,6 @@ for n = 1:optionsFile.Task.nSize
     xticks([0 1])
     yticks([0 50 100 150 200])
 
-
     %Tile2 - Omissions
     ax2 = nexttile([1 1]);
     Omits = length(eHGFFit.irr);
@@ -40,7 +37,6 @@ for n = 1:optionsFile.Task.nSize
     title('Omission Count');
     xlabel('Trial');
     ylabel('# of omissions');
-
 
     %Tile3 - omissions over task timeline
     ax3 = nexttile([1 2]);
@@ -54,9 +50,7 @@ for n = 1:optionsFile.Task.nSize
 
     bar(trials,omissionTrials,0.5, "red")
     hold on;
-
     bar(trials,omissionTrialsAvg,0.7,"green")
-
     xlabel('Trials');
     ylabel('');
     title('Omissions over time - GreenBar is Avg omission');
@@ -82,8 +76,7 @@ for n = 1:optionsFile.Task.nSize
         OmitMatrix((k),1) = 1; %Add a 1 to the corresponding row/trial in OmitMatrix
     end
 
-    %Add OmitMatrix to Counter if currMouse passes our criteria of <20%
-    %ommissions
+    %Add OmitMatrix to Counter if currMouse passes our criteria of <20% ommissions
     if length(eHGFFit.irr) >= 36   %Ommissions criteria is 20% of total trials, 180, which is 36
         disp("Detected mouse with too many omissions and broken omission criteria of 20%");
     else

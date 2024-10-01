@@ -5,7 +5,7 @@ function fitModels(optionsFile)
 %
 %  INPUT:  optionsFile
 %
-%  OUTPUT:
+%  OUTPUT: 
 %
 % Original: 30/5/2023; Katharina Wellstein
 % Amended: 23/2/2024; Nicholas Burton
@@ -13,22 +13,34 @@ function fitModels(optionsFile)
 %
 % Copyright (C) 2024 - need to fill in details
 %
+% This file is released under the terms of the GNU General Public Licence
+% (GPL), version 3. You can redistribute it and/or modify it under the
+% terms of the GPL (either version 3 or, at your option, any later version).
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
 
 
-optionsFile = runOptions; % specifications for this analysis
-addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+optionsFile = runOptions; % Load specifications for this analysis
+addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
+addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 
+for m = 1:numel(optionsFile.model.space) %for each model in the model space
+    disp(['fitting  ', optionsFile.model.space{m},' to data...']); 
 
-for m = 1:numel(optionsFile.model.space)
-    disp(['fitting  ', optionsFile.model.space{m},' to data...']);
-
-    for n = 1:optionsFile.Task.nSize
-        currMouse = optionsFile.Task.MouseID(n);
+    for n = 1:optionsFile.Task.nSize %for each mouse(agent) in the cohort
+        currMouse = optionsFile.Task.MouseID(n); %currMouse vector for each mouseID in cohort
         disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.Task.nSize),')']);
 
-        load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]);
+        load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]); %load currMouse's results from data extraction
         responses = ExperimentTaskTable.Choice;
 
         %optionsFile.model.opt_config.maxStep = Inf;
@@ -44,7 +56,7 @@ for m = 1:numel(optionsFile.model.space)
             optionsFile.model.obs_config{m}, ...             
             strct); % info for optimization and multistart
 
-        %Plot standard HGF trajectory plot
+        %Plot standard trajectory plot
         optionsFile.plot(m).plot_fits(est);
         figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m}]);
         save([figdir,'.fig']);

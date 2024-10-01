@@ -37,4 +37,3 @@ for j = 1:length(optionsFile.Task.MouseID)
         TreatmentGroupOmissionArray(:,j) =
     end
 end
-

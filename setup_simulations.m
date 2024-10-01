@@ -115,16 +115,17 @@ for n = 1:optionsFile.simulations.nSamples
     hold on;
 end
 
+%Create figure of trajectory 
 ylim([-0.1 1.1])
-%plot(sim.agent(1).data.u,'o','Color','b');
-%plot(optionsFile.task.probStr,'Color','b');
+plot(sim.agent(1).data.u,'o','Color','b');
+plot(optionsFile.task.probStr,'Color','b');
 xlabel('Trials');
 ylabel('Reward Probability (%)');
 txt = ['Simulation results (n=50) using ', optionsFile.model.prc{m}];
 title(txt)
 hold on
-set(gcf, 'color', 'none');   
-set(gca, 'color', 'none');
+set(gcf, 'color', 'none');   %transparent background
+set(gca, 'color', 'none');   %transparent background
 xticks([0 40 80 120 160 200 240 280])
 hold on;
 
