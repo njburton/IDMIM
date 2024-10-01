@@ -55,8 +55,8 @@ while optionsFile.doGetPaths
     optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
 
     % Path to MED-PC operant output data from mouse decision-making task
-    optionsFile.paths.rawMouseDataDir      = [optionsFile.paths.projDir,'rawMouseDataDir'];
-
+    optionsFile.paths.rawMouseDataDir      = ['C:\Users\c3200098\Desktop',filesep,'rawMouseDataDir']; %Local file on Desktop of UoN issued PhD laptop
+    
     optionsFile.doOptions     = 0;
     optionsFile.doGetData     = 0;
     optionsFile.doSimulations = 0;
@@ -81,7 +81,7 @@ while optionsFile.doOptions
     optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
 
     % Set Task info
-    optionsFile.Task.Task      = 'ABA';
+    optionsFile.Task.Task      = 'ABA'; %Need to change in the future with bew tasks
     optionsFile.Task.nTrials   = 180;
     optionsFile.Task.nSize     = 20;
     optionsFile.Task.MouseID   = NaN(optionsFile.Task.nSize,1);
