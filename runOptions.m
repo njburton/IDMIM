@@ -33,7 +33,7 @@ function optionsFile = runOptions()
 
 
 %% what steps to do?
-optionsFile.doOptions     = 0;
+optionsFile.doOptions     = 1;
 optionsFile.doGetData     = 0;
 optionsFile.doGetPaths    = 0;
 optionsFile.doSimulations = 0;
@@ -49,10 +49,12 @@ while optionsFile.doGetPaths
     optionsFile.paths.outputDir       = [optionsFile.paths.projDir,'output',filesep];
     optionsFile.paths.resultsDir      = [optionsFile.paths.outputDir,'results'];
     optionsFile.paths.plotsDir        = [optionsFile.paths.outputDir,'plots'];
-    optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,filesep,'HGF'];
-    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.projDir,filesep,'VKF'];
+    optionsFile.paths.toolboxDir      = [optionsFile.paths.projDir,filesep,'toolboxes'];
+    optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'HGF'];
+    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'VKF'];
+    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'spm'];
     optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
-    optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
+    optionsFile.paths.genTrajDir      = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
     % Path to MED-PC operant output data from mouse decision-making task
     optionsFile.paths.rawMouseDataDir      = ['C:\Users\c3200098\Desktop',filesep,'rawMouseDataDir']; %Local file on Desktop of UoN issued PhD laptop
@@ -73,12 +75,15 @@ while optionsFile.doOptions
     % Set paths of directories
     disp('setting paths...');
     optionsFile.paths.projDir         = [pwd,filesep];
-    optionsFile.paths.outputDir         = [optionsFile.paths.projDir,'output',filesep];
+    optionsFile.paths.outputDir       = [optionsFile.paths.projDir,'output',filesep];
     optionsFile.paths.resultsDir      = [optionsFile.paths.outputDir,'results'];
     optionsFile.paths.plotsDir        = [optionsFile.paths.outputDir,'plots'];
-    optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.projDir,filesep,'HGF'];
+    optionsFile.paths.toolboxDir      = [optionsFile.paths.projDir,filesep,'toolboxes'];
+    optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'HGF'];
+    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'VKF'];
+    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'spm'];
     optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
-    optionsFile.paths.genTrajDir      = [optionsFile.paths.projDir,'generateTrajectories'];
+    optionsFile.paths.genTrajDir      = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
     % Set Task info
     optionsFile.Task.Task      = 'ABA'; %Need to change in the future with bew tasks
@@ -113,18 +118,18 @@ while optionsFile.doOptions
     optionsFile.rng.nRandInit  = 100;
 
     %% define model and its related functions
-    optionsFile.model.space      = {'HGF_binary','RW_binary'};% all models in modelspace
-    optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_rw_binary'};
-    optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_rw_binary_config'};
-    optionsFile.model.obs	     = {'tapas_unitsq_sgm','tapas_unitsq_sgm'};
-    optionsFile.model.obs_config = {'tapas_unitsq_sgm_config','tapas_unitsq_sgm_config'};
-    optionsFile.model.opt_config = 'tapas_quasinewton_optim_config';
+    optionsFile.model.space      = {'HGF_bin_3lvl','HGF_bin_2lvl','RW_bin','VKF_bin'};% all models in modelspace
+    optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_rw_binary','vkf_bin'};
+    optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_rw_binary_config','vkf_binary'};
+    optionsFile.model.obs	     = {'tapas_unitsq_sgm','tapas_unitsq_sgm','tapas_unitsq_sgm','tapas_unitsq_sgm'};
+    optionsFile.model.obs_config = {'tapas_unitsq_sgm_config','tapas_unitsq_sgm_config','tapas_unitsq_sgm_config','tapas_unitsq_sgm_config'};
+    optionsFile.model.opt_config = {'tapas_quasinewton_optim_config'};
     optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
     optionsFile.plot(2).plot_fits = @tapas_rw_binary_plotTraj;
 
     modelSpace = struct();
 
-    optionsFile.fileName.rawFitFile = {'eHGFFit','RWFit'};
+    optionsFile.fileName.rawFitFile = {'eHGFFit_3lvl','eHGFFit_2lvl','RWFit','VKFFit'}; %each argument is a model in our model space
 
     %% SETUP config files for Perceptual models
     for i = 1:numel(optionsFile.model.space)

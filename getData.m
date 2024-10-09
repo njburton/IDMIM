@@ -5,9 +5,7 @@ function optionsFile = getData(optionsFile)
 % - make directories and folderstructure for data if needed
 %
 %  SYNTAX:  getData
-%
 %  INPUT:  optionsFile
-%
 %  OUTPUT: optionsFile, updated after reading the data
 %
 % Original: 30/5/2023; Katharina Wellstein
@@ -59,11 +57,11 @@ for i = 1:optionsFile.Task.nSize
         RBBIdx = find(contains(data(:,1),optionsFile.DataFile.RecepticalBeamBreakMarker))+2;
 
         % save arrays into table
-        ExperimentTaskTable.Choice         = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));   %Choice_ABA1
-        ExperimentTaskTable.Outcome        = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2)); %Outcome_ABA1
-        ExperimentTaskTable.LeverPressTime = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2)); %LeverPressTime_ABA1
-        ExperimentTaskTable.TrialStartTime = (0:20:3580)'; %TrialStartTime list every 20seconds
-        ExperimentTaskTable.ResponseTime   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
+        ExperimentTaskTable.Choice                = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));   %Choice_ABA1
+        ExperimentTaskTable.Outcome               = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2)); %Outcome_ABA1
+        ExperimentTaskTable.LeverPressTime        = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2)); %LeverPressTime_ABA1
+        ExperimentTaskTable.TrialStartTime        = (0:20:3580)'; %TrialStartTime list every 20seconds
+        ExperimentTaskTable.ResponseTime          = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
         ExperimentTaskTable.RecepticalBeamBreak   = cell2mat(data(RBBIdx:RBBIdx+optionsFile.Task.nTrials-1,2)); %Receptical beambreak
         optionsFile.Task.MouseID(i,:) = string(currMouse);
 
