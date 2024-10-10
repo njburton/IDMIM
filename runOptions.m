@@ -81,7 +81,7 @@ while optionsFile.doOptions
     optionsFile.paths.toolboxDir      = [optionsFile.paths.projDir,filesep,'toolboxes'];
     optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'HGF'];
     optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'VKF'];
-    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'spm'];
+    optionsFile.paths.SPMtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'spm'];
     optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
     optionsFile.paths.genTrajDir      = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
@@ -106,7 +106,7 @@ while optionsFile.doOptions
     optionsFile.DataFile.OutcomeMarker  = 'G:'; %Outcome
     optionsFile.DataFile.LeverPressTimeMarker = 'K:'; %LeverPressTime
     optionsFile.DataFile.TrialStartTimeMarker = 'I:'; % TrialStartTime
-    optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
+    %optionsFile.DataFile.RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
     %% optimization algorithm
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));
@@ -118,9 +118,9 @@ while optionsFile.doOptions
     optionsFile.rng.nRandInit  = 100;
 
     %% define model and its related functions
-    optionsFile.model.space      = {'HGF_bin_3lvl','HGF_bin_2lvl','RW_bin','VKF_bin'};% all models in modelspace
-    optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_rw_binary','vkf_bin'};
-    optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_rw_binary_config','vkf_binary'};
+    optionsFile.model.space      = {'HGF_3lvl','HGF_2lvl','RW','VKF'};% all models in modelspace
+    optionsFile.model.prc        = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
+    optionsFile.model.prc_config = {'tapas_ehgf_binary_config','tapas_ehgf_binary_config','tapas_rw_binary_config','vkf_binary'};
     optionsFile.model.obs	     = {'tapas_unitsq_sgm','tapas_unitsq_sgm','tapas_unitsq_sgm','tapas_unitsq_sgm'};
     optionsFile.model.obs_config = {'tapas_unitsq_sgm_config','tapas_unitsq_sgm_config','tapas_unitsq_sgm_config','tapas_unitsq_sgm_config'};
     optionsFile.model.opt_config = {'tapas_quasinewton_optim_config'};
