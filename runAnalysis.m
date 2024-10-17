@@ -26,7 +26,6 @@ function runAnalysis
 % =========================================================================
 
 %% STARTUP
-
 % some of these may be unnecessary, if you are running the function as a whole
 close all % Close any open windows like fig windows
 clc % Clear cmd window
@@ -53,14 +52,12 @@ end
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
-
 if optionsFile.doModelInversion
     disp('preparing to fit model to task data...');
     fitModels(optionsFile);
 end
 
 %% Plot parameter recovery and data plots
-
 if optionsFile.doParamRecovery
     disp('preparing for parameter recovery to task data...');
     parameter_recovery(optionsFile);
@@ -69,7 +66,6 @@ end
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
 %disp('preparing for Bayesian Model Comparison and model identifiability...');
-
 if optionsFile.doBMS
     performBMS
 end

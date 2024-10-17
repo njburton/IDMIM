@@ -70,9 +70,10 @@ for largeFilei = 1:length(filesToProcess)
             %check coloumn for how many occurances of the taskName there
             startIndices = find(contains(largeMEDPCFile.Var2,medpcTaskList(operantTaski)));
             for startIndicesi = 1:length(startIndices)
-                mouseFile = largeMEDPCFile.Var2((startIndicesi-8),1) %slice data and save into mouseFile
-                %save as text file using names in file
+                mouse(startIndicesi) = largeMEDPCFile.Var2((startIndicesi-8),1)
 
+            %save indices starting points
+            %use indices as starting points
 
         end
 

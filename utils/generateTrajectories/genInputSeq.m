@@ -29,16 +29,17 @@ function [probStr,savepath] = gen_trajectory
 % =========================================================================
 
 
-%CURRENTLY ONLY WORKS ONE AT A TIME
+
 
 
 %% what steps to do?
+%ONLY WORKS ONE AT A TIME
 genInputSeq.doTrainingTask_RL     = 0;
 genInputSeq.doTrainingTask_LL     = 0;
 genInputSeq.doTestTaskA           = 0;
-genInputSeq.doTestTaskB           = 1;
+genInputSeq.doTestTaskB           = 0;
 
-%% TrainingTask1_RL - Create binary input sequence 
+%% TrainingTask_RL 
 if genInputSeq.doTrainingTask_RL == 1;
     
     currTask = 'TrainingTask_RL';
@@ -46,6 +47,38 @@ if genInputSeq.doTrainingTask_RL == 1;
     pPhase1  = 0.8; %A1  probability of "1" in curr phase
     lPhase1  = 140;  %A1 n trials of curr phase
     pPhase2  = 0.2; %A2
+    lPhase2  = 140; %A2
+    
+    % Outcomes
+    phase1  = ones(1,lPhase1);
+    iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1));  %floor rounds the number to prevent errors 
+    phase1(1,iIncIdx) = 0;
+    
+    phase2  = ones(1,lPhase2);
+    iIncIdx = randperm(lPhase2,floor((1-pPhase2)*lPhase2));
+    phase2(1,iIncIdx) = 0;
+    
+    % Create input trajectory
+    u = [phase1,phase2];
+    probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2)];
+    
+    %Create second row for left lever sequence
+    k = zeros(1,length(u))
+    for i = 1:length(k)
+        if u(1,i) == 0
+            k(1,i) = 1;
+        end
+    end
+end
+
+%% TrainingTask_LL 
+if genInputSeq.doTrainingTask_LL == 1
+
+    currTask = 'TrainingTask_LL'
+
+    pPhase1  = 0.2; %A1 
+    lPhase1  = 140;  %A1 
+    pPhase2  = 0.8; %A2
     lPhase2  = 140; %A2
     
     % Outcomes
@@ -68,49 +101,15 @@ if genInputSeq.doTrainingTask_RL == 1;
             k(1,i) = 1;
         end
     end
-end
-
-%% TrainingTask2_LL - Create binary input sequence for trainingTask
-if genInputSeq.doTrainingTask_LL == 1
-
-    currTask = 'TrainingTask_LL'
-
-    pPhase1  = 0.2; %A1  probability of "1" in curr phase
-    lPhase1  = 140;  %A1 n trials of curr phase
-    pPhase2  = 0.8; %A2
-    lPhase2  = 140; %A2
-    
-    % TrainingTask_ - Outcomes
-    phase1  = ones(1,lPhase1);
-    iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1)); %floor rounds the number to prevent errors 
-    phase1(1,iIncIdx) = 0;
-    
-    phase2  = ones(1,lPhase2);
-    iIncIdx = randperm(lPhase2,floor((1-pPhase2)*lPhase2));
-    phase2(1,iIncIdx) = 0;
-    
-    % TrainingTask - create input trajectory
-    u = [phase1,phase2];
-    % TrainingTask - underlying probability structure
-    probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2)];
-    
-    %Create second row for left lever sequence
-    k = zeros(1,length(u))
-    for i = 1:length(k)
-        if u(1,i) == 0
-            k(1,i) = 1;
-        end
-    end
 end    
 
-%% TestTaskA - Create test task binary input sequence 
+%% TestTaskA 
 if genInputSeq.doTestTaskA == 1
 
     currTask = 'TestTaskA';
 
-    % 280 trials total,
-    pPhase1  = 0.8; %A1  probability of "1" in curr phase
-    lPhase1  = 40;  %A1 n trials of curr phase
+    pPhase1  = 0.8; %A1 
+    lPhase1  = 40;  %A1 
     pPhase2  = 0.3; %B1
     lPhase2  = 20; %B1
     pPhase3  = 0.7; %B2
@@ -130,9 +129,9 @@ if genInputSeq.doTestTaskA == 1
     pPhase10 = 0.2; %A4 
     lPhase10 = 40; %A4
     
-    % TestTask_1 outcomes
+    % Outcomes
     phase1  = ones(1,lPhase1);
-    iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1)); %floor rounds the number to prevent errors 
+    iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1));
     phase1(1,iIncIdx) = 0;
     
     phase2  = ones(1,lPhase2);
@@ -171,11 +170,8 @@ if genInputSeq.doTestTaskA == 1
     iIncIdx = randperm(lPhase10,floor((1-pPhase10)*lPhase10));
     phase10(1,iIncIdx) = 0;
     
-    
-    % TestTask_1 create input trajectory
+    % Create input trajectory
     u = [phase1,phase2,phase3,phase4,phase5,phase6,phase7,phase8,phase9,phase10];
-    
-    %TestTask_1 underlying probability structure
     probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2),pPhase3*ones(1,lPhase3),pPhase4*ones(1,lPhase4),pPhase5*ones(1,lPhase5),...
          pPhase6*ones(1,lPhase6),pPhase7*ones(1,lPhase7),pPhase8*ones(1,lPhase8),pPhase9*ones(1,lPhase9),pPhase10*ones(1,lPhase10)];
             
@@ -189,8 +185,7 @@ if genInputSeq.doTestTaskA == 1
 
 end
 
-
-%% TestTaskB_2 - setup phases 7_BABA Aphases are 40trials long
+%% TestTaskB
 if genInputSeq.doTestTaskB == 1
 
     currTask = 'TestTaskB';
@@ -218,9 +213,9 @@ if genInputSeq.doTestTaskB == 1
     pPhase11  = 0.3; %B8
     lPhase11  = 20; %B8
     
-    % TestTask_2 outcomes 
+    % Outcomes 
     phase1  = ones(1,lPhase1);
-    iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1)); %floor rounds the number to prevent errors 
+    iIncIdx = randperm(lPhase1,floor((1-pPhase1)*lPhase1)); 
     phase1(1,iIncIdx) = 0;
     
     phase2  = ones(1,lPhase2);
@@ -263,9 +258,8 @@ if genInputSeq.doTestTaskB == 1
     iIncIdx = randperm(lPhase11,floor((1-pPhase11)*lPhase11));
     phase11(1,iIncIdx) = 0;
     
-    % TestTask_2 - create input trajectory
+    % Create input trajectory
     u = [phase1,phase2,phase3,phase4,phase5,phase6,phase7,phase8,phase9,phase10,phase11];
-    %TeskTask_2 -  underlying probability structure
     probStr = [pPhase1*ones(1,lPhase1),pPhase2*ones(1,lPhase2),pPhase3*ones(1,lPhase3),pPhase4*ones(1,lPhase4),pPhase5*ones(1,lPhase5),...
          pPhase6*ones(1,lPhase6),pPhase7*ones(1,lPhase7),pPhase8*ones(1,lPhase8),pPhase9*ones(1,lPhase9),pPhase10*ones(1,lPhase10),...
          pPhase11*ones(1,lPhase11)];
