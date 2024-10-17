@@ -87,7 +87,7 @@ while optionsFile.doOptions
 
     % Set Task info
     optionsFile.Task.Task      = 'ABA'; %Need to change in the future with bew tasks
-    optionsFile.Task.nTrials   = 180;
+    optionsFile.Task.nTrials   = 280;
     optionsFile.Task.nSize     = 20;
     optionsFile.Task.MouseID   = NaN(optionsFile.Task.nSize,1);
     optionsFile.Task.inputName = 'binSeqABA_BothLevers.csv'; % TO DO: make this more streamlined for when more than one task

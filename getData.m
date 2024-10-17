@@ -56,32 +56,33 @@ end %end of check for files with .file in dataToAnalyse dir
 %deconstruct
 if ~isempty(filesToProcess); disp('Large raw MED-PC file found. Beginning extraction of individual mice...'); end %If filesToProcess is NOT empty, meaning there are files to process (extract individual mice)
 
-%for each large file found
+% list containing the medpcTaskNames you want to look for and extract
 medpcTaskList = ["NJB_HGF_TrainingTask_RL","NJB_HGF_TrainingTask_LL - Copy","NJB_HGF_TestTaskA","NJB_HGF_TestTaskB"];
 
+%for each large file found
 for largeFilei = 1:length(filesToProcess)
-    if filesToProcess(largeFilei,1) == 0
+    if filesToProcess(largeFilei,1) == 0 %skip if file is not designated to be processed (0) in filesToProcess
         continue
     else
-        disp('Extracting...')
         fileName = string(allFiles(largeFilei).name);
-        largeMEDPCFile = readtable(fileName);
+        largeMEDPCFile = readtable(fullfile(optionsFile.paths.dataToAnalyse,filesep,fileName));
         for operantTaski = 1:length(medpcTaskList) %for each task name in the task list
             %check coloumn for how many occurances of the taskName there
             startIndices = find(contains(largeMEDPCFile.Var2,medpcTaskList(operantTaski)));
             for startIndicesi = 1:length(startIndices)
-                mouseFile = largeMEDPCFile.Var2((startIndicesi-8),1) %slice data and save into mouseFile
+                mouseFile = largeMEDPCFile.Var2((startIndices(startIndicesi)-8):(startIndices(startIndicesi)+1867));       
+                mouseIDInFile = mouseFile(3,1);
+                taskNameInFile = mouseFile(9,1);
+                mouseFileT = cell2table(mouseFile);
+
                 %save as text file using names in file
+                writematrix(mouseFileT, [optionsFile.paths.dataToAnalyse,filesep,'Extracted_',taskNameInFile,'_Subject ',mouseIDInFile,'.txt'])
+
+            end %end of using startIndices to extract and save individual mice data
 
 
-        end
-
-           
-    end
-end %end of processing large MEDPC file
-
-
-
+        end %end of searching for each taskName in list in largeMEDPCFile
+    end %end of processing large MEDPC file
 
     %% STEP 2: For loop which creates individual mouse tables from rawTaskData file
     % (where each column is a mouse)
