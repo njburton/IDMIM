@@ -7,24 +7,24 @@ load([optionsFile.paths.resultsDir,filesep,'modelInv.mat']);
 groupCodes = dummyCodeGroups;
 
 %% CREATE TABLE
-dataTbl = table('Size',[length(optionsFile.Task.MouseID) 12],...
+dataTbl = table('Size',[length(optionsFile.task.MouseID) 12],...
     'VariableTypes',{'string','logical','double','double','double','double','double','double','double','double','double','double'},...
     'VariableNames',{'mouseID','group','RW_zeta','RW_alpha','HGF_zeta','HGF_omega1','HGF_omega2','sumRLeverPress','avgRLeverPress','omissions','avgResponseTime','avgBeamBreakTime'});
 
-dataTbl.mouseID = optionsFile.Task.MouseID; %Load mouseIDs into table
+dataTbl.mouseID = optionsFile.task.MouseID; %Load mouseIDs into table
 dataTbl.group   = logical(groupCodes); % Load groups based on groupCodes (0=control,1=ucms)
 
 %Load responses into vector
-responses = zeros(180,length(optionsFile.Task.MouseID));
-for n = 1:length(optionsFile.Task.MouseID)
+responses = zeros(180,length(optionsFile.task.MouseID));
+for n = 1:length(optionsFile.task.MouseID)
     responses(:,n) = allMice(n,1).est.y;
 end
 
 % Load responsetime & beamBreak
-responseTime  = zeros(180,length(optionsFile.Task.MouseID));
-beamBreakTime = zeros(180,length(optionsFile.Task.MouseID));
-for n = 1:length(optionsFile.Task.MouseID)
-    currMouse     = optionsFile.Task.MouseID(n);
+responseTime  = zeros(180,length(optionsFile.task.MouseID));
+beamBreakTime = zeros(180,length(optionsFile.task.MouseID));
+for n = 1:length(optionsFile.task.MouseID)
+    currMouse     = optionsFile.task.MouseID(n);
     load(fullfile([optionsFile.paths.resultsDir,filesep,'mouse',num2str(currMouse),'.mat']));
     responseTime(:,n)  = ExperimentTaskTable.ResponseTime;
     beamBreakTime(:,n) = ExperimentTaskTable.RecepticalBeamBreak;

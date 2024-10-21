@@ -33,106 +33,104 @@ load("optionsFile.mat")
 
 %% DATA EXTRACTION & PREPARATION
 % Create empty table for individual mouse with variable names as columns
-TaskTableVarTypes = {'string','double','double','double','double','double','double','double'};
-TaskTableVarNames = {'TrialCode','RewardingLeverSide','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
-ExperimentTaskTable = table('Size',[180 length(TaskTableVarNames)],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
+TaskTableVarTypes = {'string','string','double','double','double','double','double','double','double'};
+TaskTableVarNames = {'TrialCode','Cohort','RewardingLeverSide','Choice','Outcome','TrialStartTime','LeverPressTime','ResponseTime','RecepticalBeamBreak'};
+ExperimentTaskTable = table('Size',[optionsFile.task.nTrials length(TaskTableVarNames)],'VariableTypes', TaskTableVarTypes,'VariableNames',TaskTableVarNames);
 
 %% STEP 1: Check to see if extractData is needed first
 % if multiple mice are condensed into one large raw MED-PC file (with a .file extension)
-
 allFiles = dir(fullfile(optionsFile.paths.dataToAnalyse,'*.*'));
 allFiles = allFiles(3:end); %removes Unix subfolder pointers "." and ".."
-filesToProcess = zeros(length(allFiles),1);
+fileCategory = zeros(length(allFiles),1);
 
 for fileSizei = 1:length(allFiles)
-    if allFiles(fileSizei).bytes >= 400000 % 1 = true
-        filesToProcess(fileSizei,1) = 1; %1 = to process
+    if allFiles(fileSizei).bytes >= 100000 % 1 = true; individualMouseMECPDCFile is 63,140 bytes
+        fileCategory(fileSizei,1) = 1; %1 = to process
     else
         continue
-    end %end of check if file is overly large (>400,000 bytes)
+    end %end of check if file is overly large (>100,000 bytes)
 end %end of check for files with .file in dataToAnalyse dir
 
-%check if filesToProcess is empty of if there are identified large files to
-%deconstruct
-if ~isempty(filesToProcess); disp('Large raw MED-PC file found. Beginning extraction of individual mice...'); end %If filesToProcess is NOT empty, meaning there are files to process (extract individual mice)
+%check if filesToProcess is empty of if there are identified large files to deconstruct
+if ~isempty(fileCategory(:,1)); disp('Large (>100,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...');
+else disp('No large files detected.'); end %If filesToProcess is NOT empty, meaning there are files to process (extract individual mice)
 
 % list containing the medpcTaskNames you want to look for and extract
-medpcTaskList = ["NJB_HGF_TrainingTask_RL","NJB_HGF_TrainingTask_LL - Copy","NJB_HGF_TestTaskA","NJB_HGF_TestTaskB"];
+taskSearchList = ["NJB_HGF_TrainingTask_RL","NJB_HGF_TrainingTask_LL - Copy","NJB_HGF_TestTaskA","NJB_HGF_TestTaskB"]; %optionsFile.Task.taskList
+
 
 %for each large file found
-for largeFilei = 1:length(filesToProcess)
-    if filesToProcess(largeFilei,1) == 0 %skip if file is not designated to be processed (0) in filesToProcess
+for largeFilei = 1:length(fileCategory)
+    if fileCategory(largeFilei,1) == 0; %skip if file is not identified as large (0) in filesToProcess
         continue
     else
         fileName = string(allFiles(largeFilei).name);
         largeMEDPCFile = readtable(fullfile(optionsFile.paths.dataToAnalyse,filesep,fileName));
-        for operantTaski = 1:length(medpcTaskList) %for each task name in the task list
-            %check coloumn for how many occurances of the taskName there
-            startIndices = find(contains(largeMEDPCFile.Var2,medpcTaskList(operantTaski)));
-            for startIndicesi = 1:length(startIndices)
-                mouseFile = largeMEDPCFile.Var2((startIndices(startIndicesi)-8):(startIndices(startIndicesi)+1867));       
-                mouseIDInFile = mouseFile(3,1);
-                taskNameInFile = mouseFile(9,1);
-                mouseFileT = cell2table(mouseFile);
+        for operantTaski = 1:length(taskSearchList) %for each task name in the task list
+            startIndices = find(contains(largeMEDPCFile.Var2,taskSearchList(operantTaski)));
+            for startIndicesi = 1:length(startIndices) %row index for all mentions of taskListi
+                currMouse = cell2mat(largeMEDPCFile.Var2(startIndices(startIndicesi)-6));
+                % save data into individual mouse tables
+                ExperimentTaskTable.TrialCode(:)           = taskSearchList(operantTaski);  %TrialCode
+                ExperimentTaskTable.Cohort(:)              = cell2mat(largeMEDPCFile.Var2(startIndices(operantTaski)-5)); 
+                ExperimentTaskTable.Outcome                = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.outcomeOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.outcomeOffset+optionsFile.task.nTrials)));   %Outcome
+                ExperimentTaskTable.Choice                 = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.choiceOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.choiceOffset+optionsFile.task.nTrials)));   %Choice
+                ExperimentTaskTable.TrialStartTime         = transpose(0:13:3627); % cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.trialStartTimeOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.trialStartTimeOffset+optionsFile.task.nTrials)));   %TrialStartTime
+                ExperimentTaskTable.RecepticalBeamBreak    = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+optionsFile.task.nTrials)));   %RecepticalBeamBreak
+                ExperimentTaskTable.LeverPressTime         = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.leverPressTimeOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.leverPressTimeOffset+optionsFile.task.nTrials)));   %LeverPressTime
+                ExperimentTaskTable.ResponseTime(:)        = (ExperimentTaskTable.TrialStartTime - ExperimentTaskTable.LeverPressTime);
 
-                %save as text file using names in file
-                writematrix(mouseFileT, [optionsFile.paths.dataToAnalyse,filesep,'Extracted_',taskNameInFile,'_Subject ',mouseIDInFile,'.txt'])
+                ExperimentTaskTable.RewardingLeverSide     = readcell([optionsFile.paths.binInputSeqDir,'2024_HGFPilot3',filesep,taskSearchList(operantTaski),'.txt'])';%RewardingLeverSide
+           
+                % Data correction
+                ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  % Replace omissions (3 in Choice) with NaN
+                ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
+        
+                save([char(optionsFile.paths.resultsDir),'/mouse',char(currMouse),'_',taskSearchList(operantTaski)],'_ExperimentTaskTable');
 
             end %end of using startIndices to extract and save individual mice data
-
-
         end %end of searching for each taskName in list in largeMEDPCFile
-    end %end of processing large MEDPC file
+    end %end of checking filesToProcess vector
+end %end of processing large MEDPC file
 
-    %% STEP 2: For loop which creates individual mouse tables from rawTaskData file
-    % (where each column is a mouse)
-    files = dir(fullfile(optionsFile.paths.dataToAnalyse,'*Subject *.txt'));
+%% STEP 2: For loop which creates individual mouse tables from rawTaskData file
+% (where each column is a mouse)
+files = dir(fullfile(optionsFile.paths.dataToAnalyse,'*Subject *.txt'));
 
-    for i = 1:optionsFile.Task.nSize
-        fileName  = string(files(i).name);
-        currMouse = extract(fileName ," "+digitsPattern(3)+"."); %find three digits between space and .
-        currMouse = erase(currMouse{end}," ");
-        currMouse = erase(currMouse,".");
-        data      = readcell(fullfile(optionsFile.paths.dataToAnalyse, fileName));
-        [~,cols]  = size(cell2mat(data(50,2)));
+for i = 1:optionsFile.cohort.nSize
+    fileName  = string(files(i).name);
+    currMouse = extract(fileName ," "+digitsPattern(3)+"."); %find three digits between space and .
+    currMouse = erase(currMouse{end}," ");
+    currMouse = erase(currMouse,".");
+    data      = readcell(fullfile(optionsFile.paths.dataToAnalyse, fileName));
+    [~,cols]  = size(cell2mat(data(50,2)));
 
-        if cols<10 % if yes, based on old version of saving data with the
-            % second column saving 4 entries in one cell
-            % find array indices
-            choiceIdx  = find(contains(data(:,1),optionsFile.DataFile.ChoiceMarker))+2;
-            outcomeIdx = find(contains(data(:,1),optionsFile.DataFile.OutcomeMarker))+2;
-            lPressTIdx = find(contains(data(:,1),optionsFile.DataFile.LeverPressTimeMarker))+2;
-            RBBIdx = find(contains(data(:,1),optionsFile.DataFile.RecepticalBeamBreakMarker))+2;
+    if cols<10 % if yes, based on old version of saving data with the
+        % save arrays into table
+        ExperimentTaskTable.Outcome                = cell2mat(largeMEDPCFile(startIndices(operantTaski)+optionsFile.DataFile.outcomeOffset):...
+            ((startIndices(operantTaski)+optionsFile.DataFile.outcomeOffset)+optionsFile.Task.nTrials),2);   %Outcome
+        ExperimentTaskTable.Choice                = cell2mat(largeMEDPCFile(startIndices(operantTaski)+optionsFile.DataFile.choiceOffset):...
+            ((startIndices(operantTaski)+optionsFile.DataFile.choiceOffset)+optionsFile.Task.nTrials),2);   %Choice
+        ExperimentTaskTable.TrialStartTime                = (0:7:3640)';   %TrialStartTime
+        ExperimentTaskTable.RecepticalBeamBreak                = cell2mat(largeMEDPCFile(startIndices(operantTaski)+optionsFile.DataFile.recepticalBeamBreakOffset):...
+            ((startIndices(operantTaski)+optionsFile.DataFile.recepticalBeamBreakOffsetOffset)+optionsFile.Task.nTrials),2);   %RecepticalBeamBreak
+        ExperimentTaskTable.LeverPressTime               = cell2mat(largeMEDPCFile(startIndices(operantTaski)+optionsFile.DataFile.leverPressTimeOffset):...
+            ((startIndices(operantTaski)+optionsFile.DataFile.leverPressTimeOffsetOffset)+optionsFile.Task.nTrials),2);   %LeverPressTime
+        optionsFile.task.MouseID(i,:) = string(currMouse);
 
-            % save arrays into table
-            ExperimentTaskTable.Choice                = cell2mat(data(choiceIdx:choiceIdx+optionsFile.Task.nTrials-1,2));   %Choice_ABA1
-            ExperimentTaskTable.Outcome               = cell2mat(data(outcomeIdx:outcomeIdx+optionsFile.Task.nTrials-1,2)); %Outcome_ABA1
-            ExperimentTaskTable.LeverPressTime        = cell2mat(data(lPressTIdx:lPressTIdx+optionsFile.Task.nTrials-1,2)); %LeverPressTime_ABA1
-            ExperimentTaskTable.TrialStartTime        = (0:20:3580)'; %TrialStartTime list every 20seconds
-            ExperimentTaskTable.ResponseTime          = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
-            ExperimentTaskTable.RecepticalBeamBreak   = cell2mat(data(RBBIdx:RBBIdx+optionsFile.Task.nTrials-1,2)); %Receptical beambreak
-            optionsFile.Task.MouseID(i,:) = string(currMouse);
+        % Data correction
+        ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  % Replace omissions (3 in Choice) with NaN
+        ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
 
-            %% Load binary sequence for rewardlever side so we can use as input for analysis using hgf.
-            % HGF Binary sequence for RewardingLeverSide (1=leftlever, 0=rightlever)
-            ExperimentTaskTable.RewardingLeverSide = optionsFile.Task.inputs; % Binary sequence for rewarding lever side (1=left, 0=right)
+        save([char(optionsFile.paths.resultsDir),'/mouse',char(currMouse)],'ExperimentTaskTable');
 
-            %Data correction
-            ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==3) = NaN;  % Replace omissions (3 in Choice) with NaN
-            ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
-
-            save([char(optionsFile.paths.resultsDir),'/mouse',char(currMouse)],'ExperimentTaskTable');
-
-        else
-            disp(['Mouse: ', char(currMouse), 'is not saved in the right format for this analysis. ...' ...
-                'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
-        end
-
+    else
+        disp(['Mouse: ', char(currMouse), 'is not saved in the right format for this analysis. ...' ...
+            'This may be because it was only training data or there is something wrong with formatting. Please make sure to check manually.']);
     end
 
-    %Search MouseIDs for any index's that are 'NaN's and remove them
-    optionsFile.Task.MouseID(find(isnan(optionsFile.Task.MouseID)))=[];
-    %Adjust index value of Task.nSize if mouseIDs were removed by above process
-    optionsFile.Task.nSize = length(optionsFile.Task.MouseID);
+end
+optionsFile.task.MouseID(find(isnan(optionsFile.task.MouseID)))=[]; % Search MouseIDs for any index's that are 'NaN's and remove them
+optionsFile.cohort.nSize = length(optionsFile.task.MouseID); % Adjust index value of cohort.nSize if mouseIDs were removed by above process
 
 end

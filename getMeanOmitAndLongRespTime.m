@@ -6,9 +6,9 @@ OmissionArray = zeros(180,10);
 ResponseTimeArray = zeros(180,10);
 
 %% Save currMouse responseTimes and choices to appropriate arrays
-for n = 1:optionsFile.Task.nSize
+for n = 1:optionsFile.cohort.nSize
 
-    currMouse = optionsFile.Task.MouseID(n);
+    currMouse = optionsFile.task.MouseID(n);
     load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'.mat'])); %Load currMouse experimentaskTable
 
     OmissionArray(:,n) =  ExperimentTaskTable.Choice;
@@ -22,7 +22,7 @@ TableVarNames = {'MouseID','OmissionCount','AvgOmissionTrialNumber','LongRespons
 ControlMouseTable = table('Size',[10 length(TableVarNames)],'VariableTypes', TableVarTypes,'VariableNames',TableVarNames);
 
 %MouseIDS in first column
-ControlMouseTable.MouseID = optionsFile.Task.MouseID;
+ControlMouseTable.MouseID = optionsFile.task.MouseID;
 %% ResponseTime
 % %array values so that ResponseTimes less than 5 secs are zero'd
 ResponseTimeArray(ResponseTimeArray<=5.0) = NaN;

@@ -35,8 +35,8 @@ disp('*');
 disp('*');
 
 %% LOAD results from model inversion
-for n = 1:length(optionsFile.Task.MouseID)
-    currMouse = optionsFile.Task.MouseID(n);
+for n = 1:length(optionsFile.task.MouseID)
+    currMouse = optionsFile.task.MouseID(n);
     for m_in = 1:size(optionsFile.model.space, 2) %For each model in our model space (",2" meaning by the 2nd dimension?
         %but found only have 1 index in that vector, "RW_binary
         fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
@@ -53,7 +53,7 @@ for n = 1:length(optionsFile.Task.MouseID)
 end
 
 % simulated agents
-for i = 1:length(optionsFile.Task.MouseID)
+for i = 1:length(optionsFile.task.MouseID)
     for m_in = 1:size(optionsFile.model.space, 2)
         fprintf('current iteration: n=%1.0f, m=%1.0f \n', i,m_in);
         for m_est = 1:size(optionsFile.model.space, 2)
@@ -89,11 +89,11 @@ for m = 1:numel(optionsFile.model.space)
 end
 %% Plot est mice (X axis are mice/sim) Yaxis=values;
 %Plot free perceptual model parameters
-xAxis = 1:length(optionsFile.Task.MouseID);
+xAxis = 1:length(optionsFile.task.MouseID);
 
 for m = 1:numel(optionsFile.model.space)
     for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
-        for n = 1:length(optionsFile.Task.MouseID)
+        for n = 1:length(optionsFile.task.MouseID)
             PostPerceptParam = rec.est(m,n,m).data.est.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
             fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
             hold on
@@ -110,7 +110,7 @@ for m = 1:numel(optionsFile.model.space)
 
 
     %Plot free observational model parameters
-    for j = 1:optionsFile.Task.nSize
+    for j = 1:optionsFile.cohort.nSize
         PostObsParam = rec.est(m,j,m).data.est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);   % Plot single free param in observation model
         fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
         hold on
@@ -126,10 +126,10 @@ end
 
 %% Plot simAgent's Perceptual & Observational Free Parameter values
 %Plot free perceptual model parameters
-xAxis = 1:length(optionsFile.Task.MouseID);
+xAxis = 1:length(optionsFile.task.MouseID);
 for m = 1:numel(optionsFile.model.space)
     for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
-        for n = 1:length(optionsFile.Task.MouseID)
+        for n = 1:length(optionsFile.task.MouseID)
             PostPerceptParam = rec.sim.agent(n,m).data.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
             fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
             hold on
@@ -145,7 +145,7 @@ end
 
 %Plot free observational model parameters
 for m = 1:numel(optionsFile.model.space)
-    for j = 1:length(optionsFile.Task.MouseID)
+    for j = 1:length(optionsFile.task.MouseID)
         PostObsParam = rec.sim.agent(j,m).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
         fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
         hold on

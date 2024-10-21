@@ -36,9 +36,9 @@ addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 for m = 1:numel(optionsFile.model.space) %for each model in the model space
     disp(['fitting  ', optionsFile.model.space{m},' to data...']); 
 
-    for n = 1:optionsFile.Task.nSize %for each mouse(agent) in the cohort
-        currMouse = optionsFile.Task.MouseID(n); %currMouse vector for each mouseID in cohort
-        disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.Task.nSize),')']);
+    for n = 1:optionsFile.cohort.nSize %for each mouse(agent) in the cohort
+        currMouse = optionsFile.task.MouseID(n); %currMouse vector for each mouseID in cohort
+        disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.cohort.nSize),')']);
 
         load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]); %load currMouse's results from data extraction
         responses = ExperimentTaskTable.Choice;
@@ -51,7 +51,7 @@ for m = 1:numel(optionsFile.model.space) %for each model in the model space
         
         %% model fit
         est = tapas_fitModel(responses, ...
-            optionsFile.Task.inputs, ...
+            optionsFile.task.inputs, ...
             optionsFile.model.prc_config{m}, ...
             optionsFile.model.obs_config{m}, ...             
             strct); % info for optimization and multistart
