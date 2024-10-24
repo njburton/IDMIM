@@ -61,7 +61,6 @@ while optionsFile.doOptions == 1
     % Path to directory containing files to analyse from mouse decision-making task
     optionsFile.paths.dataToAnalyse   = ['C:\Users\c3200098\Desktop',filesep,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
 
-    % SET DIRECTORY PATHS FOR PROJECT, RAWDATA, RESULTS & PLOTS
     % Set paths of directories
     disp('setting paths...');
     optionsFile.paths.projDir         = [pwd,filesep];
@@ -83,7 +82,7 @@ while optionsFile.doOptions == 1
     % Set Task info
     optionsFile.task.nTrials                         = 280; %total task trials
     optionsFile.task.MouseID                         = NaN(optionsFile.cohort.nSize,1);
-    optionsFile.task.trialDuration                   = 7; % in seconds
+    optionsFile.task.trialDuration                   = 13; % in seconds
     optionsFile.task.totalTaskDuration               = 3640; % in seconds
 
     %Set input sequence, which represents the task
@@ -104,10 +103,9 @@ while optionsFile.doOptions == 1
     optionsFile.dataFile.taskNameLocation            = 13; %taskNameMSN
     optionsFile.dataFile.outcomeOffset               = 333; %Outcome G
     optionsFile.dataFile.choiceOffset                = 616; %Choice H
-    optionsFile.dataFile.trialStartTimeOffset       = 899; % TrialStartTime I
+    optionsFile.dataFile.trialStartTimeOffset        = 899; % TrialStartTime I
     optionsFile.dataFile.recepticalBeamBreakOffset   = 1182; % RecepticalBeamBreak J
     optionsFile.dataFile.leverPressTimeOffset        = 1465; %LeverPressTime K
-    optionsFile.dataFile.totalCodeLinesOfFile        = 2887; %
 
     % optimization algorithm
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));

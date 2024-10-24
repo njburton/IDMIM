@@ -8,14 +8,14 @@ disp('************************************** BAYESIAN MODEL SELECTION **********
 disp('*');
 disp('*');
 
-load([optionsFile.paths.resultsDir,filesep,'modelInv.mat']);
-groupCodes = dummyCodeGroups;
+load([optionsFile.paths.resultsDir,filesep,'2023_UCMS2',filesep,'modelInv.mat']);
+groupCodes = codeGroups;
 groups = [find(groupCodes==1) find(groupCodes==0)];
 
 addpath(genpath([pwd,filesep,'spm12']));
 
 for m = length(optionsFile.model.space)
-    for n = 1:optionsFile.Task.nSize
+    for n = 1:optionsFile.cohort.nSize
         res.LME(n,m)   = allMice(n,m).est.optim.LME;
         res.prc_param(n,m).ptrans = allMice(n,m).est.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx);
         res.obs_param(n,m).ptrans = allMice(n,m).est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);

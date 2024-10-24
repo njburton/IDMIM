@@ -1,11 +1,11 @@
 
 optionsFile = runOptions; % specifications for this analysis
 
-%% Create empty arrays for logging individual mouse data
+%% initialise empty arrays for logging individual mouse data
 OmissionArray = zeros(180,10);
 ResponseTimeArray = zeros(180,10);
 
-%% Save currMouse responseTimes and choices to appropriate arrays
+%% save currMouse responseTimes and choices to appropriate arrays
 for n = 1:optionsFile.cohort.nSize
 
     currMouse = optionsFile.task.MouseID(n);
@@ -39,16 +39,16 @@ end
 %%Find average >5 sec responseTime trial #
 AvgLongResponseTrialNumber = zeros(1,10);
 for i = 1:width(AvgLongResponseTrialNumber)
-    currLongResponseTrials = ResponseTimeArray(:,i)
+    currLongResponseTrials = ResponseTimeArray(:,i);
     currLongResponseTrialNumbers = find(~isnan(currLongResponseTrials));
     currLongResponseTrialNumbersSum = sum(currLongResponseTrialNumbers);
-    AvgLongResponseTrialNumber(1,i) = currLongResponseTrialNumbersSum / length(currLongResponseTrialNumbers)
+    AvgLongResponseTrialNumber(1,i) = currLongResponseTrialNumbersSum / length(currLongResponseTrialNumbers);
 end
 
 %Mean LongResponseTime
 AvgLongResponseTimeArray = zeros(1,10);
 for i = 1:width(ResponseTimeArray)
-    AvgLongResponseTimeArray(1,i) = mean(ResponseTimeArray(:,i),'omitnan')
+    AvgLongResponseTimeArray(1,i) = mean(ResponseTimeArray(:,i),'omitnan');
 end
 
 %% Omission
@@ -56,7 +56,7 @@ end
 %Create empty array to count per mouse how many omissions they had
 OmissionCountArray = zeros(1,10);
 %Count omissions (indicated by Choice as a 3)
-OmissionCountArray(1,:) = sum(OmissionArray == 3)
+OmissionCountArray(1,:) = sum(OmissionArray == 3);
 
 %%Find average omission trial #
 AvgOmissionTrialNumber = zeros(1,10);
@@ -64,14 +64,14 @@ for i = 1:width(AvgOmissionTrialNumber)
     currOmissionTrials = OmissionArray(:,i);
     currOmissionTrialNumbers= find(currOmissionTrials==3);
     currMouseSumOmissionTrialNumbers = sum(currOmissionTrialNumbers);
-    AvgOmissionTrialNumber(1,i) = currMouseSumOmissionTrialNumbers / length(currOmissionTrialNumbers)
+    AvgOmissionTrialNumber(1,i) = currMouseSumOmissionTrialNumbers / length(currOmissionTrialNumbers);
 end
 
 ControlMouseTable.OmissionCount = OmissionCountArray';
 ControlMouseTable.AvgOmissionTrialNumber = AvgOmissionTrialNumber';
 ControlMouseTable.LongResponseCount = LongResponseCountArray';
 ControlMouseTable.AvgLongResponseTrialNumber = AvgLongResponseTrialNumber';
-ControlMouseTable.AvgLongResponseTime = AvgLongResponseTimeArray'
+ControlMouseTable.AvgLongResponseTime = AvgLongResponseTimeArray';
 
 %Save Table data to .csv file
 writetable(ControlMouseTable,[optionsFile.paths.resultsDir, filesep, 'Controls_Omissions&&LongResponseTime_SummaryTable.csv'])

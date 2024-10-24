@@ -29,7 +29,7 @@ function fitModels(optionsFile)
 % =========================================================================
 
 
-optionsFile = runOptions; % Load specifications for this analysis
+load('optionsFile.mat');
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
 addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 
@@ -41,19 +41,20 @@ for m = 1:numel(optionsFile.model.space) %for each model in the model space
         disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.cohort.nSize),')']);
 
         load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]); %load currMouse's results from data extraction
+        inputs = ExperimentTaskTable.RewardingLeverSide;
         responses = ExperimentTaskTable.Choice;
 
         %optionsFile.model.opt_config.maxStep = Inf;
-        strct=eval(optionsFile.model.opt_config);
+        strct              = eval(optionsFile.model.opt_config);
         strct.maxStep      = inf;
-        strct.nRandInit    = 100 %optionsFile.rng.nRandInit;
+        strct.nRandInit    = optionsFile.rng.nRandInit;
         strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
         
         %% model fit
         est = tapas_fitModel(responses, ...
-            optionsFile.task.inputs, ...
+            inputs, ... 
             optionsFile.model.prc_config{m}, ...
-            optionsFile.model.obs_config{m}, ...             
+            optionsFile.model.obs_config, ...             
             strct); % info for optimization and multistart
 
         %Plot standard trajectory plot

@@ -32,10 +32,9 @@ if v0<=0
     error('v0 should be positive');
 end  
 
-T = 180;
+w0 = omega;
+T = 280;
 C = 2;
-
-w0 = omega; 
 [T,C] = size(outcomes);
 % T: number of trials
 % C: number of cues

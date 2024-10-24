@@ -71,7 +71,6 @@ end
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
 for m = 1:numel(optionsFile.model.space)
     for p = 1:length(optionsFile.modelSpace(m).prc_idx)
-
         % prc model
         [prc_coef, prc_p] = corr(rec.param.prc(m).sim(:,p), rec.param.prc(m).est(:,p));
         rec.param.prc(m).pcc(p)  = diag(prc_coef);
@@ -97,25 +96,23 @@ for m = 1:numel(optionsFile.model.space)
             PostPerceptParam = rec.est(m,n,m).data.est.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
             fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
             hold on
-
-        end %TO DO, check if this type of indexing works here
+        end %
+        
         yline(rec.est(m,n,m).data.est.c_prc.priormus(optionsFile.modelSpace(m).prc_idx),'Color','r');
         %     title(fig,['mice perceptual parameters',num2str(p)]);
         figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_prc_param',num2str(p)]);
         save([figDir,'.fig']);
         print([figDir,'.png'], '-dpng');
         close all;
-        %remove first yline
     end
-
 
     %Plot free observational model parameters
     for j = 1:optionsFile.cohort.nSize
         PostObsParam = rec.est(m,j,m).data.est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);   % Plot single free param in observation model
         fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
         hold on
-
     end
+
     yline(rec.est(m,n,m).data.est.c_obs.priormus(optionsFile.modelSpace(m).obs_idx),'Color','r');
     % title(fig,['mice observational parameters',num2str(p)]);
     figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_obs_param',num2str(p)]);
