@@ -53,7 +53,7 @@ sigmoid = @(x)1./(1+exp(-x));
 for t  = 1:T      
     o = outcomes(t,:);
     predictions(t,:) = m;    
-    volatility(t,:) = v;    
+    volatility(t,:)  = v;    
     
     mpre        = m;
     wpre        = w;

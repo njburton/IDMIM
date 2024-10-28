@@ -28,17 +28,17 @@ function fitModels(optionsFile)
 % _________________________________________________________________________
 % =========================================================================
 
+optionsFile = load("optionsFile.mat");
 
-load('optionsFile.mat');
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
 addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 
-for m = 1:numel(optionsFile.model.space) %for each model in the model space
-    disp(['fitting  ', optionsFile.model.space{m},' to data...']); 
+for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
+    disp(['fitting  ', optionsFile.model.space{modeli},' to data...']); 
 
-    for n = 1:optionsFile.cohort.nSize %for each mouse(agent) in the cohort
-        currMouse = optionsFile.task.MouseID(n); %currMouse vector for each mouseID in cohort
-        disp(['fitting mouse ', num2str(currMouse), ' (',num2str(n),' of ',num2str(optionsFile.cohort.nSize),')']);
+    for mousei = 1:optionsFile.cohort.nSize %for each mouse(agent) in the cohort
+        currMouse = optionsFile.task.MouseID(mousei); %currMouse vector for each mouseID in cohort
+        disp(['fitting mouse ', num2str(currMouse), ' (',num2str(mousei),' of ',num2str(optionsFile.cohort.nSize),')']);
 
         load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]); %load currMouse's results from data extraction
         inputs = ExperimentTaskTable.RewardingLeverSide;
@@ -53,20 +53,20 @@ for m = 1:numel(optionsFile.model.space) %for each model in the model space
         %% model fit
         est = tapas_fitModel(responses, ...
             inputs, ... 
-            optionsFile.model.prc_config{m}, ...
+            optionsFile.model.prc_config{modeli}, ...
             optionsFile.model.obs_config, ...             
             strct); % info for optimization and multistart
 
         %Plot standard trajectory plot
         optionsFile.plot(m).plot_fits(est);
-        figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m}]);
+        figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli}]);
         save([figdir,'.fig']);
         print([figdir,'.png'], '-dpng');
         close all;
 
         %Save model fit
-        save([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m},'.mat'], 'est');
-        modelInv.allMice(n,m).est = est;
+        save([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli},'.mat'], 'est');
+        modelInv.allMice(n,modeli).est = est;
     end
 end
 save([optionsFile.paths.resultsDir,filesep,'modelInv.mat'], '-struct', 'modelInv','allMice');

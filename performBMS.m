@@ -2,7 +2,7 @@ function performBMS
 
 %% INITIALIZE Variables for running this function
 
-optionsFile = runOptions; % specifications for this analysis
+optionsFile = load("optionsFile.mat"); % specifications for this analysis
 
 disp('************************************** BAYESIAN MODEL SELECTION **************************************');
 disp('*');
@@ -10,18 +10,17 @@ disp('*');
 
 load([optionsFile.paths.resultsDir,filesep,'2023_UCMS2',filesep,'modelInv.mat']);
 groupCodes = codeGroups;
-groups = [find(groupCodes==1) find(groupCodes==0)];
+groups = [find(groupCodes==1) find(groupCodes==0)]; %0 = controls,1 = treatment
 
 addpath(genpath([pwd,filesep,'spm12']));
 
-for m = length(optionsFile.model.space)
-    for n = 1:optionsFile.cohort.nSize
-        res.LME(n,m)   = allMice(n,m).est.optim.LME;
-        res.prc_param(n,m).ptrans = allMice(n,m).est.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx);
-        res.obs_param(n,m).ptrans = allMice(n,m).est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);
+for modeli = length(optionsFile.model.space)
+    for mousei = 1:optionsFile.cohort.nSize
+        res.LME(mousei,modeli)   = allMice(mousei,modeli).est.optim.LME;
+        res.prc_param(mousei,modeli).ptrans = allMice(mousei,modeli).est.p_prc.ptrans(optionsFile.modelSpace(modeli).prc_idx);
+        res.obs_param(mousei,modeli).ptrans = allMice(mousei,modeli).est.p_obs.ptrans(optionsFile.modelSpace(modeli).obs_idx);
     end
 end
-
 
 %% PERFORM rfx BMS for all Mice
 [res.BMS.alpha,res.BMS.exp_r,res.BMS.xp,res.BMS.pxp,res.BMS.bor] = spm_BMS(res.LME);

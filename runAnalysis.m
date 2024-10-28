@@ -38,7 +38,7 @@ diary on
 
 %% Initialise options for running this function
 disp('initialising options...');
-optionsFile = runOptions;
+optionsFile = load("optionsFile.mat");
 
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models

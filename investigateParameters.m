@@ -15,16 +15,16 @@ dataTbl.mouseID = optionsFile.task.MouseID; %Load mouseIDs into table
 dataTbl.group   = logical(groupCodes); % Load groups based on groupCodes (0=control,1=ucms)
 
 %Load responses into vector
-responses = zeros(180,length(optionsFile.task.MouseID));
+responses = zeros(optionsFile.task.nTrials,length(optionsFile.task.MouseID));
 for n = 1:length(optionsFile.task.MouseID)
     responses(:,n) = allMice(n,1).est.y;
 end
 
 % Load responsetime & beamBreak
-responseTime  = zeros(180,length(optionsFile.task.MouseID));
-beamBreakTime = zeros(180,length(optionsFile.task.MouseID));
+responseTime  = zeros(optionsFile.task.nTrials,length(optionsFile.task.MouseID));
+beamBreakTime = zeros(optionsFile.task.nTrials,length(optionsFile.task.MouseID));
 for n = 1:length(optionsFile.task.MouseID)
-    currMouse     = optionsFile.task.MouseID(n);
+    currMouse          = optionsFile.task.MouseID(n);
     load(fullfile([optionsFile.paths.resultsDir,filesep,'mouse',num2str(currMouse),'.mat']));
     responseTime(:,n)  = ExperimentTaskTable.ResponseTime;
     beamBreakTime(:,n) = ExperimentTaskTable.RecepticalBeamBreak;

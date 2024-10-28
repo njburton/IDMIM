@@ -77,21 +77,16 @@ while optionsFile.doOptions == 1
 
     %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
-    optionsFile.cohort.group          = {'2023_UCMS2', '2024_HGFPilot3'};
-
+    optionsFile.cohort.group          = {'2023_UCMS2', '2024_HGFPilot3'}; %Each group represents an individual experiment/cohort
+    
     % Set Task info
+    optionsFile.task.taskList                        = {'NJB_HGF_TrainingTask_RL','NJB_HGF_TrainingTask_LL - Copy', 'NJB_HGF_TestTaskA','NJB_HGF_TestTaskB'}; 
     optionsFile.task.nTrials                         = 280; %total task trials
     optionsFile.task.MouseID                         = NaN(optionsFile.cohort.nSize,1);
     optionsFile.task.trialDuration                   = 13; % in seconds
     optionsFile.task.totalTaskDuration               = 3640; % in seconds
 
-    %Set input sequence, which represents the task
-    optionsFile.input.binInputSeq.TrainingTaskRL     = 'NJB_HGF_TrainingTask_RL.txt';
-    optionsFile.input.binInputSeq.TrainingTaskLL     = 'NJB_HGF_TrainingTask_LL - Copy.txt';
-    optionsFile.input.binInputSeq.TestTaskA          = 'NJB_HGF_TestTaskA.txt';
-    optionsFile.input.binInputSeq.TestTaskB          = 'NJB_HGF_TestTaskB.txt';
-
-    % simulation options
+      % simulation options
     optionsFile.simulations.nSamples                 = 50;
     optionsFile.simulations.simResultsDir            = [optionsFile.paths.outputDir,'simResults'];
 
@@ -119,7 +114,7 @@ while optionsFile.doOptions == 1
 
     % define model and its related functions
     optionsFile.setupModels         = [];
-    optionsFile.model.space         = {'HGF_3lvl','HGF_2lvl','RW','VKF'};% all models in modelspace
+    optionsFile.model.space         = {'HGF_3LVL','HGF_2LVL','RW','VKF'};% all models in modelspace
     optionsFile.model.prc           = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
     optionsFile.model.prc_config    = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config','vkf_bin'};
     optionsFile.model.obs	        = {'tapas_unitsq_sgm'};

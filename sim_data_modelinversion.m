@@ -31,7 +31,7 @@ function [] = sim_data_modelinversion()
 %% INITIALIZE Variables for running this function
 % specifications for this analysis
 
-optionsFile = runOptions; % specifications for this analysis
+optionsFile = load("optionsFile.mat"); % specifications for this analysis
 
 disp('************************************** SIM_DATA_MODELINVERSION **************************************');
 disp('*');
@@ -53,7 +53,6 @@ for samplei = 1:optionsFile.simulations.nSamples
                 optionsFile.hgf.opt_config,...                       % Optimization algorithm
                 0,...                                            % 0 = MAP estimation
                 optionsFile.rng.settings.State(optionsFile.rng.idx, 1)); % seed for multistart
-
 
             %% SAVE model fit as struct
            save_path = fullfile(char(optionsFile.simulations.simResultsDir),...
