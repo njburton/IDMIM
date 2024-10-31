@@ -1,0 +1,208 @@
+initialising options...
+{Unrecognized field name "doSimulations".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 45)" style="font-weight:bold">runAnalysis</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m',45,0)">line 45</a>)
+if optionsFile.doSimulations
+} 
+matlab.internal.language.introspective.errorDocCallback('runAnalysis', 'C:\Users\c3200098\Desktop\projects\IDMIM\runAnalysis.m', 45)
+getData
+Large (>70,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...
+{Unrecognized function or variable 'mouseID'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 108)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',108,0)">line 108</a>)
+                ExperimentTaskTable.DrugCondition(:) = assignDrugCondition(mouseID, optionsFile);
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',108,0)
+getData
+Large (>70,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...
+{Unrecognized function or variable 'currTask'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 113)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',113,0)">line 113</a>)
+                    'mouse',char(currMouse),'_',char(currTask),'_',char(currTaskDate),'.mat'];
+} 
+getData
+Large (>70,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+{Unrecognized function or variable 'currTask'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('getData', 'C:\Users\c3200098\Desktop\projects\IDMIM\getData.m', 113)" style="font-weight:bold">getData</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\getData.m',113,0)">line 113</a>)
+                    'mouse',char(currMouse),'_',char(currTask),'_',char(currTaskDate),'.mat'];
+} 
+getData
+Large (>70,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...
+currTask
+{Unrecognized function or variable 'currTask'.
+} 
+operantTaski
+
+operantTaski =
+
+     1
+
+char(taskSearchList(operantTaski))
+
+ans =
+
+    'NJB_HGF_TrainingTask_RL'
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+getData
+Large (>70,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbcont; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbquit; end
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',25,17)">File: mouseDatabase.m Line: 25 Column: 17</a>
+Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices,
+use brackets instead of parentheses.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',25,17)
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',25,17)">File: mouseDatabase.m Line: 25 Column: 17</a>
+Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error. To construct matrices,
+use brackets instead of parentheses.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',25,17)
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',23,30)">File: mouseDatabase.m Line: 23 Column: 30</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',23,30)
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',23,30)">File: mouseDatabase.m Line: 23 Column: 30</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',23,30)">File: mouseDatabase.m Line: 23 Column: 30</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',23,30)
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',33,17)">File: mouseDatabase.m Line: 33 Column: 17</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',33,17)
+mouseDatabase
+{<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',39,17)">File: mouseDatabase.m Line: 39 Column: 17</a>
+Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',39,17)
+mouseDatabase
+{Unrecognized field name "mouseID".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mouseDatabase', 'C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m', 10)" style="font-weight:bold">mouseDatabase</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',10,0)">line 10</a>)
+    mouseDB(mousei).mouseID
+} 
+opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',10,0)
+mouseDatabase
+{Unrecognized field name "mouseID".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mouseDatabase', 'C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m', 8)" style="font-weight:bold">mouseDatabase</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',8,0)">line 8</a>)
+mouseDB.mouseID
+} 
+mouseDatabase
+{Unrecognized field name "ID".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mouseDatabase', 'C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m', 10)" style="font-weight:bold">mouseDatabase</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',10,0)">line 10</a>)
+    mouseDB(mousei).ID
+} 
+dir(fullfile(optionsFile.paths.resultsDir,'*.mat'))
+
+mouse1.1_NJB_HGF_TestTaskB_10-03-24.mat               mouse4.2_NJB_HGF_TrainingTask_LL - Copy_10-03-24.mat  
+mouse1.1_NJB_HGF_TrainingTask_RL_10-10-24.mat         mouse4.2_NJB_HGF_TrainingTask_RL_10-10-24.mat         
+mouse1.2_NJB_HGF_TestTaskB_10-03-24.mat               mouse5.1_NJB_HGF_TrainingTask_RL_10-03-24.mat         
+mouse1.2_NJB_HGF_TrainingTask_RL_10-10-24.mat         mouse5.1_NJB_HGF_TrainingTask_RL_10-10-24.mat         
+mouse2.1_NJB_HGF_TestTaskB_10-03-24.mat               mouse5.2_NJB_HGF_TrainingTask_RL_10-03-24.mat         
+mouse2.1_NJB_HGF_TrainingTask_RL_10-10-24.mat         mouse5.2_NJB_HGF_TrainingTask_RL_10-10-24.mat         
+mouse3.1_NJB_HGF_TrainingTask_RL_10-03-24.mat         mouse5.3_NJB_HGF_TrainingTask_RL_10-03-24.mat         
+mouse3.1_NJB_HGF_TrainingTask_RL_10-10-24.mat         mouse5.3_NJB_HGF_TrainingTask_RL_10-10-24.mat         
+mouse3.2_NJB_HGF_TrainingTask_LL - Copy_10-03-24.mat  mouse5.4_NJB_HGF_TrainingTask_LL - Copy_10-03-24.mat  
+mouse3.2_NJB_HGF_TrainingTask_RL_10-10-24.mat         mouse5.4_NJB_HGF_TrainingTask_RL_10-10-24.mat         
+mouse3.3_NJB_HGF_TestTaskA_10-10-24.mat               mouse5.5_NJB_HGF_TestTaskA_10-10-24.mat               
+mouse3.3_NJB_HGF_TrainingTask_RL_10-03-24.mat         mouse5.5_NJB_HGF_TrainingTask_RL_10-03-24.mat         
+mouse4.2_NJB_HGF_TestTaskB_2024-10-19.mat             
+
+exist help
+
+ans =
+
+     2
+
+doc exist
+unique(allFileNames)
+{Unrecognized function or variable 'allFileNames'.
+} 
+unique(allFilenames)
+
+ans =
+
+  25×1 <a href="matlab:helpPopup cell" style="font-weight:bold">cell</a> array
+
+    {'mouse1.1_NJB_HGF_TestTaskB_10-03-24.mat'             }
+    {'mouse1.1_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse1.2_NJB_HGF_TestTaskB_10-03-24.mat'             }
+    {'mouse1.2_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse2.1_NJB_HGF_TestTaskB_10-03-24.mat'             }
+    {'mouse2.1_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse3.1_NJB_HGF_TrainingTask_RL_10-03-24.mat'       }
+    {'mouse3.1_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse3.2_NJB_HGF_TrainingTask_LL - Copy_10-03-24.mat'}
+    {'mouse3.2_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse3.3_NJB_HGF_TestTaskA_10-10-24.mat'             }
+    {'mouse3.3_NJB_HGF_TrainingTask_RL_10-03-24.mat'       }
+    {'mouse4.2_NJB_HGF_TestTaskB_2024-10-19.mat'           }
+    {'mouse4.2_NJB_HGF_TrainingTask_LL - Copy_10-03-24.mat'}
+    {'mouse4.2_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse5.1_NJB_HGF_TrainingTask_RL_10-03-24.mat'       }
+    {'mouse5.1_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse5.2_NJB_HGF_TrainingTask_RL_10-03-24.mat'       }
+    {'mouse5.2_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse5.3_NJB_HGF_TrainingTask_RL_10-03-24.mat'       }
+    {'mouse5.3_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse5.4_NJB_HGF_TrainingTask_LL - Copy_10-03-24.mat'}
+    {'mouse5.4_NJB_HGF_TrainingTask_RL_10-10-24.mat'       }
+    {'mouse5.5_NJB_HGF_TestTaskA_10-10-24.mat'             }
+    {'mouse5.5_NJB_HGF_TrainingTask_RL_10-03-24.mat'       }
+
+mouseDatabase
+{Unable to perform assignment because the size of the left side is 1-by-1 and the size of the right side is 1-by-3.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mouseDatabase', 'C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m', 12)" style="font-weight:bold">mouseDatabase</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',12,0)">line 12</a>)
+    mouseList(fileInDir,1) = mouseID
+} 
+mouseDatabase
+{Unable to perform assignment because the size of the left side is 1-by-1 and the size of the right side is 1-by-3.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('mouseDatabase', 'C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m', 12)" style="font-weight:bold">mouseDatabase</a> (<a href="matlab: opentoline('C:\Users\c3200098\Desktop\projects\IDMIM\mouseDatabase.m',12,0)">line 12</a>)
+    mouseList(fileInDir,1) = mouseID;
+} 
+mouseDatabase
+mouseDatabase

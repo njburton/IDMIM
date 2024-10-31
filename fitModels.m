@@ -27,7 +27,7 @@ function fitModels(optionsFile)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
-
+tic
 optionsFile = load("optionsFile.mat");
 
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
@@ -71,3 +71,5 @@ for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
 end
 save([optionsFile.paths.resultsDir,filesep,'modelInv.mat'], '-struct', 'modelInv','allMice');
 end
+
+toc

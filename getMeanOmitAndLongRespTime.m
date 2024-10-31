@@ -2,6 +2,8 @@ create function which extras performance/non-comp behavioural statistics such as
 responseTime
 omissionNumbers etc.
 number of rewards received
+number of timeouts
+
 
 
 
