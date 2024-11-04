@@ -1,13 +1,14 @@
-create function which extras performance/non-comp behavioural statistics such as 
-responseTime
-omissionNumbers etc.
-number of rewards received
-number of timeouts
-
+% create function which extras performance/non-comp behavioural statistics such as 
+% responseTime
+% omissionNumbers etc.
+% number of rewards received
+% number of timeouts
+% 
 
 
 
 load("optionsFile.mat"); % specifications for this analysis
+load(char(fullfile(optionsFile.paths.databaseDir, 'toProcessWithPipeline_allFilesWithTaskOrder.mat')))
 
 %% initialise empty arrays for logging individual mouse data
 OmissionArray = zeros(optionsFile.task.nTrials,optionsFile.cohort.nSize);
@@ -15,9 +16,8 @@ ResponseTimeArray = zeros(optionsFile.task.nTrials,optionsFile.cohort.nSize);
 
 %% save currMouse responseTimes and choices to appropriate arrays
 for mousei = 1:optionsFile.cohort.nSize
-
     currMouse = optionsFile.task.MouseID(mousei);
-    load(fullfile([char(optionsFile.paths.resultsDir),'\mouse',num2str(currMouse),'.mat'])); %Load currMouse experimentaskTable
+    load(fullfile([char(optionsFile.paths.mouseMatFilesDir),'\mouse',num2str(currMouse),'.mat'])); %Load currMouse experimentaskTable
     OmissionArray(:,mousei) =  ExperimentTaskTable.Choice;
     ResponseTimeArray(:,mousei) = ExperimentTaskTable.ResponseTime;
 end
@@ -80,4 +80,4 @@ mouseTable.AvgLongResponseTrialNumber = AvgLongResponseTrialNumber';
 mouseTable.AvgLongResponseTime        = AvgLongResponseTimeArray';
 
 %Save Table data to .csv file
-writetable(mouseTable,[optionsFile.paths.resultsDir, filesep, 'Controls_Omissions&&LongResponseTime_SummaryTable.csv'])
+writetable(mouseTable,[optionsFile.paths.resultsDir, filesep, 'Omissions&&LongResponseTime_SummaryTable.csv'])

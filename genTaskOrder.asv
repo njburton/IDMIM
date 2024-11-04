@@ -1,0 +1,63 @@
+function optionsFile = groupByTasks(optionsFile)
+
+load("optionsFile.mat") % load file paths
+
+% search through MatFiles
+dirFiles = dir(fullfile(optionsFile.paths.mouseMatFilesDir,'*.mat'));
+allFilenames = {dirFiles.name}';
+
+tableVarTypes = {'string','string','string','string','single'};
+tableVarNames = {'MouseID','TaskDate','TaskPath','Task','TaskOrder'};
+groupTable    = table('Size',[length(allFilenames) length(tableVarNames)],...
+    'VariableTypes', tableVarTypes,...
+    'VariableNames',tableVarNames);
+
+% fill table from fileNames
+for filei = 1:length(allFilenames)
+    groupTable.MouseID(filei)  = extractBetween(allFilenames(filei),'mouse','_NJB_HGF');
+    groupTable.TaskDate(filei) = extractBetween(allFilenames(filei),'date','.mat');
+    groupTable.Task(filei)     = extractBetween(allFilenames(filei),'HGF_','_date');
+    groupTable.TaskPath(filei) = char(fullfile(optionsFile.paths.mouseMatFilesDir,allFilenames(filei)));
+end
+
+% loop to adjust dates so they are in the followng format: DD:MM:YY
+for dateCheck = 1:length(allFilenames)
+    if contains(groupTable.TaskDate(dateCheck),'2024') == 1
+        oldMonthAndDay = extractAfter(groupTable.TaskDate(dateCheck),'2024-');
+        day = extractAfter(oldMonthAndDay,'-');
+        month = extractBefore(oldMonthAndDay, '-');
+        newDateFormat = append(day,'-',month,'-24');
+        groupTable.TaskDate(dateCheck) = newDateFormat;
+    else
+        oldDayAndMonth = extractBefore(groupTable.TaskDate(dateCheck),'-24');
+        oldMonth = extractBefore(oldDayAndMonth,'-');
+        oldDay = extractAfter(oldDayAndMonth,'-');
+        newDateFormat = append(oldDay,'-',oldMonth,'-24');
+        groupTable.TaskDate(dateCheck) = newDateFormat;
+    end % end of check for dates containing 2024
+end %end of loop to modify dates
+
+%% loop to fill groupTable.TaskOrder
+groupTableSortByDates = sortrows(groupTable,"TaskDate");
+mouseIDList = unique(groupTableSortByDates.MouseID);
+startPoint = 0;
+for taski = 1:length(optionsFile.task.taskList)
+    currTask = erase(optionsFile.task.taskList(taski),'NJB_HGF_');
+    for mousei = 1:length(mouseIDList)
+        currMouse = mouseIDList(mousei);
+        for rowi = 1:length(allFilenames)
+            if strcmp(currMouse, groupTableSortByDates.MouseID(rowi)) && ...
+                    strcmp(currTask,groupTableSortByDates.Task(rowi)) == 1
+                startPoint = startPoint + 1;
+                groupTableSortByDates.TaskOrder(rowi) = startPoint;
+            else
+                continue
+            end
+        end
+        startPoint = 0;
+    end
+    
+
+
+    
+end

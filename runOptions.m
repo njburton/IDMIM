@@ -47,33 +47,22 @@ optionsFile.doGetData        = 0;
 while optionsFile.doOptions == 1
     load('optionsFile.mat')
     disp('setting new paths...');
-    optionsFile.paths.projDir         = [pwd,filesep];
-    optionsFile.paths.outputDir       = [optionsFile.paths.projDir,'output',filesep];
-    optionsFile.paths.resultsDir      = [optionsFile.paths.outputDir,'results'];
-    optionsFile.paths.plotsDir        = [optionsFile.paths.outputDir,'plots'];
-    optionsFile.paths.toolboxDir      = [optionsFile.paths.projDir,filesep,'toolboxes'];
-    optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'HGF'];
-    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'VKF'];
-    optionsFile.paths.SPMtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'spm'];
-    optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
-    optionsFile.paths.genTrajDir      = [optionsFile.paths.utilsDir,'generateTrajectories'];
+    optionsFile.paths.projDir          = [pwd,filesep];
+    optionsFile.paths.outputDir        = [optionsFile.paths.projDir,'output',filesep];
+    optionsFile.paths.databaseDir      = [optionsFile.paths.outputDir,'database'];
+    optionsFile.paths.modelFitFilesDir = [optionsFile.paths.databaseDir,filesep,'modelFitFiles'];
+    optionsFile.paths.mouseMatFilesDir = [optionsFile.paths.databaseDir,filesep,'mouseMatFiles'];
+    optionsFile.paths.resultsDir       = [optionsFile.paths.outputDir,'results'];
+    optionsFile.paths.plotsDir         = [optionsFile.paths.outputDir,'plots'];
+    optionsFile.paths.toolboxDir       = [optionsFile.paths.projDir,filesep,'toolboxes'];
+    optionsFile.paths.HGFtoolboxDir    = [optionsFile.paths.toolboxDir,filesep,'HGF'];
+    optionsFile.paths.VKFtoolboxDir    = [optionsFile.paths.toolboxDir,filesep,'VKF'];
+    optionsFile.paths.SPMtoolboxDir    = [optionsFile.paths.toolboxDir,filesep,'spm'];
+    optionsFile.paths.utilsDir         = [optionsFile.paths.projDir,'utils'];
+    optionsFile.paths.genTrajDir       = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
     % Path to directory containing files to analyse from mouse decision-making task
     optionsFile.paths.dataToAnalyse   = ['C:\Users\c3200098\Desktop',filesep,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
-
-    % Set paths of directories
-    disp('setting paths...');
-    optionsFile.paths.projDir         = [pwd,filesep];
-    optionsFile.paths.outputDir       = [optionsFile.paths.projDir,'output',filesep];
-    optionsFile.paths.binInputSeqDir  = [optionsFile.paths.projDir,'binInputSeq',filesep];
-    optionsFile.paths.resultsDir      = [optionsFile.paths.outputDir,'results'];
-    optionsFile.paths.plotsDir        = [optionsFile.paths.outputDir,'plots'];
-    optionsFile.paths.toolboxDir      = [optionsFile.paths.projDir,filesep,'toolboxes'];
-    optionsFile.paths.HGFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'HGF'];
-    optionsFile.paths.VKFtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'VKF'];
-    optionsFile.paths.SPMtoolboxDir   = [optionsFile.paths.toolboxDir,filesep,'spm'];
-    optionsFile.paths.utilsDir        = [optionsFile.paths.projDir,'utils'];
-    optionsFile.paths.genTrajDir      = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
     %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
