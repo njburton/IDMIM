@@ -112,8 +112,8 @@ while optionsFile.doOptions == 1
 
     % define model and its related functions
     optionsFile.setupModels         = [];
-    optionsFile.model.spaceTAPAS    = {'HGF_3LVL','HGF_2LVL','RW'};% all models in modelspace
-    optionsFile.model.spaceVKF      = {'VKF','vkf_bin'};
+    optionsFile.model.TAPASspace         = {'HGF_3LVL','HGF_2LVL','RW'};% all models in modelspace
+    optionsFile.model.space     = {'VKF','vkf_bin'};
     optionsFile.model.prc           = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
     optionsFile.model.prc_config    = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
     optionsFile.model.obs	        = {'tapas_unitsq_sgm'};
@@ -131,7 +131,7 @@ end
 
 %% SETUP config files for Perceptual models
 while optionsFile.setupModels == 1
-    for i = 1:numel(optionsFile.model.spaceTAPAS)
+    for i = 1:numel(optionsFile.model.space)
         modelSpace(i).prc           = optionsFile.model.prc{i};
         modelSpace(i).prc_config    = eval(optionsFile.model.prc_config{i});
         pr                          = priorPrep(optionsFile.input.inputs);
@@ -205,7 +205,7 @@ while optionsFile.setupModels == 1
     end
     % SETUP config files for Observational models
     for i = 1:numel(optionsFile.model.space)
-        modelSpace(i).name       = optionsFile.model.spaceTAPAS{i};
+        modelSpace(i).name       = optionsFile.model.space{i};
         modelSpace(i).obs        = optionsFile.model.obs{i};
         modelSpace(i).obs_config = eval(optionsFile.model.obs_config{i});
 

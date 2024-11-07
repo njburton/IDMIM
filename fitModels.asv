@@ -27,7 +27,7 @@ function fitModels(optionsFile)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
-tic % recording how long the function takes to complete
+tic%
 load("optionsFile.mat");
 load(char(fullfile(optionsFile.paths.databaseDir, 'toProcessWithPipeline_allFilesWithTaskOrder.mat')));
 
@@ -44,7 +44,7 @@ for modeli = 1:numel(optionsFile.model.spaceTAPAS) %for each model in the model 
         inputs = currFileData.ExperimentTaskTable.RewardingLeverSide;
         responses = currFileData.ExperimentTaskTable.Choice;
 
-        %optionsFile.model.opt_config.maxStep = inf;
+        %optionsFile.model.opt_config.maxStep = Inf;
         strct              = eval(char(optionsFile.model.opt_config));
         strct.maxStep      = inf;
         strct.nRandInit    = optionsFile.rng.nRandInit;
