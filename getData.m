@@ -28,17 +28,17 @@ function optionsFile = getData(optionsFile)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
-
+tic
 load("optionsFile.mat"); %load file to access paths
 largeFileThreshold = 70000;
 
 %% DATA EXTRACTION & PREPARATION
 % Modified table structure to include experimental conditions
 taskTableVarTypes = {'string','string','double','double','double','double',...
-    'double','double','double','single','string','string'};
-taskTableVarNames = {'TrialCode','TaskDate','RewardingLeverSide','Choice',...
+    'double','double','double','single'};
+taskTableVarNames = {'Task','TaskDate','RewardingLeverSide','Choice',...
     'Outcome','TrialStartTime','LeverPressTime','ResponseTime',...
-    'RecepticalBeamBreak','Chamber','DrugCondition','StressCondition'};
+    'RecepticalBeamBreak','Chamber'};
 ExperimentTaskTable = table('Size',[optionsFile.task.nTrials length(taskTableVarNames)],...
     'VariableTypes', taskTableVarTypes,...
     'VariableNames',taskTableVarNames);
@@ -77,10 +77,9 @@ for largeFilei = 1:length(fileCategory)
                 currMouse     = cell2mat(largeMEDPCFile.Var2(startIndices(startIndicesi)-6));
                 currTaskDate  = cell2mat(largeMEDPCFile.Var2(startIndices(startIndicesi)-8));
                 currTaskDate  = replace(currTaskDate,'/','-');
-                
 
                 % save data to table
-                ExperimentTaskTable.TrialCode(:)           = taskSearchList(operantTaski);  %TrialCode
+                ExperimentTaskTable.Task(:)                = taskSearchList(operantTaski);  %TrialCode
                 ExperimentTaskTable.TaskDate(:)            = currTaskDate;
                 ExperimentTaskTable.Outcome                = str2num(cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.outcomeOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.outcomeOffset+optionsFile.task.nTrials))));   %Outcome 0=time,1=reward
                 ExperimentTaskTable.Choice                 = str2num(cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.choiceOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.choiceOffset+optionsFile.task.nTrials))));   %Choice 0=left,1=right
@@ -112,18 +111,17 @@ for largeFilei = 1:length(fileCategory)
 end %end of processing large MEDPC file
 
 %% STEP 2: For loop which creates individual mouse tables from regular sized (<70,000 bytes) MEDPC files
+disp('Now extracting from normal MEDPC output files');
 for regFilei = 1:length(fileCategory) %for each file in the dataToAnalyse dir
-    if fileCategory(regFilei,1) == 1 %skip if file is not identified as regMEDPCFile (0) in fileCategory
+    fileName     = string(allFiles(regFilei).name);
+    regMEDPCFile = readcell(fullfile(optionsFile.paths.dataToAnalyse, fileName));
+    if fileCategory(regFilei,1) || ~contains(regMEDPCFile(10,2),optionsFile.task.taskList) == 1 %skip if file is not identified as regMEDPCFile (0) in fileCategory
         continue
     else
-        fileName     = string(allFiles(regFilei).name);
-        regMEDPCFile = readcell(fullfile(optionsFile.paths.dataToAnalyse, fileName));
         currMouse    = num2str(cell2mat(regMEDPCFile(4,2)));
         currTaskDate = extractBetween(fileName,1,10);
-        
-
         % save to table
-        ExperimentTaskTable.TrialCode(:)           = cell2mat(regMEDPCFile(10,2));  %TrialCode
+        ExperimentTaskTable.Task(:)                = cell2mat(regMEDPCFile(10,2));  %TrialCode
         ExperimentTaskTable.TaskDate(:)            = currTaskDate;
         ExperimentTaskTable.Outcome                = cell2mat(regMEDPCFile((optionsFile.dataFile.outcomeOffset+11):(optionsFile.dataFile.outcomeOffset+10+optionsFile.task.nTrials),2));   %Outcome 0=time,1=reward
         ExperimentTaskTable.Choice                 = cell2mat(regMEDPCFile((optionsFile.dataFile.choiceOffset+11):(optionsFile.dataFile.choiceOffset+10+optionsFile.task.nTrials),2));   %Choice 0=left,1=right
@@ -156,4 +154,5 @@ end
 optionsFile.task.MouseID(find(isnan(optionsFile.task.MouseID)))=[]; % Search MouseIDs for any index's that are 'NaN's and remove them
 optionsFile.cohort.nSize = length(optionsFile.task.MouseID); % Adjust index value of cohort.nSize if mouseIDs were removed by above process
 
+toc
 end

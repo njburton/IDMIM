@@ -66,8 +66,17 @@ while optionsFile.doOptions == 1
 
     %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
-    optionsFile.cohort.group          = {'2023_UCMS2', '2024_HGFPilot3'}; %Each group represents an individual experiment/cohort
-    
+    optionsFile.cohort.cohort          = {'2023_UCMS2', '2024_HGFPilot3'}; %Each group represents an individual experiment/cohort
+    % hardcode sex for each mouse
+    optionsFile.cohort.maleMice       = {'1.1','1.2','2.1','3.1','3.2','3.3'};
+    optionsFile.cohort.femaleMice     = {'4.2','5.1','5.2','5.3','5.4','5.5'};
+    %hardcode test group for each mouse
+    optionsFile.cohort.controlGroup   = {'1.1','1.2','2.1','3.1','3.2','3.3',...
+                                            '4.2','5.1','5.2','5.3','5.4','5.5'};
+    optionsFile.cohort.treatmentGroup = {''};
+
+
+
     % Set Task info
     optionsFile.task.taskList                        = {'NJB_HGF_TrainingTask_RL','NJB_HGF_TrainingTask_LL - Copy', 'NJB_HGF_TestTaskA','NJB_HGF_TestTaskB'}; 
     optionsFile.task.nTrials                         = 280; %total task trials
@@ -85,11 +94,11 @@ while optionsFile.doOptions == 1
 
     % Markers used to identify arrays of interest from raw Med-PC data (.txt file).
     optionsFile.dataFile.taskNameLocation            = 13; %taskNameMSN
-    optionsFile.dataFile.outcomeOffset               = 333; %Outcome G
-    optionsFile.dataFile.choiceOffset                = 616; %Choice H
-    optionsFile.dataFile.trialStartTimeOffset        = 899; % TrialStartTime I
-    optionsFile.dataFile.recepticalBeamBreakOffset   = 1182; % RecepticalBeamBreak J
-    optionsFile.dataFile.leverPressTimeOffset        = 1465; %LeverPressTime K
+    optionsFile.dataFile.outcomeOffset               = 332; %Outcome G
+    optionsFile.dataFile.choiceOffset                = 615; %Choice H
+    optionsFile.dataFile.trialStartTimeOffset        = 898; % TrialStartTime I
+    optionsFile.dataFile.recepticalBeamBreakOffset   = 1181; % RecepticalBeamBreak J
+    optionsFile.dataFile.leverPressTimeOffset        = 1464; %LeverPressTime K
 
     % optimization algorithm
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));

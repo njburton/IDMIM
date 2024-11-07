@@ -1,0 +1,259 @@
+MouseID,TaskDate,Task,TaskOrder,sex,group,maxRewards,omits,longResponses,meanLongResponseTime
+1.1,01-10-24,TrainingTask_RL,1,Male,Control,115,41,14,6.02857142857144
+1.2,01-10-24,TrainingTask_RL,1,Male,Control,126,43,22,6.03863636363636
+2.1,01-10-24,TrainingTask_RL,1,Male,Control,138,15,17,5.86176470588239
+3.1,01-10-24,TrainingTask_RL,1,Male,Control,122,60,22,5.82500000000006
+3.2,01-10-24,TrainingTask_RL,1,Male,Control,134,27,12,5.59166666666666
+3.3,01-10-24,TrainingTask_RL,1,Male,Control,84,106,34,6.12294117647058
+4.2,01-10-24,TrainingTask_RL,1,Female,Control,142,10,23,5.96086956521739
+5.1,01-10-24,TrainingTask_RL,1,Female,Control,77,107,21,6.12476190476192
+5.2,01-10-24,TrainingTask_RL,1,Female,Control,100,70,27,6.04777777777778
+5.3,01-10-24,TrainingTask_RL,1,Female,Control,119,23,24,6.09541666666666
+5.4,01-10-24,TrainingTask_RL,1,Female,Control,117,24,18,5.99277777777776
+5.5,01-10-24,TrainingTask_RL,1,Female,Control,96,83,23,6.09086956521736
+1.1,02-10-24,TrainingTask_LL - Copy,1,Male,Control,121,35,13,6.17846153846152
+1.2,02-10-24,TrainingTask_LL - Copy,1,Male,Control,127,35,10,5.949
+2.1,02-10-24,TrainingTask_LL - Copy,1,Male,Control,152,9,12,5.59333333333331
+3.1,02-10-24,TrainingTask_LL - Copy,1,Male,Control,106,59,21,6.12190476190474
+3.2,02-10-24,TestTaskA,1,Male,Control,96,63,12,5.82333333333332
+3.3,02-10-24,TrainingTask_LL - Copy,1,Male,Control,92,83,20,5.96250000000002
+4.2,02-10-24,TestTaskA,1,Female,Control,131,27,9,6.2633333333333
+5.1,02-10-24,TrainingTask_LL - Copy,1,Female,Control,89,95,29,5.72724137931034
+5.2,02-10-24,TrainingTask_LL - Copy,1,Female,Control,114,67,24,5.985
+5.3,02-10-24,TrainingTask_LL - Copy,1,Female,Control,107,30,26,5.83807692307691
+5.4,02-10-24,TestTaskA,1,Female,Control,130,19,11,6.05000000000004
+5.5,02-10-24,TrainingTask_LL - Copy,1,Female,Control,101,60,13,5.84846153846154
+1.1,03-10-24,TestTaskB,1,Male,Control,133,17,11,5.77454545454546
+1.2,03-10-24,TestTaskB,1,Male,Control,123,28,14,5.94428571428572
+2.1,03-10-24,TestTaskB,1,Male,Control,162,6,8,5.67750000000004
+3.1,03-10-24,TrainingTask_RL,2,Male,Control,117,61,20,6.10699999999995
+3.2,03-10-24,TrainingTask_LL - Copy,1,Male,Control,137,30,12,5.85416666666664
+3.3,03-10-24,TrainingTask_RL,2,Male,Control,92,78,32,5.76812499999999
+4.2,03-10-24,TrainingTask_LL - Copy,1,Female,Control,127,48,11,6.0990909090909
+5.1,03-10-24,TrainingTask_RL,2,Female,Control,68,109,23,6.08478260869566
+5.2,03-10-24,TrainingTask_RL,2,Female,Control,93,77,26,5.9823076923077
+5.3,03-10-24,TrainingTask_RL,2,Female,Control,102,89,23,6.22521739130433
+5.4,03-10-24,TrainingTask_LL - Copy,1,Female,Control,122,24,22,6.04863636363637
+5.5,03-10-24,TrainingTask_RL,2,Female,Control,105,68,26,6.02653846153848
+1.1,04-10-24,TrainingTask_RL,2,Male,Control,142,24,13,5.95999999999996
+1.2,04-10-24,TrainingTask_RL,2,Male,Control,121,32,17,6.31058823529407
+2.1,04-10-24,TrainingTask_RL,2,Male,Control,147,18,7,6.02142857142862
+3.1,04-10-24,TrainingTask_LL - Copy,2,Male,Control,108,38,17,6.09705882352944
+3.2,04-10-24,TrainingTask_RL,2,Male,Control,123,26,12,6.23583333333335
+3.3,04-10-24,TestTaskA,1,Male,Control,109,78,24,6.1
+4.2,04-10-24,TrainingTask_RL,2,Female,Control,139,28,13,5.81307692307691
+5.1,04-10-24,TrainingTask_LL - Copy,2,Female,Control,94,74,26,5.8046153846154
+5.2,04-10-24,TrainingTask_LL - Copy,2,Female,Control,85,76,28,6.0992857142857
+5.3,04-10-24,TrainingTask_LL - Copy,2,Female,Control,73,106,25,5.7736
+5.4,04-10-24,TrainingTask_RL,2,Female,Control,131,30,17,6.09352941176469
+5.5,04-10-24,TestTaskA,1,Female,Control,109,78,28,6.08964285714283
+1.1,05-10-24,TrainingTask_LL - Copy,2,Male,Control,133,22,10,6.16100000000001
+1.2,05-10-24,TrainingTask_LL - Copy,2,Male,Control,111,48,7,5.55142857142861
+2.1,05-10-24,TrainingTask_LL - Copy,2,Male,Control,144,5,4,5.97250000000001
+3.1,05-10-24,TrainingTask_RL,3,Male,Control,121,56,29,6.03103448275864
+3.2,05-10-24,TestTaskB,1,Male,Control,130,16,13,5.83769230769232
+3.3,05-10-24,TrainingTask_RL,3,Male,Control,109,59,15,6.03533333333332
+4.2,05-10-24,TestTaskB,1,Female,Control,128,34,9,6.00666666666668
+5.1,05-10-24,TestTaskB,1,Female,Control,87,102,31,6.03354838709677
+5.2,05-10-24,TestTaskB,1,Female,Control,122,57,14,6.10357142857145
+5.3,05-10-24,TrainingTask_RL,3,Female,Control,94,79,22,5.95227272727273
+5.4,05-10-24,TestTaskB,1,Female,Control,135,30,12,6.12666666666666
+5.5,05-10-24,TrainingTask_RL,3,Female,Control,98,55,18,6.0172222222222
+1.1,06-10-24,TestTaskA,1,Male,Control,78,136,20,6.019
+1.2,06-10-24,TestTaskA,1,Male,Control,76,156,22,6.08909090909091
+2.1,06-10-24,TestTaskA,1,Male,Control,92,103,16,6.07000000000001
+3.1,06-10-24,TestTaskA,1,Male,Control,65,147,27,6.07814814814819
+3.2,06-10-24,TrainingTask_RL,3,Male,Control,100,68,31,6.00354838709677
+3.3,06-10-24,TrainingTask_LL - Copy,2,Male,Control,77,94,28,6.14714285714285
+4.2,06-10-24,TrainingTask_RL,3,Female,Control,80,120,36,6.13222222222221
+5.1,06-10-24,TrainingTask_RL,3,Female,Control,68,150,26,5.73153846153849
+5.2,06-10-24,TrainingTask_RL,3,Female,Control,91,82,31,5.96354838709677
+5.3,06-10-24,TestTaskB,1,Female,Control,98,93,22,5.73409090909091
+5.4,06-10-24,TrainingTask_RL,3,Female,Control,75,144,34,6.05970588235292
+5.5,06-10-24,TrainingTask_LL - Copy,2,Female,Control,88,98,31,6.13225806451613
+1.1,07-10-24,TrainingTask_RL,3,Male,Control,135,26,17,5.76823529411765
+1.2,07-10-24,TrainingTask_RL,3,Male,Control,122,47,15,5.91133333333331
+2.1,07-10-24,TrainingTask_RL,3,Male,Control,145,19,11,5.81999999999994
+3.1,07-10-24,TrainingTask_LL - Copy,3,Male,Control,104,51,24,6.00208333333333
+3.2,07-10-24,TrainingTask_LL - Copy,2,Male,Control,152,30,8,5.78374999999997
+3.3,07-10-24,TestTaskB,1,Male,Control,119,67,26,5.72653846153845
+4.2,07-10-24,TrainingTask_LL - Copy,2,Female,Control,122,29,14,5.8928571428571
+5.1,07-10-24,TrainingTask_LL - Copy,3,Female,Control,89,101,27,5.88518518518518
+5.2,07-10-24,TrainingTask_LL - Copy,3,Female,Control,96,85,13,6.13538461538462
+5.3,07-10-24,TrainingTask_RL,4,Female,Control,71,132,23,6.06391304347825
+5.4,07-10-24,TrainingTask_LL - Copy,2,Female,Control,117,56,25,5.98399999999999
+5.5,07-10-24,TestTaskB,1,Female,Control,109,75,34,6.00911764705883
+1.1,08-10-24,TrainingTask_LL - Copy,3,Male,Control,129,18,10,6.11799999999996
+1.2,08-10-24,TrainingTask_LL - Copy,3,Male,Control,114,32,13,5.73461538461536
+2.1,08-10-24,TrainingTask_LL - Copy,3,Male,Control,142,9,4,5.79749999999996
+3.1,08-10-24,TrainingTask_RL,4,Male,Control,125,56,18,5.61000000000005
+3.2,08-10-24,TrainingTask_RL,4,Male,Control,144,15,9,5.93333333333337
+3.3,08-10-24,TrainingTask_RL,4,Male,Control,122,65,26,6.17499999999998
+4.2,08-10-24,TrainingTask_RL,4,Female,Control,142,27,8,5.88500000000004
+5.1,08-10-24,TrainingTask_RL,4,Female,Control,107,84,21,6.04333333333329
+5.2,08-10-24,TrainingTask_RL,4,Female,Control,100,76,26,5.84576923076918
+5.3,08-10-24,TrainingTask_LL - Copy,3,Female,Control,102,75,23,5.83347826086956
+5.4,08-10-24,TrainingTask_RL,4,Female,Control,138,38,17,6.07647058823528
+5.5,08-10-24,TrainingTask_RL,4,Female,Control,120,62,29,5.89655172413795
+1.1,09-10-24,TestTaskB,2,Male,Control,132,17,9,6.24111111111116
+1.2,09-10-24,TestTaskB,2,Male,Control,134,30,14,6.07642857142854
+2.1,09-10-24,TestTaskB,2,Male,Control,149,1,3,5.70666666666671
+3.1,09-10-24,TestTaskB,1,Male,Control,128,36,21,6.15095238095238
+3.2,09-10-24,TestTaskA,2,Male,Control,125,16,7,5.94000000000005
+3.3,09-10-24,TrainingTask_LL - Copy,3,Male,Control,119,46,30,5.95633333333332
+4.2,09-10-24,TestTaskA,2,Female,Control,139,7,9,5.95444444444454
+5.1,09-10-24,TestTaskA,1,Female,Control,87,85,34,6.03000000000002
+5.2,09-10-24,TestTaskA,1,Female,Control,97,72,19,5.99526315789476
+5.3,09-10-24,TestTaskA,1,Female,Control,100,82,23,5.77739130434783
+5.4,09-10-24,TestTaskA,2,Female,Control,148,12,15,5.82000000000001
+5.5,09-10-24,TrainingTask_LL - Copy,3,Female,Control,115,31,19,5.94947368421053
+1.1,10-10-24,TrainingTask_RL,4,Male,Control,125,35,10,6.08599999999992
+1.2,10-10-24,TrainingTask_RL,4,Male,Control,134,43,19,6.04263157894738
+2.1,10-10-24,TrainingTask_RL,4,Male,Control,152,8,11,6.1590909090909
+3.1,10-10-24,TrainingTask_RL,5,Male,Control,134,31,22,6.10363636363635
+3.2,10-10-24,TrainingTask_RL,5,Male,Control,145,22,6,5.83333333333333
+3.3,10-10-24,TestTaskA,2,Male,Control,112,43,22,5.98090909090905
+4.2,10-10-24,TrainingTask_RL,5,Female,Control,148,21,4,5.53500000000003
+5.1,10-10-24,TrainingTask_RL,5,Female,Control,116,65,39,6.06128205128204
+5.2,10-10-24,TrainingTask_RL,5,Female,Control,89,95,23,5.99478260869566
+5.3,10-10-24,TrainingTask_RL,5,Female,Control,108,70,19,6.22789473684206
+5.4,10-10-24,TrainingTask_RL,5,Female,Control,131,28,24,6.19166666666666
+5.5,10-10-24,TestTaskA,2,Female,Control,117,64,32,6.02437499999996
+1.1,11-10-24,TrainingTask_LL - Copy,4,Male,Control,125,20,13,5.88307692307692
+1.2,11-10-24,TrainingTask_LL - Copy,4,Male,Control,123,20,16,6.04187499999997
+2.1,11-10-24,TrainingTask_LL - Copy,4,Male,Control,152,7,3,5.73000000000002
+3.1,11-10-24,TrainingTask_LL - Copy,4,Male,Control,128,20,10,5.91300000000001
+3.2,11-10-24,TrainingTask_LL - Copy,3,Male,Control,141,23,7,5.67142857142853
+3.3,11-10-24,TrainingTask_RL,5,Male,Control,125,37,18,5.83555555555557
+4.2,11-10-24,TrainingTask_LL - Copy,3,Female,Control,121,24,14,5.92999999999997
+5.1,11-10-24,TrainingTask_LL - Copy,4,Female,Control,107,60,24,6.0195833333333
+5.2,11-10-24,TrainingTask_LL - Copy,4,Female,Control,95,75,18,6.01944444444441
+5.3,11-10-24,TrainingTask_LL - Copy,4,Female,Control,111,52,20,5.81950000000001
+5.4,11-10-24,TrainingTask_LL - Copy,3,Female,Control,136,20,7,5.9871428571428
+5.5,11-10-24,TrainingTask_RL,5,Female,Control,80,120,23,6.15086956521739
+1.1,12-10-24,TrainingTask_RL,5,Male,Control,133,28,11,5.72363636363638
+1.2,12-10-24,TrainingTask_RL,5,Male,Control,131,26,16,6.06562499999998
+2.1,12-10-24,TrainingTask_RL,5,Male,Control,151,16,14,5.94428571428576
+3.1,12-10-24,TrainingTask_RL,6,Male,Control,117,31,10,5.96999999999998
+3.2,12-10-24,TrainingTask_RL,6,Male,Control,144,15,7,5.75714285714288
+3.3,12-10-24,TrainingTask_LL - Copy,4,Male,Control,129,26,10,5.65
+4.2,12-10-24,TrainingTask_RL,6,Female,Control,129,60,15,6.16466666666672
+5.1,12-10-24,TrainingTask_RL,6,Female,Control,106,50,29,6.08620689655171
+5.2,12-10-24,TrainingTask_RL,6,Female,Control,106,83,27,5.95111111111112
+5.3,12-10-24,TrainingTask_RL,6,Female,Control,102,83,25,5.93840000000002
+5.4,12-10-24,TrainingTask_RL,6,Female,Control,124,32,17,5.98588235294116
+5.5,12-10-24,TrainingTask_LL - Copy,4,Female,Control,110,55,20,6.03900000000003
+1.1,13-10-24,TestTaskA,2,Male,Control,145,24,15,5.75599999999999
+1.2,13-10-24,TestTaskA,2,Male,Control,125,28,10,6.05200000000001
+2.1,13-10-24,TestTaskA,2,Male,Control,152,10,4,5.71749999999997
+3.1,13-10-24,TestTaskA,2,Male,Control,141,21,21,6.21380952380949
+3.2,13-10-24,TestTaskB,2,Male,Control,152,14,9,6.03
+3.3,13-10-24,TestTaskB,2,Male,Control,115,59,25,5.99680000000001
+4.2,13-10-24,TestTaskB,2,Female,Control,123,38,9,5.82555555555558
+5.1,13-10-24,TestTaskB,2,Female,Control,101,77,27,6.14407407407407
+5.2,13-10-24,TestTaskB,2,Female,Control,107,82,22,6.01954545454544
+5.3,13-10-24,TestTaskB,2,Female,Control,95,84,32,6.00999999999999
+5.4,13-10-24,TestTaskB,2,Female,Control,119,38,20,6.10649999999998
+5.5,13-10-24,TestTaskB,2,Female,Control,94,75,24,6.07416666666669
+1.1,14-10-24,TrainingTask_RL,6,Male,Control,135,43,20,6.17400000000002
+1.2,14-10-24,TrainingTask_RL,6,Male,Control,127,36,12,5.85166666666665
+2.1,14-10-24,TrainingTask_RL,6,Male,Control,163,12,4,5.24250000000002
+3.1,14-10-24,TrainingTask_RL,7,Male,Control,116,71,28,5.92249999999999
+3.2,14-10-24,TrainingTask_RL,7,Male,Control,134,16,8,5.77375000000001
+3.3,14-10-24,TrainingTask_RL,6,Male,Control,109,48,23,5.76173913043474
+4.2,14-10-24,TrainingTask_RL,7,Female,Control,142,38,10,5.688
+5.1,14-10-24,TrainingTask_RL,7,Female,Control,59,147,29,6.08896551724135
+5.2,14-10-24,TrainingTask_RL,7,Female,Control,84,136,13,6.13846153846153
+5.3,14-10-24,TrainingTask_RL,7,Female,Control,64,142,19,6.24105263157894
+5.4,14-10-24,TrainingTask_RL,7,Female,Control,108,72,30,6.11500000000001
+5.5,14-10-24,TrainingTask_RL,6,Female,Control,107,55,15,5.93533333333336
+1.1,15-10-24,TrainingTask_LL - Copy,5,Male,Control,110,30,13,5.72307692307696
+1.2,15-10-24,TrainingTask_LL - Copy,5,Male,Control,117,38,12,6.22166666666665
+2.1,15-10-24,TrainingTask_LL - Copy,5,Male,Control,157,6,3,5.7966666666667
+3.1,15-10-24,TrainingTask_LL - Copy,5,Male,Control,127,18,11,5.65909090909087
+3.2,15-10-24,TrainingTask_LL - Copy,4,Male,Control,146,12,6,6.18333333333338
+3.3,15-10-24,TrainingTask_LL - Copy,5,Male,Control,113,30,22,5.88363636363635
+4.2,15-10-24,TrainingTask_LL - Copy,4,Female,Control,144,11,3,6.34999999999991
+5.1,15-10-24,TrainingTask_LL - Copy,5,Female,Control,96,94,36,5.95250000000003
+5.2,15-10-24,TrainingTask_LL - Copy,5,Female,Control,61,137,20,6.082
+5.3,15-10-24,TrainingTask_LL - Copy,5,Female,Control,61,162,18,6.0511111111111
+5.4,15-10-24,TrainingTask_LL - Copy,4,Female,Control,106,75,21,5.89571428571427
+5.5,15-10-24,TrainingTask_LL - Copy,5,Female,Control,110,45,10,5.94100000000004
+1.1,16-10-24,TestTaskB,3,Male,Control,131,18,13,5.91000000000006
+1.2,16-10-24,TestTaskB,3,Male,Control,141,34,9,5.88555555555555
+2.1,16-10-24,TestTaskB,3,Male,Control,140,3,2,5.88499999999999
+3.1,16-10-24,TestTaskB,2,Male,Control,126,14,8,6.05000000000003
+3.2,16-10-24,TestTaskA,3,Male,Control,139,8,2,6.29500000000007
+3.3,16-10-24,TestTaskA,3,Male,Control,135,14,14,5.9685714285714
+4.2,16-10-24,TestTaskA,3,Female,Control,140,4,2,5.86000000000013
+5.1,16-10-24,TestTaskA,2,Female,Control,59,172,26,5.86153846153849
+5.2,16-10-24,TestTaskA,2,Female,Control,94,113,20,5.8895
+5.3,16-10-24,TestTaskA,2,Female,Control,73,137,12,6.16916666666666
+5.4,16-10-24,TestTaskA,3,Female,Control,104,74,22,6.06000000000001
+5.5,16-10-24,TestTaskA,3,Female,Control,142,17,4,6.47000000000001
+1.1,17-10-24,TrainingTask_RL,7,Male,Control,131,35,9,5.73222222222226
+1.2,17-10-24,TrainingTask_RL,7,Male,Control,139,30,12,6.18999999999998
+2.1,17-10-24,TrainingTask_RL,7,Male,Control,160,8,3,5.63000000000011
+3.1,17-10-24,TrainingTask_RL,8,Male,Control,124,45,21,5.92142857142859
+3.2,17-10-24,TrainingTask_RL,8,Male,Control,149,6,2,5.27999999999997
+3.3,17-10-24,TrainingTask_RL,7,Male,Control,137,17,12,5.78250000000001
+4.2,17-10-24,TrainingTask_RL,8,Female,Control,149,5,6,5.71333333333337
+5.1,17-10-24,TrainingTask_RL,8,Female,Control,78,139,23,5.87956521739137
+5.2,17-10-24,TrainingTask_RL,8,Female,Control,90,112,21,6.0695238095238
+5.3,17-10-24,TrainingTask_RL,8,Female,Control,85,116,17,5.90411764705881
+5.4,17-10-24,TrainingTask_RL,8,Female,Control,126,73,25,5.89440000000002
+5.5,17-10-24,TrainingTask_RL,7,Female,Control,122,39,12,5.85583333333337
+1.1,18-10-24,TrainingTask_LL - Copy,6,Male,Control,126,24,10,6.21700000000004
+1.2,18-10-24,TrainingTask_LL - Copy,6,Male,Control,129,28,12,6.16333333333332
+2.1,18-10-24,TrainingTask_LL - Copy,6,Male,Control,159,5,1,5.53999999999996
+3.1,18-10-24,TrainingTask_LL - Copy,6,Male,Control,125,57,20,5.87800000000003
+3.2,18-10-24,TrainingTask_LL - Copy,5,Male,Control,139,8,7,5.49000000000003
+3.3,18-10-24,TrainingTask_LL - Copy,6,Male,Control,119,40,19,6.05210526315787
+4.2,18-10-24,TrainingTask_LL - Copy,5,Female,Control,165,9,11,5.76636363636364
+5.1,18-10-24,TrainingTask_LL - Copy,6,Female,Control,83,111,18,5.87111111111108
+5.2,18-10-24,TrainingTask_LL - Copy,6,Female,Control,72,129,20,6.25099999999997
+5.3,18-10-24,TrainingTask_LL - Copy,6,Female,Control,92,102,29,6.01310344827587
+5.4,18-10-24,TrainingTask_LL - Copy,5,Female,Control,95,88,30,5.97066666666669
+5.5,18-10-24,TrainingTask_LL - Copy,6,Female,Control,108,51,18,5.93055555555555
+1.1,19-10-24,TestTaskA,3,Male,Control,136,19,11,6.29454545454545
+1.2,19-10-24,TestTaskA,3,Male,Control,132,21,12,5.64749999999996
+2.1,19-10-24,TestTaskA,3,Male,Control,132,3,1,6
+3.1,19-10-24,TestTaskA,3,Male,Control,115,46,18,6.07222222222221
+3.2,19-10-24,TestTaskB,3,Male,Control,145,5,6,5.69666666666672
+3.3,19-10-24,TestTaskB,3,Male,Control,134,19,20,6.237
+4.2,19-10-24,TestTaskB,3,Female,Control,148,7,6,6.00833333333336
+5.1,19-10-24,TestTaskB,3,Female,Control,68,152,15,6.07866666666667
+5.2,19-10-24,TestTaskB,3,Female,Control,68,127,18,6.05500000000001
+5.3,19-10-24,TestTaskB,3,Female,Control,93,115,32,6.13093749999999
+5.4,19-10-24,TestTaskB,3,Female,Control,113,61,30,6.05933333333332
+5.5,19-10-24,TestTaskB,3,Female,Control,134,27,12,6.27750000000001
+1.1,25-09-24,TrainingTask_RL,8,Male,Control,128,22,20,5.89249999999998
+1.2,25-09-24,TrainingTask_RL,8,Male,Control,116,33,17,6.2105882352941
+2.1,25-09-24,TrainingTask_RL,8,Male,Control,125,13,18,5.75999999999998
+3.2,25-09-24,TrainingTask_RL,9,Male,Control,109,49,22,6.09772727272727
+4.2,25-09-24,TrainingTask_RL,9,Female,Control,142,29,13,5.69923076923078
+5.4,25-09-24,TrainingTask_RL,9,Female,Control,100,63,25,5.98680000000002
+1.1,26-09-24,TrainingTask_LL - Copy,7,Male,Control,131,21,13,5.86153846153846
+1.2,26-09-24,TrainingTask_LL - Copy,7,Male,Control,119,26,23,6.13565217391302
+2.1,26-09-24,TrainingTask_LL - Copy,7,Male,Control,134,12,6,6.23333333333334
+3.2,26-09-24,TrainingTask_LL - Copy,6,Male,Control,108,45,26,5.70923076923077
+4.2,26-09-24,TrainingTask_LL - Copy,6,Female,Control,128,36,11,6.12909090909094
+5.4,26-09-24,TrainingTask_LL - Copy,6,Female,Control,126,42,26,6.23692307692313
+1.1,27-09-24,TrainingTask_RL,9,Male,Control,150,6,9,5.98111111111111
+1.2,27-09-24,TrainingTask_RL,9,Male,Control,140,14,16,5.94937500000002
+2.1,27-09-24,TrainingTask_RL,9,Male,Control,146,3,5,5.77000000000003
+3.2,27-09-24,TrainingTask_RL,10,Male,Control,113,54,26,5.90076923076924
+3.3,27-09-24,TrainingTask_RL,8,Male,Control,110,61,25,6.04440000000001
+4.2,27-09-24,TrainingTask_RL,10,Female,Control,161,16,7,5.77857142857147
+5.4,27-09-24,TrainingTask_RL,10,Female,Control,123,31,16,6.07062500000003
+5.5,27-09-24,TrainingTask_RL,8,Female,Control,117,48,27,5.77925925925926
+1.1,30-09-24,TrainingTask_LL - Copy,8,Male,Control,94,69,22,6.09227272727278
+1.2,30-09-24,TrainingTask_LL - Copy,8,Male,Control,96,81,24,5.9766666666667
+2.1,30-09-24,TrainingTask_LL - Copy,8,Male,Control,111,26,16,5.815
+3.2,30-09-24,TrainingTask_LL - Copy,7,Male,Control,116,48,25,6.12999999999999
+3.3,30-09-24,TrainingTask_LL - Copy,7,Male,Control,84,105,31,5.83999999999999
+4.2,30-09-24,TrainingTask_LL - Copy,7,Female,Control,123,15,5,5.62200000000009
+5.2,30-09-24,TrainingTask_LL - Copy,7,Female,Control,94,80,32,6.0540625
+5.3,30-09-24,TrainingTask_LL - Copy,7,Female,Control,117,60,29,5.8765517241379
+5.4,30-09-24,TrainingTask_LL - Copy,7,Female,Control,120,45,27,6.03629629629628
+5.5,30-09-24,TrainingTask_LL - Copy,7,Female,Control,93,88,23,6.00043478260869

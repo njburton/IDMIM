@@ -1,13 +1,9 @@
 function plotMouseBehaviour
 
-% read data in - task tables
-try
-    load('optionsFile.mat');
-catch
-    optionsFile = runOptions; % specifications for this analysis
-end
+load('optionsFile.mat');
 
-OmittedTrialsCounter =zeros(180,1);
+
+omittedTrialsCounter =zeros(optionsFile.paths.nTrials,1);
 
 for n = 1:optionsFile.cohort.nSize
     currMouse = optionsFile.task.MouseID(n);
@@ -41,10 +37,10 @@ for n = 1:optionsFile.cohort.nSize
     %Tile3 - omissions over task timeline
     ax3 = nexttile([1 2]);
     trials = 1:180;
-    omissionTrials = zeros(1,180);
+    omissionTrials = zeros(1,optionsFile.paths.nTrials);
     omissionTrials(eHGFFit.irr) = 1;
 
-    omissionTrialsAvg = zeros(1,180);
+    omissionTrialsAvg = zeros(1,optionsFile.paths.nTrials);
     omissionTrialAvg = ((sum(eHGFFit.irr)) / length(eHGFFit.irr));
     omissionTrialsAvg(round(omissionTrialAvg)) = 1;
 
@@ -70,10 +66,10 @@ for n = 1:optionsFile.cohort.nSize
     print([figdir,'.png'], '-dpng')
 
     %Create empy vector with same amount of trials
-    OmitMatrix = zeros(180,1); %fill with zeros
+    omitMatrix = zeros(optionsFile.paths.nTrials,1); %fill with zeros
     %Add each omission trial to OmitMatrix to plot later
     for k = eHGFFit.irr %For each omitted trial
-        OmitMatrix((k),1) = 1; %Add a 1 to the corresponding row/trial in OmitMatrix
+        omitMatrix((k),1) = 1; %Add a 1 to the corresponding row/trial in OmitMatrix
     end
 
     %Add OmitMatrix to Counter if currMouse passes our criteria of <20% ommissions
@@ -81,7 +77,7 @@ for n = 1:optionsFile.cohort.nSize
         disp("Detected mouse with too many omissions and broken omission criteria of 20%");
     else
         %Add omitted trials to OmittedTrialCounter
-        OmittedTrialsCounter = (OmittedTrialsCounter + OmitMatrix)
+        omittedTrialsCounter = (omittedTrialsCounter + omitMatrix);
     end
 
 end
@@ -89,7 +85,7 @@ end
 close all;
 
 %Plot omissions over trials for all mice
-fig = bar(OmittedTrialsCounter)
+fig = bar(omittedTrialsCounter);
 title('Omission distribution over task. Outliers have been removed from this plot');
 xlabel('Trial');
 ylabel('Number of omissions');

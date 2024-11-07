@@ -28,7 +28,9 @@ function fitModels(optionsFile)
 % _________________________________________________________________________
 % =========================================================================
 tic
-optionsFile = load("optionsFile.mat");
+load("optionsFile.mat");
+
+
 
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
 addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
@@ -39,7 +41,6 @@ for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
     for mousei = 1:optionsFile.cohort.nSize %for each mouse(agent) in the cohort
         currMouse = optionsFile.task.MouseID(mousei); %currMouse vector for each mouseID in cohort
         disp(['fitting mouse ', num2str(currMouse), ' (',num2str(mousei),' of ',num2str(optionsFile.cohort.nSize),')']);
-
         load([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse)]); %load currMouse's results from data extraction
         inputs = ExperimentTaskTable.RewardingLeverSide;
         responses = ExperimentTaskTable.Choice;
@@ -59,17 +60,18 @@ for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
 
         %Plot standard trajectory plot
         optionsFile.plot(m).plot_fits(est);
-        figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli}]);
+        figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mouse',...
+            num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli}]);
         save([figdir,'.fig']);
         print([figdir,'.png'], '-dpng');
         close all;
 
         %Save model fit
-        save([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli},'.mat'], 'est');
+        save([char(optionsFile.paths.mouseMatFilesDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli},'.mat'], 'est');
         modelInv.allMice(n,modeli).est = est;
     end
 end
-save([optionsFile.paths.resultsDir,filesep,'modelInv.mat'], '-struct', 'modelInv','allMice');
+save([optionsFile.paths.mouseMatFilesDir,filesep,'modelInv.mat'], '-struct', 'modelInv','allMice');
 end
 
 toc
