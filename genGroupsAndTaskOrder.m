@@ -7,7 +7,7 @@ dirFiles = dir(fullfile(optionsFile.paths.mouseMatFilesDir,'*.mat'));
 allFilenames = {dirFiles.name}';
 
 tableVarTypes = {'string','string','string','string','single','string','string'};
-tableVarNames = {'MouseID','TaskDate','TaskPath','Task','TaskOrder','sex','group'};
+tableVarNames = {'MouseID','TaskDate','TaskPath','Task','TaskRepetition','sex','group'};
 groupTable    = table('Size',[length(allFilenames) length(tableVarNames)],...
     'VariableTypes', tableVarTypes,...
     'VariableNames',tableVarNames);

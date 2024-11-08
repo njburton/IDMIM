@@ -33,7 +33,10 @@ groupTable.("meanLongResponseTime") = nanmean(longResponseTimeArray,2);
 groupTable2 = removevars(groupTable,"TaskPath"); % save table without filePath var
 
 %Save Table data to .csv file
-%writetable(groupTable2,[optionsFile.paths.resultsDir, filesep, 'allMiceAlltasks_Rewards-Omits-RT-LongRT.csv'])
+%if file exists, save over
+filePathAndName = [optionsFile.paths.resultsDir, filesep, 'allMiceAlltasks_Rewards-Omits-RT-LongRT.csv'];
+if exists(filePathAndName)
+writetable(groupTable2,filePathAndName)
 
 %Create sex-specific tables
 maleGroupTable = groupTable2;
@@ -41,13 +44,14 @@ femaleGroupTable = groupTable2;
 maleGroupTable(~ismember(maleGroupTable.sex,"Male"),:)=[]; %remove all female mice
 femaleGroupTable(~ismember(femaleGroupTable.sex,"Female"),:)=[]; %remove all male mice
 
-task1GroupTable(~ismember(task1GroupTable.TaskOrder,"1"),:)=[]; %remove all male mice
+%task1GroupTable(~ismember(task1GroupTable.TaskOrder,"1"),:)=[]; %remove all male mice
 
 %% initialise table to save individual mouse maxRew data and group mean into .csv
 tableVarTypes = {'double','double','double','double','double','double','double'};
-tableVarNames = {'Group','Task','TaskOrder','MaxRewards','Omits','longResponses','meanLongResponseTime'};
+tableVarNames = {'Group','Task','TaskRepetition','MaxRewards','Omits','longResponses','meanLongResponseTime'};
 tableT  = table('Size',[3 length(tableVarNames)],'VariableTypes', tableVarTypes,'VariableNames',tableVarNames);
 
+%testTask = {'TestTask1', 'TestTask2'} as vars, NaN if mouse hasn't completed that testTaskOrder
 groups = {'Control','Male','Female'};
 for rowi = 1:length(groupTable.MouseID)
     for groupi = 1:length(groups)
@@ -66,10 +70,10 @@ for rowi = 1:length(groupTable.MouseID)
                 tableT.Omits(rowi) = currOmits; 
                 tableT.longResponses(rowi) = currLongResponses;
                 tableT.meanLongResponseTime(rowi) = groupTable
-
+            end
         end
+   
     end
-
 
 end
 
