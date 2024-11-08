@@ -36,16 +36,14 @@ function optionsFile = runOptions()
 optionsFile.doOptions        = 1;
 optionsFile.setupModels      = 0;
 optionsFile.doGetData        = 0;
-
-% optionsFile.doSimulations    = 0;
-% optionsFile.doModelInversion = 0;
-% optionsFile.doParamRecovery  = 0;
-% optionsFile.doParamInvestig  = 0;
-% optionsFile.doBMS            = 0;
+optionsFile.doSimulations    = 0;
+optionsFile.doModelInversion = 0;
+optionsFile.doParamRecovery  = 0;
+optionsFile.doParamInvestig  = 0;
+optionsFile.doBMS            = 0;
 
 %%
-while optionsFile.doOptions == 1
-    load('optionsFile.mat')
+if optionsFile.doOptions == 1
     disp('setting new paths...');
     optionsFile.paths.projDir          = [pwd,filesep];
     optionsFile.paths.outputDir        = [optionsFile.paths.projDir,'output',filesep];
@@ -62,6 +60,9 @@ while optionsFile.doOptions == 1
     optionsFile.paths.genTrajDir       = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
     % Path to directory containing files to analyse from mouse decision-making task
+    % COMMENT KW: softcode this, so that anyone could run this. If the file
+    % was in the projectDir and any of the sub directories,
+    % 'C:\Users\c3200098\Desktop',filesep, could be replaced by optionsFile.paths.projDir 
     optionsFile.paths.dataToAnalyse   = ['C:\Users\c3200098\Desktop',filesep,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
 
     %Set cohort info
@@ -130,7 +131,7 @@ while optionsFile.doOptions == 1
 end
 
 %% SETUP config files for Perceptual models
-while optionsFile.setupModels == 1
+if optionsFile.setupModels == 1
     for i = 1:numel(optionsFile.model.spaceTAPAS)
         modelSpace(i).prc           = optionsFile.model.prc{i};
         modelSpace(i).prc_config    = eval(optionsFile.model.prc_config{i});
@@ -274,7 +275,7 @@ while optionsFile.setupModels == 1
 
 end
 %% 
-while optionsFile.doGetData == 1
+if optionsFile.doGetData == 1
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
     optionsFile.doOptions     = 0;
