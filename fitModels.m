@@ -27,7 +27,7 @@ function fitModels(optionsFile)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
-diaryName = 'diary_IDMIM_HGFPilot3'; %start diary that will be saved as a textfile
+diaryName = 'diary_IDMIM_HGFPilot3_RW'; %start diary that will be saved as a textfile
 diary on
 
 tic % recording how long the function takes to complete
