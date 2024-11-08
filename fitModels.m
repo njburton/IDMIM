@@ -40,11 +40,11 @@ for modeli = 1:numel(optionsFile.model.spaceTAPAS) %for each model in the model 
     for filei = 1:length(groupTableSorted.TaskPath) %for each mouse(agent) in the cohort
         currMouse = groupTableSorted.MouseID(filei); %currMouse vector for each mouseID in cohort
         disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(groupTableSorted.MouseID)),')']);
-        currFileData = load(groupTableSorted.TaskPath(filei)); %load currMouse's results from data extraction
-        inputs = currFileData.ExperimentTaskTable.RewardingLeverSide;
-        responses = currFileData.ExperimentTaskTable.Choice;
 
-        %optionsFile.model.opt_config.maxStep = inf;
+        currFileData = load(groupTableSorted.TaskPath(filei)); %load currMouse's results from data extraction
+        inputs       = currFileData.ExperimentTaskTable.RewardingLeverSide;
+        responses    = currFileData.ExperimentTaskTable.Choice;
+
         strct              = eval(char(optionsFile.model.opt_config));
         strct.maxStep      = inf;
         strct.nRandInit    = optionsFile.rng.nRandInit;
@@ -53,8 +53,8 @@ for modeli = 1:numel(optionsFile.model.spaceTAPAS) %for each model in the model 
         %% model fit
         est = tapas_fitModel(responses, ...
             inputs, ... 
-            optionsFile.model.prc_config{modeli}, ...
-            optionsFile.model.obs_config, ...             
+            optionsFile.model.prc_config{modeli}, ...       
+            optionsFile.model.obs_config{1}, ... % only ever take first entry because all perceptual models use the same observational model, if this changes, in runOptions add different observational models and add a loop   
             strct); % info for optimization and multistart
 
         %Plot standard trajectory plot
@@ -67,7 +67,7 @@ for modeli = 1:numel(optionsFile.model.spaceTAPAS) %for each model in the model 
 
         %Save model fit
         save([char(optionsFile.paths.mouseMatFilesDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli},'.mat'], 'est');
-        modelInv.allMice(n,modeli).est = est;
+        modelInv.allMice(filei,modeli).est = est;
     end
 end
 save([optionsFile.paths.mouseMatFilesDir,filesep,'modelInv.mat'], '-struct', 'modelInv','allMice');
