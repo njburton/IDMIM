@@ -27,7 +27,7 @@ function fitModels(optionsFile)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
-diaryName = 'diary_IDMIM_HGFPilot3_RW'; %start diary that will be saved as a textfile
+diaryName = 'diary_IDMIM_HGFPilot3_HGF_2LV'; %start diary that will be saved as a textfile
 diary on
 
 tic % recording how long the function takes to complete
@@ -37,7 +37,7 @@ load(char(fullfile(optionsFile.paths.databaseDir, 'toProcessWithPipeline_allFile
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
 addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 
-for modeli = 3:numel(optionsFile.model.spaceTAPAS) %for each model in the model space
+for modeli = 2:numel(optionsFile.model.spaceTAPAS) %for each model in the model space
     disp(['fitting  ', optionsFile.model.spaceTAPAS{modeli},' to data...']); 
 
     for filei = 1:length(groupTableSorted.TaskPath) %for each mouse(agent) in the cohort

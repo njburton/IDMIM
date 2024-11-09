@@ -121,18 +121,18 @@ c.irregular_intervals = false;
 % first level is NaN because it is determined by the second,
 % and the second implies neutrality between outcomes when it
 % is centered at 0.
-c.mu_0mu = [NaN, 0]%, 0];
-c.mu_0sa = [NaN, 0]%, 0];
+c.mu_0mu = [NaN, 1];
+c.mu_0sa = [NaN, 0];
 
-c.logsa_0mu = [NaN,   log(0.1)]%, 0];
-c.logsa_0sa = [NaN,          0]%, 0];
+c.logsa_0mu = [NaN,   log(0.1)];
+c.logsa_0sa = [NaN,        0];
 
 % Rhos
 % Format: row vector of length n_levels.
 % Undefined (therefore NaN) at the first level.
 % Fix this to zero to turn off drift.
-c.rhomu = [NaN, 0]%, 0];
-c.rhosa = [NaN, 0]%, 0];
+c.rhomu = [NaN, 0];
+c.rhosa = [NaN, 0];
 
 % Kappas
 % Format: row vector of length n_levels-1.
@@ -140,14 +140,14 @@ c.rhosa = [NaN, 0]%, 0];
 % Higher log(kappas) should be fixed (preferably to log(1)) if the
 % observation model does not use mu_i+1 (kappa then determines the
 % scaling of x_i+1).
-c.logkamu = [log(1)]%, 0];
-c.logkasa = [     0]%, 0];
+c.logkamu = [log(1)]; % also tried -Inf here
+c.logkasa = [0];
 
 % Omegas
 % Format: row vector of length n_levels.
 % Undefined (therefore NaN) at the first level.
-c.ommu = [NaN,  -3]%,   0];
-c.omsa = [NaN,   4]%,   0];
+c.ommu = [NaN,  -3];
+c.omsa = [NaN,   4];
 
 % Gather prior settings in vectors
 c.priormus = [
