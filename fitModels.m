@@ -64,8 +64,8 @@ for modeli = 3:numel(optionsFile.model.spaceTAPAS) %for each model in the model 
 
         %Plot standard trajectory plot
         optionsFile.plot(modeli).plot_fits(est);
-        figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,'mouse',...
-            num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeli}]);
+        figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,char(date),'_',...
+            'mouse',num2str(currMouse),'_',char(task),'_',optionsFile.fileName.rawFitFile{modeli}]);
         save([figdir,'.fig']);
         print([figdir,'.png'], '-dpng');
         close all;
