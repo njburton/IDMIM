@@ -40,33 +40,39 @@ optionsFile.doBMS            = 0;
 if optionsFile.doOptions == 1
     disp('setting new paths...');
     optionsFile.paths.projDir               = [pwd,filesep];
-    optionsFile.paths.dataToAnalyse         = [optionsFile.paths.projDir,'dataToAnalyse'];
+    optionsFile.paths.outputDir             = [optionsFile.paths.projDir,'output',filesep];
     optionsFile.paths.utilsDir              = [optionsFile.paths.projDir,'utils'];
     optionsFile.paths.toolboxDir            = [optionsFile.paths.projDir,filesep,'toolboxes'];
-    optionsFile.paths.outputDir             = [optionsFile.paths.projDir,'output',filesep];
+    optionsFile.paths.databaseDir           = [optionsFile.paths.outputDir,'database'];
     optionsFile.paths.resultsDir            = [optionsFile.paths.outputDir,'results'];
     optionsFile.paths.plotsDir              = [optionsFile.paths.outputDir,'plots'];
-    optionsFile.paths.databaseDir           = [optionsFile.paths.outputDir,'database'];
     optionsFile.paths.mouseModelFitFilesDir = [optionsFile.paths.databaseDir,filesep,'modelFitFiles'];
     optionsFile.paths.mouseMatFilesDir      = [optionsFile.paths.databaseDir,filesep,'mouseMatFiles'];
+
+   
     optionsFile.paths.HGFtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'HGF'];
     optionsFile.paths.VKFtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'VKF'];
     optionsFile.paths.SPMtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'spm'];
+    
     optionsFile.paths.genTrajDir            = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
-    %% SPECIFY COHORT DATASET info
+    % Path to directory containing files to analyse from mouse decision-making task
+    optionsFile.paths.dataToAnalyse   = [optionsFile.paths.projDir,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
+
+    %% SPECIFY DATASET info
     %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
     optionsFile.cohort.cohort         = {'2023_UCMS2', '2024_HGFPilot3'}; % Each group represents an individual experiment/cohort
-    
-    % Identify which mouseIDs are male, female and their experimental group
+    % hardcode sex for each mouse
     optionsFile.cohort.maleMice       = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort.femaleMice     = {'4.2','5.1','5.2','5.3','5.4','5.5'};
+    %hardcode test group for each mouse
     optionsFile.cohort.controlGroup   = {'1.1','1.2','2.1','3.1','3.2','3.3',...
                                          '4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort.treatmentGroup = {''};
 
     %% SPECIFY TASK and data file info
+
     % specify the task name prefix and task name extension
     optionsFile.task.taskPrefix        = 'NJB_HGF';
     optionsFile.task.taskList          = {[optionsFile.task.taskPrefix,'_TrainingTask_RL'],...
@@ -106,7 +112,7 @@ if optionsFile.doOptions == 1
 
     %% SPECIFY MODELS and related functions
     optionsFile.setupModels       = [];
-    optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW','vkf_bin'}; % all models in modelspace
+    optionsFile.model.space  = {'HGF_3LVL','HGF_2LVL','RW','VKF','vkf_bin'}; % all models in modelspace
     optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
     optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
     optionsFile.model.obs	      = {'tapas_unitsq_sgm'};
@@ -123,12 +129,12 @@ if optionsFile.doOptions == 1
     optionsFile.modelVKF.omega      = 0.2;  % noise parameter
 
    %% SPECIFY FILENAMES
-    optionsFile.fileName.fullDiaryName    = [optionsFile.task.taskPrefix,'_diary']; %
-    optionsFile.fileName.simResponses     = 'sim.mat';
-    optionsFile.fileName.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
-    optionsFile.fileName.fitDiaryName     = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
-    optionsFile.fileName.fittedData       = 'modelInv.mat';
-    optionsFile.fileName.dataBaseFileName = 'rawDataFileInfo.mat'; 
+    optionsFile.fileName.fullDiaryName = [optionsFile.task.taskPrefix,'_diary']; %% @NICK: does that make sense?
+    optionsFile.fileName.simResponses  = 'sim.mat';
+    optionsFile.fileName.rawFitFile    = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
+    optionsFile.fileName.fitDiaryName  = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
+    optionsFile.fileName.fittedData    = 'modelInv.mat';
+    optionsFile.fileName.dataBaseFileName = 'rawDataFileInfo.mat'; % changed it to that because seemed to make more sense, but change it if you like ;):)
     optionsFile.fileName.dataBaseName     = 'dataInfoTable';
 
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
@@ -283,14 +289,14 @@ end
 if optionsFile.doGetData == 1
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
-    optionsFile.doOptions        = 0;
-    optionsFile.doSimulations    = 0;
+    optionsFile.doOptions     = 0;
+    optionsFile.doSimulations = 0;
     optionsFile.doModelInversion = 0;
     optionsFile.doParamRecovery  = 0;
     optionsFile.doParamInvestig  = 0;
-    optionsFile.doBMS            = 0;
+    optionsFile.doBMS = 0;
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
-    optionsFile.doGetData        = 0;
+    optionsFile.doGetData     = 0;
 end
 
 %% NOTE: THIS IS A COPY from hgf function tapas_fitModel:

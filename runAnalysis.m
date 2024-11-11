@@ -49,7 +49,7 @@ if optionsFile.doSimulations
     sim_data_modelinversion;
 end
 %% Get and process data
-% @NICK: CAN YOU SORT THESE FUNCTIONS OUT?
+% Extract data from raw files in dataToAnalyse Dir
 getData;
 getGroupsAndTaskOrder;
 
@@ -70,6 +70,7 @@ end
 
 % @NICK TO DO, clean up
 % data plots
+% getMouseTaskPerformance
 % investigateParameters
 % plotByTreatmentGroup
 
