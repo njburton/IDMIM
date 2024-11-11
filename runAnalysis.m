@@ -33,7 +33,6 @@ clc % Clear cmd window
 disp('starting analysis pipeline...');
 restoredefaultpath();
 
-diaryName = 'diary_IDMIM_UCMS_study'; %start diary that will be saved as a textfile
 diary on
 
 %% Initialise options for running this function

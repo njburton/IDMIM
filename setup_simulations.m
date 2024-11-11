@@ -27,7 +27,6 @@ function [] = setup_simulations
 
 %% INITIALIZE Variables for running this function
 % specifications for this analysis
-
 optionsFile = load("optionsFile.mat"); % specifications for this analysis
 
 addpath(genpath(optionsFile.paths.HGFtoolboxDir));
@@ -129,6 +128,7 @@ set(gca, 'color', 'none');   %transparent background
 xticks([0 40 80 120 160 200 240 280])
 hold on;
 
+%% @NICK: why is this commented out?
 % figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{m},'_predictions']);
 % save([figdir,'.fig'])
 % print(figdir, '-dpng');

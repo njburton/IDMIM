@@ -42,7 +42,7 @@ optionsFile.doParamRecovery  = 0;
 optionsFile.doParamInvestig  = 0;
 optionsFile.doBMS            = 0;
 
-%%
+%% SPECIFY PATHS
 if optionsFile.doOptions == 1
     disp('setting new paths...');
     optionsFile.paths.projDir               = [pwd,filesep];
@@ -60,46 +60,48 @@ if optionsFile.doOptions == 1
     optionsFile.paths.genTrajDir            = [optionsFile.paths.utilsDir,'generateTrajectories'];
 
     % Path to directory containing files to analyse from mouse decision-making task
-    % COMMENT KW: softcode this, so that anyone could run this. If the file
-    % was in the projectDir and any of the sub directories,
-    % 'C:\Users\c3200098\Desktop',filesep, could be replaced by optionsFile.paths.projDir 
     optionsFile.paths.dataToAnalyse   = [optionsFile.paths.projDir,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
 
+    %% SPECIFY DATASET info
     %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
-    optionsFile.cohort.cohort          = {'2023_UCMS2', '2024_HGFPilot3'}; %Each group represents an individual experiment/cohort
+    optionsFile.cohort.cohort         = {'2023_UCMS2', '2024_HGFPilot3'}; % Each group represents an individual experiment/cohort
     % hardcode sex for each mouse
     optionsFile.cohort.maleMice       = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort.femaleMice     = {'4.2','5.1','5.2','5.3','5.4','5.5'};
     %hardcode test group for each mouse
     optionsFile.cohort.controlGroup   = {'1.1','1.2','2.1','3.1','3.2','3.3',...
-                                            '4.2','5.1','5.2','5.3','5.4','5.5'};
+        '4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort.treatmentGroup = {''};
 
+    %% SPECIFY TASK and data file info
 
+    % specify the task name prefix and task name extension
+    optionsFile.task.taskPrefix        = 'NJB_HGF';
+    optionsFile.task.taskList          = {[optionsFile.task.taskPrefix,'_TrainingTask_RL'],...
+                                          [optionsFile.task.taskPrefix,'_TrainingTask_LL - Copy'],...
+                                          [optionsFile.task.taskPrefix,'_TestTaskA'],...
+                                          [optionsFile.task.taskPrefix,'_TestTaskB']};
+    optionsFile.task.nTrials           = 280;  % total task trials
+    optionsFile.task.MouseID           = NaN(optionsFile.cohort.nSize,1);
+    optionsFile.task.trialDuration     = 13;   % in seconds
+    optionsFile.task.totalTaskDuration = 3640; % in seconds
 
-    % Set Task info
-    optionsFile.task.taskList                        = {'NJB_HGF_TrainingTask_RL','NJB_HGF_TrainingTask_LL - Copy', 'NJB_HGF_TestTaskA','NJB_HGF_TestTaskB'}; 
-    optionsFile.task.nTrials                         = 280; %total task trials
-    optionsFile.task.MouseID                         = NaN(optionsFile.cohort.nSize,1);
-    optionsFile.task.trialDuration                   = 13; % in seconds
-    optionsFile.task.totalTaskDuration               = 3640; % in seconds
+   % Markers used to identify arrays of interest from raw Med-PC data (.txt file).
+    optionsFile.dataFile.taskNameLocation          = 13;  % taskNameMSN
+    optionsFile.dataFile.outcomeOffset             = 332; % Outcome G
+    optionsFile.dataFile.choiceOffset              = 615; % Choice H
+    optionsFile.dataFile.trialStartTimeOffset      = 898; % TrialStartTime I
+    optionsFile.dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
+    optionsFile.dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
 
-      % simulation options
-    optionsFile.simulations.nSamples                 = 50;
-    optionsFile.simulations.simResultsDir            = [optionsFile.paths.outputDir,'simResults'];
+    %% SPECIFY SIMULATION settings
+    optionsFile.simulations.nSamples       = 50;
+    optionsFile.simulations.simResultsDir  = [optionsFile.paths.outputDir,'simResults'];
 
     if ~exist(optionsFile.simulations.simResultsDir,'dir')
         mkdir(optionsFile.simulations.simResultsDir)
     end
-
-    % Markers used to identify arrays of interest from raw Med-PC data (.txt file).
-    optionsFile.dataFile.taskNameLocation            = 13; %taskNameMSN
-    optionsFile.dataFile.outcomeOffset               = 332; %Outcome G
-    optionsFile.dataFile.choiceOffset                = 615; %Choice H
-    optionsFile.dataFile.trialStartTimeOffset        = 898; % TrialStartTime I
-    optionsFile.dataFile.recepticalBeamBreakOffset   = 1181; % RecepticalBeamBreak J
-    optionsFile.dataFile.leverPressTimeOffset        = 1464; %LeverPressTime K
 
     % optimization algorithm
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));
@@ -111,27 +113,28 @@ if optionsFile.doOptions == 1
     optionsFile.rng.settings   = rng(123, 'twister');
     optionsFile.rng.nRandInit  = 100;
 
-    % define model and its related functions
-    optionsFile.setupModels         = [];
-    optionsFile.model.spaceTAPAS    = {'HGF_3LVL','HGF_2LVL','RW'};% all models in modelspace
-    optionsFile.model.spaceVKF      = {'VKF','vkf_bin'};
-    optionsFile.model.prc           = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
-    optionsFile.model.prc_config    = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
-    optionsFile.model.obs	        = {'tapas_unitsq_sgm'};
-    optionsFile.model.obs_config    = {'tapas_unitsq_sgm_config'};
-    optionsFile.model.opt_config    = {'tapas_quasinewton_optim_config'};
-    optionsFile.plot(1).plot_fits   = @tapas_ehgf_binary_plotTraj;
-    optionsFile.plot(2).plot_fits   = @tapas_ehgf_binary_plotTraj;
-    optionsFile.plot(3).plot_fits   = @tapas_rw_binary_plotTraj;
+    %% SPECIFY MODELS and related functions
+    optionsFile.setupModels       = [];
+    optionsFile.model.spaceTAPAS  = {'HGF_3LVL','HGF_2LVL','RW'};% all models in modelspace
+    optionsFile.model.spaceVKF    = {'VKF','vkf_bin'};
+    optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
+    optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
+    optionsFile.model.obs	      = {'tapas_unitsq_sgm'};
+    optionsFile.model.obs_config  = {'tapas_unitsq_sgm_config'};
+    optionsFile.model.opt_config  = {'tapas_quasinewton_optim_config'};
+    optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
+    optionsFile.plot(2).plot_fits = @tapas_ehgf_binary_plotTraj;
+    optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
     modelSpace = struct();
-
-    optionsFile.fileName.rawFitFile = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
 
     % Volatile kalman filter parameters informed by paper, Figure 7D
     optionsFile.modelVKF.lambda     = 0.1;  %volatility learning rate
     optionsFile.modelVKF.v0         = 0.5; % initial volatility
     optionsFile.modelVKF.omega      = 0.2;  % noise parameter
 
+   %% SPECIFY FILENAMES
+    optionsFile.fileName.rawFitFile = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
+    optionsFile.fileName.diaryName   = [optionsFile.task.taskPrefix,'_diary']; %% @NICK: does that make sense?
 
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 
@@ -281,7 +284,7 @@ if optionsFile.setupModels == 1
     optionsFile.doOptions = 0;
 
 end
-%% 
+%%
 if optionsFile.doGetData == 1
     load('optionsFile.mat');
     optionsFile = getData(optionsFile);
