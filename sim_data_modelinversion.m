@@ -1,17 +1,16 @@
 function [] = sim_data_modelinversion()
 
-%% WBEST_sim_data_modinv
+%% sim_data_modelinversion
 %  Invert simulated agents with models in the modelspace. This step will be
-%  executed if simP.doSimulations = 1;
+%  executed if optionsFIle.doSimulations = 1;
 %
-%   SYNTAX:       WBEST_sim_data_modinv()
+%   SYNTAX:       sim_data_modinv()
 %
 % Original: 29-10-2021; Alex Hess
 % Amended:  30-11-2021; Sandra Iglesias
 % Amended:  30-05-2023; Katharina V. Wellstein
-
+%       and 11-11-2024; for Nicholas Burton
 % -------------------------------------------------------------------------
-% Copyright (C) 2023 TNU, Institute for Biomedical Engineering, University of Zurich and ETH Zurich.
 %
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
@@ -38,7 +37,7 @@ disp('*');
 disp('*');
 
 % simulation setup
-sim = load(fullfile([optionsFile.simulations.simResultsDir,filesep,'sim.mat']));
+sim = load(fullfile([optionsFile.simulations.simResultsDir,filesep,optionsFile.fileName.simResponses]));
 
 for samplei = 1:optionsFile.simulations.nSamples
     for m_in = 1:numel(optionsFile.model.space)

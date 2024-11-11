@@ -48,6 +48,10 @@ if optionsFile.doSimulations
     disp('performing model inversion on simulated agents...');
     sim_data_modelinversion;
 end
+%% Get and process data
+% @NICK: CAN YOU SORT THESE FUNCTIONS OUT?
+getData;
+genGroupsAndTaskOrder;
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
