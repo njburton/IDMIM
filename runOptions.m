@@ -51,6 +51,7 @@ if optionsFile.doOptions == 1
     optionsFile.paths.mouseModelFitFilesDir = [optionsFile.paths.databaseDir,filesep,'modelFitFiles'];
     optionsFile.paths.mouseMatFilesDir      = [optionsFile.paths.databaseDir,filesep,'mouseMatFiles'];
     optionsFile.paths.resultsDir            = [optionsFile.paths.outputDir,'results'];
+    optionsFile.paths.binInputSeqDir        = [optionsFile.paths.utilsDir,
     optionsFile.paths.plotsDir              = [optionsFile.paths.outputDir,'plots'];
     optionsFile.paths.toolboxDir            = [optionsFile.paths.projDir,filesep,'toolboxes'];
     optionsFile.paths.HGFtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'HGF'];
@@ -63,7 +64,7 @@ if optionsFile.doOptions == 1
     % COMMENT KW: softcode this, so that anyone could run this. If the file
     % was in the projectDir and any of the sub directories,
     % 'C:\Users\c3200098\Desktop',filesep, could be replaced by optionsFile.paths.projDir 
-    optionsFile.paths.dataToAnalyse   = [optionsFile.paths.projDir,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
+    optionsFile.paths.dataToAnalyse   = ['C:\Users\c3200098\Desktop',filesep,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
 
     %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
@@ -75,8 +76,6 @@ if optionsFile.doOptions == 1
     optionsFile.cohort.controlGroup   = {'1.1','1.2','2.1','3.1','3.2','3.3',...
                                             '4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort.treatmentGroup = {''};
-
-
 
     % Set Task info
     optionsFile.task.taskList                        = {'NJB_HGF_TrainingTask_RL','NJB_HGF_TrainingTask_LL - Copy', 'NJB_HGF_TestTaskA','NJB_HGF_TestTaskB'}; 

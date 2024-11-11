@@ -32,8 +32,7 @@ tic
 load("optionsFile.mat"); %load file to access paths
 largeFileThreshold = 70000;
 
-%% DATA EXTRACTION & PREPARATION
-% Modified table structure to include experimental conditions
+% Initialise Experiment Task Table
 taskTableVarTypes = {'string','string','double','double','double','double',...
     'double','double','double','single'};
 taskTableVarNames = {'Task','TaskDate','RewardingLeverSide','Choice',...
@@ -43,8 +42,7 @@ ExperimentTaskTable = table('Size',[optionsFile.task.nTrials length(taskTableVar
     'VariableTypes', taskTableVarTypes,...
     'VariableNames',taskTableVarNames);
 
-%% STEP 1: Check to see if extractData is needed first
-% if multiple mice are condensed into one large raw MED-PC file (with a .file extension)
+%% check for large files where multiple mice are saved into a single raw MED-PC file 
 allFiles = dir(fullfile(optionsFile.paths.dataToAnalyse,'*.*'));
 allFiles = allFiles(3:end); %removes Unix subfolder pointers "." and ".."
 fileCategory = zeros(length(allFiles),1);
@@ -58,11 +56,12 @@ for fileSizei = 1:length(allFiles)
 end %end of check for files with .file in dataToAnalyse dir
 
 %check if filesToProcess is empty of if there are identified large files to deconstruct
-if ~isempty(fileCategory(:,1)); disp('Large (>70,000 bytes) raw MED-PC file(s) found. Beginning extraction of individual mice...');
+if ~isempty(fileCategory(:,1)); disp('Large (>70,000 bytes) MED-PC file found.');
 else disp('No large files detected.'); end %If filesToProcess is NOT empty, meaning there are files to process (extract individual mice)
 
 % list containing the medpcTaskNames you want to look for and extract
 taskSearchList = optionsFile.task.taskList;
+if isempty(taskSearchList); error('Task search list is empty. Check optionsFiles task list has at least 1 entry.'); end
 
 %for each large file found
 for largeFilei = 1:length(fileCategory)
@@ -92,6 +91,16 @@ for largeFilei = 1:length(fileCategory)
                 %input sequence
                 binInputSeq  = rows2vars(readtable(fullfile([char(optionsFile.paths.binInputSeqDir),'2024_HGFPilot3',filesep,char(taskSearchList(operantTaski)),'.txt']))); %RewardingLeverSide
                 ExperimentTaskTable.RewardingLeverSide     = binInputSeq.Var1; % binary input sequence for task aka. RewardingLeverSide
+
+                %check RLS logic passes. If outcome = 1, then choice and
+                %RLS must be the same
+                checkpoint = ExperimentTaskTable.RewaringLeverSide + ExperimentTaskTable.Choice;
+
+                checkpointOutcome = ExperimentTaskTable.Outcome;
+
+                if sum(ExperimentTaskTable.RewaringLeverSide)
+
+
 
                 % Data correction
                 ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==3)              = NaN;

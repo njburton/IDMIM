@@ -35,8 +35,10 @@ groupTable2 = removevars(groupTable,"TaskPath"); % save table without filePath v
 %Save Table data to .csv file
 %if file exists, save over
 filePathAndName = [optionsFile.paths.resultsDir, filesep, 'allMiceAlltasks_Rewards-Omits-RT-LongRT.csv'];
-if exists(filePathAndName)
-writetable(groupTable2,filePathAndName)
+if isfile(filePathAndName)
+    disp('overwriting allMiceAllTasks-Rewards-Omits-RT file');
+    writetable(groupTable2,filePathAndName)
+end
 
 %Create sex-specific tables
 maleGroupTable = groupTable2;
