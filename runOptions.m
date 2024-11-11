@@ -59,6 +59,7 @@ if optionsFile.doOptions == 1
     optionsFile.paths.SPMtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'spm'];
     optionsFile.paths.utilsDir              = [optionsFile.paths.projDir,'utils'];
     optionsFile.paths.genTrajDir            = [optionsFile.paths.utilsDir,'generateTrajectories'];
+    %ADD IN DIARY DIR
 
     % Path to directory containing files to analyse from mouse decision-making task
     % COMMENT KW: softcode this, so that anyone could run this. If the file

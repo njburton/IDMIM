@@ -97,7 +97,8 @@ for largeFilei = 1:length(fileCategory)
                 checkPoint = verifyExperimentSequence(ExperimentTaskTable);
                 if checkPoint == false; error(['InputSeqCheckpoint: Detected error between RewardingSideLever binInputSequence' ...
                         'and task outcome. Troubleshoot by checking input values in ExperimentTaskTable.RewardingLeverSide,'...
-                        'and .Outcomes as well as. Choice.']); end
+                        'and .Outcomes as well as. Choice.']); 
+                end
 
                 % Data correction
                 ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==3)              = NaN;

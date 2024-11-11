@@ -1,7 +1,5 @@
 function checkPoint = verifyExperimentSequence(getData)
 
-load('optionsFile.mat')
-
 % Initialise checkpoint vector to false
 checkPoint = false;
 % Initialise counter for matching conditions
@@ -23,5 +21,6 @@ end
 
 % If all conditions were met, set checkpoint to true
 if validMatches
-    checkPoint = true; end
+    checkPoint = true; 
+end
 end
