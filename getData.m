@@ -42,7 +42,7 @@ ExperimentTaskTable = table('Size',[optionsFile.task.nTrials length(taskTableVar
     'VariableTypes', taskTableVarTypes,...
     'VariableNames',taskTableVarNames);
 
-%% check for large files where multiple mice are saved into a single raw MED-PC file 
+%% check for large files where multiple mice are saved into a single raw MED-PC file
 allFiles = dir(fullfile(optionsFile.paths.dataToAnalyse,'*.*'));
 allFiles = allFiles(3:end); %removes Unix subfolder pointers "." and ".."
 fileCategory = zeros(length(allFiles),1);
@@ -89,18 +89,15 @@ for largeFilei = 1:length(fileCategory)
                 ExperimentTaskTable.Chamber(:)             = str2num(cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)-3))));
 
                 %input sequence
-                binInputSeq  = rows2vars(readtable(fullfile([char(optionsFile.paths.binInputSeqDir),'2024_HGFPilot3',filesep,char(taskSearchList(operantTaski)),'.txt']))); %RewardingLeverSide
+                binInputSeq  = rows2vars(readtable(fullfile([char(optionsFile.paths.binInputSeqDir),filesep,'2024_HGFPilot3',...
+                    filesep,char(taskSearchList(operantTaski)),'.txt']))); %RewardingLeverSide
                 ExperimentTaskTable.RewardingLeverSide     = binInputSeq.Var1; % binary input sequence for task aka. RewardingLeverSide
 
-                %check RLS logic passes. If outcome = 1, then choice and
-                %RLS must be the same
-                checkpoint = ExperimentTaskTable.RewaringLeverSide + ExperimentTaskTable.Choice;
-
-                checkpointOutcome = ExperimentTaskTable.Outcome;
-
-                if sum(ExperimentTaskTable.RewaringLeverSide)
-
-
+                %verifyExperimentSequence
+                checkPoint = verifyExperimentSequence(ExperimentTaskTable);
+                if checkPoint == false; error(['InputSeqCheckpoint: Detected error between RewardingSideLever binInputSequence' ...
+                        'and task outcome. Troubleshoot by checking input values in ExperimentTaskTable.RewardingLeverSide,'...
+                        'and .Outcomes as well as. Choice.']); end
 
                 % Data correction
                 ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==3)              = NaN;

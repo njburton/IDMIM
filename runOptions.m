@@ -51,7 +51,7 @@ if optionsFile.doOptions == 1
     optionsFile.paths.mouseModelFitFilesDir = [optionsFile.paths.databaseDir,filesep,'modelFitFiles'];
     optionsFile.paths.mouseMatFilesDir      = [optionsFile.paths.databaseDir,filesep,'mouseMatFiles'];
     optionsFile.paths.resultsDir            = [optionsFile.paths.outputDir,'results'];
-    optionsFile.paths.binInputSeqDir        = [optionsFile.paths.utilsDir,
+    optionsFile.paths.binInputSeqDir        = [optionsFile.paths.projDir, 'binInputSeq'];
     optionsFile.paths.plotsDir              = [optionsFile.paths.outputDir,'plots'];
     optionsFile.paths.toolboxDir            = [optionsFile.paths.projDir,filesep,'toolboxes'];
     optionsFile.paths.HGFtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'HGF'];
