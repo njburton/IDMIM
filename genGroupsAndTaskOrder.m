@@ -45,7 +45,7 @@ for taski = 1:length(optionsFile.task.taskList)
             if strcmp(currMouse, groupTableSorted.MouseID(rowi)) && ...
                     strcmp(currTask,groupTableSorted.Task(rowi)) == 1
                 startPoint = startPoint + 1;
-                groupTableSorted.TaskOrder(rowi) = startPoint;
+                groupTableSorted.TaskRepetition(rowi) = startPoint;
             else
                 continue
             end

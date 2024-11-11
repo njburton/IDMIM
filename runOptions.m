@@ -51,6 +51,7 @@ if optionsFile.doOptions == 1
     optionsFile.paths.mouseModelFitFilesDir = [optionsFile.paths.databaseDir,filesep,'modelFitFiles'];
     optionsFile.paths.mouseMatFilesDir      = [optionsFile.paths.databaseDir,filesep,'mouseMatFiles'];
     optionsFile.paths.resultsDir            = [optionsFile.paths.outputDir,'results'];
+    optionsFile.paths.binInputSeqDir        = [optionsFile.paths.projDir, 'binInputSeq'];
     optionsFile.paths.plotsDir              = [optionsFile.paths.outputDir,'plots'];
     optionsFile.paths.toolboxDir            = [optionsFile.paths.projDir,filesep,'toolboxes'];
     optionsFile.paths.HGFtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'HGF'];
@@ -58,9 +59,17 @@ if optionsFile.doOptions == 1
     optionsFile.paths.SPMtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'spm'];
     optionsFile.paths.utilsDir              = [optionsFile.paths.projDir,'utils'];
     optionsFile.paths.genTrajDir            = [optionsFile.paths.utilsDir,'generateTrajectories'];
+    %ADD IN DIARY DIR
 
     % Path to directory containing files to analyse from mouse decision-making task
+<<<<<<< HEAD
     optionsFile.paths.dataToAnalyse   = [optionsFile.paths.projDir,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
+=======
+    % COMMENT KW: softcode this, so that anyone could run this. If the file
+    % was in the projectDir and any of the sub directories,
+    % 'C:\Users\c3200098\Desktop',filesep, could be replaced by optionsFile.paths.projDir 
+    optionsFile.paths.dataToAnalyse   = ['C:\Users\c3200098\Desktop',filesep,'dataToAnalyse']; %Local file on Desktop of UoN issued PhD laptop
+>>>>>>> 25dfac848e7f8ccecebc13c9f70df6ca22c5e8f3
 
     %% SPECIFY DATASET info
     %Set cohort info
@@ -74,6 +83,7 @@ if optionsFile.doOptions == 1
         '4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort.treatmentGroup = {''};
 
+<<<<<<< HEAD
     %% SPECIFY TASK and data file info
 
     % specify the task name prefix and task name extension
@@ -94,6 +104,14 @@ if optionsFile.doOptions == 1
     optionsFile.dataFile.trialStartTimeOffset      = 898; % TrialStartTime I
     optionsFile.dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
+=======
+    % Set Task info
+    optionsFile.task.taskList                        = {'NJB_HGF_TrainingTask_RL','NJB_HGF_TrainingTask_LL - Copy', 'NJB_HGF_TestTaskA','NJB_HGF_TestTaskB'}; 
+    optionsFile.task.nTrials                         = 280; %total task trials
+    optionsFile.task.MouseID                         = NaN(optionsFile.cohort.nSize,1);
+    optionsFile.task.trialDuration                   = 13; % in seconds
+    optionsFile.task.totalTaskDuration               = 3640; % in seconds
+>>>>>>> 25dfac848e7f8ccecebc13c9f70df6ca22c5e8f3
 
     %% SPECIFY SIMULATION settings
     optionsFile.simulations.nSamples       = 50;

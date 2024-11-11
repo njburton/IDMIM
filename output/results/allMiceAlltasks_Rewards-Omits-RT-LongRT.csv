@@ -1,4 +1,4 @@
-MouseID,TaskDate,Task,TaskOrder,sex,group,maxRewards,omits,longResponses,meanLongResponseTime
+MouseID,TaskDate,Task,TaskRepetition,sex,group,maxRewards,omits,longResponses,meanLongResponseTime
 1.1,2024-09-25,TrainingTask_RL,1,Male,Control,128,22,20,5.89249999999998
 1.2,2024-09-25,TrainingTask_RL,1,Male,Control,116,33,17,6.2105882352941
 2.1,2024-09-25,TrainingTask_RL,1,Male,Control,125,13,18,5.75999999999998

@@ -59,15 +59,15 @@ for taski = 1:length(optionsFile.task.taskList)
         mouseList = unique(groupTable.MouseID);
 
         for mousei = 1:length(unique(groupTable.MouseID))
-            taskRepTable.MouseID(mousei)              = mouseList(mousei);
-            taskRepTable.maxRewards(mousei)           = taskData.maxRewards(mousei);
-            taskRepTable.omits(mousei)                = taskData.omits(mousei);
-            taskRepTable.longResponses(mousei)        = taskData.longResponses(mousei);
+            taskRepTable.MouseID(mousei) = mouseList(mousei);
+            taskRepTable.maxRewards(mousei) = taskData.maxRewards(mousei);
+            taskRepTable.omits(mousei) = taskData.omits(mousei);
+            taskRepTable.longResponses(mousei) = taskData.longResponses(mousei);
             taskRepTable.meanLongResponseTime(mousei) = taskData.meanLongResponseTime(mousei);
+            taskTable = [taskTable;taskRepTable];
         end
-        taskTable = [taskTable;taskRepTable];
     end
-
+    
 end
 
 

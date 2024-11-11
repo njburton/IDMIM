@@ -101,7 +101,7 @@ function c = tapas_ehgf_binary_config_2LVL
 c = struct;
 
 % Model name
-c.model = 'ehgf_binary';
+c.model = 'ehgf_binary'; % 11/11 Do we need to change this to include '2LVL'.nb
 
 % Number of levels (minimum: 3)
 c.n_levels = 2;
