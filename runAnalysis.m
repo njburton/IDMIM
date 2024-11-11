@@ -51,7 +51,7 @@ end
 %% Get and process data
 % @NICK: CAN YOU SORT THESE FUNCTIONS OUT?
 getData;
-genGroupsAndTaskOrder;
+getGroupsAndTaskOrder;
 
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
@@ -60,21 +60,29 @@ if optionsFile.doModelInversion
     fitModels(optionsFile);
 end
 
-%% Plot parameter recovery and data plots
+%% Sanity check plots
+
+% parameter recovery
 if optionsFile.doParamRecovery
     disp('preparing for parameter recovery to task data...');
     parameter_recovery(optionsFile);
 end
 
+% @NICK TO DO, clean up
+% data plots
+% investigateParameters
+% plotByTreatmentGroup
+
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
-%disp('preparing for Bayesian Model Comparison and model identifiability...');
+
 if optionsFile.doBMS
+     disp('preparing for Bayesian Model Comparison and model identifiability...');
     performBMS
 end
 
-diary off
-save(diaryName)
 disp('pipeline finished.');
+diary off
+save([optionsFile.fileName.fullDiaryName,'.txt'])
 
 end

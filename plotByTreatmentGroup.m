@@ -32,8 +32,8 @@ for j = 1:length(optionsFile.task.MouseID)
     else
         TreatmentGroupChoiceArray(:,j) = currMouseData.eHGFFit.y %Choices/responses  
         TreatmentGroupOutcomeArray(:,j) = ExperimentTaskTable
-        TreatmentGroupRecepticalBeamBreakArray(:,j) =
-        TreatmentGroupResponseTimeArray(:,j) =
-        TreatmentGroupOmissionArray(:,j) =
+        % TreatmentGroupRecepticalBeamBreakArray(:,j) =
+        % TreatmentGroupResponseTimeArray(:,j) =
+        % TreatmentGroupOmissionArray(:,j) =
     end
 end

@@ -1,12 +1,12 @@
 %plot distribution of responsetimes
 tic
 load("optionsFile.mat"); % specifications for this analysis
-if isfile(char(fullfile(optionsFile.paths.databaseDir, 'toProcessWithPipeline_allFilesWithTaskOrder.mat'))) == 1
-    load(char(fullfile(optionsFile.paths.databaseDir, 'toProcessWithPipeline_allFilesWithTaskOrder.mat')));
-else; error('No file found: Check directory for toProcess.mat')
+if isfile(char(fullfile(optionsFile.paths.databaseDir, optionsFile.fileName.dataBaseFileName))) == 1
+    load(char(fullfile(optionsFile.paths.databaseDir, optionsFile.fileName.dataBaseFileName)));
+else; error('No file found: Check directory for data base file containing dataset info')
 end
 
-groupTable = groupTableSorted;
+groupTable = dataInfoTable;
 
 %% initialise empty arrays for logging individual mouse data
 omissionArray         = zeros(length(groupTable.MouseID),optionsFile.task.nTrials);
@@ -46,7 +46,7 @@ maleGroupTable = groupTable(~ismember(groupTable.sex,"Female"),:); %remove all m
 
 
 for taski = 1:length(optionsFile.task.taskList)
-    currTask = erase(optionsFile.task.taskList(taski),"NJB_HGF_");
+    currTask = erase(optionsFile.task.taskList(taski),optionsFile.task.taskPrefix,'_');
     taskData = groupTable(ismember(groupTable.Task,char(currTask)),:);
     taskTable = table();
 

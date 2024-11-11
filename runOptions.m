@@ -133,11 +133,13 @@ if optionsFile.doOptions == 1
 
    %% SPECIFY FILENAMES
     optionsFile.fileName.fullDiaryName = [optionsFile.task.taskPrefix,'_diary']; %% @NICK: does that make sense?
+    optionsFile.fileName.simResponses  = 'sim.mat';
+    optionsFile.fileName.rawFitFile    = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
+    optionsFile.fileName.fitDiaryName  = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
+    optionsFile.fileName.fittedData    = 'modelInv.mat';
+    optionsFile.fileName.dataBaseFileName = 'rawDataFileInfo.mat'; % changed it to that because seemed to make more sense, but change it if you like ;):)
+    optionsFile.fileName.dataBaseName     = 'dataInfoTable';
 
-    optionsFile.fileName.simResponses = 'sim.mat';
-    optionsFile.fileName.rawFitFile   = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
-    optionsFile.fileName.fitDiaryName = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
-    optionsFile.fileName.fittedData   = 'modelInv.mat';
     save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
 
 end

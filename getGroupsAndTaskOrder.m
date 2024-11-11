@@ -1,5 +1,28 @@
-function optionsFile = genGroupsAndTaskOrder(optionsFile)
+function getGroupsAndTaskOrder
 
+%% getGroupsAndTaskOrder
+%
+%  SYNTAX:  fitModels
+%
+%  OUTPUT:
+%
+% Original: XX; Nicholas Burton
+% -------------------------------------------------------------------------
+%
+% This file is released under the terms of the GNU General Public Licence
+% (GPL), version 3. You can redistribute it and/or modify it under the
+% terms of the GPL (either version 3 or, at your option, any later version).
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% _________________________________________________________________________
+% =========================================================================
 load("optionsFile.mat") % load file paths
 
 % search through MatFiles
@@ -14,7 +37,7 @@ groupTable    = table('Size',[length(allFilenames) length(tableVarNames)],...
 
 % fill table from fileNames
 for filei = 1:length(allFilenames)
-    groupTable.MouseID(filei)  = extractBetween(allFilenames(filei),'mouse','_NJB_HGF');
+    groupTable.MouseID(filei)  = extractBetween(allFilenames(filei),'mouse','_',optionsFile.task.taskPrefix);
     groupTable.TaskDate(filei) = extractBetween(allFilenames(filei),'date','.mat');
     groupTable.Task(filei)     = extractBetween(allFilenames(filei),'HGF_','_date');
     groupTable.TaskPath(filei) = char(fullfile(optionsFile.paths.mouseMatFilesDir,allFilenames(filei)));
@@ -38,7 +61,7 @@ groupTableSorted = sortrows(groupTable,"TaskDate","ascend");
 mouseIDList = unique(groupTableSorted.MouseID);
 startPoint = 0;
 for taski = 1:length(optionsFile.task.taskList)
-    currTask = erase(optionsFile.task.taskList(taski),'NJB_HGF_');
+    currTask = erase(optionsFile.task.taskList(taski),optionsFile.task.taskPrefix,'_');
     for mousei = 1:length(mouseIDList)
         currMouse = mouseIDList(mousei);
         for rowi = 1:length(allFilenames)
@@ -73,8 +96,7 @@ for rowi = 1:length(groupTableSorted.sex)
 end
 
 %% save file
-savePathAndName = [char(optionsFile.paths.databaseDir),filesep,...
-    'toProcessWithPipeline_allFilesWithTaskOrder.mat'];
-save(savePathAndName,'groupTableSorted'); %save
+savePath = [char(optionsFile.paths.databaseDir),filesep,'_',optionsFile.fileName.dataBase];
+save(savePath,optionsFile.fileName.dataBaseName);
 
 end
