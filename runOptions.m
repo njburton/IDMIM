@@ -28,9 +28,9 @@ function optionsFile = runOptions()
 
 %% what steps to do?
 optionsFile.doOptions        = 1;
-optionsFile.setupModels      = 0;
-optionsFile.doGetData        = 0;
 optionsFile.doSimulations    = 0;
+optionsFile.setupModels      = 0; 
+optionsFile.doGetData        = 0;
 optionsFile.doModelInversion = 0;
 optionsFile.doParamRecovery  = 0;
 optionsFile.doParamInvestig  = 0;
@@ -41,7 +41,7 @@ if optionsFile.doOptions == 1
     disp('setting new paths...');
     optionsFile.paths.projDir               = [pwd,filesep];
     optionsFile.paths.dataToAnalyse         = [optionsFile.paths.projDir,'dataToAnalyse'];
-    optionsFile.paths.utilsDir              = [optionsFile.paths.projDir,'utils'];
+    optionsFile.paths.utilsDir              = [optionsFile.paths.projDir,'utils',filesep];
     optionsFile.paths.toolboxDir            = [optionsFile.paths.projDir,filesep,'toolboxes'];
     optionsFile.paths.outputDir             = [optionsFile.paths.projDir,'output',filesep];
     optionsFile.paths.resultsDir            = [optionsFile.paths.outputDir,'results'];
@@ -53,9 +53,9 @@ if optionsFile.doOptions == 1
     optionsFile.paths.VKFtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'VKF'];
     optionsFile.paths.SPMtoolboxDir         = [optionsFile.paths.toolboxDir,filesep,'spm'];
     optionsFile.paths.genTrajDir            = [optionsFile.paths.utilsDir,'generateTrajectories'];
-
+    optionsFile.paths.diaryDir              = [optionsFile.paths.utilsDir,filesep,'diary'];
+    optionsFile.paths.binInputSeqDir        = [optionsFile.paths.genTrajDir,filesep,'inputSequences',filesep,'usedTrajs'];
     %% SPECIFY COHORT DATASET info
-    %Set cohort info
     optionsFile.cohort.nSize          = 20; % sample size
     optionsFile.cohort.cohort         = {'2023_UCMS2', '2024_HGFPilot3'}; % Each group represents an individual experiment/cohort
     
@@ -68,7 +68,7 @@ if optionsFile.doOptions == 1
 
     %% SPECIFY TASK and data file info
     % specify the task name prefix and task name extension
-    optionsFile.task.taskPrefix        = 'NJB_HGF';
+    optionsFile.task.taskPrefix        = 'NJB_HGF_';
     optionsFile.task.taskList          = {[optionsFile.task.taskPrefix,'_TrainingTask_RL'],...
                                           [optionsFile.task.taskPrefix,'_TrainingTask_LL - Copy'],...
                                           [optionsFile.task.taskPrefix,'_TestTaskA'],...
@@ -79,7 +79,7 @@ if optionsFile.doOptions == 1
     optionsFile.task.totalTaskDuration = 3640; % in seconds
 
    % Markers used to identify arrays of interest from raw Med-PC data (.txt file).
-    optionsFile.dataFile.taskNameLocation          = 13;  % taskNameMSN
+    %optionsFile.dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.dataFile.choiceOffset              = 615; % Choice H
     optionsFile.dataFile.trialStartTimeOffset      = 898; % TrialStartTime I

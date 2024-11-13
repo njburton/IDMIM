@@ -89,9 +89,6 @@ for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
             date         = currFileData.ExperimentTaskTable.TaskDate(filei);
 
             % VKF model fit
-            %     vkfPredictions  =
-            %     vkfSignals  =
-
             [resp,signals] = vkf_bin(outcomes,...
                 optionsFile.modelVKF.lambda,...  % volatility learning rate
                 optionsFile.modelVKF.v0,...      % initial volatility

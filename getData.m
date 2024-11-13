@@ -1,15 +1,11 @@
 function optionsFile = getData(optionsFile)
-%% runOptions
-% - set all relevant paths, global variables
-% - specify what analysis steps should be executed when running "runAnalysis"
-% - make directories and folderstructure for data if needed
+%% getData - Process and extract experimental task data from MED-PC files
 %
-%  SYNTAX:  getData
-%  INPUT:  optionsFile
-%  OUTPUT: optionsFile, updated after reading the data
+% SYNTAX:  getData(optionsFile)
+% INPUT:   optionsFile - Structure containing analysis options and paths
+% OUTPUT:  optionsFile - Updated structure after data processing
 %
-% Original: 30/5/2023; Katharina Wellstein
-% Amended: 23/2/2024; Nicholas Burton
+% Authors: Katharina Wellstein (30/5/2023), Nicholas Burton (23/2/2024)
 % -------------------------------------------------------------------------
 %
 % Copyright (C) 2024 - need to fill in details
@@ -72,6 +68,10 @@ for largeFilei = 1:length(fileCategory)
         largeMEDPCFile        = readtable(fullfile(optionsFile.paths.dataToAnalyse,filesep,fileName));
         for operantTaski      = 1:length(taskSearchList) %for each task name in the task list
             startIndices      = find(contains(largeMEDPCFile.Var2,taskSearchList(operantTaski)));
+            
+            %checkpoint to throw error if startIndices extract non-interger
+            %value and also before (cell above) and after( cell above)
+            
             for startIndicesi = 1:length(startIndices) %row index for all mentions of taskListi
                 currMouse     = cell2mat(largeMEDPCFile.Var2(startIndices(startIndicesi)-6));
                 currTaskDate  = cell2mat(largeMEDPCFile.Var2(startIndices(startIndicesi)-8));
@@ -97,7 +97,8 @@ for largeFilei = 1:length(fileCategory)
                 checkPoint = verifyExperimentSequence(ExperimentTaskTable);
                 if checkPoint == false; error(['InputSeqCheckpoint: Detected error between RewardingSideLever binInputSequence' ...
                         'and task outcome. Troubleshoot by checking input values in ExperimentTaskTable.RewardingLeverSide,'...
-                        'and .Outcomes as well as. Choice.']); 
+                        'and .Outcomes as well as. Choice.'])
+                    %save diary and turn off diary; 
                 end
 
                 % Data correction
@@ -142,6 +143,13 @@ for regFilei = 1:length(fileCategory) %for each file in the dataToAnalyse dir
         %input sequence
         binInputSeq  = rows2vars(readtable(fullfile([char(optionsFile.paths.binInputSeqDir),'2024_HGFPilot3',filesep,char(currTask),'.txt']))); %RewardingLeverSide
         ExperimentTaskTable.RewardingLeverSide     = binInputSeq.Var1; % binary input sequence for task aka. RewardingLeverSide
+
+        %verifyExperimentSequence
+        checkPoint = verifyExperimentSequence(ExperimentTaskTable);
+        if checkPoint == false; error(['InputSeqCheckpoint: Detected error between RewardingSideLever binInputSequence' ...
+                'and task outcome. Troubleshoot by checking input values in ExperimentTaskTable.RewardingLeverSide,'...
+                'and .Outcomes as well as. Choice.']); 
+        end
 
         % Data correction
         ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==3)              = NaN;

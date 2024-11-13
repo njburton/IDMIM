@@ -6,7 +6,7 @@ if isfile(char(fullfile(optionsFile.paths.databaseDir, optionsFile.fileName.data
 else; error('No file found: Check directory for data base file containing dataset info')
 end
 
-groupTable = dataInfoTable;
+groupTable = groupTableSorted;
 
 %% initialise empty arrays for logging individual mouse data
 omissionArray         = zeros(length(groupTable.MouseID),optionsFile.task.nTrials);
@@ -48,12 +48,10 @@ maleGroupTable = groupTable(~ismember(groupTable.sex,"Female"),:); %remove all m
 for taski = 1:length(optionsFile.task.taskList)
     currTask = erase(optionsFile.task.taskList(taski),optionsFile.task.taskPrefix,'_');
     taskData = groupTable(ismember(groupTable.Task,char(currTask)),:);
-    taskTable = table();
-
     for taskRepetitioni = 1:max(groupTable.TaskRepetition)
         taskData     = taskData(ismember(taskData.TaskRepetition,taskRepetitioni),:);
-        tableVarTypes = {'string','double','double','double','double'};
-        tableVarNames = {'MouseID','maxRewards','omits','longResponses','meanLongResponseTime'};
+        tableVarTypes = {'string','string','double','double','double','double'};
+        tableVarNames = {'MouseID','sex','maxRewards','omits','longResponses','meanLongResponseTime'};
         taskRepTable = table('Size',[length(unique(groupTable.MouseID)) length(tableVarNames)],...
             'VariableTypes',tableVarTypes,'VariableNames',tableVarNames);
         mouseList = unique(groupTable.MouseID);
@@ -65,13 +63,11 @@ for taski = 1:length(optionsFile.task.taskList)
             taskRepTable.longResponses(mousei)        = taskData.longResponses(mousei);
             taskRepTable.meanLongResponseTime(mousei) = taskData.meanLongResponseTime(mousei);
         end
+
         taskTable = [taskTable;taskRepTable];
     end
 
 end
-
-
-
 
 
 %%Find average >5 sec responseTime trial #

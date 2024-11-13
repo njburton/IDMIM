@@ -29,10 +29,8 @@ function runAnalysis
 % some of these may be unnecessary, if you are running the function as a whole
 close all % Close any open windows like fig windows
 clc % Clear cmd window
-
 disp('starting analysis pipeline...');
 restoredefaultpath();
-
 diary on
 
 %% Initialise options for running this function
@@ -41,29 +39,31 @@ optionsFile = load("optionsFile.mat");
 
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
-if optionsFile.doSimulations
+if optionsFile.optionsFile.doSimulations == 1
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));
     disp('setting up simulations...');
     setup_simulations;
     disp('performing model inversion on simulated agents...');
     sim_data_modelinversion;
 end
-%% Get and process data
-% Extract data from raw files in dataToAnalyse Dir
-getData;
-getGroupsAndTaskOrder;
 
+%% Get and process data
+if optionsFile.optionsFile.doGetData == 1
+    disp('preparing to extract raw data from .txt files in dataToAnalyseDir...');
+    getData(optionsFile); % Extract data from raw files in dataToAnalyse Dir
+    disp('...now allocating groups, sex, and taskRepetition counts...');
+    getGroupsAndTaskRepetition(optionsFile); % Take getData output .mat file and fill in groups and taskRepetition info
+end
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
-if optionsFile.doModelInversion
+if optionsFile.optionsFile.doModelInversion == 1
     disp('preparing to fit model to task data...');
     fitModels(optionsFile);
 end
 
 %% Sanity check plots
-
 % parameter recovery
-if optionsFile.doParamRecovery
+if optionsFile.optionsFile.doParamRecovery == 1
     disp('preparing for parameter recovery to task data...');
     parameter_recovery(optionsFile);
 end
@@ -77,13 +77,13 @@ end
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
 
-if optionsFile.doBMS
+if optionsFile.optionsFile.doBMS == 1
      disp('preparing for Bayesian Model Comparison and model identifiability...');
     performBMS
 end
 
 disp('pipeline finished.');
 diary off
-save([optionsFile.fileName.fullDiaryName,'.txt'])
+save([optionsFile.optionsFile.paths.diaryDir,filesep,optionsFile.optionsFile.fileName.fullDiaryName,'.txt'])
 
 end
