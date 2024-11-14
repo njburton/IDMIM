@@ -30,11 +30,12 @@ diary on
 tic % recording how long the function takes to complete
 load("optionsFile.mat");
 load(char(fullfile(optionsFile.paths.databaseDir,optionsFile.fileName.dataBaseFileName)));
+dataInfoTable = groupTableSorted;
 
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
 addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 
-for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
+for modeli = 1:1 %numel(optionsFile.model.space) %for each model in the model space
     if modeli < 4
         diaryName = optionsFile.fileName.fitDiaryName{modeli};
         disp(['fitting  ', optionsFile.model.space{modeli},' to data...']);
@@ -46,7 +47,7 @@ for modeli = 1:numel(optionsFile.model.space) %for each model in the model space
             currFileData = load(dataInfoTable.TaskPath(filei)); %load currMouse's results from data extraction
             inputs       = currFileData.ExperimentTaskTable.RewardingLeverSide;
             responses    = currFileData.ExperimentTaskTable.Choice;
-            task         = erase(currFileData.ExperimentTaskTable.Task(filei),optionsFile.task.taskPrefix,'_');
+            task         = erase(currFileData.ExperimentTaskTable.Task(filei),optionsFile.task.taskPrefix);
             date         = currFileData.ExperimentTaskTable.TaskDate(filei);
 
             strct              = eval(char(optionsFile.model.opt_config));
