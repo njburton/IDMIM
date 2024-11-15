@@ -104,7 +104,7 @@ c = struct;
 c.model = 'ehgf_binary'; % 11/11 Do we need to change this to include '2LVL'.nb
 
 % Number of levels (minimum: 3)
-c.n_levels = 2;
+c.n_levels = 3;
 
 % Input intervals
 % If input intervals are irregular, the last column of the input

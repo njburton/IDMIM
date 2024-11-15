@@ -57,7 +57,6 @@ for k = 2:1:n
         da(k) = 0;
         v(k)  = v(k-1);
     end
-    % disp(['value v at trial ', num2str(k), ' is: ' num2str(v(k))])
 end
 
 % Predicted value

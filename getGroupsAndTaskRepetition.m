@@ -57,18 +57,18 @@ for dateCheck = 1:length(allFilenames)
 end %end of loop to modify dates
 
 %% loop to fill groupTable.TaskOrder
-groupTableSorted = sortrows(groupTable,"TaskDate","ascend");
-mouseIDList = unique(groupTableSorted.MouseID);
+rawDataFileInfo = sortrows(groupTable,"TaskDate","ascend");
+mouseIDList = unique(rawDataFileInfo.MouseID);
 startPoint = 0;
 for taski = 1:length(optionsFile.task.taskList)
     currTask = erase(optionsFile.task.taskList(taski),[optionsFile.task.taskPrefix,'_']);
     for mousei = 1:length(mouseIDList)
         currMouse = mouseIDList(mousei);
         for rowi = 1:length(allFilenames)
-            if strcmp(currMouse, groupTableSorted.MouseID(rowi)) && ...
-                    strcmp(currTask,groupTableSorted.Task(rowi)) == 1
+            if strcmp(currMouse, rawDataFileInfo.MouseID(rowi)) && ...
+                    strcmp(currTask,rawDataFileInfo.Task(rowi)) == 1
                 startPoint = startPoint + 1;
-                groupTableSorted.TaskRepetition(rowi) = startPoint;
+                rawDataFileInfo.TaskRepetition(rowi) = startPoint;
             else
                 continue
             end
@@ -78,25 +78,25 @@ for taski = 1:length(optionsFile.task.taskList)
 end
 
 %% Fill in sex and group columns
-for rowi = 1:length(groupTableSorted.sex)
-    if sum(strcmp(groupTableSorted.MouseID(rowi),optionsFile.cohort.maleMice)) >= 1
-        groupTableSorted.sex(rowi) = "Male";
+for rowi = 1:length(rawDataFileInfo.sex)
+    if sum(strcmp(rawDataFileInfo.MouseID(rowi),optionsFile.cohort.maleMice)) >= 1
+        rawDataFileInfo.sex(rowi) = "Male";
     else
-        groupTableSorted.sex(rowi) = "Female";
+        rawDataFileInfo.sex(rowi) = "Female";
     end
 end
 
 %% Fill in group columns
-for rowi = 1:length(groupTableSorted.sex)
-    if sum(strcmp(groupTableSorted.MouseID(rowi),optionsFile.cohort.controlGroup)) >= 1
-        groupTableSorted.group(rowi) = "Control";
+for rowi = 1:length(rawDataFileInfo.sex)
+    if sum(strcmp(rawDataFileInfo.MouseID(rowi),optionsFile.cohort.controlGroup)) >= 1
+        rawDataFileInfo.group(rowi) = "Control";
     else
-        groupTableSorted.group(rowi) = "Treatment";
+        rawDataFileInfo.group(rowi) = "Treatment";
     end
 end
 
 %% save file
 savePath = [char(optionsFile.paths.databaseDir),filesep,optionsFile.fileName.dataBaseFileName];
-save(savePath,"groupTableSorted");
+save(savePath,"rawDataFileInfo");
 
 end

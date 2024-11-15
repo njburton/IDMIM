@@ -1,4 +1,4 @@
-function c = tapas_ehgf_binary_config
+function c = tapas_ehgf_binary_config_3LVL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Contains the configuration for the enhanced Hierarchical Gaussian Filter (eHGF)

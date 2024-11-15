@@ -30,21 +30,20 @@ diary on
 tic % recording how long the function takes to complete
 load("optionsFile.mat");
 load(char(fullfile(optionsFile.paths.databaseDir,optionsFile.fileName.dataBaseFileName)));
-dataInfoTable = groupTableSorted;
 
 addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
 addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
 
-for modeli = 1:1 %numel(optionsFile.model.space) %for each model in the model space
+for modeli = 1:3 %numel(optionsFile.model.space) %for each model in the model space
     if modeli < 4
         diaryName = optionsFile.fileName.fitDiaryName{modeli};
         disp(['fitting  ', optionsFile.model.space{modeli},' to data...']);
 
-        for filei = 1:length(dataInfoTable.TaskPath)  % for each mouse(agent) in the cohort
-            currMouse = dataInfoTable.MouseID(filei); % currMouse vector for each mouseID in cohort
-            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(dataInfoTable.MouseID)),')']);
+        for filei = 1:length(rawDataFileInfo.TaskPath)  % for each mouse(agent) in the cohort
+            currMouse = rawDataFileInfo.MouseID(filei); % currMouse vector for each mouseID in cohort
+            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(rawDataFileInfo.MouseID)),')']);
 
-            currFileData = load(dataInfoTable.TaskPath(filei)); %load currMouse's results from data extraction
+            currFileData = load(rawDataFileInfo.TaskPath(filei)); %load currMouse's results from data extraction
             inputs       = currFileData.ExperimentTaskTable.RewardingLeverSide;
             responses    = currFileData.ExperimentTaskTable.Choice;
             task         = erase(currFileData.ExperimentTaskTable.Task(filei),optionsFile.task.taskPrefix);
@@ -76,13 +75,13 @@ for modeli = 1:1 %numel(optionsFile.model.space) %for each model in the model sp
             modelInv.allMice(filei,modeli).est = est;
         end
     else
-        for filei = 1:length(dataInfoTable.TaskPath) %for each mouse(agent) in the cohort
+        for filei = 1:length(rawDataFileInfo.TaskPath) %for each mouse(agent) in the cohort
 
             disp('Starting VKF fitting');
-            currMouse = dataInfoTable.MouseID(filei); %currMouse vector for each mouseID in cohort
-            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(dataInfoTable.MouseID)),')']);
+            currMouse = rawDataFileInfo.MouseID(filei); %currMouse vector for each mouseID in cohort
+            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(rawDataFileInfo.MouseID)),')']);
 
-            currFileData = load(dataInfoTable.TaskPath(filei)); %load currMouse's results from data extraction
+            currFileData = load(rawDataFileInfo.TaskPath(filei)); %load currMouse's results from data extraction
             responses    = currFileData.ExperimentTaskTable.Choice;
             outcomes     = currFileData.ExperimentTaskTable.Outcome;
             inputs       = currFileData.ExperimentTaskTable.RewardingLeverSide;

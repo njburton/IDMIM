@@ -26,7 +26,7 @@ function optionsFile = getData(optionsFile)
 % =========================================================================
 tic
 load("optionsFile.mat"); %load file to access paths
-largeFileThreshold = 70000;
+largeFileThreshold = 500000;
 
 % Initialise Experiment Task Table
 taskTableVarTypes = {'string','string','double','double','double','double',...
@@ -48,11 +48,11 @@ for fileSizei = 1:length(allFiles)
         fileCategory(fileSizei,1) = 1; %1 = to process
     else
         continue
-    end %end of check if file is overly large (>100,000 bytes)
+    end %end of check if file is overly large (>500,000 bytes)
 end %end of check for files with .file in dataToAnalyse dir
 
 %check if filesToProcess is empty of if there are identified large files to deconstruct
-if ~isempty(fileCategory(:,1)); disp('Large (>70,000 bytes) MED-PC file found.');
+if ~isempty(fileCategory(:,1)); disp('Large (>500,000 bytes) MED-PC file found.');
 else disp('No large files detected.'); end %If filesToProcess is NOT empty, meaning there are files to process (extract individual mice)
 
 % list containing the medpcTaskNames you want to look for and extract

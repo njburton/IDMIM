@@ -8,6 +8,11 @@ end
 
 groupTable = groupTableSorted;
 
+
+,'sumRLeverPress','avgRLeverPress','omissions','avgResponseTime'
+
+
+
 %% initialise empty arrays for logging individual mouse data
 omissionArray         = zeros(length(groupTable.MouseID),optionsFile.task.nTrials);
 longResponseTimeArray = zeros(length(groupTable.MouseID),optionsFile.task.nTrials);
