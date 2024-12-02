@@ -23,16 +23,25 @@ TASK_TABLE_SPEC = {...
     'Sex',               'string';
     'Task',              'string';
     'TaskRepetition',    'single';
+    'HGF3_zeta',          'double';
+    'HGF3_wt',            'double';
+    'HGF3_omega2',        'single';
+    'HGF3_omega3',        'double';
+    'HGF3_sahat1',        'double';
+    'HGF3_sahat2',        'double';
+    'HGF3_sahat3',        'double';
+    'HGF3_epsi2',         'double';
+    'HGF3_epsi3',         'double';
+    'HGF2_zeta',          'double';
+    'HGF2_wt',            'double';
+    'HGF2_omega2',        'single';
+    'HGF2_sahat1',        'double';
+    'HGF2_sahat2',        'double';
+    'HGF2_sahat3',        'double';
+    'HGF2_epsi2',         'double';
+    'HGF2_epsi3',         'double';
     'RW_zeta',           'double';
     'RW_alpha',          'double';
-    'HGF_zeta',          'double';
-    'HGF_omega2',        'single';
-    'HGF_omega3',        'double';
-    'HGF_sahat1',        'double';
-    'HGF_sahat2',        'double';
-    'HGF_sahat3',        'double';
-    'HGF_epsi2',         'double';
-    'HGF_epsi3',         'double';
     'omissions'          'double'};
 
 dataTbl = table('Size', [length(rawDataFileInfo.MouseID), size(TASK_TABLE_SPEC, 1)], ...
@@ -46,16 +55,26 @@ for mousei = 1:length(rawDataFileInfo.MouseID)
     dataTbl.Task(mousei)           = rawDataFileInfo.Task(mousei);
     dataTbl.TaskRepetition(mousei) = rawDataFileInfo.TaskRepetition(mousei);
     dataTbl.omissions(mousei)      = width(allMice(mousei).est.irr);  
-    dataTbl.RW_zeta(mousei)        = NaN; %allMice(mousei,2).est.p_obs.ze;
-    dataTbl.RW_alpha(mousei)       = NaN; %allMice(mousei,2).est.p_prc.al;
-    dataTbl.HGF_zeta(mousei)       = allMice(mousei).est.p_obs.ze;
-    dataTbl.HGF_omega2(mousei)     = allMice(mousei).est.p_prc.om(2);
-    dataTbl.HGF_omega3(mousei)     = allMice(mousei).est.p_prc.om(3);
-    dataTbl.HGF_sahat1(mousei)     = mean(allMice(mousei).est.traj.sahat(:,1));
-    dataTbl.HGF_sahat2(mousei)     = mean(allMice(mousei).est.traj.sahat(:,2));
-    dataTbl.HGF_sahat3(mousei)     = mean(allMice(mousei).est.traj.sahat(:,3));
-    dataTbl.HGF_epsi2(mousei)      = mean(allMice(mousei).est.traj.epsi(:,2));
-    dataTbl.HGF_epsi3(mousei)      = mean(allMice(mousei).est.traj.epsi(:,3));
+
+    dataTbl.HGF3_zeta(mousei)       = allMice(mousei,1).est.p_obs.ze;
+    dataTbl.HGF3_wt(mousei)         = mean(allMice(mousei,1).est.traj.wt(:,1));
+    dataTbl.HGF3_omega2(mousei)     = allMice(mousei,1).est.p_prc.om(2);
+    dataTbl.HGF3_omega3(mousei)     = allMice(mousei,1).est.p_prc.om(3);
+    dataTbl.HGF3_sahat1(mousei)     = mean(allMice(mousei,1).est.traj.sahat(:,1));
+    dataTbl.HGF3_sahat2(mousei)     = mean(allMice(mousei,1).est.traj.sahat(:,2));
+    dataTbl.HGF3_sahat3(mousei)     = mean(allMice(mousei,1).est.traj.sahat(:,3));
+    dataTbl.HGF3_epsi2(mousei)      = mean(allMice(mousei,1).est.traj.epsi(:,2));
+    dataTbl.HGF3_epsi3(mousei)      = mean(allMice(mousei,1).est.traj.epsi(:,3));
+    dataTbl.HGF2_zeta(mousei)       = allMice(mousei,2).est.p_obs.ze;
+    dataTbl.HGF2_wt(mousei)         = mean(allMice(mousei,2).est.traj.wt(:,1));
+    dataTbl.HGF2_omega2(mousei)     = allMice(mousei,2).est.p_prc.om(2);
+    dataTbl.HGF2_sahat1(mousei)     = mean(allMice(mousei,2).est.traj.sahat(:,1));
+    dataTbl.HGF2_sahat2(mousei)     = mean(allMice(mousei,2).est.traj.sahat(:,2));
+    dataTbl.HGF2_sahat3(mousei)     = mean(allMice(mousei,2).est.traj.sahat(:,3));
+    dataTbl.HGF2_epsi2(mousei)      = mean(allMice(mousei,2).est.traj.epsi(:,2));
+    dataTbl.HGF2_epsi3(mousei)      = mean(allMice(mousei,2).est.traj.epsi(:,3));
+    dataTbl.RW_zeta(mousei)         = allMice(mousei,3).est.p_obs.ze;
+    dataTbl.RW_alpha(mousei)        = allMice(mousei,3).est.p_prc.al;
 end
 
 %save([optionsFile.paths.resultsDir,'investigateParametersResults.mat'],'dataTbl');
