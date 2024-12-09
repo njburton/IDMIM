@@ -28,27 +28,29 @@ function [] = parameter_recovery(optionsFile)
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
-optionsFile = load("optionsFile.mat"); % specifications for this analysis
+load("optionsFile.mat"); % specifications for this analysis
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
 disp('*');
 
-%% LOAD results from model inversion
-for n = 1:length(optionsFile.task.MouseID)
-    currMouse = optionsFile.task.MouseID(n);
-    for m_in = 1:size(optionsFile.model.space, 2) %For each model in our model space (",2" meaning by the 2nd dimension?
-        %but found only have 1 index in that vector, "RW_binary
-        fprintf('current iteration: n=%1.0f, m=%1.0f \n', n,m_in);
-        for m_est = 1:size(optionsFile.model.space, 2)
-
+% LOAD results from model inversion
+for mousei = 1:length(optionsFile.cohort.controlGroup)
+    currMouse = optionsFile.cohort.controlGroup(mousei);
+    for modeli = 1:size(optionsFile.model.space, 2) %For each model in our model space
+        currModel = optionsFile.model.space(modeli);
+        fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', mousei, modeli);
+        for modeliEst = 1:size(optionsFile.model.space, 2)
             % load results from real data model inversion
-            rec.est(m_in,n,m_est).data = load(fullfile([char(optionsFile.paths.resultsDir),filesep,'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{m_in},'.mat']));
+            currModelList = dir(fullfile([optionsFile.paths.mouseModelFitFilesDir,filesep],'*char(currModel).mat'));
+
+            rec.est(modeli,mousei,modeliEst).data = load(fullfile([char(optionsFile.paths.databaseDir),filesep,...
+                'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeliEst},'.mat']));
         end
 
         % param values in transformed space (assumption of Gaussian prior)
-        rec.param.prc(m_in).est(n,:) = rec.est(m_in,n,m_in).data.est.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
-        rec.param.obs(m_in).est(n,:) = rec.est(m_in,n,m_in).data.est.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        rec.param.prc(modeli).est(mousei,:) = rec.est(modeli,mousei,modeli).data.est.p_prc.ptrans(optionsFile.modelSpace(modeli).prc_idx);
+        rec.param.obs(modeli).est(mousei,:) = rec.est(modeli,mousei,modeli).data.est.p_obs.ptrans(optionsFile.modelSpace(modeli).obs_idx);
     end
 end
 
@@ -78,6 +80,7 @@ for m = 1:numel(optionsFile.model.space)
     end
 end
 
+%if RW throws error, use ifElse statement to bypass
 for m = 1:numel(optionsFile.model.space)
     for p = 1:length(optionsFile.modelSpace(m).obs_idx)
         % obs model

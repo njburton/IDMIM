@@ -26,7 +26,7 @@ function getGroupsAndTaskRepetition
 load("optionsFile.mat") % load file paths
 
 % search through MatFiles
-dirFiles = dir(fullfile(optionsFile.paths.mouseMatFilesDir,'*.mat'));
+dirFiles     = dir(fullfile(optionsFile.paths.mouseMatFilesDir,'*.mat'));
 allFilenames = {dirFiles.name}';
 
 tableVarTypes = {'string','string','string','string','single','string','string'};

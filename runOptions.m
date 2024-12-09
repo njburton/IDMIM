@@ -55,6 +55,7 @@ if optionsFile.doOptions == 1
     optionsFile.paths.genTrajDir            = [optionsFile.paths.utilsDir,'generateTrajectories'];
     optionsFile.paths.diaryDir              = [optionsFile.paths.utilsDir,filesep,'diary'];
     optionsFile.paths.binInputSeqDir        = [optionsFile.paths.genTrajDir,filesep,'inputSequences',filesep,'usedTrajs'];
+   
     %% SPECIFY COHORT DATASET info
     optionsFile.cohort.nSize          = 20; % sample size
     optionsFile.cohort.cohort         = {'2023_UCMS2', '2024_HGFPilot3'}; % Each group represents an individual experiment/cohort
@@ -106,8 +107,8 @@ if optionsFile.doOptions == 1
 
     %% SPECIFY MODELS and related functions
     optionsFile.setupModels       = [];
-    optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW','vkf_bin'}; % all models in modelspace
-    optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','vkf_binary'};
+    optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW'}; % all models in modelspace
+    optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary'};
     optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
     optionsFile.model.obs	      = {'tapas_unitsq_sgm'};
     optionsFile.model.obs_config  = {'tapas_unitsq_sgm_config'};

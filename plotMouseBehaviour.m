@@ -2,7 +2,6 @@ function plotMouseBehaviour
 
 load('optionsFile.mat');
 
-
 omittedTrialsCounter =zeros(optionsFile.paths.nTrials,1);
 
 for n = 1:optionsFile.cohort.nSize
