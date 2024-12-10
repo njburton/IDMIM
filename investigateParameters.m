@@ -7,7 +7,6 @@ function investigateParameters
 %
 % Authors: Katharina Wellstein (30/5/2023), Nicholas Burton (23/2/2024)
 % -------------------------------------------------------------------------
-
 tic
 
 % Load options
@@ -55,6 +54,8 @@ for mousei = 1:length(rawDataFileInfo.MouseID)
     dataTbl.Task(mousei)           = rawDataFileInfo.Task(mousei);
     dataTbl.TaskRepetition(mousei) = rawDataFileInfo.TaskRepetition(mousei);
     dataTbl.omissions(mousei)      = width(allMice(mousei).est.irr);  
+    
+
     %computationalParameters
     dataTbl.HGF3_zeta(mousei)       = allMice(mousei,1).est.p_obs.ze;
     dataTbl.HGF3_wt(mousei)         = mean(allMice(mousei,1).est.traj.wt(:,1));
@@ -77,7 +78,7 @@ for mousei = 1:length(rawDataFileInfo.MouseID)
     dataTbl.RW_alpha(mousei)        = allMice(mousei,3).est.p_prc.al;
 end
 
-%save([optionsFile.paths.resultsDir,'investigateParametersResults.mat'],'dataTbl');
+save([optionsFile.paths.resultsDir,'investigateParametersResults.mat'],'dataTbl');
 
 saveDir = [optionsFile.paths.plotsDir,filesep,'investigateParameters',filesep];
 createParameterViolins(dataTbl, saveDir);
@@ -87,5 +88,5 @@ createParameterViolins(dataTbl, saveDir);
 % [H,P,CI,STATS] = ttest(dataTbl.RW_alpha(find(groupCodes)),dataTbl.RW_alpha(find(~groupCodes)));
 % [H,P,CI,STATS] = ttest(dataTbl.HGF_omega1(find(groupCodes)),dataTbl.HGF_omega1(find(~groupCodes)));
 % [H,P,CI,STATS] = ttest(dataTbl.HGF_omega2(find(groupCodes)),dataTbl.HGF_omega2(find(~groupCodes)));
-
+toc
 end

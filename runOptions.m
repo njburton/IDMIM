@@ -138,7 +138,7 @@ end
 
 %% SETUP config files for Perceptual models
 if optionsFile.setupModels == 1
-    for i = 1:numel(optionsFile.model.spaceTAPAS)
+    for i = 1:numel(optionsFile.model.space)
         modelSpace(i).prc           = optionsFile.model.prc{i};
         modelSpace(i).prc_config    = eval(optionsFile.model.prc_config{i});
         pr                          = priorPrep(optionsFile.input.inputs);

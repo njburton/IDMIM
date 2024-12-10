@@ -1,6 +1,4 @@
-function createParameterViolins(data, saveDir)
-tic
-
+function plotParameters(data, saveDir)
 % Define parameter groups
 HGF3_params = {'HGF3_zeta', 'HGF3_wt', 'HGF3_omega2', 'HGF3_omega3', ...
     'HGF3_sahat1', 'HGF3_sahat2', 'HGF3_sahat3', ...
@@ -136,5 +134,4 @@ for m = 1:length(all_model_params)
         end
     end
 end
-toc
 end

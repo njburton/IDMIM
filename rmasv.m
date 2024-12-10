@@ -1,3 +1,5 @@
+%%Small function to find and remove any .asv files in the projDir
+
 function rmasv
 load('optionsFile.mat');
 asvFiles = dir(fullfile(optionsFile.paths.projDir, '**', '*.asv'));

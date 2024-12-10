@@ -28,17 +28,25 @@ function [] = parameter_recovery(optionsFile)
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
+tic
 load("optionsFile.mat"); 
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
 disp('*');
 
-%find ONLY the TestTaskA fit files for the real mice
-realMiceTestTaskAFiles = dir(fullfile(optionsFile.paths.mouseModelFitFilesDir,'*TestTaskA*eHGF_3LVLFit.mat'));
-% LOAD results from model inversion
-realMiceModelInvData   = load(fullfile([char(optionsFile.paths.mouseModelFitFilesDir),filesep,'modelInv.mat']));
-simMiceModelInvData    = load(fullfile([char(optionsFile.simulations.simResultsDir),filesep,'simTestTaskA',filesep,'sim.mat']));
+% LOAD results from real Mice model inversion
+load(fullfile([char(optionsFile.paths.databaseDir),filesep,'rawDataFileInfo.mat']));
+% LOAD results from real Mice model inversion
+simMiceModelInvData = load(fullfile([char(optionsFile.simulations.simResultsDir),filesep,'simTestTaskA',filesep,'sim.mat']));
+
+% Filter dataTbl for TestTaskA and TaskRepetition 1
+realMiceModelInvData = rawDataFileInfo(strcmp(rawDataFileInfo.Task, 'TestTaskA') & rawDataFileInfo.TaskRepetition == 1, :);
+
+
+
+
+
 
 for mousei = 1:length(optionsFile.cohort.controlGroup)
     currMouse = optionsFile.cohort.controlGroup(mousei);
@@ -206,4 +214,5 @@ save_path = fullfile(optionsFile.paths.plotsDir,filesep,'sim_and_realData.mat');
 save(save_path, '-struct', 'res');
 
 disp('recovery analysis complete.')
+toc
 end
