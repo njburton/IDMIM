@@ -74,7 +74,6 @@ for taski = 1:length(optionsFile.task.taskList)
 
 end
 
-
 %%Find average >5 sec responseTime trial #
 AvgLongResponseTrialNumber = zeros(1,10);
 for i = 1:width(AvgLongResponseTrialNumber)

@@ -28,24 +28,27 @@ function [] = parameter_recovery(optionsFile)
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
-load("optionsFile.mat"); % specifications for this analysis
+load("optionsFile.mat"); 
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
 disp('*');
 
+%find ONLY the TestTaskA fit files for the real mice
+realMiceTestTaskAFiles = dir(fullfile(optionsFile.paths.mouseModelFitFilesDir,'*TestTaskA*eHGF_3LVLFit.mat'));
 % LOAD results from model inversion
+realMiceModelInvData   = load(fullfile([char(optionsFile.paths.mouseModelFitFilesDir),filesep,'modelInv.mat']));
+simMiceModelInvData    = load(fullfile([char(optionsFile.simulations.simResultsDir),filesep,'simTestTaskA',filesep,'sim.mat']));
+
 for mousei = 1:length(optionsFile.cohort.controlGroup)
     currMouse = optionsFile.cohort.controlGroup(mousei);
     for modeli = 1:size(optionsFile.model.space, 2) %For each model in our model space
-        currModel = optionsFile.model.space(modeli);
+        %currModel = optionsFile.model.space(modeli);
         fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', mousei, modeli);
         for modeliEst = 1:size(optionsFile.model.space, 2)
             % load results from real data model inversion
-            currModelList = dir(fullfile([optionsFile.paths.mouseModelFitFilesDir,filesep],'*char(currModel).mat'));
-
-            rec.est(modeli,mousei,modeliEst).data = load(fullfile([char(optionsFile.paths.databaseDir),filesep,...
-                'mouse',num2str(currMouse),'_',optionsFile.fileName.rawFitFile{modeliEst},'.mat']));
+            rec.est(modeli,mousei,modeliEst).data = load(fullfile([char(optionsFile.paths.mouseModelFitFilesDir),filesep, ...
+                'modelInv.mat']));
         end
 
         % param values in transformed space (assumption of Gaussian prior)
@@ -89,6 +92,7 @@ for m = 1:numel(optionsFile.model.space)
         rec.param.obs(m).pval(p) = diag(obs_p);
     end
 end
+
 %% Plot est mice (X axis are mice/sim) Yaxis=values;
 %Plot free perceptual model parameters
 xAxis = 1:length(optionsFile.task.MouseID);

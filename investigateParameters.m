@@ -79,7 +79,6 @@ end
 
 %save([optionsFile.paths.resultsDir,'investigateParametersResults.mat'],'dataTbl');
 
-
 saveDir = [optionsFile.paths.plotsDir,filesep,'investigateParameters',filesep];
 createParameterViolins(dataTbl, saveDir);
 
