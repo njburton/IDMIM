@@ -40,30 +40,30 @@ disp('************************************** SIM_DATA_MODELINVERSION ***********
 disp('*');
 disp('*');
 
-% simulation setup
-sim = load(fullfile([optionsFile.simulations.simResultsDir,filesep,optionsFile.fileName.simResponses]));
+for iTask = 1:numel(optionsFile.task.testTask)
+    for iSample = 1:optionsFile.simulations.nSamples
+        for m_in = 1:numel(optionsFile.model.space)
 
-for samplei = 1:optionsFile.simulations.nSamples
-    for m_in = 1:numel(optionsFile.model.space)
-        for m_est = 1:numel(optionsFile.model.space)
-            %%  MODEL INVERSION
-            disp(['Model inversion for agent: ', num2str(samplei), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);
+            sim = load(fullfile([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m_in},optionsFile.task.testTask(iTask).name,'_sim']));
+            for m_est = 1:numel(optionsFile.model.space)
+                %%  MODEL INVERSION
+                disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);
 
-            est = tapas_fitModel(sim.agent(samplei,m_in).data.y,...    % responses
-                sim.agent(samplei,m_in).data.u,...                     % input sequence
-                optionsFile.modelSpace(m_est).prc_config,...         % Prc fitting model
-                optionsFile.modelSpace(m_est).obs_config,...         % Obs fitting model
-                optionsFile.hgf.opt_config,...                       % Optimization algorithm
-                0,...                                            % 0 = MAP estimation
-                optionsFile.rng.settings.State(optionsFile.rng.idx, 1)); % seed for multistart
+                est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
+                    sim.agent(iSample,m_in).task(iTask).data.u,...                  % input sequence
+                    optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
+                    optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
+                    optionsFile.hgf.opt_config,...                       % Optimization algorithm
+                    0,...                                            % 0 = MAP estimation
+                    optionsFile.rng.settings.State(optionsFile.rng.idx, 1)); % seed for multistart
 
-            %% SAVE model fit as struct
-           save_path = fullfile(char(optionsFile.simulations.simResultsDir),...
-                [filesep,char(optionsFile.model.space{m_in}),'_simAgent_', num2str(samplei),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'.mat']);
-            save(save_path, '-struct', 'est');
+                %% SAVE model fit as struct
+                save_path = fullfile(char(optionsFile.simulations.simResultsDir),...
+                    [filesep,char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'_task_',optionsFile.task.testTask(iTask).name,'.mat']);
+                save(save_path, '-struct', 'est');
 
+            end
         end
     end
 end
-
 end
