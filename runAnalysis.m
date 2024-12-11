@@ -35,11 +35,16 @@ diary on
 
 %% Initialise options for running this function
 disp('initialising options...');
-optionsFile = load("optionsFile.mat");
+
+if exist('optionsFile.mat','file')==2
+    load("optionsFile.mat");
+else
+    optionsFile = runOptions();
+end
 
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
-if optionsFile.optionsFile.doSimulations == 1
+if optionsFile.doSimulations == 1
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));
     disp('setting up simulations...');
     setup_simulations;
