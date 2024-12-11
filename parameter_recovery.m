@@ -39,69 +39,85 @@ disp('************************************** PARAMETER RECOVERY ****************
 disp('*');
 disp('*');
 
-% LOAD results from real Mice model inversion
-load(fullfile([char(optionsFile.paths.databaseDir),filesep,'rawDataFileInfo.mat']));
-% LOAD results from real Mice model inversion
-simMiceModelInvData = load(fullfile([char(optionsFile.simulations.simResultsDir),filesep,'simTestTaskA',filesep,'sim.mat']));
+% % LOAD results from real Mice model inversion
+% load(fullfile([char(optionsFile.paths.databaseDir),filesep,'rawDataFileInfo.mat']));
+% % LOAD results from real Mice model inversion
+% simMiceModelInvData = load(fullfile([char(optionsFile.simulations.simResultsDir),filesep,'simTestTaskA',filesep,'sim.mat']));
+%
+% % Filter dataTbl for TestTaskA and TaskRepetition 1
+% realMiceModelInvData = rawDataFileInfo(strcmp(rawDataFileInfo.Task, 'TestTaskA') & rawDataFileInfo.TaskRepetition == 1, :);
 
-% Filter dataTbl for TestTaskA and TaskRepetition 1
-realMiceModelInvData = rawDataFileInfo(strcmp(rawDataFileInfo.Task, 'TestTaskA') & rawDataFileInfo.TaskRepetition == 1, :);
+for iTask = 1:numel(optionsFile.task.testTask)
+    for iMouse = 1:optionsFile.cohort.nSize
+        currMouse = optionsFile.cohort.controlGroup{iMouse};
+        for m_est = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+            currModel = optionsFile.model.space{m_est};
+            fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', iMouse,m_est);
 
-
-
-
-
-
-for mousei = 1:length(optionsFile.cohort.controlGroup)
-    currMouse = optionsFile.cohort.controlGroup(mousei);
-    for modeli = 1:size(optionsFile.model.space, 2) %For each model in our model space
-        %currModel = optionsFile.model.space(modeli);
-        fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', mousei, modeli);
-        for modeliEst = 1:size(optionsFile.model.space, 2)
             % load results from real data model inversion
-            rec.est(modeli,mousei,modeliEst).data = load(fullfile([char(optionsFile.paths.mouseModelFitFilesDir),filesep, ...
-                'modelInv.mat']));
+            try
+                rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.mouseModelFitFilesDir,filesep,...
+                    '2024-10-09_mouse',currMouse,'_',optionsFile.task.testTask(iTask).name,'_',optionsFile.fileName.rawFitFile{m_est},'.mat']);
+            catch
+                try
+                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.mouseModelFitFilesDir,filesep,...
+                        '2024-10-13_mouse',currMouse,'_',optionsFile.task.testTask(iTask).name,'_',optionsFile.fileName.rawFitFile{m_est},'.mat']);
+                catch
+                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.mouseModelFitFilesDir,filesep,...
+                        '2024-10-16_mouse',currMouse,'_',optionsFile.task.testTask(iTask).name,'_',optionsFile.fileName.rawFitFile{m_est},'.mat']);
+                end
+            end
         end
 
         % param values in transformed space (assumption of Gaussian prior)
-        rec.param.prc(modeli).est(mousei,:) = rec.est(modeli,mousei,modeli).data.est.p_prc.ptrans(optionsFile.modelSpace(modeli).prc_idx);
-        rec.param.obs(modeli).est(mousei,:) = rec.est(modeli,mousei,modeli).data.est.p_obs.ptrans(optionsFile.modelSpace(modeli).obs_idx);
+        rec.param(iTask).prc(m_est).est(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);
+        rec.param(iTask).obs(m_est).est(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_obs.ptrans(optionsFile.modelSpace(m_est).obs_idx);
     end
 end
 
 % simulated agents
-for i = 1:length(optionsFile.task.MouseID)
-    for m_in = 1:size(optionsFile.model.space, 2)
-        fprintf('current iteration: n=%1.0f, m=%1.0f \n', i,m_in);
-        for m_est = 1:size(optionsFile.model.space, 2)
+for iTask = 1:numel(optionsFile.task.testTask)
+for iAgent = 1:optionsFile.cohort.nSize
+    for m_in = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+        fprintf('current iteration: n=%1.0f, m=%1.0f \n', iAgent,m_in);
+        simResp = load([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m_in},optionsFile.task.testTask(iTask).name,'_sim.mat']);
+        for m_est = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
 
             % load results from simulated agents' model inversion
-            rec.sim.agent(i,m_in).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
-                [optionsFile.model.space{m_in},'_simAgent_', num2str(i),'_model_in',num2str(m_in),'_model_est',num2str(m_in),'.mat']));
+            rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
+                [optionsFile.model.space{m_in},'_simAgent_', num2str(iAgent),'_model_in',num2str(m_in),'_model_est',num2str(m_in),'_task_',optionsFile.task.testTask(iTask).name,'.mat']));
+
+            % LME
+            rec.model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
         end
 
-        rec.param.prc(m_in).sim(i,:) = rec.sim.agent(i,m_in).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx);
-        rec.param.obs(m_in).sim(i,:) = rec.sim.agent(i,m_in).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx);
+        rec.param(iTask).prc(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).data.p_prc.p(optionsFile.modelSpace(m_in).prc_idx); % might be wrong, there should be .ptrans here
+        rec.param(iTask).obs(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).data.p_obs.p(optionsFile.modelSpace(m_in).obs_idx); % might be wrong, there should be .ptrans here
+
+        rec.param(iTask).prc(m_in).estAgent(iAgent,:) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx); % might be wrong, there should be .ptrans here
+        rec.param(iTask).obs(m_in).estAgent(iAgent,:) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx); % might be wrong, there should be .ptrans here
+
     end
+end
 end
 
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
-for m = 1:numel(optionsFile.model.space)
+for m = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
     for p = 1:length(optionsFile.modelSpace(m).prc_idx)
         % prc model
-        [prc_coef, prc_p] = corr(rec.param.prc(m).sim(:,p), rec.param.prc(m).est(:,p));
-        rec.param.prc(m).pcc(p)  = diag(prc_coef);
-        rec.param.prc(m).pval(p) = diag(prc_p);
+        [prc_coef, prc_p] = corr(rec.param(iTask).prc(m).simAgent(:,p), rec.param(iTask).prc(m).estAgent(:,p));
+        rec.param(iTask).prc(m).pcc(p)  = diag(prc_coef);
+        rec.param(iTask).prc(m).pval(p) = diag(prc_p);
     end
 end
 
 %if RW throws error, use ifElse statement to bypass
-for m = 1:numel(optionsFile.model.space)
+for m = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
     for p = 1:length(optionsFile.modelSpace(m).obs_idx)
         % obs model
-        [obs_coef, obs_p] = corr(rec.param.obs(m_in).sim(:,p), rec.param.obs(m_in).est(:,p));
-        rec.param.obs(m).pcc(p)  = diag(obs_coef);
-        rec.param.obs(m).pval(p) = diag(obs_p);
+        [obs_coef, obs_p] = corr(rec.param(iTask).obs(m_in).simAgent(:,p), rec.param(iTask).obs(m_in).estAgent(:,p));
+        rec.param(iTask).obs(m).pcc(p)  = diag(obs_coef);
+        rec.param(iTask).obs(m).pval(p) = diag(obs_p);
     end
 end
 
@@ -116,7 +132,7 @@ for m = 1:numel(optionsFile.model.space)
             fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
             hold on
         end %
-        
+
         yline(rec.est(m,n,m).data.est.c_prc.priormus(optionsFile.modelSpace(m).prc_idx),'Color','r');
         %     title(fig,['mice perceptual parameters',num2str(p)]);
         figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_prc_param',num2str(p)]);
