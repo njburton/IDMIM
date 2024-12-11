@@ -29,7 +29,11 @@ function [] = parameter_recovery(optionsFile)
 
 %% INITIALIZE Variables for running this function
 tic
-load("optionsFile.mat"); 
+if exist('optionsFile.mat','file')==2
+    load("optionsFile.mat");
+else
+    optionsFile = runOptions();
+end
 
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
