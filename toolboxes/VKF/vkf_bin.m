@@ -1,4 +1,5 @@
 function [predictions, signals] = vkf_bin(outcomes,lambda,v0,omega)
+
 % Volatile Kalman Filter for binary outcomes (binary VKF)
 % [predictions, signals] = vkf_bin(lambda,sigma2,v0,outcomes)
 % Inputs: 

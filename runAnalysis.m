@@ -63,7 +63,7 @@ end
 % Fit mouse choice data using the following models for comparison
 if optionsFile.optionsFile.doModelInversion == 1
     disp('preparing to fit model to task data...');
-    fitModels(optionsFile);
+    fitModels;
 end
 
 %% Sanity check plots

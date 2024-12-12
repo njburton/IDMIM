@@ -45,7 +45,7 @@ disp('*');
 for iTask = 1:numel(optionsFile.task.testTask)
     for iMouse = 1:optionsFile.cohort.nSize
         currMouse = optionsFile.cohort.controlGroup{iMouse};
-        for m_est = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+        for m_est = 1:numel(optionsFile.model.space)
             currModel = optionsFile.model.space{m_est};
             fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', iMouse,m_est);
 
@@ -78,10 +78,11 @@ end
 
 for iTask = 1:numel(optionsFile.task.testTask)
     for iAgent = 1:optionsFile.cohort.nSize
-        for m_in = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+        for m_in = 1:numel(optionsFile.model.space)
             fprintf('current iteration: n=%1.0f, m=%1.0f \n', iAgent,m_in);
             simResp = load([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m_in},optionsFile.task.testTask(iTask).name,'_sim.mat']);
-            for m_est = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+            
+            for m_est = 1:numel(optionsFile.model.space)
 
                 % load results from simulated agents' model inversion
                 rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
@@ -104,7 +105,7 @@ end
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
 
 for iTask = 1:numel(optionsFile.task.testTask)
-    for m = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+    for m = 1:numel(optionsFile.model.space)
         for p = 1:length(optionsFile.modelSpace(m).prc_idx)
             % prc model
             [prc_coef, prc_p] = corr(rec.param(iTask).prc(m).simAgent(:,p), rec.param(iTask).prc(m).estAgent(:,p));
@@ -116,7 +117,7 @@ end
 
 %if RW throws error, use ifElse statement to bypass
 for iTask = 1:numel(optionsFile.task.testTask)
-    for m = 1:2 %numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+    for m = 1:numel(optionsFile.model.space)
         for p = 1:length(optionsFile.modelSpace(m).obs_idx)
             % obs model
             [obs_coef, obs_p] = corr(rec.param(iTask).obs(m_in).simAgent(:,p), rec.param(iTask).obs(m_in).estAgent(:,p));
@@ -125,18 +126,61 @@ for iTask = 1:numel(optionsFile.task.testTask)
         end
     end
 end
+
+%% PLOT correlation plot
+for iTask = 1:numel(optionsFile.task.testTask)
+    for m = 1:numel(optionsFile.model.space)
+        t = tiledlayout('flow');
+        figure('Color',[1,1,1],'pos',[10 10 1050 500]);
+
+        for pPrc = 1:size(optionsFile.modelSpace(m).prc_idx,2)
+            nexttile;
+            scatter(rec.param(iTask).prc(m).simAgent(:,pPrc),rec.param(iTask).prc(m).est(:,pPrc),'filled');
+            lsline;
+            ylim([(min(rec.param(iTask).prc(m).est(:,pPrc))-0.1) (max(rec.param(iTask).prc(m).est(:,pPrc))+0.1)]);
+            [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_prc{pPrc},'rho = ' num2str(rec.param(iTask).prc(m).pcc(pPrc))]);
+            t.FontSize = 18;
+            xlabel('simulated data')
+            ylabel('estimated data')
+            hold on;
+        end
+
+        for pObs = 1:size(optionsFile.modelSpace(m).obs_idx,2)
+            nexttile;
+            scatter(rec.param(iTask).obs(m).simAgent(:,pObs),rec.param(iTask).obs(m).est(:,pObs),'filled');
+            lsline;
+            ylim([(min(rec.param(iTask).obs(m).est(:,pObs))-0.1) (max(rec.param(iTask).obs(m).est(:,pObs))+0.1)]);
+            [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_obs{pObs},'rho = ' num2str(rec.param(iTask).obs(m).pcc(pObs))]);
+            t.FontSize = 18;
+            hold on;
+            xlabel('simulated data')
+            ylabel('estimated data')
+            hold on;
+        end
+
+        sgtitle([optionsFile.modelSpace(m).name], 'FontSize', 18);
+        figDir = fullfile([optionsFile.paths.plotsDir, ...
+            filesep,'Parameter_recovery_',optionsFile.modelSpace(m).name,' ',optionsFile.task.testTask(iTask).name]);
+        print(figDir, '-dpng');
+
+        save([figDir,'.fig'])
+    end
+end
+
+close all
+
 %% MODEL IDENTIFIABILITY (LME Winner classification)
 
 for iTask = 1:numel(optionsFile.task.testTask)
 
     % pre-allocate
-    class.task(iTask).LMEwinner     = NaN(2,2); % replace both 2 with numel(optionsFile.model.space)
-    class.task(iTask).percLMEwinner = NaN(size(class.task(iTask).LMEwinner));
+     rec.task(iTask).class.LMEwinner     = NaN(numel(optionsFile.model.space),numel(optionsFile.model.space));
+     rec.task(iTask).class.percLMEwinner = NaN(size(rec.task(iTask).class.LMEwinner));
 
     % calc winner freq for each data generating model
-    for m = 1:2 % numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+    for m = 1:numel(optionsFile.model.space)
         [rec.task(iTask).class.max(m).val, rec.task(iTask).class.max(m).idx] = max(rec.task(iTask).model(m).LME, [], 2);
-        for i = 1:2 % numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
+        for i = 1:numel(optionsFile.model.space)
             rec.task(iTask).class.LMEwinner(m,i) = sum(rec.task(iTask).class.max(m).idx==i);
         end
         rec.task(iTask).class.percLMEwinner(m,:) = rec.task(iTask).class.LMEwinner(m,:)./optionsFile.simulations.nSamples;
@@ -147,12 +191,12 @@ for iTask = 1:numel(optionsFile.task.testTask)
     % balanced accuraccy
     rec.task(iTask).class.balacc = mean(rec.task(iTask).class.acc);
     % chance threshold (inv binomial distr)
-    rec.task(iTask).class.chancethr = binoinv(0.9, optionsFile.simulations.nSamples, 1/2) / optionsFile.simulations.nSamples; % replace 1/2 with 1/numel(optionsFile.model.space)
+    rec.task(iTask).class.chancethr = binoinv(0.9, optionsFile.simulations.nSamples, 1/numel(optionsFile.model.space)) / optionsFile.simulations.nSamples; 
 end
 
 %% PLOT model identifiability
 for iTask = 1:numel(optionsFile.task.testTask)
-    label_x = {optionsFile.model.space{1} optionsFile.model.space{2}}; % res.main.ModSpace(3).name res.main.ModSpace(4).name};
+    label_x = {optionsFile.model.space{1} optionsFile.model.space{2} optionsFile.model.space{3}};
     figure('color',[1 1 1],'name','model identifiability');
 
     numlabels = size(rec.task(iTask).class.percLMEwinner, 1); % number of labels
@@ -193,6 +237,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
 end
 
 close all;
+
 % %% Plot est mice (X axis are mice/sim) Yaxis=values;
 % % Plot free perceptual model parameters
 % xAxis = 1:optionsFile.cohort.nSize;
@@ -229,47 +274,6 @@ close all;
 %     end
 % end
 
-%% PLOT correlation plot
-for iTask = 1:numel(optionsFile.task.testTask)
-    for m = 1:2 % numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
-        t = tiledlayout('flow');
-        figure('Color',[1,1,1],'pos',[10 10 1050 500]);
-
-        for pPrc = 1:size(optionsFile.modelSpace(m).prc_idx,2)
-            nexttile;
-            scatter(rec.param(iTask).prc(m).simAgent(:,pPrc),rec.param(iTask).prc(m).est(:,pPrc),'filled');
-            refline(1,0);
-            ylim([(min(rec.param(iTask).prc(m).est(:,pPrc))-0.1) (max(rec.param(iTask).prc(m).est(:,pPrc))+0.1)]);
-            [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_prc{pPrc},'rho = ' num2str(rec.param(iTask).prc(m).pcc(pPrc))]);
-            t.FontSize = 18;
-            xlabel('simulated data')
-            ylabel('estimated data')
-            hold on;
-        end
-
-        for pObs = 1:size(optionsFile.modelSpace(m).obs_idx,2)
-            nexttile;
-            scatter(rec.param(iTask).obs(m).simAgent(:,pObs),rec.param(iTask).obs(m).est(:,pObs),'filled');
-            refline(1,0);
-            ylim([(min(rec.param(iTask).obs(m).est(:,pObs))-0.1) (max(rec.param(iTask).obs(m).est(:,pObs))+0.1)]);
-            [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_obs{pObs},'rho = ' num2str(rec.param(iTask).obs(m).pcc(pObs))]);
-            t.FontSize = 18;
-            hold on;
-            xlabel('simulated data')
-            ylabel('estimated data')
-            hold on;
-        end
-
-        sgtitle([optionsFile.modelSpace(m).name], 'FontSize', 18);
-        figDir = fullfile([optionsFile.paths.plotsDir, ...
-            filesep,'Parameter_recovery_',optionsFile.modelSpace(m).name,' ',optionsFile.task.testTask(iTask).name]);
-        print(figDir, '-dpng');
-
-        save([figDir,'.fig'])
-    end
-end
-
-close all
 % %% Plot simAgent's Perceptual & Observational Free Parameter values *TO CHECK IF THAT WORKS
 % %Plot free perceptual model parameters
 % xAxis = 1:length(optionsFile.task.MouseID);

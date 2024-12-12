@@ -72,6 +72,7 @@ for iModel = 1:length(optionsFile.model.space)
 
         % simulate predictions for SNR calculation
         stable = 0;
+
         for iTask = 1:numel(optionsFile.task.testTask)
             optionsFile.task.testTask(iTask).inputs
             disp(['Simulating with input sequence from ', optionsFile.task.testTask(iTask).name,'...   ']);
@@ -131,7 +132,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
         xticks([0 40 80 120 160 200 240 280])
         hold on;
 
-        figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{iModel},'_predictions']);
+        figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{iModel},'_predictions', optionsFile.task.testTask(iTask).name]);
         save([figdir,'.fig'])
         print(figdir, '-dpng');
         close;

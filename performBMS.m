@@ -1,8 +1,12 @@
 function performBMS
 
 %% INITIALIZE Variables for running this function
-
-optionsFile = load("optionsFile.mat"); % specifications for this analysis
+% specifications for this analysis
+if exist('optionsFile.mat','file')==2
+    load("optionsFile.mat");
+else
+    optionsFile = runOptions();
+end
 
 disp('************************************** BAYESIAN MODEL SELECTION **************************************');
 disp('*');

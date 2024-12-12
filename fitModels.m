@@ -1,9 +1,7 @@
-function fitModels(optionsFile)
+function fitModels()
 %% fitModels
 %
 %  SYNTAX:  fitModels
-%
-%  INPUT:  optionsFile
 %
 %  OUTPUT:
 %
@@ -26,6 +24,12 @@ function fitModels(optionsFile)
 % _________________________________________________________________________
 % =========================================================================
 diary on
+
+if exist('optionsFile.mat','file')==2
+    load("optionsFile.mat");
+else
+    optionsFile = runOptions();
+end
 
 tic % recording how long the function takes to complete
 load("optionsFile.mat");

@@ -259,7 +259,7 @@ if optionsFile.setupModels == 1
         modelSpace(iModel).expnms_sa_obs=expnms_sa_obs(~cellfun('isempty',expnms_sa_obs));
     end
     % Find free parameters & convert parameters to native space
-    for iModel = 1:size(modelSpace,2)
+    for iModel = 1:numel(optionsFile.model.space)
 
         % Perceptual model
         prc_idx = modelSpace(iModel).prc_config.priorsas;
