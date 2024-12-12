@@ -70,7 +70,7 @@ end
 % parameter recovery
 if optionsFile.optionsFile.doParamRecovery == 1
     disp('preparing for parameter recovery to task data...');
-    parameter_recovery(optionsFile);
+    parameter_recovery();
 end
 
 % @NICK TO DO, clean up
