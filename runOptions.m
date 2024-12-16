@@ -147,7 +147,6 @@ if optionsFile.doOptions == 1
     optionsFile.fileName.fittedData       = 'modelInv.mat';
     optionsFile.fileName.dataBaseFileName = 'rawDataFileInfo.mat';
     optionsFile.fileName.dataBaseName     = 'dataInfoTable';
-
 end
 
 %% SETUP config files for Perceptual models

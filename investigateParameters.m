@@ -15,7 +15,7 @@ load("optionsFile.mat");
 load([optionsFile.paths.mouseModelFitFilesDir,filesep,'modelInv.mat']);
 load(char(fullfile(optionsFile.paths.databaseDir, optionsFile.fileName.dataBaseFileName)));
 
-%% CREATE TABLE
+%% CREATE ARCHIVEDATATABLE
 TASK_TABLE_SPEC = {...
     'MouseID',            'string';
     'Group',              'string';
@@ -47,6 +47,60 @@ dataTbl = table('Size', [length(rawDataFileInfo.MouseID), size(TASK_TABLE_SPEC, 
     'VariableTypes', TASK_TABLE_SPEC(:,2)', ...
     'VariableNames', TASK_TABLE_SPEC(:,1)');
 
+%% CREATE DATAANALYSISTABLE
+TASK_TABLE2_SPEC = {...
+    'MouseID',            'string';
+    'Group',              'string';
+    'Sex',                'string';
+    'omissions',          'double';
+    'HGF3_wt_TestA_Rep1', 'double';
+    'HGF3_wt_TestA_Rep2', 'double';
+    'HGF3_wt_TestA_Rep3', 'double';
+    'HGF3_wt_TestB_Rep1', 'double';
+    'HGF3_wt_TestB_Rep2', 'double';
+    'HGF3_wt_TestB_Rep3', 'double';
+    'HGF2_wt_TestA_Rep1', 'double';
+    'HGF2_wt_TestA_Rep2', 'double';
+    'HGF2_wt_TestA_Rep3', 'double';
+    'HGF2_wt_TestB_Rep1', 'double';
+    'HGF2_wt_TestB_Rep2', 'double';
+    'HGF2_wt_TestB_Rep3', 'double';
+    'HGF3_omega3_TestA_Rep1', 'double';
+    'HGF3_omega3_TestA_Rep2', 'double';
+    'HGF3_omega3_TestA_Rep3', 'double';
+    'HGF3_omega3_TestB_Rep1', 'double';
+    'HGF3_omega3_TestB_Rep2', 'double';
+    'HGF3_omega3_TestB_Rep3', 'double';
+    'HGF2_omega3_TestA_Rep1', 'double';
+    'HGF2_omega3_TestA_Rep2', 'double';
+    'HGF2_omega3_TestA_Rep3', 'double';
+    'HGF2_omega3_TestB_Rep1', 'double';
+    'HGF2_omega3_TestB_Rep2', 'double';
+    'HGF2_omega3_TestB_Rep3', 'double';
+    'HGF3_omega2_TestA_Rep1', 'double';
+    'HGF3_omega2_TestA_Rep2', 'double';
+    'HGF3_omega2_TestA_Rep3', 'double';
+    'HGF3_omega2_TestB_Rep1', 'double';
+    'HGF3_omega2_TestB_Rep2', 'double';
+    'HGF3_omega2_TestB_Rep3', 'double';
+    'HGF2_omega2_TestA_Rep1', 'double';
+    'HGF2_omega2_TestA_Rep2', 'double';
+    'HGF2_omega2_TestA_Rep3', 'double';
+    'HGF2_omega2_TestB_Rep1', 'double';
+    'HGF2_omega2_TestB_Rep2', 'double';
+    'HGF2_omega2_TestB_Rep3', 'double';
+    'RW_alpha_TestA_Rep1', 'double';
+    'RW_alpha_TestA_Rep2', 'double';
+    'RW_alpha_TestA_Rep3', 'double';
+    'RW_alpha_TestB_Rep1', 'double';
+    'RW_alpha_TestB_Rep2', 'double';
+    'RW_alpha_TestB_Rep3', 'double'};
+
+    JASPDataTbl = table('Size', [length(rawDataFileInfo.MouseID), size(TASK_TABLE2_SPEC, 1)], ...
+    'VariableTypes', TASK_TABLE2_SPEC(:,2)', ...
+    'VariableNames', TASK_TABLE2_SPEC(:,1)');
+
+    %% dataTbl
 for mousei = 1:length(rawDataFileInfo.MouseID)
     dataTbl.MouseID(mousei)        = rawDataFileInfo.MouseID(mousei);
     dataTbl.Sex(mousei)            = rawDataFileInfo.sex(mousei);
@@ -54,7 +108,6 @@ for mousei = 1:length(rawDataFileInfo.MouseID)
     dataTbl.Task(mousei)           = rawDataFileInfo.Task(mousei);
     dataTbl.TaskRepetition(mousei) = rawDataFileInfo.TaskRepetition(mousei);
     dataTbl.omissions(mousei)      = width(allMice(mousei).est.irr);  
-    
 
     %computationalParameters
     dataTbl.HGF3_zeta(mousei)       = allMice(mousei,1).est.p_obs.ze;
@@ -79,6 +132,67 @@ for mousei = 1:length(rawDataFileInfo.MouseID)
 end
 
 save([optionsFile.paths.resultsDir,'investigateParametersResults.mat'],'dataTbl');
+%writetable(dataTbl,[optionsFile.paths.resultsDir,'investigateParametersResults.csv']);
+
+%create table with just TestTaskData
+testTaskData = rawDataFileInfo(rawDataFileInfo.Task=='TestTaskA') && (rawDataFileInfo.Task=='TestTaskB');
+
+%% JASPDataTbl
+for mousei = 1:length(rawDataFileInfo.MouseID)
+    JASPDataTbl.MouseID(mousei)        = rawDataFileInfo.MouseID(mousei);
+    JASPDataTbl.Sex(mousei)            = rawDataFileInfo.sex(mousei);
+    JASPDataTbl.Group(mousei)          = rawDataFileInfo.group(mousei);
+    JASPDataTbl.omissions(mousei)      = width(allMice(mousei).est.irr);  
+    %computationalParameters
+    JASPDataTbl.HGF3_wt_TestA_Rep1(mousei) = mean(allMice(mousei,1).est.traj.wt(:,1));
+    JASPDataTbl.HGF3_wt_TestA_Rep2(mousei) = mean(allMice(mousei,1).est.traj.wt(:,1));
+    JASPDataTbl.HGF3_wt_TestA_Rep3(mousei) = mean(allMice(mousei,1).est.traj.wt(:,1));
+    JASPDataTbl.HGF3_wt_TestB_Rep1(mousei) = mean(allMice(mousei,1).est.traj.wt(:,1));
+    JASPDataTbl.HGF3_wt_TestB_Rep2(mousei) = mean(allMice(mousei,1).est.traj.wt(:,1));
+    JASPDataTbl.HGF3_wt_TestB_Rep3(mousei) = mean(allMice(mousei,1).est.traj.wt(:,1));
+    JASPDataTbl.HGF2_wt_TestA_Rep1(mousei) = mean(allMice(mousei,2).est.traj.wt(:,1));
+    JASPDataTbl.HGF2_wt_TestA_Rep2(mousei) = mean(allMice(mousei,2).est.traj.wt(:,1));
+    JASPDataTbl.HGF2_wt_TestA_Rep3(mousei) = mean(allMice(mousei,2).est.traj.wt(:,1));
+    JASPDataTbl.HGF2_wt_TestB_Rep1(mousei) = mean(allMice(mousei,2).est.traj.wt(:,1));
+    JASPDataTbl.HGF2_wt_TestB_Rep2(mousei) = mean(allMice(mousei,2).est.traj.wt(:,1));
+    JASPDataTbl.HGF2_wt_TestB_Rep3(mousei) = mean(allMice(mousei,2).est.traj.wt(:,1));
+    JASPDataTbl.HGF3_omega3_TestA_Rep1(mousei) = allMice(mousei,1).est.p_prc.om(3);
+    JASPDataTbl.HGF3_omega3_TestA_Rep2(mousei) = allMice(mousei,1).est.p_prc.om(3);
+    JASPDataTbl.HGF3_omega3_TestA_Rep3(mousei) = allMice(mousei,1).est.p_prc.om(3);
+    JASPDataTbl.HGF3_omega3_TestB_Rep1(mousei) = allMice(mousei,1).est.p_prc.om(3);
+    JASPDataTbl.HGF3_omega3_TestB_Rep2(mousei) = allMice(mousei,1).est.p_prc.om(3);
+    JASPDataTbl.HGF3_omega3_TestB_Rep3(mousei) = allMice(mousei,1).est.p_prc.om(3);
+    JASPDataTbl.HGF2_omega3_TestA_Rep1(mousei) = allMice(mousei,2).est.p_prc.om(3);
+    JASPDataTbl.HGF2_omega3_TestA_Rep2(mousei) = allMice(mousei,2).est.p_prc.om(3);
+    JASPDataTbl.HGF2_omega3_TestA_Rep3(mousei) = allMice(mousei,2).est.p_prc.om(3);
+    JASPDataTbl.HGF2_omega3_TestB_Rep1(mousei) = allMice(mousei,2).est.p_prc.om(3);
+    JASPDataTbl.HGF2_omega3_TestB_Rep2(mousei) = allMice(mousei,2).est.p_prc.om(3);
+    JASPDataTbl.HGF2_omega3_TestB_Rep3(mousei) = allMice(mousei,2).est.p_prc.om(3);
+    JASPDataTbl.HGF3_omega2_TestA_Rep1(mousei) = allMice(mousei,1).est.p_prc.om(2);
+    JASPDataTbl.HGF3_omega2_TestA_Rep2(mousei) = allMice(mousei,1).est.p_prc.om(2);
+    JASPDataTbl.HGF3_omega2_TestA_Rep3(mousei) = allMice(mousei,1).est.p_prc.om(2);
+    JASPDataTbl.HGF3_omega2_TestB_Rep1(mousei) = allMice(mousei,1).est.p_prc.om(2);
+    JASPDataTbl.HGF3_omega2_TestB_Rep2(mousei) = allMice(mousei,1).est.p_prc.om(2);
+    JASPDataTbl.HGF3_omega2_TestB_Rep3(mousei) = allMice(mousei,1).est.p_prc.om(2);
+    JASPDataTbl.HGF2_omega2_TestA_Rep1(mousei) = allMice(mousei,2).est.p_prc.om(2);
+    JASPDataTbl.HGF2_omega2_TestA_Rep2(mousei) = allMice(mousei,2).est.p_prc.om(2);
+    JASPDataTbl.HGF2_omega2_TestA_Rep3(mousei) = allMice(mousei,2).est.p_prc.om(2);
+    JASPDataTbl.HGF2_omega2_TestB_Rep1(mousei) = allMice(mousei,2).est.p_prc.om(2);
+    JASPDataTbl.HGF2_omega2_TestB_Rep2(mousei) = allMice(mousei,2).est.p_prc.om(2);
+    JASPDataTbl.HGF2_omega2_TestB_Rep3(mousei) = allMice(mousei,2).est.p_prc.om(2);
+    JASPDataTbl.RW_alpha_TestA_Rep1(mousei) = allMice(mousei,3).est.p_prc.al;
+    JASPDataTbl.RW_alpha_TestA_Rep2(mousei) = allMice(mousei,3).est.p_prc.al;
+    JASPDataTbl.RW_alpha_TestA_Rep3(mousei) = allMice(mousei,3).est.p_prc.al;
+    JASPDataTbl.RW_alpha_TestB_Rep1(mousei) = allMice(mousei,3).est.p_prc.al;
+    JASPDataTbl.RW_alpha_TestB_Rep2(mousei) = allMice(mousei,3).est.p_prc.al;
+    JASPDataTbl.RW_alpha_TestB_Rep3(mousei) = allMice(mousei,3).est.p_prc.al;
+end
+
+save([optionsFile.paths.resultsDir,'JASPinvParametersResults.mat'],'JASPDataTbl');
+writetable(dataTbl,[optionsFile.paths.resultsDir,'JASPinvParametersResults.csv']);
+
+
+
 
 saveDir = [optionsFile.paths.plotsDir,filesep,'investigateParameters',filesep];
 createParameterViolins(dataTbl, saveDir);
