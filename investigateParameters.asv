@@ -188,8 +188,7 @@ end
 % datasets
 
 checkTable = table2array(JASPDataTbl);
-[rows, cols] = find(strcmp(checkTable,"0"));
-JASPDataTbl(rows,cols)={NaN};
+find(strcmp(checkTable,"0"));
 
     save([optionsFile.paths.resultsDir,filesep,'JASPinvParametersResults.mat'],'JASPDataTbl');
     writetable(JASPDataTbl,[optionsFile.paths.resultsDir,filesep,'JASPinvParametersResults.csv']);
