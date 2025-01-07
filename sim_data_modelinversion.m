@@ -50,7 +50,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);
 
                 est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
-                    sim.agent(iSample,m_in).task(iTask).data.u,...                  % input sequence
+                    optionsFile.task.testTask(iTask).inputs,...                  % input sequence
                     optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
                     optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
                     optionsFile.hgf.opt_config,...                       % Optimization algorithm

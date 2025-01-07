@@ -64,8 +64,8 @@ for iTask = 1:numel(optionsFile.task.testTask)
             end
 
         % param values in transformed space (assumption of Gaussian prior)
-        rec.param(iTask).prc(m_est).est(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);
-        rec.param(iTask).obs(m_est).est(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_obs.ptrans(optionsFile.modelSpace(m_est).obs_idx);
+        rec.param(iTask).prc(m_est).estAgent(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);
+        rec.param(iTask).obs(m_est).estAgent(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_obs.ptrans(optionsFile.modelSpace(m_est).obs_idx);
         end
     end
 end
@@ -91,13 +91,11 @@ for iTask = 1:numel(optionsFile.task.testTask)
                 % LME
                 rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
             end
-
             rec.param(iTask).prc(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).data.p_prc.p(optionsFile.modelSpace(m_in).prc_idx); % might be wrong, there should be .ptrans here
             rec.param(iTask).obs(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).data.p_obs.p(optionsFile.modelSpace(m_in).obs_idx); % might be wrong, there should be .ptrans here
 
             rec.param(iTask).prc(m_in).estAgent(iAgent,:) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx); % might be wrong, there should be .ptrans here
             rec.param(iTask).obs(m_in).estAgent(iAgent,:) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx); % might be wrong, there should be .ptrans here
-
         end
     end
 end
@@ -135,9 +133,9 @@ for iTask = 1:numel(optionsFile.task.testTask)
 
         for pPrc = 1:size(optionsFile.modelSpace(m).prc_idx,2)
             nexttile;
-            scatter(rec.param(iTask).prc(m).simAgent(:,pPrc),rec.param(iTask).prc(m).est(:,pPrc),'filled');
+            scatter(rec.param(iTask).prc(m).simAgent(:,pPrc),rec.param(iTask).prc(m).estAgent(:,pPrc),'filled');
             lsline;
-            ylim([(min(rec.param(iTask).prc(m).est(:,pPrc))-0.1) (max(rec.param(iTask).prc(m).est(:,pPrc))+0.1)]);
+            ylim([(min(rec.param(iTask).prc(m).estAgent(:,pPrc))-0.1) (max(rec.param(iTask).prc(m).estAgent(:,pPrc))+0.1)]);
             [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_prc{pPrc},'rho = ' num2str(rec.param(iTask).prc(m).pcc(pPrc))]);
             t.FontSize = 18;
             xlabel('simulated data')
@@ -147,9 +145,9 @@ for iTask = 1:numel(optionsFile.task.testTask)
 
         for pObs = 1:size(optionsFile.modelSpace(m).obs_idx,2)
             nexttile;
-            scatter(rec.param(iTask).obs(m).simAgent(:,pObs),rec.param(iTask).obs(m).est(:,pObs),'filled');
+            scatter(rec.param(iTask).obs(m).simAgent(:,pObs),rec.param(iTask).obs(m).estAgent(:,pObs),'filled');
             lsline;
-            ylim([(min(rec.param(iTask).obs(m).est(:,pObs))-0.1) (max(rec.param(iTask).obs(m).est(:,pObs))+0.1)]);
+            ylim([(min(rec.param(iTask).obs(m).estAgent(:,pObs))-0.1) (max(rec.param(iTask).obs(m).estAgent(:,pObs))+0.1)]);
             [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_obs{pObs},'rho = ' num2str(rec.param(iTask).obs(m).pcc(pObs))]);
             t.FontSize = 18;
             hold on;
