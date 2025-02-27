@@ -46,22 +46,23 @@ disp('*');
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
 sim.input  = struct();
+s.task   = struct();
 
-for iModel = 1:length(optionsFile.model.space)
-    for iAgent = 1:optionsFile.simulations.nSamples
+for iAgent = 1:optionsFile.simulations.nSamples
+    for iModel = 1:length(optionsFile.model.space)
         % sample free parameter values
         input.prc.transInp = optionsFile.modelSpace(iModel).prc_config.priormus;
         input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus;
 
-        for percParamIdx = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
-            input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(percParamIdx)) = ...
-                normrnd(optionsFile.modelSpace(iModel).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(percParamIdx)),...
-                abs(sqrt(optionsFile.modelSpace(iModel).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(percParamIdx)))));
+        for iPerc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
+            input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(iPerc)) = ...
+                normrnd(optionsFile.modelSpace(iModel).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(iPerc)),...
+                abs(sqrt(optionsFile.modelSpace(iModel).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(iPerc)))));
         end
-        for obsParamIdx = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
-            input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(obsParamIdx)) = ...
-                normrnd(optionsFile.modelSpace(iModel).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(obsParamIdx)),...
-                abs(sqrt(optionsFile.modelSpace(iModel).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(obsParamIdx)))));
+        for iObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
+            input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(iObs)) = ...
+                normrnd(optionsFile.modelSpace(iModel).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(iObs)),...
+                abs(sqrt(optionsFile.modelSpace(iModel).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(iObs)))));
         end
 
         % create simulation input vectors (native space)
@@ -76,22 +77,36 @@ for iModel = 1:length(optionsFile.model.space)
         for iTask = 1:numel(optionsFile.task.testTask)
             optionsFile.task.testTask(iTask).inputs
             disp(['Simulating with input sequence from ', optionsFile.task.testTask(iTask).name,'...   ']);
+
             while stable == 0
                 try %tapas_simModel(inputs, prc_model, prc_pvec, varargin)
-                    sim_est = tapas_simModel(optionsFile.task.testTask(iTask).inputs,...
-                        optionsFile.modelSpace(iModel,iTask).prc,...
+                    data = tapas_simModel(optionsFile.task.testTask(iTask).inputs,...
+                        optionsFile.modelSpace(iModel).prc,...
                         input.prc.nativeInp,...
-                        optionsFile.modelSpace(iModel,iTask).obs,...
+                        optionsFile.modelSpace(iModel).obs,...
                         input.obs.nativeInp,...
                         optionsFile.rng.settings.State(optionsFile.rng.idx, 1));
                     stable = 1;
 
                 catch
-                    fprintf('simulation failed for synth. agent %1.0f \n',iAgent);
+                    fprintf('simulation failed for Model %1.0f, synth. Sub %1.0f \n', [iModel, iAgent]);
+                    fprintf('Prc Param Values: \n');
+                    input.prc.nativeInp
+                    fprintf('Obs Param Values: \n');
+                    input.obs.nativeInp
+                    % re-sample prc param values
+                    for j = 1:size(res.main.ModSpace(iModel).prc_idx,2)
+                        input.prc.transInp(optionsFile.modelSpace(iModel,iTask).prc_idx(j)) = ...
+                            normrnd(optionsFile.modelSpace(iModel,iTask).prc_config.priormus(optionsFile.modelSpace(iModel,iTask).prc_idx(j)),...
+                            abs(sqrt(optionsFile.modelSpace(iModel,iTask).prc_config.priorsas(optionsFile.modelSpace(iModel,iTask).prc_idx(j)))));
+                    end
+                    input.prc.nativeInp = optionsFile.modelSpace(iModel,iTask).prc_config.transp_prc_fun(c, input.prc.transInp);
                 end
             end
             % save simulation input
-            sim.agent(iAgent,iModel).task(iTask).data = sim_est;
+            s.task(iTask).data = data;
+            sim.agent(iAgent,iModel).task(iTask).data = s.task(iTask).data;
+            sim.agent(iAgent,iModel).task(iTask).input = input;
 
             % Update the rng state idx
             optionsFile.rng.idx    = optionsFile.rng.idx+1;

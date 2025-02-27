@@ -45,14 +45,14 @@ strct.nRandInit    = optionsFile.rng.nRandInit;
 strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 for iTask = 1:numel(optionsFile.task.testTask)
-    for iSample = 5:19 %optionsFile.simulations.nSamples
+    for iSample = 1:optionsFile.simulations.nSamples
         for m_in = 1:numel(optionsFile.model.space)
 
             sim = load(fullfile([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m_in},optionsFile.task.testTask(iTask).name,'_sim']));
             for m_est = 1:2 %1:numel(optionsFile.model.space)
 
                 if m_est == 3
-                    strct.maxStep  = inf;
+                    strct.maxStep  = 100;
                 end
                 %%  MODEL INVERSION
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);

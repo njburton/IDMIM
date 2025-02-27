@@ -86,18 +86,15 @@ for iTask = 1:numel(optionsFile.task.testTask)
 
                 % load results from simulated agents' model inversion
                 rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
-                    [optionsFile.model.space{m_in},'_simAgent_', num2str(iAgent),'_model_in',num2str(m_in),'_model_est',num2str(m_in),'_task_',optionsFile.task.testTask(iTask).name,'.mat']));
+                    [optionsFile.model.space{m_in},'_simAgent_', num2str(iAgent),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'_task_',optionsFile.task.testTask(iTask).name,'.mat']));
 
                 % LME
                 rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
             end
-            rec.param(iTask).prc(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).data.p_prc.p(optionsFile.modelSpace(m_in).prc_idx); % might be wrong, there should be .ptrans here
-            rec.param(iTask).obs(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).data.p_obs.p(optionsFile.modelSpace(m_in).obs_idx); % might be wrong, there should be .ptrans here
-
-            rec.param(iTask).prc(m_in).estAgent(iAgent,:) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.p_prc.ptrans(optionsFile.modelSpace(m_in).prc_idx); % might be wrong, there should be .ptrans here
-            rec.param(iTask).obs(m_in).estAgent(iAgent,:) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.p_obs.ptrans(optionsFile.modelSpace(m_in).obs_idx); % might be wrong, there should be .ptrans here
+            rec.param(iTask).prc(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).input.prc.transInp(optionsFile.modelSpace(m_in).prc_idx); 
+            rec.param(iTask).obs(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).input.obs.transInp(optionsFile.modelSpace(m_in).obs_idx);
         end
-    end
+    end 
 end
 
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
@@ -181,7 +178,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
         for i = 1:numel(optionsFile.model.space)
             rec.task(iTask).class.LMEwinner(m,i) = sum(rec.task(iTask).class.max(m).idx==i);
         end
-        rec.task(iTask).class.percLMEwinner(m,:) = rec.task(iTask).class.LMEwinner(m,:)./optionsFile.simulations.nSamples;
+        rec.task(iTask).class.percLMEwinner(m,:) = rec.task(iTask).class.LMEwinner(m,:)./12; %optionsFile.simulations.nSamples;
         % accuracy
         rec.task(iTask).class.acc(m) = rec.task(iTask).class.percLMEwinner(m,m);
     end
@@ -189,7 +186,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
     % balanced accuraccy
     rec.task(iTask).class.balacc = mean(rec.task(iTask).class.acc);
     % chance threshold (inv binomial distr)
-    rec.task(iTask).class.chancethr = binoinv(0.9, optionsFile.simulations.nSamples, 1/numel(optionsFile.model.space)) / optionsFile.simulations.nSamples; 
+    rec.task(iTask).class.chancethr = binoinv(0.9, optionsFile.simulations.nSamples, 1/numel(optionsFile.model.space)) / 12; %optionsFile.simulations.nSamples; 
 end
 
 %% PLOT model identifiability
