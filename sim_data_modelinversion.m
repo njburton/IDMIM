@@ -45,11 +45,11 @@ strct.nRandInit    = optionsFile.rng.nRandInit;
 strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 for iTask = 1:numel(optionsFile.task.testTask)
-    for iSample = 1:optionsFile.simulations.nSamples
+    for iSample = 1:12 %optionsFile.simulations.nSamples
         for m_in = 1:numel(optionsFile.model.space)
 
             sim = load(fullfile([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m_in},optionsFile.task.testTask(iTask).name,'_sim']));
-            for m_est = 1:2 %1:numel(optionsFile.model.space)
+            for m_est = 1:numel(optionsFile.model.space)
 
                 if m_est == 3
                     strct.maxStep  = 100;
