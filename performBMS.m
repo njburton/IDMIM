@@ -12,6 +12,9 @@ disp('************************************** BAYESIAN MODEL SELECTION **********
 disp('*');
 disp('*');
 
+% >>>>>>>>> COMMENT: here only one cohort is loaded (2023), fid a way to
+% load the other cohorts, e.g. 2024_HGFPilot3 and the new ones
+
 load([optionsFile.paths.resultsDir,filesep,'2023_UCMS2',filesep,'modelInv.mat']);
 
 % KW note: the code below only works for those cohorts that have treatments and controls

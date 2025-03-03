@@ -41,9 +41,10 @@ if optionsFile.doOptions == 1
 
     %% SPECIFY COHORT DATASET info
     optionsFile.cohort.cohort            = {'2023_UCMS2', '2024_HGFPilot3'}; % Each group represents an individual experiment/cohort
-    optionsFile.cohort.dataSetNames      = {'2024_HGFPilot3','2023_UCMS'};
+    optionsFile.cohort.dataSetNames      = {'2023_UCMS','2024_HGFPilot3'};
 
     % Identify which mouseIDs are male, female and their experimental group
+    % >>>>>>>>>>> COMMENT: this probably doesnt apply to all cohorts
     optionsFile.cohort.maleMice       = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort.femaleMice     = {'4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort.controlGroup   = {'1.1','1.2','2.1','3.1','3.2','3.3',...
@@ -86,6 +87,7 @@ if optionsFile.doOptions == 1
 
     %% INFO regarding raw data sets
     % Markers used to identify arrays of interest from raw Med-PC data (.txt file).
+    % >>>>>>>>>>> COMMENT: Does this apply to new data files?????
     % optionsFile.dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.dataFile.choiceOffset              = 615; % Choice H
@@ -115,7 +117,7 @@ if optionsFile.doOptions == 1
 
     % optimization algorithm
     addpath(genpath(optionsFile.paths.HGFtoolboxDir));
-    addpath(genpath(optionsFile.paths.VKFtoolboxDir));
+    addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %% >>>>>>>>>>> COMMENT: DELETE?!
     optionsFile.hgf.opt_config = eval('tapas_quasinewton_optim_config');
 
     % seed for random number generator
@@ -135,6 +137,7 @@ if optionsFile.doOptions == 1
     optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
 
     % Volatile kalman filter parameters informed by paper, Figure 7D
+    % >>>>>>>>>>> COMMENT: DELETE?
     optionsFile.modelVKF.lambda     = 0.1;  %volatility learning rate
     optionsFile.modelVKF.v0         = 0.5; % initial volatility
     optionsFile.modelVKF.omega      = 0.2;  % noise parameter
@@ -296,6 +299,7 @@ if optionsFile.setupModels == 1
     optionsFile.doOptions = 0;
 
 end
+
 %%
 if optionsFile.doGetData == 1
 

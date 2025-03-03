@@ -62,6 +62,14 @@ for iTask = 1:numel(optionsFile.task.testTask)
                     optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
                     strct); % seed for multistart
 
+            %Plot standard trajectory plot
+            optionsFile.plot(m_est).plot_fits(est);
+            figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,char(date),'_',...
+                'simAgent_', num2str(iSample),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'_task_',char(iTask),'_',optionsFile.fileName.rawFitFile{m_est}]);
+            save([figdir,'.fig']);
+            print([figdir,'.png'], '-dpng');
+            close all;
+
                 %% SAVE model fit as struct
                 save_path = fullfile(char(optionsFile.simulations.simResultsDir),...
                     [filesep,char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'_task_',optionsFile.task.testTask(iTask).name,'.mat']);
