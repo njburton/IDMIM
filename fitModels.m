@@ -31,27 +31,25 @@ else
     optionsFile = runOptions();
 end
 
-tic % recording how long the function takes to complete
-load("optionsFile.mat");
-load(char(fullfile(optionsFile.paths.databaseDir,optionsFile.fileName.dataBaseFileName)));
+load(char(fullfile(optionsFile.paths.cohort(cohortNo).databaseDir,optionsFile.fileName.dataBaseFileName)));
 
-addpath(genpath(optionsFile.paths.HGFtoolboxDir)); %add TAPAS toolbox via path
-addpath(genpath(optionsFile.paths.VKFtoolboxDir)); %add VKF toolbox via path
+optionsFile = setup_configFiles(optionsFile,cohortNo);
 
-for modeli = 1:3 %numel(optionsFile.model.space) %for each model in the model space
-    if modeli < 4
-        diaryName = optionsFile.fileName.fitDiaryName{modeli};
-        disp(['fitting  ', optionsFile.model.space{modeli},' to data...']);
+addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 
-        for filei = 1:length(rawDataFileInfo.TaskPath)  % for each mouse(agent) in the cohort
-            currMouse = rawDataFileInfo.MouseID(filei); % currMouse vector for each mouseID in cohort
-            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(rawDataFileInfo.MouseID)),')']);
+for iModel = 1:numel(optionsFile.model.space) %for each model in the model space
+        diaryName = optionsFile.fileName.fitDiaryName{iModel};
+        disp(['fitting  ', optionsFile.model.space{iModel},' to data...']);
 
-            currFileData = load(rawDataFileInfo.TaskPath(filei)); %load currMouse's results from data extraction
+        for iFile = 1:length(rawDataFileInfo.TaskPath)  % for each mouse(agent) in the cohort: Could this also be
+            currMouse = rawDataFileInfo.MouseID(iFile); % currMouse vector for each mouseID in cohort: is this not in the optionsFile?
+            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(iFile),' of ',num2str(length(rawDataFileInfo.MouseID)),')']);
+
+            currFileData = load(rawDataFileInfo.TaskPath(iFile)); %load currMouse's results from data extraction
             inputs       = currFileData.ExperimentTaskTable.RewardingLeverSide;
             responses    = currFileData.ExperimentTaskTable.Choice;
-            task         = erase(currFileData.ExperimentTaskTable.Task(filei),optionsFile.task.taskPrefix);
-            date         = currFileData.ExperimentTaskTable.TaskDate(filei);
+            task         = erase(currFileData.ExperimentTaskTable.Task(iFile),optionsFile.task.taskPrefix);
+            date         = currFileData.ExperimentTaskTable.TaskDate(iFile);
 
             strct              = eval(char(optionsFile.model.opt_config));
             strct.maxStep      = inf;
@@ -61,49 +59,23 @@ for modeli = 1:3 %numel(optionsFile.model.space) %for each model in the model sp
             %% model fit
             est = tapas_fitModel(responses, ...
                 inputs, ...
-                optionsFile.model.prc_config{modeli}, ...
+                optionsFile.model.prc_config{iModel}, ...
                 optionsFile.model.obs_config{1}, ... % only ever take first entry because all perceptual models use the same observational model, if this changes, in runOptions add different observational models and add a loop
                 strct); % info for optimization and multistart
 
             %Plot standard trajectory plot
-            optionsFile.plot(modeli).plot_fits(est);
+            optionsFile.plot(iModel).plot_fits(est);
             figdir = fullfile([char(optionsFile.paths.plotsDir),filesep,char(date),'_',...
-                'mouse',num2str(currMouse),'_',char(task),'_',optionsFile.fileName.rawFitFile{modeli}]);
+                'mouse',num2str(currMouse),'_',char(task),'_',optionsFile.fileName.rawFitFile{iModel}]);
             save([figdir,'.fig']);
             print([figdir,'.png'], '-dpng');
             close all;
 
             %Save model fit
             save([char(optionsFile.paths.mouseModelFitFilesDir),filesep,char(date),'_',...
-                'mouse',num2str(currMouse),'_',char(task),'_',optionsFile.fileName.rawFitFile{modeli},'.mat'], 'est');
-            modelInv.allMice(filei,modeli).est = est;
+                'mouse',num2str(currMouse),'_',char(task),'_',optionsFile.fileName.rawFitFile{iModel},'.mat'], 'est');
+            modelInv.allMice(iFile,iModel).est = est;
         end
-    else
-        for filei = 1:length(rawDataFileInfo.TaskPath) %for each mouse(agent) in the cohort
-
-            disp('Starting VKF fitting');
-            currMouse = rawDataFileInfo.MouseID(filei); %currMouse vector for each mouseID in cohort
-            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(filei),' of ',num2str(length(rawDataFileInfo.MouseID)),')']);
-
-            currFileData = load(rawDataFileInfo.TaskPath(filei)); %load currMouse's results from data extraction
-            responses    = currFileData.ExperimentTaskTable.Choice;
-            outcomes     = currFileData.ExperimentTaskTable.Outcome;
-            inputs       = currFileData.ExperimentTaskTable.RewardingLeverSide;
-            task         = erase(currFileData.ExperimentTaskTable.Task(filei),optionsFile.task.taskPrefix,'_');
-            date         = currFileData.ExperimentTaskTable.TaskDate(filei);
-
-            % VKF model fit
-            [resp,signals] = vkf_bin(outcomes,...
-                optionsFile.modelVKF.lambda,...  % volatility learning rate
-                optionsFile.modelVKF.v0,...      % initial volatility
-                optionsFile.modelVKF.omega);     % noise parameter
-            %vkfEstParams = vkfEst.signals;
-
-            % save struct
-            save([char(optionsFile.paths.mouseModelFitFilesDir),filesep,char(date),'_',...
-                'mouse',num2str(currMouse),'_',char(task),'_',optionsFile.fileName.rawFitFile{modeli},'.mat'], 'vkfEst');
-        end
-    end
 end
 save([optionsFile.paths.mouseModelFitFilesDir,filesep,optionsFile.fileName.fittedData], '-struct', 'modelInv','allMice');
 toc % end timer

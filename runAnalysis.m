@@ -1,9 +1,15 @@
-function runAnalysis
+function runAnalysis(cohortNo)
 
 %% INITIALIZE runOptions
 % Main function for running the analysis of the IDMIM study
 %
 %    SYNTAX:        runAnalysis
+%
+%    IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
+%                            corresponds to what number in the
+%                            optionsFile.cohort(cohortNo).name struct. This
+%                            allows to run the pipeline and its functions for different
+%                            cohorts whose expcifications have been set in runOptions.m
 %
 % Original: 30-5-2023; Katharina V. Wellstein
 % Amended: 23-2-2023; Nicholas Burton
@@ -45,32 +51,32 @@ end
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
 if optionsFile.doSimulations == 1
-    addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+
     disp('setting up simulations...');
-    setup_simulations;
+    setup_simulations(cohortNo);
     disp('performing model inversion on simulated agents...');
-    sim_data_modelinversion;
+    sim_data_modelinversion(cohortNo);
 end
 
 %% Get and process data
 if optionsFile.optionsFile.doGetData == 1
     disp('preparing to extract raw data from .txt files in dataToAnalyseDir...');
-    getData(optionsFile); % Extract data from raw files in dataToAnalyse Dir
+    getData(optionsFile,cohortNo); % Extract data from raw files in dataToAnalyse Dir
     disp('...now allocating groups, sex, and taskRepetition counts...');
-    getGroupsAndTaskRepetition(optionsFile); % Take getData output .mat file and fill in groups and taskRepetition info
+    getGroupsAndTaskRepetition(optionsFile,cohortNo); % Take getData output .mat file and fill in groups and taskRepetition info
 end
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
 if optionsFile.optionsFile.doModelInversion == 1
     disp('preparing to fit model to task data...');
-    fitModels;
+    fitModels(cohortNo);
 end
 
 %% Sanity check plots
 % parameter recovery
 if optionsFile.optionsFile.doParamRecovery == 1
     disp('preparing for parameter recovery to task data...');
-    parameter_recovery();
+    parameter_recovery(cohortNo);
 end
 
 % @NICK TO DO, clean up
@@ -84,7 +90,7 @@ end
 
 if optionsFile.optionsFile.doBMS == 1
      disp('preparing for Bayesian Model Comparison and model identifiability...');
-    performBMS
+    performBMS(cohortNo)
 end
 
 disp('pipeline finished.');

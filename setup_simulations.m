@@ -1,9 +1,15 @@
-function [] = setup_simulations
+function [] = setup_simulations(cohortNo)
 
 %% WBEST_setup_simulations
 %  Simulat synthetic agents using priors determined from pilot dataset
 %
-%   SYNTAX:       WBEST_setup_simulations
+%   SYNTAX:       setup_simulations
+%   
+%   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
+%                            corresponds to what number in the
+%                            optionsFile.cohort(cohortNo).name struct. This
+%                            allows to run the pipeline and its functions for different
+%                            cohorts whose expcifications have been set in runOptions.m
 %
 % Original: Katharina V. Wellstein
 % Amended
@@ -33,12 +39,15 @@ else
     optionsFile = runOptions();
 end
 
-addpath(genpath(optionsFile.paths.HGFtoolboxDir));
+optionsFile = setup_configFiles(optionsFile,cohortNo);
+
+addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 disp('************************************** SETUP_SIMULATIONS **************************************');
 disp('*');
 disp('*');
 
 %% Add in input sequence that has been generated
+%>>>>>>>>>> COMMENT: ???
 %Save input seq as variable in workspace so that I can subsititute it in
 %the code when running this funcition
 %newInputs = xlsread('C:\Users\c3200098\Desktop\ImprovedInputSequence.csv');
@@ -46,7 +55,7 @@ disp('*');
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();
 sim.input  = struct();
-s.task   = struct();
+s.task    = struct();
 
 for iAgent = 1:optionsFile.simulations.nSamples
     for iModel = 1:length(optionsFile.model.space)
@@ -74,13 +83,13 @@ for iAgent = 1:optionsFile.simulations.nSamples
         % simulate predictions for SNR calculation
         stable = 0;
 
-        for iTask = 1:numel(optionsFile.task.testTask)
-            optionsFile.task.testTask(iTask).inputs
-            disp(['Simulating with input sequence from ', optionsFile.task.testTask(iTask).name,'...   ']);
+        for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+            optionsFile.cohort(cohortNo).testTask(iTask).inputs
+            disp(['Simulating with input sequence from ', optionsFile.cohort(cohortNo).testTask(iTask).name,'...   ']);
 
             while stable == 0
                 try %tapas_simModel(inputs, prc_model, prc_pvec, varargin)
-                    data = tapas_simModel(optionsFile.task.testTask(iTask).inputs,...
+                    data = tapas_simModel(optionsFile.cohort(cohortNo).testTask(iTask).inputs,...
                         optionsFile.modelSpace(iModel).prc,...
                         input.prc.nativeInp,...
                         optionsFile.modelSpace(iModel).obs,...
@@ -118,7 +127,7 @@ for iAgent = 1:optionsFile.simulations.nSamples
 end
 
 %% PLOT predictions
-for iTask = 1:numel(optionsFile.task.testTask)
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for iModel = 1:numel(optionsFile.model.space)
         for iAgent = 1:optionsFile.simulations.nSamples
 
@@ -147,7 +156,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
         xticks([0 40 80 120 160 200 240 280])
         hold on;
 
-        figdir = fullfile([char(optionsFile.simulations.simResultsDir),filesep,optionsFile.model.space{iModel},'_predictions', optionsFile.task.testTask(iTask).name]);
+        figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),optionsFile.model.space{iModel},'_predictions', optionsFile.cohort(cohortNo).testTask(iTask).name]);
         save([figdir,'.fig'])
         print(figdir, '-dpng');
         close;
@@ -156,7 +165,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
         optionsFile.rng.idx = 1;
 
         %% SAVE model simulation specs as struct
-        save([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{iModel},optionsFile.task.testTask(iTask).name,'_sim'], '-struct', 'sim');
+        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim'], '-struct', 'sim');
     end
 end
 disp('simulated data successfully created.')
