@@ -158,17 +158,13 @@ if optionsFile.doOptions == 1
     for i = 1:numel(optionsFile.cohort(d).testTask)
         inputs = readmatrix([optionsFile.paths.inputsDir,filesep,...
             optionsFile.cohort(d).taskPrefix,optionsFile.cohort(d).testTask(i).name,'.txt']);
-        if size(inputs,2)>1
         optionsFile.cohort(d).testTask(i).inputs = inputs';
-        end
     end
 
     for i = 1:numel(optionsFile.cohort(d).trainTask)
         inputs = readmatrix([optionsFile.paths.inputsDir,filesep,...
             optionsFile.cohort(d).taskPrefix,optionsFile.cohort(d).trainTask(i).name,'.txt']);
-        if size(inputs,2)>1
         optionsFile.cohort(d).trainTask(i).inputs = inputs';
-        end
     end
     end
     %% SPECIFY SIMULATION settings
