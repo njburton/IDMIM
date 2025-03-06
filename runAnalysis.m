@@ -51,7 +51,6 @@ end
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
 if optionsFile.doSimulations == 1
-
     disp('setting up simulations...');
     setup_simulations(cohortNo);
     disp('performing model inversion on simulated agents...');

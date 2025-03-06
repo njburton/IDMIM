@@ -43,14 +43,23 @@ if optionsFile.doOptions == 1
     %% SPECIFY COHORT DATASET info
     % Each group represents an individual experiment/cohort
     optionsFile.cohort(1).name = '2023_UCMS';
-    optionsFile.cohort(1).nameInDataFiles = '2023_UCMS2';
+    optionsFile.cohort(1).nameInDataFiles = '2023_UCMS2'; %how it is in the MEDPC files
+    optionsFile.cohort(1).conditions = {'UCMS','noUCMS'}; % does that make sense of leave empty?
+    optionsFile.cohort(1).taskDesign = 'betweenDesign';
+
     optionsFile.cohort(2).name = '2024_HGFPilot';
-    optionsFile.cohort(2).nameInDataFiles = '2024_HGFPilot3';
+    optionsFile.cohort(2).nameInDataFiles = '2024_HGFPilot3'; %how it is in the MEDPC files
+    optionsFile.cohort(2).conditions = [];
+    optionsFile.cohort(2).taskDesign = 'oneCondition';
+
     optionsFile.cohort(3).name = '5HT';
-    optionsFile.cohort(3).nameInDataFiles = '5HT'; %is that right?
+    optionsFile.cohort(3).nameInDataFiles = '5HT'; %how it is in the MEDPC files, is that right here?
+    optionsFile.cohort(3).conditions = {'5mg','10mg','sucrose'};
+    optionsFile.cohort(3).taskDesign = 'withinDesign';
 
     % Identify which mouseIDs are male, female and their experimental group
-    % >>>>>>>>>>> COMMENT: @NICK, check if these numbers are correct
+    % >>>>>>>>>>> COMMENT: @NICK, check if these ID numbers are correct and
+    % replace with correct ones for cohorts
     optionsFile.cohort(1).treatment.maleMice   = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort(1).treatment.femaleMice = {'4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort(1).control.maleMice     = {'1.1','1.2','2.1','3.1','3.2','3.3'};
@@ -59,7 +68,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).treatment.femaleMice = [];
     optionsFile.cohort(2).control.maleMice     = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort(2).control.femaleMice   = {'4.2','5.1','5.2','5.3','5.4','5.5'};
-    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2'};
+    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2'}; % IDs are repeating themselves here because this is within-mice
     optionsFile.cohort(3).treatment.femaleMice = {'4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort(3).control.maleMice     = [];
     optionsFile.cohort(3).control.femaleMice   = [];

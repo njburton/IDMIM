@@ -40,48 +40,78 @@ optionsFile = setup_configFiles(optionsFile,cohortNo);
 % Collate mouseIDs
 mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice, optionsFile.cohort(cohortNo).treatment.femaleMice,...
     optionsFile.cohort(cohortNo).control.maleMice, optionsFile.cohort(cohortNo).control.femaleMice];
+if numel(optionsFile.cohort(cohortNo).conditions)==0
+    nConditions = 1;
+else
+    nConditions = numel(optionsFile.cohort(cohortNo).conditions);
+end
 
-for iTask = 1: numel(optionsFile.cohort(cohortNo).testTask)
-    currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
-
-    for iModel = 1:numel(optionsFile.model.space) %for each model in the model space
-
-        disp(['fitting  ', optionsFile.model.space{iModel},' to data...']);
-
-        for iMouse = 1:optionsFile.cohort(cohortNo).nSize  % for each mouse (agent) in the cohort
-            currMouse = mouseIDs(iMouse);
-            disp(['fitting mouse ', num2str(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')']);
-
-            load([optionsFile.paths.cohort(cohortNo).data,'mouse',char(currMouse),'_',char(currTask),'.mat']); %load currMouse's data table
-
-            % optimization settings
-            strct              = eval(char(optionsFile.model.opt_config));
-            strct.maxStep      = inf;
-            strct.nRandInit    = optionsFile.rng.nRandInit;
-            strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
-
-            %% model fit
-            est = tapas_fitModel(ExperimentTaskTable.Choice, ...
-                optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
-                optionsFile.model.prc_config{iModel}, ...
-                optionsFile.model.obs_config{1}, ... % only ever take first entry because all perceptual models use the same observational model, if this changes, in runOptions add different observational models and add a loop
-                strct); % info for optimization and multistart
-
-            %Plot standard trajectory plot
-            optionsFile.plot(iModel).plot_fits(est);
-            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),'_',...
-                'mouse',num2str(currMouse),'_',currTask,'_',optionsFile.fileName.rawFitFile{iModel}]);
-            save([figdir,'.fig']);
-            print([figdir,'.png'], '-dpng');
-            close all;
-
-            %Save model fit
-            save([char(optionsFile.paths.cohort(cohortNo).results),'_',...
-                'mouse',num2str(currMouse),'_',currTask,'_',optionsFile.fileName.rawFitFile{iModel},'.mat'], 'est');
-            modelInv.allMice(iMouse,iModel).est = est;
-        end
+for iCondition = 1:nConditions
+    if ~isempty(optionsFile.cohort(cohortNo).conditions)
+        currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
-    save([optionsFile.paths.cohort(cohortNo).results,optionsFile.fileName.fittedData], '-struct', 'modelInv','allMice');
+    for iTask = 1: numel(optionsFile.cohort(cohortNo).testTask)
+        currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
+
+        for iModel = 1:numel(optionsFile.model.space) %for each model in the model space
+
+            disp(['fitting  ', optionsFile.model.space{iModel},' to data...']);
+
+            for iMouse = 1:optionsFile.cohort(cohortNo).nSize  % for each mouse (agent) in the cohort
+                currMouse = mouseIDs(iMouse);
+                disp(['fitting mouse ', num2str(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')']);
+
+                if isempty(optionsFile.cohort(cohortNo).conditions)
+                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        tasks{iTask},'.mat']);
+                else
+                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        tasks{iTask},'_condition_',currCondition,'.mat']);
+                end
+
+                % optimization settings
+                strct              = eval(char(optionsFile.model.opt_config));
+                strct.maxStep      = inf;
+                strct.nRandInit    = optionsFile.rng.nRandInit;
+                strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
+
+                %% model fit
+                est = tapas_fitModel(ExperimentTaskTable.Choice, ...
+                    optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
+                    optionsFile.model.prc_config{iModel}, ...
+                    optionsFile.model.obs_config{1}, ... % only ever take first entry because all perceptual models use the same observational model, if this changes, in runOptions add different observational models and add a loop
+                    strct); % info for optimization and multistart
+
+                %Plot standard trajectory plot
+                optionsFile.plot(iModel).plot_fits(est);
+                figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),'_',...
+                    'mouse',num2str(currMouse),'_',currTask,'_',optionsFile.fileName.rawFitFile{iModel}]);
+                save([figdir,'.fig']);
+                print([figdir,'.png'], '-dpng');
+                close all;
+
+                %Save model fit
+                if isempty(optionsFile.cohort(cohortNo).conditions)
+                    save([char(optionsFile.paths.cohort(cohortNo).results),'_',...
+                        'mouse',num2str(currMouse),'_',currTask,'_',optionsFile.fileName.rawFitFile{iModel},'.mat'], 'est');
+                else
+                    save([char(optionsFile.paths.cohort(cohortNo).results),'_',...
+                        'mouse',num2str(currMouse),'_',currTask,'condition_',currCondition,'_',...
+                        optionsFile.fileName.rawFitFile{iModel},'.mat'], 'est');
+                end
+                modelInv.allMice(iMouse,iModel).est = est;
+            end
+        end
+        % create savepath and filename as a .mat file
+        if isempty(optionsFile.cohort(cohortNo).conditions)
+            savePath = [optionsFile.paths.cohort(cohortNo).results,'_',currTask,...
+                '_',optionsFile.fileName.fittedData];
+        else % Save with conditions included
+            savePath = [optionsFile.paths.cohort(cohortNo).results,'_',currTask,...
+                'condition_',currCondition,'_',optionsFile.fileName.fittedData];
+        end
+        save(savePath, '-struct', 'modelInv','allMice');
+    end
 end
 
 end
