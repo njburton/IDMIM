@@ -62,6 +62,8 @@ end
 if optionsFile.optionsFile.doGetData == 1
     disp('preparing to extract raw data from .txt files in dataToAnalyseDir...');
     getData(optionsFile,cohortNo); % Extract data from raw files in dataToAnalyse Dir
+    excludeData(cohortNo); % create tables thats include info regarding mice meeting exclusion criteria
+
     disp('...now allocating groups, sex, and taskRepetition counts...');
     getGroupsAndTaskRepetition(optionsFile,cohortNo); % Take getData output .mat file and fill in groups and taskRepetition info
 end

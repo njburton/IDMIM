@@ -1,4 +1,35 @@
-function performBMS
+function performBMS(cohortNo)
+
+%% performBMS
+%  Performs Bayesian Model Selection to determine what model in the model
+%  space describes the data acquired in the current dataset (cohort) best
+%
+%   SYNTAX:       preformBMS(cohortNo)
+%
+%   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
+%                            corresponds to what number in the
+%                            optionsFile.cohort(cohortNo).name struct. This
+%                            allows to run the pipeline and its functions for different
+%                            cohorts whose expcifications have been set in runOptions.m
+%
+% Original: 29-05-2024; Katharina V. Wellstein,
+%           katharina.wellstein@newcastle.edu.au
+%
+% -------------------------------------------------------------------------
+% This file is released under the terms of the GNU General Public Licence
+% (GPL), version 3. You can redistribute it and/or modify it under the
+% terms of the GPL (either version 3 or, at your option, any later version).
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% _________________________________________________________________________
+% =========================================================================
 
 %% INITIALIZE Variables for running this function
 % specifications for this analysis
@@ -8,28 +39,22 @@ else
     optionsFile = runOptions();
 end
 
+addpath(genpath([optionsFile.paths.toolboxDir,'spm']));
+
 disp('************************************** BAYESIAN MODEL SELECTION **************************************');
 disp('*');
 disp('*');
 
-% >>>>>>>>> COMMENT: here only one cohort is loaded (2023), fid a way to
-% load the other cohorts, e.g. 2024_HGFPilot3 and the new ones
+% load data
+load([optionsFile.paths.cohort(cohortNo).results,optionsFile.cohort(cohortNo).name,filesep,'modelInv.mat']);
 
-load([optionsFile.paths.resultsDir,filesep,'2023_UCMS2',filesep,'modelInv.mat']);
 
-% KW note: the code below only works for those cohorts that have treatments and controls
-% in them. That poses the question: Did we have that at all? I think we
-% have a within-mice-design, right?
-groupCodes = codeGroups;
-groups = [find(groupCodes==1) find(groupCodes==0)]; %0 = controls,1 = treatment
 
-addpath(genpath([pwd,filesep,'spm12']));
-
-for modeli = length(optionsFile.model.space)
-    for mousei = 1:optionsFile.cohort.nSize
-        res.LME(mousei,modeli)   = allMice(mousei,modeli).est.optim.LME;
-        res.prc_param(mousei,modeli).ptrans = allMice(mousei,modeli).est.p_prc.ptrans(optionsFile.modelSpace(modeli).prc_idx);
-        res.obs_param(mousei,modeli).ptrans = allMice(mousei,modeli).est.p_obs.ptrans(optionsFile.modelSpace(modeli).obs_idx);
+for iModel = length(optionsFile.model.space)
+    for iMouse = 1:optionsFile.cohort.nSize
+        res.LME(iMouse,iModel)   = allMice(iMouse,iModel).est.optim.LME;
+        res.prc_param(iMouse,iModel).ptrans = allMice(iMouse,iModel).est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
+        res.obs_param(iMouse,iModel).ptrans = allMice(iMouse,iModel).est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
     end
 en
 

@@ -42,9 +42,12 @@ if optionsFile.doOptions == 1
 
     %% SPECIFY COHORT DATASET info
     % Each group represents an individual experiment/cohort
-    optionsFile.cohort(1).name = '2023_UCMS'; %>>> @NICK: this is what it was called in dataSetNames: '2023_UCMS', which one is the one that is used in the datafiles?
+    optionsFile.cohort(1).name = '2023_UCMS';
+    optionsFile.cohort(1).nameInDataFiles = '2023_UCMS2';
     optionsFile.cohort(2).name = '2024_HGFPilot';
+    optionsFile.cohort(2).nameInDataFiles = '2024_HGFPilot3';
     optionsFile.cohort(3).name = '5HT';
+    optionsFile.cohort(3).nameInDataFiles = '5HT'; %is that right?
 
     % Identify which mouseIDs are male, female and their experimental group
     % >>>>>>>>>>> COMMENT: @NICK, check if these numbers are correct
@@ -85,7 +88,8 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).dataFile.trialStartTimeOffset      = 898; % TrialStartTime I
     optionsFile.cohort(1).dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.cohort(1).dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
-
+    optionsFile.cohort(2).dataFile.fileStartSrings = {'','',''}; %>> SEE HOW THIS LOOKS IN THIS COHORT
+    
     % '2024_HGF' COHORT
     optionsFile.cohort(2).taskPrefix        = 'NJB_HGF_';
     optionsFile.cohort(2).trainTask(1).name = 'TrainingTask_RL';
@@ -101,11 +105,12 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).dataFile.trialStartTimeOffset      = 898; % TrialStartTime I
     optionsFile.cohort(2).dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.cohort(2).dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
-
+    optionsFile.cohort(2).dataFile.fileStartSrings = {'2024-10-09_mouse','2024-10-13_mouse','2024-10-16_mouse'}; % may ot be necessary any longer...
+    
     % '5HT' COHORT
     optionsFile.cohort(3).taskPrefix        = 'NJB_HGF_';
     optionsFile.cohort(3).trainTask(1).name = 'TrainingTask_RL';
-    optionsFile.cohort(3).trainTask(2).name = 'TrainingTask_LL - Copy';
+    optionsFile.cohort(3).trainTask(2).name = 'TrainingTask_LL';
     optionsFile.cohort(3).testTask(1).name  = 'TestTaskA';
     optionsFile.cohort(3).nTrials           = 280;   % total task trials
     optionsFile.cohort(3).trialDuration     = 13;   % in seconds
@@ -116,8 +121,12 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(3).dataFile.trialStartTimeOffset      = 898; % TrialStartTime I
     optionsFile.cohort(3).dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.cohort(3).dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
-
-    %% SPECIFY PATHS
+    optionsFile.cohort(3).dataFile.fileStartSrings = {'','',''}; %>> SEE HOW THIS LOOKS IN THIS COHORT
+    
+    % general dataFile settings needed for reading the data
+    optionsFile.dataFiles.largeFileThreshold = 500000; % indicates this is a file containing multiple mouse datasets,
+                                                       % since individualMouseMECPDCFile is 63,140 bytes
+%% SPECIFY PATHS
     % reorganize data and results folders
     disp('setting new paths...');
     optionsFile.paths.projDir    = [pwd,filesep];
@@ -129,6 +138,7 @@ if optionsFile.doOptions == 1
 
     for d = 1:size(optionsFile.cohort,2)
         optionsFile.paths.cohort(d).data    = [optionsFile.paths.dataDir,optionsFile.cohort(d).name,filesep];
+        optionsFile.paths.cohort(d).rawData = [optionsFile.paths.dataDir,'raw',filesep,optionsFile.cohort(d).name,filesep];
         optionsFile.paths.cohort(d).results = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep];
         optionsFile.paths.cohort(d).plots   = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep,'plots',filesep];
         optionsFile.paths.cohort(d).simulations = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep,'simulations',filesep];
@@ -192,12 +202,12 @@ if optionsFile.doOptions == 1
     optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
 
     %% SPECIFY FILENAMES
-    optionsFile.fileName.simResponses     = 'sim.mat';
-    optionsFile.fileName.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
-    optionsFile.fileName.fitDiaryName     = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
-    optionsFile.fileName.fittedData       = 'modelInv.mat';
-    optionsFile.fileName.dataBaseFileName = 'rawDataFileInfo.mat'; % >>> AGAIN< WHat is this for ?
-    optionsFile.fileName.dataBaseName     = 'dataInfoTable';
+    optionsFile.dataFiles.simResponses     = 'sim.mat';
+    optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
+    optionsFile.dataFiles.fitDiaryName     = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
+    optionsFile.dataFiles.fittedData       = 'modelInv.mat';
+    optionsFile.dataFiles.dataBaseFileName = 'rawDataFileInfo.mat'; % >>> AGAIN< WHat is this for ?
+    optionsFile.dataFiles.dataBaseName     = 'dataInfoTable';
 end
 
 

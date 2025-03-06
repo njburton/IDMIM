@@ -1,11 +1,16 @@
-function [] = parameter_recovery()
+function [] = parameter_recovery(cohortNo)
 
 %% parameter_recovery
 %  Parameter recovery analysis based on simulations. This step will be
-%  executed if simP.doSimulations = 1;
+%  executed if optionsFile.doSimulations = 1;
 %
-%   SYNTAX:       parameter_recovery
+%   SYNTAX:       parameter_recovery(cohortNo)
 %
+%   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
+%                            corresponds to what number in the
+%                            optionsFile.cohort(cohortNo).name struct. This
+%                            allows to run the pipeline and its functions for different
+%                            cohorts whose expcifications have been set in runOptions.m
 %
 % Original: 29-05-2024; Katharina V. Wellstein,
 %           katharina.wellstein@newcastle.edu.au
@@ -42,27 +47,37 @@ disp('*');
 % and save data into rec.est struct and paramete values for recovery into
 % rec.param.{}.est
 
-for iTask = 1:numel(optionsFile.task.testTask)
-    for iMouse = 1:optionsFile.cohort.nSize
-        currMouse = optionsFile.cohort.controlGroup{iMouse};
+
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+
+    % collate all mouse IDs
+    mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice,optionsFile.cohort(cohortNo).treatment.femaleMice,...
+    optionsFile.cohort(cohortNo).control.maleMice,optionsFile.cohort(cohortNo).control.femaleMice];
+
+    %load data exclusion info
+    % still to do!
+     load([char(optionsFile.paths.cohort(cohortNo).results),'ExclusionInfo_',char(currTask),'.mat']);
+
+
+    for iMouse = 1:optionsFile.cohort(cohortNo).nSize
+        currMouse = mouseIDs{iMouse};
         for m_est = 1:numel(optionsFile.model.space)
             currModel = optionsFile.model.space{m_est};
             fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', iMouse,m_est);
 
             % load results from real data model inversion
             try
-                rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.mouseModelFitFilesDir,filesep,...
-                    '2024-10-09_mouse',currMouse,'_',optionsFile.task.testTask(iTask).name,'_',optionsFile.fileName.rawFitFile{m_est},'.mat']);
+                rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.cohort(cohortNo).results,...
+                    optionsFile.cohort(cohortNo).dataFile.fileStartSrings{1},currMouse,'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',currModel,'.mat']);
             catch
                 try
-                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.mouseModelFitFilesDir,filesep,...
-                        '2024-10-13_mouse',currMouse,'_',optionsFile.task.testTask(iTask).name,'_',optionsFile.fileName.rawFitFile{m_est},'.mat']);
+                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.cohort(cohortNo).results,...
+                        optionsFile.cohort(cohortNo).dataFile.fileStartSrings{2},currMouse,'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',currModel,'.mat']);
                 catch
-                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.mouseModelFitFilesDir,filesep,...
-                        '2024-10-16_mouse',currMouse,'_',optionsFile.task.testTask(iTask).name,'_',optionsFile.fileName.rawFitFile{m_est},'.mat']);
+                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.cohort(cohortNo).results,...
+                        optionsFile.cohort(cohortNo).dataFile.fileStartSrings{3},currMouse,'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',currModel,'.mat']);
                 end
             end
-
         % param values in transformed space (assumption of Gaussian prior)
         rec.param(iTask).prc(m_est).estAgent(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);
         rec.param(iTask).obs(m_est).estAgent(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_obs.ptrans(optionsFile.modelSpace(m_est).obs_idx);
@@ -76,17 +91,20 @@ end
 % model space and inverted with all the models in the model space. For
 % model identifiability we are saving into the following structure: agent(m_in,iAgent,m_est)
 
-for iTask = 1:numel(optionsFile.task.testTask)
-    for iAgent = 1:optionsFile.cohort.nSize
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+    for iAgent = 1:optionsFile.cohort(cohortNo).nSize
         for m_in = 1:numel(optionsFile.model.space)
-            fprintf('current iteration: n=%1.0f, m=%1.0f \n', iAgent,m_in);
-            simResp = load([optionsFile.simulations.simResultsDir,filesep,optionsFile.model.space{m_in},optionsFile.task.testTask(iTask).name,'_sim.mat']);
+            modelIn = optionsFile.model.space{m_in};
+            fprintf('current iteration: n=%1.0f, m=%1.0f \n', iAgent,modelIn);
+            simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},...
+                            optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
             
             for m_est = 1:numel(optionsFile.model.space)
-
+                modelEst = optionsFile.model.space{m_est};
                 % load results from simulated agents' model inversion
-                rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.simulations.simResultsDir, ...
-                    [optionsFile.model.space{m_in},'_simAgent_', num2str(iAgent),'_model_in',num2str(m_in),'_model_est',num2str(m_est),'_task_',optionsFile.task.testTask(iTask).name,'.mat']));
+                rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.paths.cohort(cohortNo).simulations, ...
+                    [optionsFile.model.space{m_in},'_simAgent_', num2str(iAgent),'_model_in_',modelIn,'_model_est_',modelEst,...
+                    '_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']));
 
                 % LME
                 rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
@@ -99,23 +117,24 @@ end
 
 %% CALCULATE Pearson's Correlation Coefficient (pcc)
 
-for iTask = 1:numel(optionsFile.task.testTask)
+% Perceptual Model
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for m = 1:numel(optionsFile.model.space)
         for p = 1:length(optionsFile.modelSpace(m).prc_idx)
-            % prc model
-            [prc_coef, prc_p] = corr(rec.param(iTask).prc(m).simAgent(:,p), rec.param(iTask).prc(m).estAgent(:,p));
+            [prc_coef,prc_p] = corr(rec.param(iTask).prc(m).simAgent(:,p),...
+                                    rec.param(iTask).prc(m).estAgent(:,p));
             rec.param(iTask).prc(m).pcc(p)  = diag(prc_coef);
             rec.param(iTask).prc(m).pval(p) = diag(prc_p);
         end
     end
 end
 
-%if RW throws error, use ifElse statement to bypass
-for iTask = 1:numel(optionsFile.task.testTask)
+% Observational Model
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for m = 1:numel(optionsFile.model.space)
         for p = 1:length(optionsFile.modelSpace(m).obs_idx)
-            % obs model
-            [obs_coef, obs_p] = corr(rec.param(iTask).obs(m_in).simAgent(:,p), rec.param(iTask).obs(m_in).estAgent(:,p));
+            [obs_coef,obs_p] = corr(rec.param(iTask).obs(m_in).simAgent(:,p),...
+                                    rec.param(iTask).obs(m_in).estAgent(:,p));
             rec.param(iTask).obs(m).pcc(p)  = diag(obs_coef);
             rec.param(iTask).obs(m).pval(p) = diag(obs_p);
         end
@@ -123,11 +142,13 @@ for iTask = 1:numel(optionsFile.task.testTask)
 end
 
 %% PLOT correlation plot
-for iTask = 1:numel(optionsFile.task.testTask)
+
+
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for m = 1:numel(optionsFile.model.space)
         t = tiledlayout('flow');
         figure('Color',[1,1,1],'pos',[10 10 1050 500]);
-
+        % Perceptual Model
         for pPrc = 1:size(optionsFile.modelSpace(m).prc_idx,2)
             nexttile;
             scatter(rec.param(iTask).prc(m).simAgent(:,pPrc),rec.param(iTask).prc(m).estAgent(:,pPrc),'filled');
@@ -140,6 +161,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
             hold on;
         end
 
+        % Observational Model
         for pObs = 1:size(optionsFile.modelSpace(m).obs_idx,2)
             nexttile;
             scatter(rec.param(iTask).obs(m).simAgent(:,pObs),rec.param(iTask).obs(m).estAgent(:,pObs),'filled');
@@ -154,10 +176,9 @@ for iTask = 1:numel(optionsFile.task.testTask)
         end
 
         sgtitle([optionsFile.modelSpace(m).name], 'FontSize', 18);
-        figDir = fullfile([optionsFile.paths.plotsDir, ...
-            filesep,'Parameter_recovery_',optionsFile.modelSpace(m).name,' ',optionsFile.task.testTask(iTask).name]);
+        figDir = fullfile([optionsFile.paths.cohort(cohortNo).simPlots,'Parameter_recovery_', ...
+            optionsFile.modelSpace(m).name,' ',optionsFile.cohort(cohortNo).testTask(iTask).name]);
         print(figDir, '-dpng');
-
         save([figDir,'.fig'])
     end
 end
@@ -166,7 +187,7 @@ close all
 
 %% MODEL IDENTIFIABILITY (LME Winner classification)
 
-for iTask = 1:numel(optionsFile.task.testTask)
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
 
     % pre-allocate
      rec.task(iTask).class.LMEwinner     = NaN(numel(optionsFile.model.space),numel(optionsFile.model.space));
@@ -178,7 +199,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
         for i = 1:numel(optionsFile.model.space)
             rec.task(iTask).class.LMEwinner(m,i) = sum(rec.task(iTask).class.max(m).idx==i);
         end
-        rec.task(iTask).class.percLMEwinner(m,:) = rec.task(iTask).class.LMEwinner(m,:)./12; %optionsFile.simulations.nSamples;
+        rec.task(iTask).class.percLMEwinner(m,:) = rec.task(iTask).class.LMEwinner(m,:)./12;% should be !!! :optionsFile.simulations.nSamples
         % accuracy
         rec.task(iTask).class.acc(m) = rec.task(iTask).class.percLMEwinner(m,m);
     end
@@ -190,7 +211,7 @@ for iTask = 1:numel(optionsFile.task.testTask)
 end
 
 %% PLOT model identifiability
-for iTask = 1:numel(optionsFile.task.testTask)
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     label_x = {optionsFile.model.space{1} optionsFile.model.space{2} optionsFile.model.space{3}};
     figure('color',[1 1 1],'name','model identifiability');
 
@@ -226,87 +247,17 @@ for iTask = 1:numel(optionsFile.task.testTask)
         'YTickLabel',label_x,...
         'TickLength',[0 0]);
 
-    figdir = fullfile([optionsFile.paths.plotsDir,filesep,...
-        'Model Identifiability  ',optionsFile.task.testTask(iTask).name]);
+    figdir = fullfile([optionsFile.paths.cohort(cohortNo).simPlots,'Model Identifiability  ',...
+                       optionsFile.cohort(cohortNo).testTask(iTask).name]);
     print(figdir, '-dpng');
+    save([figDir,'.fig'])
 end
 
 close all;
 
-% %% Plot est mice (X axis are mice/sim) Yaxis=values;
-% % Plot free perceptual model parameters
-% xAxis = 1:optionsFile.cohort.nSize;
-% for iTask = 1:numel(optionsFile.task.testTask)
-%     for m = 1:2 % numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
-%         for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
-%             for n = 1:optionsFile.cohort.nSize
-%                 PostPerceptParam = rec.sim.task(iTask).agent(m,iAgent,m).data.p_prc.ptrans(optionsFile.modelSpace(m).prc_idx(p));
-%                 fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b'); %ylim([-5.0, 5.0]);
-%                 hold on
-%             end %
-% 
-%             yline(rec.sim.task(iTask).agent(m,iAgent,m_).data.est.c_prc.priormus(optionsFile.modelSpace(m).prc_idx),'Color','r');
-%             title(fig,['mice perceptual parameters',num2str(p),' ',optionsFile.task.testTask(iTask).name]);
-%             figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_prc_param',num2str(p),' ',optionsFile.task.testTask(iTask).name]);
-%             save([figDir,'.fig']);
-%             print([figDir,'.png'], '-dpng');
-%             close all;
-%         end
-% 
-%         %Plot free observational model parameters
-%         for j = 1:optionsFile.cohort.nSize
-%             PostObsParam = rec.sim.task(iTask).agent(m,iAgent,m_).data.est.p_obs.ptrans(optionsFile.modelSpace(m).obs_idx);   % Plot single free param in observation model
-%             fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
-%             hold on
-%         end
-% 
-%         yline(rec.sim.task(iTask).agent(m,iAgent,m_).data.est.c_obs.priormus(optionsFile.modelSpace(m).obs_idx),'Color','r');
-%         title(fig,['mice observational parameters',num2str(p),' ',optionsFile.task.testTask(iTask).name]);
-%         figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_mice_obs_param',num2str(p),' ',optionsFile.task.testTask(iTask).name]);
-%         save([figDir,'.fig']);
-%         print([figDir,'.png'], '-dpng');
-%         close all;
-%     end
-% end
-
-% %% Plot simAgent's Perceptual & Observational Free Parameter values *TO CHECK IF THAT WORKS
-% %Plot free perceptual model parameters
-% xAxis = 1:length(optionsFile.task.MouseID);
-% for iTask = 1:numel(optionsFile.task.testTask)
-%     for m = 1:2 % numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
-%         for p = 1:length(optionsFile.modelSpace(m).prc_idx)   % Plot both free params in perceptual model
-%             for n = 1:length(optionsFile.task.MouseID)
-%                 PostPerceptParam = simResp.agent(iAgent,m_in).task(iTask).data.p_prc.p(optionsFile.modelSpace(m).prc_idx(p));
-%                 fig = plot(xAxis(n),PostPerceptParam,'Marker', 'o','Color','b');
-%                 hold on
-%             end
-%             yline(simResp.agent(iAgent,m_in).task(iTask).data.c_prc.priormus(optionsFile.modelSpace(m).prc_idx(p)),'Color','r');
-%             %     title(fig,['simulated observational parameters',num2str(p)]);
-%             figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_simAgents_prc_param',num2str(p)]);
-%             save([figDir,'.fig']);
-%             print([figDir,'.png'], '-dpng');
-%             close all;
-%         end
-%     end
-% 
-%     %Plot free observational model parameters
-%     for m = 1:2 % numel(optionsFile.model.space) have to fix prc_idx for RW model (and eventually VK model)
-%         for j = 1:length(optionsFile.task.MouseID)
-%             PostObsParam = simResp.agent(iAgent,m_in).task(iTask).data.p_obs.ptrans(optionsFile.modelSpace.obs_idx);   % Plot single free param in observation model
-%             fig = plot(xAxis(j),PostObsParam,'Marker','o','Color','b');
-%             hold on
-%         end
-%         yline(simResp.agent(iAgent,m_in).task(iTask).data.c_obs.priormus(optionsFile.modelSpace.obs_idx),'Color','r');
-%         % title(fig,['simulated observational parameters',num2str(p)]);
-%         figDir = fullfile([char(optionsFile.paths.plotsDir),filesep,'model',num2str(m),'_simAgents_obs_param',num2str(p)]);
-%         save([figDir,'.fig']);
-%         print([figDir,'.png'], '-dpng');
-%         close all;
-%     end
-% end
 %% SAVE results as struct
 res.rec = rec;
-save_path = fullfile(optionsFile.paths.plotsDir,filesep,'sim_and_realData.mat');
+save_path = fullfile(optionsFile.paths.cohort(cohortNo).simulations,'sim_and_realData.mat');
 save(save_path, '-struct', 'res');
 
 disp('recovery analysis complete.')

@@ -2,7 +2,7 @@ function [] = sim_data_modelinversion(cohortNo)
 
 %% sim_data_modelinversion
 %  Invert simulated agents with models in the modelspace. This step will be
-%  executed if optionsFIle.doSimulations = 1;
+%  executed if optionsFile.doSimulations = 1;
 %
 %   SYNTAX:       sim_data_modinversion
 %   
