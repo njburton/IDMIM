@@ -54,38 +54,42 @@ strct.nRandInit    = optionsFile.rng.nRandInit;
 strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
  for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-    for iSample = 39:optionsFile.simulations.nSamples
+    for iSample = 1:optionsFile.simulations.nSamples
         for m_in = 1:numel(optionsFile.model.space)
             sim = load(fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim']));
             
             for m_est = 1:numel(optionsFile.model.space)
                  
-                if m_est == 3 && m_in ==3
-                    strct.maxStep  = 100;
-                end
+                % if m_est == 3 && m_in ==3
+                %     strct.maxStep  = 100;
+                % end
+                % 
+                % %%  MODEL INVERSION
+                %  disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);
+                % est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
+                %     optionsFile.cohort(cohortNo).testTask(iTask).inputs,...                  % input sequence
+                %     optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
+                %     optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
+                %     strct); % seed for multistart
 
-                %%  MODEL INVERSION
-                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | fitting model: ', optionsFile.modelSpace(m_est).name]);
-                est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
-                    optionsFile.cohort(cohortNo).testTask(iTask).inputs,...                  % input sequence
-                    optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
-                    optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
-                    strct); % seed for multistart
+              est =  load(fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
+                    [char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']));
 
             %Plot standard trajectory plot
             optionsFile.plot(m_est).plot_fits(est);
             figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),char(datetime("today")),'_',...
                 'simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                '_model_est',num2str(m_est),'_task_',char(iTask),'_',optionsFile.dataFiles.rawFitFile{m_est}]);
+                '_model_est',num2str(m_est),'_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.dataFiles.rawFitFile{m_est}]);
             save([figdir,'.fig']);
             print([figdir,'.png'], '-dpng');
             close all;
 
-                %% SAVE model fit as struct
-                save_path = fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
-                    [char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']);
-                save(save_path, '-struct', 'est');
+                % %% SAVE model fit as struct
+                % save_path = fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
+                %     [char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                %     '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']);
+                % save(save_path, '-struct', 'est');
 
             end
         end
