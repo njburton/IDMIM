@@ -1,6 +1,6 @@
 function [] = setup_simulations(cohortNo)
 
-%% WBEST_setup_simulations
+%% setup_simulations
 %  Simulat synthetic agents using priors determined from pilot dataset
 %
 %   SYNTAX:       setup_simulations
@@ -45,12 +45,6 @@ addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 disp('************************************** SETUP_SIMULATIONS **************************************');
 disp('*');
 disp('*');
-
-%% Add in input sequence that has been generated
-%>>>>>>>>>> COMMENT: ???
-%Save input seq as variable in workspace so that I can subsititute it in
-%the code when running this funcition
-%newInputs = xlsread('C:\Users\c3200098\Desktop\ImprovedInputSequence.csv');
 
 %% GENERATE synthetic agents using default priors from toolbox
 sim.agent  = struct();

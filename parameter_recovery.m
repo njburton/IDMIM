@@ -143,7 +143,6 @@ end
 
 %% PLOT correlation plot
 
-
 for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for m = 1:numel(optionsFile.model.space)
         t = tiledlayout('flow');
@@ -183,8 +182,36 @@ for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     end
 end
 
+%% PLOT PRIORS AND POSTERIORS
+
+for m = 1:numel(optionsFile.model.space)
+
+    % perceptual model
+    for j = 1:size(optionsFile.modelSpace(m).prc_idx,2)
+        hgf_plot_param_pdf(res.main.ModSpace(m).free_expnms_mu_prc,M(m),res.main.ModSpace(m),res.pilot.ModSpace(m), j, 'prc')
+
+        figdir = fullfile(simP.saveDirGroupPilots,...
+            [simP.Acronym,'_priors_model_', options.model.space{m}, '_prcparam_', num2str(j),'_pilot_priors']);
+        print(figdir, '-dpng');
+        close;
+    end
+
+    % observational model
+    for k = 1:size(optionsFile.modelSpace(m).obs_idx,2)
+        hgf_plot_param_pdf(res.main.ModSpace(m).free_expnms_mu_obs,M(m),res.main.ModSpace(m),res.pilot.ModSpace(m), k, 'obs')
+
+        figdir = fullfile(simP.saveDirGroupPilots,...
+            [simP.Acronym,'_priors_model_', options.model.space{m}, '_obsparam_', num2str(k),'_pilot_priors']);
+        print(figdir, '-dpng');
+        close;
+    end
+end
+
+hgf_plot_param_pdf(paramNames,data,prior,posterior,i,type);
+
 close all
 
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %%
 %% MODEL IDENTIFIABILITY (LME Winner classification)
 
 for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
@@ -210,7 +237,7 @@ for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     rec.task(iTask).class.chancethr = binoinv(0.9, optionsFile.simulations.nSamples, 1/numel(optionsFile.model.space)) / 12; %optionsFile.simulations.nSamples; 
 end
 
-%% PLOT model identifiability
+%% PLOT MODEL IDENTIFIABILITY
 for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     label_x = {optionsFile.model.space{1} optionsFile.model.space{2} optionsFile.model.space{3}};
     figure('color',[1 1 1],'name','model identifiability');
