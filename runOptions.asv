@@ -44,15 +44,18 @@ if optionsFile.doOptions == 1
     % Each group represents an individual experiment/cohort
     optionsFile.cohort(1).name = '2023_UCMS';
     optionsFile.cohort(1).nameInDataFiles = '2023_UCMS2'; %how it is in the MEDPC files
-    optionsFile.cohort(1).conditions = [];
+    optionsFile.cohort(1).conditions = {'UCMS','noUCMS'}; % does that make sense of leave empty?
+    optionsFile.cohort(1).taskDesign = 'betweenDesign';
 
     optionsFile.cohort(2).name = '2024_HGFPilot';
     optionsFile.cohort(2).nameInDataFiles = '2024_HGFPilot3'; %how it is in the MEDPC files
     optionsFile.cohort(2).conditions = [];
+    optionsFile.cohort(2).taskDesign = 'oneCondition';
 
     optionsFile.cohort(3).name = '5HT';
     optionsFile.cohort(3).nameInDataFiles = '5HT'; %how it is in the MEDPC files, is that right here?
-    optionsFile.cohort(3).conditions = {'5mg','10mg','saline'};
+    optionsFile.cohort(3).conditions = {'5mg','10mg','sucrose'};
+    optionsFile.cohort(3).taskDesign = 'withinDesign';
 
     % Identify which mouseIDs are male, female and their experimental group
     optionsFile.cohort(1).treatment.maleMice   = {'372','382','392','402','412','422'};
@@ -63,8 +66,8 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).treatment.femaleMice = [];
     optionsFile.cohort(2).control.maleMice     = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort(2).control.femaleMice   = {'4.2','5.1','5.2','5.3','5.4','5.5'};
-    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2','2.3','2.4','3.1','3.2','3.3','3.4'}; % IDs are repeating themselves here because this is within-mice
-    optionsFile.cohort(3).treatment.femaleMice = {'4.1','4.2','4.3','4.4','5.1','5.2','5.3','5.4','6.1','6.2','6.3','6.4'};
+    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2'}; % IDs are repeating themselves here because this is within-mice
+    optionsFile.cohort(3).treatment.femaleMice = {'4.2','5.1','5.2','5.3','5.4','5.5'};
     optionsFile.cohort(3).control.maleMice     = [];
     optionsFile.cohort(3).control.femaleMice   = [];
 
@@ -80,11 +83,10 @@ if optionsFile.doOptions == 1
     % '2023_UCMS' COHORT
     optionsFile.cohort(1).taskPrefix        = 'NJB_HGF_';
     optionsFile.cohort(1).trainTask(1).name = []; % @NICK: any?
-    optionsFile.cohort(1).testTask(1).name  = 'ABA2_R';
-    optionsFile.cohort(1).testTask(2).name  = 'ABA1_L';
-    optionsFile.cohort(1).nTrials           = 180;  % trials
+    optionsFile.cohort(1).testTask(1).name  = 'binInputSeq_ABA_rightLever';
+    optionsFile.cohort(1).nTrials           = 180;  %>>> @NICK: CHECK!
     optionsFile.cohort(1).trialDuration     = 20;   % in seconds
-    optionsFile.cohort(1).totalTaskDuration = optionsFile.cohort(1).nTrials*optionsFile.cohort(1).trialDuration; % in seconds
+    optionsFile.cohort(1).totalTaskDuration = 3640; % in seconds
     % optionsFile.cohort(1).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(1).dataFile.outcomeOffset = 332; % Outcome G
     optionsFile.cohort(1).dataFile.choiceOffset              = 615; % Choice H
@@ -92,13 +94,13 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.cohort(1).dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
     optionsFile.cohort(1).dataFile.fileStartSrings = {'','',''}; %>> SEE HOW THIS LOOKS IN THIS COHORT
-    optionsFile.cohort(1).dataFile.ConditionMarker      = {'Group:','Group'};
-    optionsFile.cohort(1).dataFile.RLSMarker            = {'F:','F'}; %RewardingLeverSide
-    optionsFile.cohort(1).dataFile.ChoiceMarker         = {'H:','H'}; %Choice
-    optionsFile.cohort(1).dataFile.OutcomeMarker        = {'G:','G'}; %Outcome
-    optionsFile.cohort(1).dataFile.LeverPressTimeMarker = {'K:','K'}; %LeverPressTime
-    optionsFile.cohort(1).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
-    optionsFile.cohort(1).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
+    optionsFile.cohort(1).TaskDateMarker       = 'Start Date: ';
+    optionsFile.cohort(1).RLSMarker            = 'F:'; %RewardingLeverSide
+    optionsFile.cohort(1).ChoiceMarker         = 'H:'; %Choice
+    optionsFile.cohort(1).OutcomeMarker        = 'G:'; %Outcome
+    optionsFile.cohort(1).LeverPressTimeMarker = 'K:'; %LeverPressTime
+    optionsFile.cohort(1).TrialStartTimeMarker = 'I:'; % TrialStartTime
+    optionsFile.cohort(1).RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
     % '2024_HGF' COHORT
     optionsFile.cohort(2).taskPrefix        = 'NJB_HGF_';
@@ -108,21 +110,21 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).testTask(2).name  = 'TestTaskB';
     optionsFile.cohort(2).nTrials           = 280;  % total task trials
     optionsFile.cohort(2).trialDuration     = 13;   % in seconds
-    optionsFile.cohort(2).totalTaskDuration = optionsFile.cohort(2).nTrials*optionsFile.cohort(2).trialDuration; % in seconds
+    optionsFile.cohort(2).totalTaskDuration = 3640; % in seconds
     % optionsFile.cohort(2).dataFile.taskNameLocation          = 13;  % taskNameMSN
-    optionsFile.cohort(2).dataFile.outcomeOffset             = 332; % Outcome G
+    optionsFile.cohort(2).dataFile.outcomeOffset = 332; % Outcome G
     optionsFile.cohort(2).dataFile.choiceOffset              = 615; % Choice H
     optionsFile.cohort(2).dataFile.trialStartTimeOffset      = 898; % TrialStartTime I
     optionsFile.cohort(2).dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.cohort(2).dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
     optionsFile.cohort(2).dataFile.fileStartSrings = {'2024-10-09_mouse','2024-10-13_mouse','2024-10-16_mouse'}; % may ot be necessary any longer...
-    optionsFile.cohort(2).dataFile.ConditionMarker       = {'Group:','Group'};
-    optionsFile.cohort(2).dataFile.RLSMarker            = {'F:','F'}; %RewardingLeverSide
-    optionsFile.cohort(2).dataFile.ChoiceMarker         = {'H:','H'}; %Choice
-    optionsFile.cohort(2).dataFile.OutcomeMarker        = {'G:','G'}; %Outcome
-    optionsFile.cohort(2).dataFile.LeverPressTimeMarker = {'K:','K'}; %LeverPressTime
-    optionsFile.cohort(2).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
-    optionsFile.cohort(2).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
+    optionsFile.cohort(2).dataFile.TaskDateMarker       = 'Start Date: ';
+    optionsFile.cohort(2).dataFile.RLSMarker            = 'F:'; %RewardingLeverSide
+    optionsFile.cohort(2).ChoiceMarker         = 'H:'; %Choice
+    optionsFile.cohort(2).OutcomeMarker        = 'G:'; %Outcome
+    optionsFile.cohort(2).LeverPressTimeMarker = 'K:'; %LeverPressTime
+    optionsFile.cohort(2).TrialStartTimeMarker = 'I:'; % TrialStartTime
+    optionsFile.cohort(1).RecepticalBeamBreakMarker = 'J:'; % RecepticalBeamBreak
 
     % '5HT' COHORT
     optionsFile.cohort(3).taskPrefix        = 'NJB_HGF_';
@@ -131,7 +133,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(3).testTask(1).name  = 'TestTaskA';
     optionsFile.cohort(3).nTrials           = 280;   % total task trials
     optionsFile.cohort(3).trialDuration     = 13;   % in seconds
-    optionsFile.cohort(3).totalTaskDuration = optionsFile.cohort(3).nTrials*optionsFile.cohort(3).trialDuration; % in seconds
+    optionsFile.cohort(3).totalTaskDuration = 3640; % in seconds
     % optionsFile.cohort(3).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(3).dataFile.outcomeOffset = 332; % Outcome G
     optionsFile.cohort(3).dataFile.choiceOffset              = 615; % Choice H
@@ -139,13 +141,6 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(3).dataFile.recepticalBeamBreakOffset = 1181;% RecepticalBeamBreak J
     optionsFile.cohort(3).dataFile.leverPressTimeOffset      = 1464;% LeverPressTime K
     optionsFile.cohort(3).dataFile.fileStartSrings = {'','',''}; %>> SEE HOW THIS LOOKS IN THIS COHORT
-    optionsFile.cohort(3).dataFile.ConditionMarker      = {'Group:','Group'};
-    optionsFile.cohort(3).dataFile.RLSMarker            = {'F:','F'}; %RewardingLeverSide
-    optionsFile.cohort(3).dataFile.ChoiceMarker         = {'H:','H'}; %Choice
-    optionsFile.cohort(3).dataFile.OutcomeMarker        = {'G:','G'}; %Outcome
-    optionsFile.cohort(3).dataFile.LeverPressTimeMarker = {'K:','K'}; %LeverPressTime
-    optionsFile.cohort(3).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
-    optionsFile.cohort(3).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
     
     % general dataFile settings needed for reading the data
     optionsFile.dataFiles.largeFileThreshold = 500000; % indicates this is a file containing multiple mouse datasets,
@@ -153,12 +148,11 @@ if optionsFile.doOptions == 1
 %% SPECIFY PATHS
     % reorganize data and results folders
     disp('setting new paths...');
-    optionsFile.paths.saveDir    = '/Volumes/Samsung_T5/SNG/projects/IDMIM/';
     optionsFile.paths.projDir    = [pwd,filesep];
     optionsFile.paths.utilsDir   = [optionsFile.paths.projDir,'utils',filesep];
     optionsFile.paths.toolboxDir = [optionsFile.paths.projDir,'toolboxes',filesep];
-    optionsFile.paths.resultsDir = [optionsFile.paths.saveDir,'results',filesep];
-    optionsFile.paths.dataDir    = [optionsFile.paths.saveDir,'data',filesep];
+    optionsFile.paths.resultsDir = [optionsFile.paths.projDir,'results',filesep];
+    optionsFile.paths.dataDir    = [optionsFile.paths.projDir,'data',filesep];
     optionsFile.paths.inputsDir  = [optionsFile.paths.utilsDir,'inputSequences',filesep];
 
     for d = 1:size(optionsFile.cohort,2)
