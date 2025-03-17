@@ -39,6 +39,13 @@ else
     optionsFile = runOptions();
 end
 
+
+
+
+%% exclude datasets
+
+inclIdArray = excludeData(optionsFile,cohortNo);
+nIncluded   = sum(inclIdArray)
 disp('************************************** PARAMETER RECOVERY **************************************');
 disp('*');
 disp('*');
@@ -47,36 +54,32 @@ disp('*');
 % and save data into rec.est struct and paramete values for recovery into
 % rec.param.{}.est
 
-
-for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-
-    % collate all mouse IDs
-    mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice,optionsFile.cohort(cohortNo).treatment.femaleMice,...
+% collate all mouse IDs
+mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice,optionsFile.cohort(cohortNo).treatment.femaleMice,...
     optionsFile.cohort(cohortNo).control.maleMice,optionsFile.cohort(cohortNo).control.femaleMice];
 
-    %load data exclusion info
-    % still to do!
-     load([char(optionsFile.paths.cohort(cohortNo).results),'ExclusionInfo_',char(currTask),'.mat']);
+for n = 1:optionsFile.cohort(cohortNo).nSize
 
+if inclIdArray(n)==0
+    mouseIDs(n) = [];
+end
 
-    for iMouse = 1:optionsFile.cohort(cohortNo).nSize
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+    currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
+    for iMouse = 1:numel(mouseIDs)
         currMouse = mouseIDs{iMouse};
         for m_est = 1:numel(optionsFile.model.space)
             currModel = optionsFile.model.space{m_est};
             fprintf('current iteration: mouse=%1.0f, model=%1.0f \n', iMouse,m_est);
 
             % load results from real data model inversion
-            try
-                rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.cohort(cohortNo).results,...
-                    optionsFile.cohort(cohortNo).dataFile.fileStartSrings{1},currMouse,'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',currModel,'.mat']);
-            catch
-                try
-                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.cohort(cohortNo).results,...
-                        optionsFile.cohort(cohortNo).dataFile.fileStartSrings{2},currMouse,'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',currModel,'.mat']);
-                catch
-                    rec.est(iMouse,m_est).task(iTask).data = load([optionsFile.paths.cohort(cohortNo).results,...
-                        optionsFile.cohort(cohortNo).dataFile.fileStartSrings{3},currMouse,'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',currModel,'.mat']);
-                end
+            if isempty(optionsFile.cohort(cohortNo).conditions)
+              rec.est(iMouse,m_est).task(iTask).data =  load([char(optionsFile.paths.cohort(cohortNo).results),...
+                    'mouse',char(currMouse),'_',currTask,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
+            else
+                rec.est(iMouse,m_est).task(iTask).data = load([char(optionsFile.paths.cohort(cohortNo).results),...
+                    'mouse',char(currMouse),'_',currTask,'_condition_',currCondition,'_',...
+                    optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
             end
         % param values in transformed space (assumption of Gaussian prior)
         rec.param(iTask).prc(m_est).estAgent(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);

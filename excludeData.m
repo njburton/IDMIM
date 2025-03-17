@@ -1,11 +1,20 @@
-function excludeData(cohortNo)
+function inclIdArray = excludeData(optionsFile,cohortNo)
+
+if exist('optionsFile.mat','file')==2
+    load("optionsFile.mat");
+else
+    optionsFile = runOptions();
+end
+
+%% INITIALIZE
+% Collate mouseIDs
+mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice, optionsFile.cohort(cohortNo).treatment.femaleMice,...
+    optionsFile.cohort(cohortNo).control.maleMice, optionsFile.cohort(cohortNo).control.femaleMice];
+
+inclIdArray = ones(1,numel(mouseIDs));
 
 for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
-
-    exclDataTable = table('VariableTypes',{'string','string','string','string','string','double'},...
-        'VariableNames',{'mouseID','task','group','sex','reason_for_exclusion','data'});
-    deleteRows = zeros(size(optionsFile.cohort(cohortNo).treatment.nSize,2));
 
     if numel(optionsFile.cohort(cohortNo).conditions)==0
         nConditions = 1;
@@ -17,189 +26,95 @@ for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
         if ~isempty(optionsFile.cohort(cohortNo).conditions)
             currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
         end
-        %% ------------ read data files male mice treatment group ------------%
-        if ~isempty(optionsFile.cohort(cohortNo).treatment.maleMice)
-            % vector for collecting indices of mouseIDs that need to be removed
-            % from optionsfile
 
-            for iMouse = 1:size(optionsFile.cohort(cohortNo).treatment.maleMice,2)
-                currMouse = optionsFile.cohort(cohortNo).treatment.maleMice{iMouse};
+        for iMouse = 1:numel(mouseIDs)
+            currMouse = mouseIDs{iMouse};
 
-                if isempty(optionsFile.cohort(cohortNo).conditions)
+            if isempty(optionsFile.cohort(cohortNo).conditions)
+
+                try % some task names contained the taskPrefix
+                    % load trial-by-trial data file
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'.mat']);
-                else
+                        optionsFile.cohort(cohortNo).taskPrefix,currTask,'.mat']);
+                    % load mouse info file
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'_condition_',currCondition,'.mat']);
+                        optionsFile.cohort(cohortNo).taskPrefix,currTask,'_info.mat']);
+                catch
+                    try
+                        % load trial-by-trial data file
+                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                            currTask,'.mat']);
+                        % load mouse info file
+                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                            currTask,'_info.mat']);
+                    catch
+                        inclIdArray(iMouse) = 0;
+                    end
+
                 end
-
-                % check if dataset has >30% omissions
-                NaNrows = find(isnan(ExperimentTaskTable.Choice));
-                if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*0.3
-                    exclDataTable.mouseID(iMouse) = currMouse;
-                    exclDataTable.group(iMouse)   = 'treatment';
-                    exclDataTable.sex(iMouse)     = 'male';
-                    exclDataTable.reason_for_exclusion(iMouse) = 'no. omissions';
-                    exclDataTable.data(iMouse)    = 'no. omissions';
-                    exclDataTable.task(iMouse)    = currTask;
-
-                    % Exclude datasets with 20 omissions in a row ???
-                elseif ~isempty(strfind(isnan(ExperimentTaskTable.Choice),true(1,20)))
-                    startNaNTrial = strfind(isnan(ExperimentTaskTable.Choice), true(1,20));
-                    exclDataTable.mouseID(iMouse) = currMouse;
-                    exclDataTable.group(iMouse)   = 'treatment';
-                    exclDataTable.sex(iMouse)     = 'male';
-                    exclDataTable.reason_for_exclusion(iMouse) = 'consecutive omissions';
-                    exclDataTable.data(iMouse)    = startNaNTrial;
-                    exclDataTable.task(iMouse)    = currTask;
-                else
-                    deleteRows(iMouse) = 1;
-                end
-            end
-        end
-
-        %% ---------- read data files female mice treatment group ---------------
-        if ~isempty(optionsFile.cohort(cohortNo).treatment.femaleMice)
-            % vector for collecting indices of mouseIDs that need to be removed
-            % from optionsfile
-            for iMouse = 1:size(optionsFile.cohort(cohortNo).treatment.femaleMice,2)
-                currMouse = optionsFile.cohort(cohortNo).treatment.femaleMice{iMouse};
-
-                if isempty(optionsFile.cohort(cohortNo).conditions)
+            else % if the cohort had different conditions
+                try% some task names contained the taskPrefix
+                    % load trial-by-trial data file
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'.mat']);
-                else
+                        optionsFile.cohort(cohortNo).taskPrefix,currTask,'_condition_',currCondition,'.mat']);
+                    % load mouse info file
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'_condition_',currCondition,'.mat']);
-                end
-
-                % check if dataset has >30% omissions
-                NaNrows = find(isnan(ExperimentTaskTable.Choice));
-                tblRow = nMaleTreat + iMouse;
-                if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*0.3
-                    exclDataTable.mouseID(tblRow) = currMouse;
-                    exclDataTable.group(tblRow)   = 'treatment';
-                    exclDataTable.sex(tblRow)     = 'female';
-                    exclDataTable.reason_for_exclusion(tblRow) = 'no. omissions';
-                    exclDataTable.task(tblRow)    = currTask;
-                    exclDataTable.data(tblRow) = numel(NaNrows);
-                    % Exclude datasets with 20 omissions in a row ???
-
-                elseif ~isempty(strfind(isnan(ExperimentTaskTable.Choice),true(1,20)))
-                    startNaNTrial = strfind(isnan(ExperimentTaskTable.Choice), true(1,20));
-                    exclDataTable.mouseID(tblRow) = currMouse;
-                    exclDataTable.group(tblRow)   = 'treatment';
-                    exclDataTable.sex(tblRow)     = 'female';
-                    exclDataTable.reason_for_exclusion(tblRow) = 'consecutive omissions';
-                    exclDataTable.task(tblRow)    = currTask;
-                    exclDataTable.data(tblRow)    = startNaNTrial;
-                else
-                    deleteRows(tblRow) = 1;
+                        optionsFile.cohort(cohortNo).taskPrefix,currTask,'_condition_',currCondition,'_info.mat']);
+                catch
+                    try
+                        % load trial-by-trial data file
+                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                            currTask,'_condition_',currCondition,'.mat']);
+                        % load mouse info file
+                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                            currTask,'_condition_',currCondition,'_info.mat']);
+                    catch
+                        inclIdArray(iMouse) = 0;
+                    end
                 end
             end
-        end
 
-        %% ---------------- read data files male mice control group ------- %
-        if ~isempty(optionsFile.cohort(cohortNo).control.maleMice)
 
-            % vector for collecting indices of mouseIDs that need to be removed
-            % from optionsfile
-            for iMouse = 1:size(optionsFile.cohort(cohortNo).control.maleMice,2)
-                currMouse = optionsFile.cohort(cohortNo).control.maleMice{iMouse};
-                tblRow    = nMaleTreat + nFemaleTreat + iMouse;
 
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'.mat']);
-                else
-                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'_condition_',currCondition,'.mat']);
-                end
+            % create vector of indices with NaNs
+            NaNrows     = find(isnan(ExperimentTaskTable.Choice));
+            % create vector of differences between indices with NaNs (a 1
+            % means there are two indices in a row with a NaN)
+            NaNDiffs    = [NaNrows;optionsFile.cohort(3).nTrials+1]-[0;NaNrows];
+            consecNaNs  = zeros(1,numel(NaNDiffs));
+            consecNaNs(NaNDiffs==1) = 1;
+            f           = find(diff([0,consecNaNs,0]==1));
+            NaNIdx      = f(1:2:end-1);
+            nConsecNaNs = f(2:2:end)-NaNIdx;
+            numNaNs       = numel(NaNrows);
+            numConsecNans = max(nConsecNaNs);
 
-                % check if dataset has >30% omissions
-                NaNrows = find(isnan(ExperimentTaskTable.Choice));
+            if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*optionsFile.cohort(cohortNo).exclCriteria(1).cutoff
+                exclCrit1_met       = true;
+                inclIdArray(iMouse) = 0;
 
-                if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*0.3
-                    exclDataTable.mouseID(tblRow) = currMouse;
-                    exclDataTable.group(tblRow)   = 'control';
-                    exclDataTable.sex(tblRow)     = 'male';
-                    exclDataTable.reason_for_exclusion(tblRow) = 'no. omissions';
-                    exclDataTable.task(tblRow)    = currTask;
-                    exclDataTable.data = numel(NaNrows);
-
-                    % Exclude datasets with 20 omissions in a row ???
-                elseif ~isempty(strfind(isnan(ExperimentTaskTable.Choice),true(1,20)))
-                    startNaNTrial = strfind(isnan(ExperimentTaskTable.Choice), true(1,20));
-                    exclDataTable.mouseID(tblRow) = currMouse;
-                    exclDataTable.group(tblRow)   = 'control';
-                    exclDataTable.sex(tblRow)     = 'male';
-                    exclDataTable.reason_for_exclusion(tblRow) = 'consecutive omissions';
-                    exclDataTable.task(tblRow)    = currTask;
-                    exclDataTable.data(tblRow)    = startNaNTrial;
-                else
-                    deleteRows(tblRow) = 1;
-                end
+                % Exclude datasets with 20 omissions in a row ???
+            elseif any(nConsecNaNs>optionsFile.cohort(cohortNo).exclCriteria(2).cutoff)
+                exclCrit2_met       = true;
+                inclIdArray(iMouse) = 0;
+            else
+                exclCrit1_met = false;
+                exclCrit2_met = false;
             end
-        end
 
-        % read data files male mice treatment group
-        if ~isempty(optionsFile.cohort(cohortNo).control.femaleMice)
-            % vector for collecting indices of mouseIDs that need to be removed
-            % from optionsfile
-            for iMouse = 1:size(optionsFile.cohort(cohortNo).control.femaleMice,2)
-                currMouse = optionsFile.cohort(cohortNo).control.femaleMice{iMouse};
 
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'.mat']);
-                else
-                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        tasks{iTask},'_condition_',currCondition,'.mat']);
-                end
-
-                % check if dataset has >30% omissions
-                NaNrows = find(isnan(ExperimentTaskTable.Choice));
-                tblRow = nMaleTreat + femaleTreat + maleControl + iMouse;
-                if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*0.3
-                    optionsFile.cohort(cohortNo).treatment.femaleMice(find(isnan(optionsFile.cohort(cohortNo).treatment.femaleMice)))=[];
-                    exclDataTable.mouseID(tblRow) = currMouse;
-                    exclDataTable.group(tblRow)   = 'control';
-                    exclDataTable.sex(tblRow)     = 'female';
-                    exclDataTable.reason_for_exclusion(tblRow) = 'no. omissions';
-                    exclDataTable.task(tblRow)    = currTask;
-                    exclDataTable.data(tblRow)    = numel(NaNrows);
-
-                    % Exclude datasets with 20 omissions in a row ???
-                elseif ~isempty(strfind(isnan(ExperimentTaskTable.Choice),true(1,20)))
-                    optionsFile.cohort(cohortNo).treatment.femaleMice(find(isnan(optionsFile.cohort(cohortNo).control.femaleMice)))=[];
-                    startNaNTrial = strfind(isnan(ExperimentTaskTable.omissions), true(1,20));
-                    exclDataTable.mouseID(tblRow) = currMouse;
-                    exclDataTable.group(tblRow)   = 'control';
-                    exclDataTable.sex(tblRow)     = 'female';
-                    exclDataTable.reason_for_exclusion(tblRow) = 'consecutive omissions';
-                    exclDataTable.task(tblRow)    = currTask;
-                    exclDataTable.data(tblRow)    = startNaNTrial;
-                else
-                    deleteRows(tblRow) = 1;
-                end
-            end
-        end
-        deleteIdx = find(deleteRows);
-        if sum(deleteRows)==optionsFile.cohort(cohortNo).nSize
-            continue
-        else
-            exclDataTable(deleteIdx ,:);
+            MouseInfoTable = addvars(MouseInfoTable,exclCrit1_met,numNaNs,exclCrit2_met,numConsecNans);
 
             % create savepath and filename as a .mat file
             if isempty(optionsFile.cohort(cohortNo).conditions)
-                savePath = [char(optionsFile.paths.cohort(cohortNo).results),...
-                    'ExclusionInfo_',tasks{iTask},'.mat'];
+                savePath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                    optionsFile.cohort(cohortNo).taskPrefix,currTask,'_info.mat'];
             else % Save with conditions included
-                savePath = [char(optionsFile.paths.cohort(cohortNo).results),...
-                    'ExclusionInfo_',tasks{iTask},'_condition_',currCondition,'.mat'];
+                savePath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                    currTask,'_condition_',currCondition,'_info.mat'];
             end
-            save(savePath,'exclDataTable'); %save
         end
+        save(savePath,'MouseInfoTable'); %save
     end
 end
 end

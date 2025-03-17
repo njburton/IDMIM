@@ -46,7 +46,6 @@ ExperimentTaskTable = table('Size',[optionsFile.cohort(cohortNo).nTrials length(
     'VariableNames',taskTableVarNames);
 
 %% Initialise Mouse Info Table containing general info about the mouse
-
 infoTableVarTypes = {'string','string','double','string','string'};
 infoTableVarNames = {'Task','TaskDate','Chamber','Condition','Sex'};
 MouseInfoTable    = table('Size',[1,length(infoTableVarNames)],...
