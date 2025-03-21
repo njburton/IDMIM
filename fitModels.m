@@ -37,17 +37,13 @@ end
 addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 optionsFile = setup_configFiles(optionsFile,cohortNo);
 
-% Collate mouseIDs
-mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice, optionsFile.cohort(cohortNo).treatment.femaleMice,...
-    optionsFile.cohort(cohortNo).control.maleMice, optionsFile.cohort(cohortNo).control.femaleMice];
-
 if numel(optionsFile.cohort(cohortNo).conditions)==0
     nConditions = 1;
 else
     nConditions = numel(optionsFile.cohort(cohortNo).conditions);
 end
 
-for iCondition = 3:nConditions
+for iCondition = 1:nConditions
     disp(['fitting iteration', num2str(iCondition),'........'])
     for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
         currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
@@ -56,8 +52,8 @@ for iCondition = 3:nConditions
 
             disp(['* model ', optionsFile.model.space{iModel},'.']);
 
-              for iMouse = 1:optionsFile.cohort(cohortNo).nSize  % for each mouse (agent) in the cohort
-                currMouse= mouseIDs(iMouse);
+            for iMouse  = 1:optionsFile.cohort(cohortNo).nSize  % for each mouse (agent) in the cohort
+                currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
                 try
                     try
                         if isempty(optionsFile.cohort(cohortNo).conditions)
@@ -82,8 +78,6 @@ for iCondition = 3:nConditions
                         end
                     end
                     disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')']);
-
-
 
                     % optimization settings
                     strct              = eval(char(optionsFile.model.opt_config));
@@ -116,10 +110,10 @@ for iCondition = 3:nConditions
                             optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
                     end
                     modelInv.allMice(iMouse,iModel).est = est;
-  
+
                 catch
                     modelInv.allMice(iMouse,iModel).est = [];
-                disp(['mouse ', char(currMouse), ' not loaded'])
+                    disp(['mouse ', char(currMouse), ' not loaded'])
                 end
             end
         end
@@ -132,7 +126,6 @@ for iCondition = 3:nConditions
                 'condition_',currCondition,'_',optionsFile.dataFiles.fittedData];
         end
         save(savePath, '-struct', 'modelInv','allMice');
-
 
     end
 end

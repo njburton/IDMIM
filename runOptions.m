@@ -32,6 +32,7 @@ optionsFile.doMakeDir        = 0;
 optionsFile.doSimulations    = 1;
 optionsFile.setupModels      = 1;
 optionsFile.doGetData        = 0;
+optionsFile.doExcludeData    = 1;
 optionsFile.doModelInversion = 1;
 optionsFile.doParamRecovery  = 1;
 optionsFile.doParamInvestig  = 1;
@@ -45,14 +46,17 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).name = '2023_UCMS';
     optionsFile.cohort(1).nameInDataFiles = '2023_UCMS2'; %how it is in the MEDPC files
     optionsFile.cohort(1).conditions = [];
+    optionsFile.cohort(1).subCohorts = {'treatment','controls'};
 
     optionsFile.cohort(2).name = '2024_HGFPilot';
     optionsFile.cohort(2).nameInDataFiles = '2024_HGFPilot3'; %how it is in the MEDPC files
     optionsFile.cohort(2).conditions = [];
+    optionsFile.cohort(2).subCohorts = [];
 
     optionsFile.cohort(3).name = '5HT';
     optionsFile.cohort(3).nameInDataFiles = '5HT'; %how it is in the MEDPC files, is that right here?
     optionsFile.cohort(3).conditions = {'5mg','10mg','saline'};
+    optionsFile.cohort(3).subCohorts = [];
 
     % Identify which mouseIDs are male, female and their experimental group
     optionsFile.cohort(1).treatment.maleMice   = {'372','382','392','402','412','422'};
@@ -63,30 +67,33 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).treatment.femaleMice = [];
     optionsFile.cohort(2).control.maleMice     = {'1.1','1.2','2.1','3.1','3.2','3.3'};
     optionsFile.cohort(2).control.femaleMice   = {'4.2','5.1','5.2','5.3','5.4','5.5'};
-    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2','2.3','2.4','3.1','3.2','3.3','3.4'}; % IDs are repeating themselves here because this is within-mice
+    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2','2.3','2.4','3.1','3.2','3.3','3.4'}; 
     optionsFile.cohort(3).treatment.femaleMice = {'4.1','4.2','4.3','4.4','5.1','5.2','5.3','5.4','6.1','6.2','6.3','6.4'};
     optionsFile.cohort(3).control.maleMice     = [];
     optionsFile.cohort(3).control.femaleMice   = [];
 
-    % sample sizes
-    optionsFile.cohort(1).nSize = size(optionsFile.cohort(1).treatment.maleMice,2) + size(optionsFile.cohort(1).treatment.femaleMice,2)...
-        + size(optionsFile.cohort(1).control.maleMice,2) + size(optionsFile.cohort(1).control.femaleMice,2);
-    optionsFile.cohort(2).nSize = size(optionsFile.cohort(2).treatment.maleMice,2) + size(optionsFile.cohort(2).treatment.femaleMice,2)...
-        + size(optionsFile.cohort(2).control.maleMice,2) + size(optionsFile.cohort(2).control.femaleMice,2);
-    optionsFile.cohort(3).nSize = size(optionsFile.cohort(3).treatment.maleMice,2) + size(optionsFile.cohort(3).treatment.femaleMice,2)...
-        + size(optionsFile.cohort(3).control.maleMice,2) + size(optionsFile.cohort(3).control.femaleMice,2);
+    for cohortNo = 1:numel(optionsFile.cohort)
+        % collate mouseIDs
+        optionsFile.cohort(cohortNo).mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice, optionsFile.cohort(cohortNo).treatment.femaleMice,...
+            optionsFile.cohort(cohortNo).control.maleMice, optionsFile.cohort(cohortNo).control.femaleMice];
+
+        % sample sizes
+        optionsFile.cohort(cohortNo).nSize = numel(optionsFile.cohort(cohortNo).mouseIDs);
+    end
+    
+
     %% SPECIFY TASK and data file info
     % specify the task name prefix and task name extension
     % '2023_UCMS' COHORT
     optionsFile.cohort(1).taskPrefix        = 'NJB_HGF_';
     optionsFile.cohort(1).trainTask(1).name = []; % @NICK: any?
     optionsFile.cohort(1).testTask(1).name  = 'ABA2_R';
-    optionsFile.cohort(1).testTask(2).name  = 'ABA1_L';
+    % optionsFile.cohort(1).testTask(2).name  = 'ABA1_L';
     optionsFile.cohort(1).nTrials           = 180;  % trials
     optionsFile.cohort(1).trialDuration     = 20;   % in seconds
     optionsFile.cohort(1).totalTaskDuration = optionsFile.cohort(1).nTrials*optionsFile.cohort(1).trialDuration; % in seconds
     optionsFile.cohort(1).exclCriteria(1).name   = 'nOmissions';
-    optionsFile.cohort(1).exclCriteria(1).cutoff = 0.3;
+    optionsFile.cohort(1).exclCriteria(1).cutoff = 0.2;
     optionsFile.cohort(1).exclCriteria(2).name   = 'nConsecutiveOmissions';
     optionsFile.cohort(1).exclCriteria(2).cutoff = 20;
     % optionsFile.cohort(1).dataFile.taskNameLocation        = 13;  % taskNameMSN
@@ -98,7 +105,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).dataFile.ConditionMarker      = {'Group:','Group'};
     optionsFile.cohort(1).dataFile.RLSMarker            = {'F:','F'}; %RewardingLeverSide
     optionsFile.cohort(1).dataFile.ChoiceMarker         = {'H:','H'}; %Choice
-    optionsFile.cohort(1).dataFile.OutcomeMarker        = {'G:','G'}; %Outcome
+    optionsFile.cohort(1).dataFile.OutcomeMarker        = {'G:','G'}; % Did they get a reward
     optionsFile.cohort(1).dataFile.LeverPressTimeMarker = {'K:','K'}; %LeverPressTime
     optionsFile.cohort(1).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
     optionsFile.cohort(1).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak

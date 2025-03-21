@@ -1,4 +1,4 @@
-function [] = hgf_plot_param_pdf(paramNames,data,prior,posterior,i,type)
+function [] = hgf_plot_param_pdf(paramNames,data,i,j,type)
 
 %% hgf_plot_param_pdf
 %  plots prior predictive distributions of the priors generated from the
@@ -43,75 +43,50 @@ function [] = hgf_plot_param_pdf(paramNames,data,prior,posterior,i,type)
 %% PLOTTING Priors for PERCEPTUAL Models
 
 if strcmp(type, 'prc')
+     priorMu  = data(1,1).task.data.est.c_prc.priormus(i);
+     priorSa  = data(1,1).task.data.est.c_prc.priorsas(i);
+    for n = 1:numel(data)
+        posteriorMus(n,1) = data(n,1).task.data.est.p_prc.ptrans(i);
+    end
 
+elseif strcmp(type, 'obs')
+     priorMu  = data(1,1).task.data.est.c_obs.priormus(i);
+     priorSa  = data(1,1).task.data.est.c_obs.priorsas(i);
+    for n = 1:numel(data)
+        posteriorMus(n,1) = data(n,1).task.data.est.p_obs.ptrans(i);
+    end
+end
+
+    [posteriorSa,posteriorMu] = robustcov(posteriorMus);
+    
     % get data
-    idx = prior.prc_idx(1,i);
-    mMaxMean = round(abs(max(posterior.prc_config.priormus))); pMaxMean = round(abs(max(prior.prc_config.priormus)));
-    mMaxSa   = round(abs(max(posterior.prc_config.priorsas))); pMaxSa = round(abs(max(prior.prc_config.priorsas)));
-    maxMeans = [mMaxMean,pMaxMean]; maxSas = [mMaxSa,pMaxSa];
+    mMaxMean = round(abs(max(posteriorMu))); pMaxMean = round(abs(max(priorMu)));
+    mMaxSa   = round(abs(max(priorSa))); pMaxSa = round(abs(max(posteriorSa)));
+    maxMeans = [mMaxMean,pMaxMean];
+    maxSas   = [mMaxSa,pMaxSa];
     x_min = -(max(maxMeans) + max(maxSas))-1;
     x_max = max(maxMeans) + max(maxSas)+1;
     x     = x_min:0.1:x_max;
 
     % create prior predictive density function based on prior mus and prior variances
-    y_posterior   = normpdf(x, posterior.prc_config.priormus(1,idx), sqrt(posterior.prc_config.priorsas(1,idx)));
-    y_prior = normpdf(x, prior.prc_config.priormus(1,idx), sqrt(prior.prc_config.priorsas(1,idx)));
+    y_posterior = normpdf(x, posteriorMu, sqrt(posteriorSa));
+    y_prior     = normpdf(x, priorMu, sqrt(priorSa));
 
     % plot
     figure('Color', [1 1 1]);
     plot(x, y_posterior, 'k')
     hold on
     plot(x, y_prior, 'k--')
-    hold on
-    plot(data.prc_est(:,i), -0.05, 'ko')
+    ylim([-0.1 1.5])
 
     % legends and titles
-    ylim([-0.1 1.5])
-    str = sprintf('pilot mu = %0.3g, pilot sa = %0.3g \n init mu = %0.3g, init sa = %0.3g',...
-        posterior.prc_config.priormus(1,idx), sqrt(posterior.prc_config.priorsas(1,idx)),...
-        prior.prc_config.priormus(1,idx),sqrt(prior.prc_config.priorsas(1,idx)));
+    str = sprintf('prior mu = %0.3g, prior sa = %0.3g \n posterior mu = %0.3g, posterior sa = %0.3g',...
+        priorMu, sqrt(priorSa),...
+        posteriorMu,sqrt(posteriorSa));
     T = text(min(get(gca, 'xlim')), max(get(gca, 'ylim')), str);
-    set(T,'fontSize', 12,'verticalalignment', 'top', 'horizontalalignment', 'left');
-    legend('posterior','prior','MAP estimates')
+    set(T,'fontSize', 16,'verticalalignment', 'top', 'horizontalalignment', 'left');
+    legend('posterior','prior','MAP estimates','fontSize', 16)
 
-    title(paramNames{i})
-
-%% PLOTTING Priors for OBSERVATIONAL Models
-
-elseif strcmp(type, 'obs')
-
-    % get data
-    idx = prior.obs_idx(1,i);
-    mMaxMean = round(abs(max(posterior.obs_config.priormus))); pMaxMean = round(abs(max(prior.obs_config.priormus)));
-    mMaxSa   = round(abs(max(posterior.obs_config.priorsas))); pMaxSa = round(abs(max(prior.obs_config.priorsas)));
-    maxMeans = [mMaxMean,pMaxMean]; maxSas = [mMaxSa,pMaxSa];
-    x_min    = -(max(maxMeans) + max(maxSas))-1;
-    x_max    = max(maxMeans) + max(maxSas)+1;
-    x = x_min:0.1:x_max;
-
-    % create prior predictive density function based on prior mus and prior variances
-    y_posterior = normpdf(x, posterior.obs_config.priormus(1,idx), sqrt(posterior.obs_config.priorsas(1,idx)));
-    y_prior = normpdf(x, prior.obs_config.priormus(1,idx), sqrt(prior.obs_config.priorsas(1,idx)));
-
-    % plot
-    figure('Color', [1 1 1]);
-    plot(x, y_posterior, 'k')
-    hold on
-    plot(x, y_prior, 'k--')
-    hold on
-    plot(data.obs_est(:,i), -0.05, 'ko')
-
-    % legends and titles
-    ylim([-0.1 1.5])
-    str = sprintf('pilot mu = %0.3g, pilot sa = %0.3g \n init mu = %0.3g, init sa = %0.3g',...
-        posterior.obs_config.priormus(1,idx), sqrt(posterior.obs_config.priorsas(1,idx)),...
-        prior.obs_config.priormus(1,idx),sqrt(prior.obs_config.priorsas(1,idx)));
-    T = text(min(get(gca, 'xlim')), max(get(gca, 'ylim')), str);
-    set(T, 'fontSize', 12,'verticalalignment','top','horizontalalignment','left');
-    legend('posterior','prior','MAP estimates')
-
-    title(paramNames{i})
-
-end
+    title(paramNames{j})
 
 end

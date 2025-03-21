@@ -7,23 +7,23 @@ else
 end
 
  for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-    for iSample = 2:optionsFile.simulations.nSamples
+    for iSample = 1:optionsFile.simulations.nSamples
         for m_in = 1:numel(optionsFile.model.space)
-            sim = load(fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim']));
+            sim = load(fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']));
             
             for m_est = 1:numel(optionsFile.model.space)
 try
               est =  load(fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
-                    [char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']));
+                    ['simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_binInputSeq_ABA_rightLever.mat']));
 catch
     try
             est =  load(fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
                     ['simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']));
+                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_binInputSeq_ABA_rightLever.mat']));
     catch
-        disp([char(optionsFile.model.space{m_in}),'_simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_task_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat not found'])
+        disp(['simAgent_', num2str(iSample),'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'_binInputSeq_ABA_rightLever.mat not found']);
  continue
     end
     end

@@ -56,7 +56,7 @@ strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for iSample = 1:optionsFile.simulations.nSamples
         for m_in = 1:numel(optionsFile.model.space)
-            sim = load(fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim']));
+            sim = load(fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim']));
 
             for m_est = 1:numel(optionsFile.model.space)
 

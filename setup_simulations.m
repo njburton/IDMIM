@@ -159,7 +159,7 @@ for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
         optionsFile.rng.idx = 1;
 
         %% SAVE model simulation specs as struct
-        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim'], '-struct', 'sim');
+        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim'], '-struct', 'sim');
     end
 end
 disp('simulated data successfully created.')
