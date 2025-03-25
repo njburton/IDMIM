@@ -44,19 +44,25 @@ if optionsFile.doOptions == 1
     %% SPECIFY COHORT DATASET info
     % Each group represents an individual experiment/cohort
     optionsFile.cohort(1).name = '2023_UCMS';
-    optionsFile.cohort(1).nameInDataFiles = '2023_UCMS2'; %how it is in the MEDPC files
     optionsFile.cohort(1).conditions = [];
-    optionsFile.cohort(1).subCohorts = {'treatment','controls'};
+    optionsFile.cohort(1).subCohorts = {'treatment','control'};
+    optionsFile.cohort(1).priorsFromCohort = [];
+    optionsFile.cohort(1).priorsFromTask   = [];
+    optionsFile.cohort(1).priorsFromCondition = [];
 
     optionsFile.cohort(2).name = '2024_HGFPilot';
-    optionsFile.cohort(2).nameInDataFiles = '2024_HGFPilot3'; %how it is in the MEDPC files
     optionsFile.cohort(2).conditions = [];
     optionsFile.cohort(2).subCohorts = [];
+    optionsFile.cohort(2).priorsFromCohort = [];
+    optionsFile.cohort(2).priorsFromTask   = [];
+    optionsFile.cohort(2).priorsFromCondition = [];
 
     optionsFile.cohort(3).name = '5HT';
-    optionsFile.cohort(3).nameInDataFiles = '5HT'; %how it is in the MEDPC files, is that right here?
     optionsFile.cohort(3).conditions = {'5mg','10mg','saline'};
     optionsFile.cohort(3).subCohorts = [];
+    optionsFile.cohort(3).priorsFromCohort    = 2;
+    optionsFile.cohort(3).priorsFromTask      = 1;
+    optionsFile.cohort(3).priorsFromCondition = [];
 
     % Identify which mouseIDs are male, female and their experimental group
     optionsFile.cohort(1).treatment.maleMice   = {'372','382','392','402','412','422'};
@@ -148,7 +154,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(3).exclCriteria(1).name   = 'nOmissions';
     optionsFile.cohort(3).exclCriteria(1).cutoff = 0.3;
     optionsFile.cohort(3).exclCriteria(2).name   = 'nConsecutiveOmissions';
-    optionsFile.cohort(3).exclCriteria(2).cutoff = 20; % and 30
+    optionsFile.cohort(3).exclCriteria(2).cutoff = 20;
     % optionsFile.cohort(3).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(3).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(3).dataFile.choiceOffset              = 615; % Choice H
@@ -178,10 +184,12 @@ if optionsFile.doOptions == 1
     optionsFile.paths.inputsDir  = [optionsFile.paths.utilsDir,'inputSequences',filesep];
 
     for d = 1:size(optionsFile.cohort,2)
-        optionsFile.paths.cohort(d).data    = [optionsFile.paths.dataDir,optionsFile.cohort(d).name,filesep];
-        optionsFile.paths.cohort(d).rawData = [optionsFile.paths.dataDir,'raw',filesep,optionsFile.cohort(d).name,filesep];
-        optionsFile.paths.cohort(d).results = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep];
-        optionsFile.paths.cohort(d).plots   = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep,'plots',filesep];
+        optionsFile.paths.cohort(d).data       = [optionsFile.paths.dataDir,optionsFile.cohort(d).name,filesep];
+        optionsFile.paths.cohort(d).rawData    = [optionsFile.paths.dataDir,'raw',filesep,optionsFile.cohort(d).name,filesep];
+        optionsFile.paths.cohort(d).results    = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep];
+        optionsFile.paths.cohort(d).groupLevel = [optionsFile.paths.cohort(d).results,'group',filesep];
+        optionsFile.paths.cohort(d).groupSim   = [optionsFile.paths.cohort(d).groupLevel,'simulations',filesep];
+        optionsFile.paths.cohort(d).plots      = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep,'plots',filesep];
         optionsFile.paths.cohort(d).simulations = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep,'simulations',filesep];
         optionsFile.paths.cohort(d).simPlots    = [optionsFile.paths.resultsDir,optionsFile.cohort(d).name,filesep,'simulations',filesep,'plots',filesep];
         optionsFile.paths.cohort(d).databaseDir = [optionsFile.paths.cohort(d).results,filesep,'database',filesep]; %% TO CHECK WHAT THAT IS FOR
@@ -195,6 +203,8 @@ if optionsFile.doOptions == 1
             mkdir(optionsFile.paths.cohort(d).simulations);
             mkdir(optionsFile.paths.cohort(d).simPlots);
             mkdir(optionsFile.paths.cohort(d).databaseDir);
+            mkdir(optionsFile.paths.cohort(d).groupLevel);
+            mkdir(optionsFile.paths.cohort(d).groupSim);
         end
     end
 
@@ -235,6 +245,7 @@ if optionsFile.doOptions == 1
 
     %% SPECIFY MODELS and related functions
     optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW'}; % all models in modelspace
+    optionsFile.model.names       = {'eHGF 3-level','eHGF 2-level','RW'}; % all models in modelspace
     optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary'};
     optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
     optionsFile.model.obs	      = {'tapas_unitsq_sgm'};
@@ -249,7 +260,7 @@ if optionsFile.doOptions == 1
     optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
     optionsFile.dataFiles.fitDiaryName     = {'eHGF_3LVLFit_diary','eHGF_2LVLFit_diary','RWFit_diary'};
     optionsFile.dataFiles.fittedData       = 'modelInv.mat';
-    optionsFile.dataFiles.dataBaseFileName = 'rawDataFileInfo.mat'; % >>> AGAIN< WHat is this for ?
+    optionsFile.dataFiles.dataBaseFileName = 'rawDataFileInfo.mat';
     optionsFile.dataFiles.dataBaseName     = 'dataInfoTable';
 end
 
@@ -274,12 +285,12 @@ if optionsFile.doGetData == 1
     optionsFile.doParamRecovery  = 0;
     optionsFile.doParamInvestig  = 0;
     optionsFile.doBMS            = 0;
-    save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
+    save([optionsFile.paths.projDir,'optionsFile.mat'],'optionsFile');
     optionsFile.doGetData        = 0;
 end
 
 
 %% SAVE options file
-save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
+save([optionsFile.paths.projDir,'optionsFile.mat'],'optionsFile');
 
 end

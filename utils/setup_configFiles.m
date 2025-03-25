@@ -198,6 +198,6 @@ end
 % --------------------------------------------------------------------------------------------------
 
 %% SAVE options file
-save([optionsFile.paths.projDir,'optionsFile.mat'],"optionsFile");
+save([optionsFile.paths.projDir,'optionsFile.mat'],'optionsFile');
 
 end

@@ -1,4 +1,4 @@
-function [] = hgf_plot_param_pdf(paramNames,data,i,j,type)
+function [] = hgf_plot_param_pdf(paramNames,data,i,j,t,type)
 
 %% hgf_plot_param_pdf
 %  plots prior predictive distributions of the priors generated from the
@@ -43,17 +43,17 @@ function [] = hgf_plot_param_pdf(paramNames,data,i,j,type)
 %% PLOTTING Priors for PERCEPTUAL Models
 
 if strcmp(type, 'prc')
-     priorMu  = data(1,1).task.data.est.c_prc.priormus(i);
-     priorSa  = data(1,1).task.data.est.c_prc.priorsas(i);
+     priorMu  = data(1,1).task(1,t).data.est.c_prc.priormus(i);
+     priorSa  = data(1,1).task(1,t).data.est.c_prc.priorsas(i);
     for n = 1:numel(data)
-        posteriorMus(n,1) = data(n,1).task.data.est.p_prc.ptrans(i);
+        posteriorMus(n,1) = data(n,1).task(1,t).data.est.p_prc.ptrans(i);
     end
 
 elseif strcmp(type, 'obs')
-     priorMu  = data(1,1).task.data.est.c_obs.priormus(i);
-     priorSa  = data(1,1).task.data.est.c_obs.priorsas(i);
+     priorMu  = data(1,1).task(1,t).data.est.c_obs.priormus(i);
+     priorSa  = data(1,1).task(1,t).data.est.c_obs.priorsas(i);
     for n = 1:numel(data)
-        posteriorMus(n,1) = data(n,1).task.data.est.p_obs.ptrans(i);
+        posteriorMus(n,1) = data(n,1).task(1,t).data.est.p_obs.ptrans(i);
     end
 end
 

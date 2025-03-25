@@ -55,7 +55,11 @@ else
     optionsFile = runOptions();
 end
 
-if numel(optionsFile.cohort(cohortNo).conditions)==0
+if strcmp(subCohort,'all')
+    nConditions = 1;
+    mouseIDs    = optionsFile.cohort(cohortNo).mouseIDs;
+    nSize       = optionsFile.cohort(cohortNo).nSize;
+elseif  numel(optionsFile.cohort(cohortNo).conditions)==0
     nConditions = 1;
     mouseIDs    = [optionsFile.cohort(cohortNo).(subCohort).maleMice,...
         optionsFile.cohort(cohortNo).(subCohort).femaleMice];

@@ -101,14 +101,6 @@ for iCondition = 1:nConditions
                 modelIn = optionsFile.dataFiles.rawFitFile{m_in};
                 simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},...
                     '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
-
-                for m_est = 1:numel(optionsFile.model.space)
-                    modelEst = optionsFile.dataFiles.rawFitFile{m_est};
-                    %load results from simulated agents' model inversion
-                    rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.paths.cohort(cohortNo).simulations, ...
-                        ['simAgent_', num2str(iAgent),'_model_in_',modelIn,'_model_est_',modelEst,...
-                        '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']));
-                end
                 rec.param(iTask).prc(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).input.prc.transInp(optionsFile.modelSpace(m_in).prc_idx);
                 rec.param(iTask).obs(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).input.obs.transInp(optionsFile.modelSpace(m_in).obs_idx);
             end
@@ -176,8 +168,8 @@ for iCondition = 1:nConditions
 
             saveName = getSaveName(optionsFile,cohortNo,subCohort,currCondition);
             figTitle = getFigTitle(optionsFile,cohortNo,subCohort,currCondition);
-            sgtitle([optionsFile.modelSpace(m).name,figTitle], 'FontSize', 18);
-            figDir = fullfile([optionsFile.paths.cohort(cohortNo).simPlots,'Parameter_recovery',...
+            sgtitle([optionsFile.modelSpace(m).name,figTitle,optionsFile.cohort(cohortNo).testTask(iTask).name], 'FontSize', 18);
+            figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim ,'Parameter_recovery',...
                 optionsFile.modelSpace(m).name,saveName,optionsFile.cohort(cohortNo).testTask(iTask).name]);
 
             print(figDir, '-dpng');
@@ -187,37 +179,37 @@ for iCondition = 1:nConditions
     end
 
     %% PLOT PRIORS AND POSTERIORS
-
+ for t = 1:numel(optionsFile.cohort(cohortNo).testTask)
     for m = 1:numel(optionsFile.model.space)
-
         % perceptual model
         for j = 1:size(optionsFile.modelSpace(m).prc_idx,2)
-            hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).prc_idx(j),j,'prc');
+            hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).prc_idx(j),j,t,'prc');
 
             saveName = getSaveName(optionsFile,cohortNo,subCohort,currCondition);
             figdir   = fullfile(optionsFile.paths.cohort(cohortNo).plots,...
-                [optionsFile.cohort(cohortNo).taskPrefix,'prc_priors_posteriors_model_',char(optionsFile.model.space{m}),'_',optionsFile.modelSpace(m).free_expnms_mu_prc{j},saveName]);
+                [optionsFile.cohort(cohortNo).taskPrefix,'prc_priors_posteriors_model_',char(optionsFile.model.space{m}),'_',optionsFile.modelSpace(m).free_expnms_mu_prc{j},saveName,optionsFile.cohort(cohortNo).testTask(t).name]);
             print(figdir, '-dpng');
             close;
         end
 
         % observational model
         for k = 1:size(optionsFile.modelSpace(m).obs_idx,2)
-            hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).obs_idx(k),k,'obs');
+            hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).obs_idx(k),k,t,'obs');
 
             saveName = getSaveName(optionsFile,cohortNo,subCohort,currCondition);
-            figdir   = fullfile(optionsFile.paths.cohort(cohortNo).plots,...
+            figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,...
                 [optionsFile.cohort(cohortNo).taskPrefix,'obs_priors_posteriors_model_',char(optionsFile.model.space{m}),'_',...
                 optionsFile.modelSpace(m).free_expnms_mu_obs{k},saveName,optionsFile.cohort(cohortNo).testTask(iTask).name]);
             print(figdir, '-dpng');
             close;
         end
     end
+ end
     close all
 
     %% SAVE results as struct
     res.rec = rec;
-    save_path = fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(cohortNo).taskPrefix,'recoveryData',saveName,optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']);
+    save_path = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).taskPrefix,'recoveryData',saveName,optionsFile.cohort(cohortNo).testTask(t).name,'.mat']);
     save(save_path, '-struct', 'res');
 
 end
