@@ -99,7 +99,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).trialDuration     = 20;   % in seconds
     optionsFile.cohort(1).totalTaskDuration = optionsFile.cohort(1).nTrials*optionsFile.cohort(1).trialDuration; % in seconds
     optionsFile.cohort(1).exclCriteria(1).name   = 'nOmissions';
-    optionsFile.cohort(1).exclCriteria(1).cutoff = 0.2;
+    optionsFile.cohort(1).exclCriteria(1).cutoff = 0.3;
     optionsFile.cohort(1).exclCriteria(2).name   = 'nConsecutiveOmissions';
     optionsFile.cohort(1).exclCriteria(2).cutoff = 20;
     % optionsFile.cohort(1).dataFile.taskNameLocation        = 13;  % taskNameMSN

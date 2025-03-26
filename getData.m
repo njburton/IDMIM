@@ -114,7 +114,7 @@ for iLargeFile = 1:sum(isLargeFile)
 
             % save data to table
             MouseInfoTable.Task      = tasks{iTask};  %TrialCode
-            MouseInfoTable.TaskDate  = currTaskDate;
+            MouseInfoTable.TaskDate  = char(currTaskDate);
             MouseInfoTable.Chamber   = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)-3))));
 
             if ~isempty(optionsFile.cohort(cohortNo).conditions) % if there arent any different conditions
@@ -243,7 +243,7 @@ for iFile = 1:length(isLargeFile) %for each file in the data dir
 
                 % save data to table
                 MouseInfoTable.Task      = currTask;
-                MouseInfoTable.TaskDate  = currTaskDate;
+                MouseInfoTable.TaskDate  = char(currTaskDate);
                 MouseInfoTable.Chamber   = cell2mat(regMEDPCFile(7,2));
 
                 % save arrays into table
