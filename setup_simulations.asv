@@ -42,10 +42,10 @@ end
 
 if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
     optionsFile = setup_configFiles(optionsFile,cohortNo);
-    [priors,optionsFile] = get_informedPriors_from_pilotData(optionsFile.cohort(cohortNo).priorsFromCohort,cohortNo,...
+    [priors,options] = get_informedPriors_from_pilotData(optionsFile.cohort(cohortNo).priorsFromCohort,cohortNo,...
         [],optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,0);
-    % clear optionsFile
-    % optionsFile.modelSpace = priors.config;
+    clear optionsFile
+    optionsFile.m = options;
     informedPriors=1; % flag for using informed priors
 else
     optionsFile = setup_configFiles(optionsFile,cohortNo);
@@ -106,7 +106,7 @@ for iAgent = 1:optionsFile.simulations.nSamples
 
             c.c_prc = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config;
             input.prc.nativeInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.transp_prc_fun(c, input.prc.transInp);
-            c.c_obs = priors.config(iModel).obs_config;
+            c.c_obs = optionsFile.modelSpace(iModel).obs_config;
             input.obs.nativeInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).obs_config.transp_obs_fun(c, input.obs.transInp);
         end
         % simulate predictions for SNR calculation

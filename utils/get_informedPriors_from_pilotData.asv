@@ -97,7 +97,7 @@ clear i;
         [priors.obs_posteriorSa(m).param(j),priors.obs_posteriorMu(m).param(j) ] = robustcov(obs_posteriorMus);
     end
 clear j;
-
+optionsFile = setup_configFiles(optionsFile,currCohort);
 priors.config = optionsFile.modelSpace;
 
 %% SAVE pilot priors for main dataset into appropriate struct
