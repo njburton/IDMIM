@@ -42,10 +42,8 @@ end
 
 if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
     optionsFile = setup_configFiles(optionsFile,cohortNo);
-    [priors,optionsFile] = get_informedPriors_from_pilotData(optionsFile.cohort(cohortNo).priorsFromCohort,cohortNo,...
+    [~,optionsFile] = get_informedPriors_from_pilotData(optionsFile.cohort(cohortNo).priorsFromCohort,cohortNo,...
         [],optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,0);
-    % clear optionsFile
-    % optionsFile.modelSpace = priors.config;
     informedPriors=1; % flag for using informed priors
 else
     optionsFile = setup_configFiles(optionsFile,cohortNo);
@@ -65,50 +63,27 @@ s.task     = struct();
 
 for iAgent = 1:optionsFile.simulations.nSamples
     for iModel = 1:length(optionsFile.model.space)
-        if informedPriors==0
-            % sample free parameter values
-            input.prc.transInp = optionsFile.modelSpace(iModel).prc_config.priormus;
-            input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus;
+        % sample free parameter values
+        input.prc.transInp = optionsFile.modelSpace(iModel).prc_config.priormus;
+        input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus;
 
-            for iPerc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
-                input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(iPerc)) = ...
-                    normrnd(optionsFile.modelSpace(iModel).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(iPerc)),...
-                    abs(sqrt(optionsFile.modelSpace(iModel).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(iPerc)))));
-            end
-
-            for iObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
-                input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(iObs)) = ...
-                    normrnd(optionsFile.modelSpace(iModel).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(iObs)),...
-                    abs(sqrt(optionsFile.modelSpace(iModel).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(iObs)))));
-            end
-
-            c.c_prc = optionsFile.modelSpace(iModel).prc_config;
-            input.prc.nativeInp = optionsFile.modelSpace(iModel).prc_config.transp_prc_fun(c, input.prc.transInp);
-            c.c_obs = optionsFile.modelSpace(iModel).obs_config;
-            input.obs.nativeInp = optionsFile.modelSpace(iModel).obs_config.transp_obs_fun(c, input.obs.transInp);
-
-        else
-            % sample free parameter values
-            input.prc.transInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.priormus;
-            input.obs.transInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).obs_config.priormus;
-
-            for iPerc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
-                input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(iPerc)) = ...
-                    normrnd(priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(iPerc)),...
-                    abs(sqrt(priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(iPerc)))));
-            end
-
-            for iObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
-                input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(iObs)) = ...
-                    normrnd(priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(iObs)),...
-                    abs(sqrt(priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(iObs)))));
-            end
-
-            c.c_prc = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config;
-            input.prc.nativeInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.transp_prc_fun(c, input.prc.transInp);
-            c.c_obs = priors.config(iModel).obs_config;
-            input.obs.nativeInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).obs_config.transp_obs_fun(c, input.obs.transInp);
+        for iPerc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
+            input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(iPerc)) = ...
+                normrnd(optionsFile.modelSpace(iModel).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(iPerc)),...
+                abs(sqrt(optionsFile.modelSpace(iModel).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(iPerc)))));
         end
+
+        for iObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
+            input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(iObs)) = ...
+                normrnd(optionsFile.modelSpace(iModel).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(iObs)),...
+                abs(sqrt(optionsFile.modelSpace(iModel).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(iObs)))));
+        end
+
+        c.c_prc = optionsFile.modelSpace(iModel).prc_config;
+        input.prc.nativeInp = optionsFile.modelSpace(iModel).prc_config.transp_prc_fun(c, input.prc.transInp);
+        c.c_obs = optionsFile.modelSpace(iModel).obs_config;
+        input.obs.nativeInp = optionsFile.modelSpace(iModel).obs_config.transp_obs_fun(c, input.obs.transInp);
+
         % simulate predictions for SNR calculation
         stable = 0;
 
@@ -132,26 +107,14 @@ for iAgent = 1:optionsFile.simulations.nSamples
                     input.prc.nativeInp
                     fprintf('Obs Param Values: \n');
                     input.obs.nativeInp
-                    if informedPriors==1 && optionsFile.cohort(cohortNo).priorsFromTask==iTask
-                        % re-sample prc param values
-
-                        for j = 1:size(optionsFile.modelSpace(iModel,iTask).prc_idx,2)
-                            input.prc.transInp(optionsFile.modelSpace(iModel,iTask).prc_idx(j)) = ...
-                                normrnd(priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.priormus(optionsFile.modelSpace(iModel,iTask).prc_idx(j)),...
-                                abs(sqrt(priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.priorsas(optionsFile.modelSpace(iModel,iTask).prc_idx(j)))));
-                        end
-                        input.prc.nativeInp = priors.config(iModel,optionsFile.cohort(cohortNo).priorsFromTask).prc_config.transp_prc_fun(c, input.prc.transInp);
-
-                    else
-                        % re-sample prc param values
-                        for j = 1:size(optionsFile.model.space(iModel).prc_idx,2)
-                            input.prc.transInp(optionsFile.modelSpace(iModel,iTask).prc_idx(j)) = ...
-                                normrnd(optionsFile.modelSpace(iModel,iTask).prc_config.priormus(optionsFile.modelSpace(iModel,iTask).prc_idx(j)),...
-                                abs(sqrt(optionsFile.modelSpace(iModel,iTask).prc_config.priorsas(optionsFile.modelSpace(iModel,iTask).prc_idx(j)))));
-                        end
-                        input.prc.nativeInp = optionsFile.modelSpace(iModel,iTask).prc_config.transp_prc_fun(c, input.prc.transInp);
-
+                    % re-sample prc param values
+                    for j = 1:size(optionsFile.model.space(iModel).prc_idx,2)
+                        input.prc.transInp(optionsFile.modelSpace(iModel,iTask).prc_idx(j)) = ...
+                            normrnd(optionsFile.modelSpace(iModel,iTask).prc_config.priormus(optionsFile.modelSpace(iModel,iTask).prc_idx(j)),...
+                            abs(sqrt(optionsFile.modelSpace(iModel,iTask).prc_config.priorsas(optionsFile.modelSpace(iModel,iTask).prc_idx(j)))));
                     end
+                    input.prc.nativeInp = optionsFile.modelSpace(iModel,iTask).prc_config.transp_prc_fun(c, input.prc.transInp);
+
                 end
                 % save simulation input
                 s.task(iTask).data = data;
@@ -168,48 +131,48 @@ for iAgent = 1:optionsFile.simulations.nSamples
     end
 end
 
-    %% PLOT predictions
-    for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-        for iModel = 1:numel(optionsFile.model.space)
-            for iAgent = 1:optionsFile.simulations.nSamples
+%% PLOT predictions
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+    for iModel = 1:numel(optionsFile.model.space)
+        for iAgent = 1:optionsFile.simulations.nSamples
 
-                if any(strcmp('muhat',fieldnames(sim.agent(iAgent,iModel).task(iTask).data.traj)))
-                    plot(sim.agent(iAgent,iModel).task(iTask).data.traj.muhat(:,1), 'color', optionsFile.col.tnub);
-                    ylabel('$\hat{\mu}_{1}$', 'Interpreter', 'Latex')
-                else
-                    plot(sim.agent(iAgent,iModel).task(iTask).data.traj.vhat(:,1), 'color', optionsFile.col.tnub);
-                    ylabel('v_hat')
-                end
-
-                hold on;
+            if any(strcmp('muhat',fieldnames(sim.agent(iAgent,iModel).task(iTask).data.traj)))
+                plot(sim.agent(iAgent,iModel).task(iTask).data.traj.muhat(:,1), 'color', optionsFile.col.tnub);
+                ylabel('$\hat{\mu}_{1}$', 'Interpreter', 'Latex')
+            else
+                plot(sim.agent(iAgent,iModel).task(iTask).data.traj.vhat(:,1), 'color', optionsFile.col.tnub);
+                ylabel('v_hat')
             end
 
-            %Create figure of trajectory
-            ylim([-0.1 1.1])
-            plot(sim.agent(1).task(iTask).data.u,'o','Color','b');
-            % plot(optionsFile.task.probStr,'Color','b');
-            xlabel('Trials');
-            ylabel('Reward Probability');
-            txt = ['Simulation results (n=50) using ', optionsFile.model.prc{iModel}];
-            title(txt)
-            hold on
-            set(gcf, 'color', 'none');   %transparent background
-            set(gca, 'color', 'none');   %transparent background
-            xticks([0 40 80 120 160 200 240 280])
             hold on;
-
-            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.model.space{iModel},'_predictions', optionsFile.cohort(cohortNo).testTask(iTask).name]);
-            save([figdir,'.fig'])
-            print(figdir, '-dpng');
-            close;
-
-            % reset rng state idx
-            optionsFile.rng.idx = 1;
-
-            %% SAVE model simulation specs as struct
-            save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim'], '-struct', 'sim');
         end
+
+        %Create figure of trajectory
+        ylim([-0.1 1.1])
+        plot(sim.agent(1).task(iTask).data.u,'o','Color','b');
+        % plot(optionsFile.task.probStr,'Color','b');
+        xlabel('Trials');
+        ylabel('Reward Probability');
+        txt = ['Simulation results (n=50) using ', optionsFile.model.prc{iModel}];
+        title(txt)
+        hold on
+        set(gcf, 'color', 'none');   %transparent background
+        set(gca, 'color', 'none');   %transparent background
+        xticks([0 40 80 120 160 200 240 280])
+        hold on;
+
+        figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.model.space{iModel},'_predictions', optionsFile.cohort(cohortNo).testTask(iTask).name]);
+        save([figdir,'.fig'])
+        print(figdir, '-dpng');
+        close;
+
+        % reset rng state idx
+        optionsFile.rng.idx = 1;
+
+        %% SAVE model simulation specs as struct
+        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim'], '-struct', 'sim');
     end
-    disp('simulated data successfully created.')
+end
+disp('simulated data successfully created.')
 
 end

@@ -50,12 +50,12 @@ disp('*');
 currTask = optionsFile.cohort(priorCohort).testTask(iTask).name;
 
 if isempty(subCohort)
-    mouseIDs      = optionsFile.cohort(priorCohort).mouseIDs;
-    nSize         = optionsFile.cohort(priorCohort).nSize;
+    mouseIDs  = optionsFile.cohort(priorCohort).mouseIDs;
+    nSize     = optionsFile.cohort(priorCohort).nSize;
 elseif isempty(iCondition)
-    mouseIDs    = [optionsFile.cohort(priorCohort).(subCohort).maleMice,...
+    mouseIDs  = [optionsFile.cohort(priorCohort).(subCohort).maleMice,...
                     optionsFile.cohort(priorCohort).(subCohort).femaleMice];
-    nSize       = numel(mouseIDs);
+    nSize     = numel(mouseIDs);
 else
     condition = optionsFile.cohort(priorCohort).conditions{iCondition};
     mouseIDs  = optionsFile.cohort(priorCohort).mouseIDs;
