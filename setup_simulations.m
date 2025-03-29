@@ -108,7 +108,7 @@ for iAgent = 1:optionsFile.simulations.nSamples
                     fprintf('Obs Param Values: \n');
                     input.obs.nativeInp
                     % re-sample prc param values
-                    for j = 1:size(optionsFile.model.space(iModel).prc_idx,2)
+                    for j = 1:size(optionsFile.modelSpace(iModel,iTask).prc_idx,2)
                         input.prc.transInp(optionsFile.modelSpace(iModel,iTask).prc_idx(j)) = ...
                             normrnd(optionsFile.modelSpace(iModel,iTask).prc_config.priormus(optionsFile.modelSpace(iModel,iTask).prc_idx(j)),...
                             abs(sqrt(optionsFile.modelSpace(iModel,iTask).prc_config.priorsas(optionsFile.modelSpace(iModel,iTask).prc_idx(j)))));

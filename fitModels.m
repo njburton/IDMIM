@@ -54,7 +54,7 @@ end
     for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
         currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
         disp(['* task  ', char(currTask),'.']);
-        for iModel = 2:numel(optionsFile.model.space) %for each model in the model space
+        for iModel = 1:numel(optionsFile.model.space) %for each model in the model space
             disp(['* model ', optionsFile.model.space{iModel},'.']);
 
             for iMouse  = 1:optionsFile.cohort(cohortNo).nSize  % for each mouse (agent) in the cohort
@@ -119,7 +119,7 @@ end
                     disp(['mouse ', char(currMouse), ' not loaded'])
                 end
             end
-        end
+        
         % create savepath and filename as a .mat file
         savePath = [optionsFile.paths.cohort(cohortNo).results,saveName,currTask,...
             '_',optionsFile.dataFiles.fittedData];

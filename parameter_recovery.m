@@ -80,8 +80,8 @@ for iCondition = 1:nConditions
                 else
                     currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
                     rec.est(iMouse,m_est).task(iTask).data = load([char(optionsFile.paths.cohort(cohortNo).results),...
-                        'mouse',char(currMouse),'_',currTask,'_condition_',currCondition,'_',...
-                        optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
+                        'mouse',char(currMouse),'_condition_',currCondition,'_',...
+                        currTask,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
                 end
                 % param values in transformed space (assumption of Gaussian prior)
                 rec.param(iTask).prc(m_est).estAgent(iMouse,:) = rec.est(iMouse,m_est).task(iTask).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);
@@ -186,7 +186,7 @@ for iCondition = 1:nConditions
             hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).prc_idx(j),j,t,'prc');
 
             saveName = getSaveName(optionsFile,cohortNo,subCohort,currCondition);
-            figdir   = fullfile(optionsFile.paths.cohort(cohortNo).plots,...
+            figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,...
                 [optionsFile.cohort(cohortNo).taskPrefix,'prc_priors_posteriors_model_',char(optionsFile.model.space{m}),'_',optionsFile.modelSpace(m).free_expnms_mu_prc{j},saveName,optionsFile.cohort(cohortNo).testTask(t).name]);
             print(figdir, '-dpng');
             close;

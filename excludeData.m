@@ -16,7 +16,7 @@ function [inclIdArray,optionsFile] = excludeData(optionsFile,cohortNo,subCohort,
 %                                  cohorts whose expcifications have been set in runOptions.m
 %            mode: string, {'excludeData','updateDataInfo','updateOptions'},mode in which
 %                           this function should run.
-%                           'excludeData', only determes what data should be excluded
+%                           'excludeData', only determines what data should be excluded
 %                           'updateDataInfo' updates the dataInfo Tables
 %                           with the info on exclusion criteria in addition
 %                           to determining what data should be excluded

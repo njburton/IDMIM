@@ -46,6 +46,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).name = '2023_UCMS';
     optionsFile.cohort(1).conditions = [];
     optionsFile.cohort(1).subCohorts = {'treatment','control'};
+    optionsFile.cohort(1).taskRepetitions  = 0;
     optionsFile.cohort(1).priorsFromCohort = [];
     optionsFile.cohort(1).priorsFromTask   = [];
     optionsFile.cohort(1).priorsFromCondition = [];
@@ -53,6 +54,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).name = '2024_HGFPilot';
     optionsFile.cohort(2).conditions = [];
     optionsFile.cohort(2).subCohorts = [];
+    optionsFile.cohort(2).taskRepetitions = 3;
     optionsFile.cohort(2).priorsFromCohort = [];
     optionsFile.cohort(2).priorsFromTask   = [];
     optionsFile.cohort(2).priorsFromCondition = [];
@@ -60,6 +62,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(3).name = '5HT';
     optionsFile.cohort(3).conditions = {'5mg','10mg','saline'};
     optionsFile.cohort(3).subCohorts = [];
+    optionsFile.cohort(3).taskRepetitions     = 0;
     optionsFile.cohort(3).priorsFromCohort    = 2;
     optionsFile.cohort(3).priorsFromTask      = 1;
     optionsFile.cohort(3).priorsFromCondition = [];
