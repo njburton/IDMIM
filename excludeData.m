@@ -50,7 +50,7 @@ function [inclIdArray,optionsFile] = excludeData(optionsFile,cohortNo,subCohort,
 % =========================================================================
 
 if exist('optionsFile.mat','file')==2
-    load("optionsFile.mat");
+    load('optionsFile.mat');
 else
     optionsFile = runOptions();
 end

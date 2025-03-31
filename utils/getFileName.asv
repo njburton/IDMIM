@@ -1,0 +1,26 @@
+function fileName = getFileName(optionsFile,cohortNo,currTask,subCohort,currCondition,currRepetition)
+
+
+if strcmp(subCohort,'all')
+    fileName = [currTask,'_'];
+
+elseif ~isempty(subCohort) 
+
+    if isempty(currCondition)
+    
+    fileName = ['_',subCohort,'_'];
+    else
+            fileName = ['_',subCohort,'_condition_',currCondition,'_'];
+    end
+
+else
+    fileName = ['_condition_',currCondition,'_'];
+
+elseif ~isempty(subCohort) && isempty(currCondition)
+    fileName = ['_',subCohort,'_'];
+else
+    fileName = ['_',subCohort,'_condition_',currCondition,'_'];
+end
+
+
+end

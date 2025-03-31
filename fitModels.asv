@@ -63,56 +63,55 @@ for iCondition = 1:nConditions
                 loadName = getFileName('','',currTask,[],currCondition,iRep);
                 for iMouse  = 1:optionsFile.cohort(cohortNo).nSize  % for each mouse (agent) in the cohort
                     currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
-                    try
-                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                            loadName,'.mat']);
+                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        loadName,'.mat']);
 
-                        disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')']);
-
-                        % optimization settings
-                        strct              = eval(char(optionsFile.model.opt_config));
-                        strct.maxStep      = inf;
-                        strct.nRandInit    = 100; %optionsFile.rng.nRandInit;
-                        strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
-
-                        %% model fit
-                        est = tapas_fitModel(ExperimentTaskTable.Choice, ...
-                            optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
-                            optionsFile.model.prc_config{iModel}, ...
-                            optionsFile.model.obs_config{1}, ... % only ever take first entry because all perceptual models use the same observational model, if this changes, in runOptions add different observational models and add a loop
-                            strct); % info for optimization and multistart
-
-                        %Plot standard trajectory plot
-                        optionsFile.plot(iModel).plot_fits(est);
-                        saveName = getFileName('','',currTask,[],currCondition,iRep);
-                        figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),...
-                            'mouse',char(currMouse),'_',saveName,optionsFile.dataFiles.rawFitFile{iModel}]);
-                        save([figdir,'.fig']);
-                        print([figdir,'.png'], '-dpng');
-                        close all;
-
-                        %Save model fit
-                        save([char(optionsFile.paths.cohort(cohortNo).results),...
-                            'mouse',char(currMouse),'_',saveName,optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
-
-                        modelInv.allMice(iMouse,iModel).est = est;
-
-                    catch
-                        modelInv.allMice(iMouse,iModel).est = [];
-                        disp(['mouse ', char(currMouse), ' not loaded'])
-                    end
                 end
+                disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')']);
 
-                % create savepath and filename as a .mat file
-                groupSaveName = getFileName('','all',currTask,[],currCondition,iRep);
-                savePath = [optionsFile.paths.cohort(cohortNo).results,groupSaveName,...
-                    optionsFile.model.space{iModel},'_',optionsFile.dataFiles.fittedData];
+                % optimization settings
+                strct              = eval(char(optionsFile.model.opt_config));
+                strct.maxStep      = inf;
+                strct.nRandInit    = 100; %optionsFile.rng.nRandInit;
+                strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
-                save(savePath, '-struct', 'modelInv','allMice');
+                %% model fit
+                est = tapas_fitModel(ExperimentTaskTable.Choice, ...
+                    optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
+                    optionsFile.model.prc_config{iModel}, ...
+                    optionsFile.model.obs_config{1}, ... % only ever take first entry because all perceptual models use the same observational model, if this changes, in runOptions add different observational models and add a loop
+                    strct); % info for optimization and multistart
+
+                %Plot standard trajectory plot
+                optionsFile.plot(iModel).plot_fits(est);
+                saveName = getFileName('','',currTask,[],currCondition,iRep);
+                figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),...
+                    'mouse',char(currMouse),'_',currTask,'_',optionsFile.dataFiles.rawFitFile{iModel}]);
+                save([figdir,'.fig']);
+                print([figdir,'.png'], '-dpng');
+                close all;
+
+                %Save model fit
+                save([char(optionsFile.paths.cohort(cohortNo).results),...
+                    'mouse',char(currMouse),'_',saveName,optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
+
+                modelInv.allMice(iMouse,iModel).est = est;
+
+            catch
+                modelInv.allMice(iMouse,iModel).est = [];
+                disp(['mouse ', char(currMouse), ' not loaded'])
             end
         end
+
+        % create savepath and filename as a .mat file
+        saveName = getFileName('','all',currTask,[],currCondition,iRep);
+        savePath = [optionsFile.paths.cohort(cohortNo).results,saveName,...
+            optionsFile.model.space{iModel},'_',optionsFile.dataFiles.fittedData];
+
+        save(savePath, '-struct', 'modelInv','allMice');
     end
 end
-
+end
+end
 end
 
