@@ -12,9 +12,8 @@ function [] = setup_simulations(cohortNo)
 %                            cohorts whose expcifications have been set in runOptions.m
 %
 % Original: Katharina V. Wellstein
-% Amended
 % -------------------------------------------------------------------------
-% Copyright (C) 2024, Katharina V. Wellstein
+% Copyright (C) 2025, Katharina V. Wellstein
 %
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
@@ -31,38 +30,51 @@ function [] = setup_simulations(cohortNo)
 % _________________________________________________________________________
 % =========================================================================
 
-%% INITIALIZE Variables for running this function
-% specifications for this analysis
-if exist('optionsFile.mat','file')==2
-    load("optionsFile.mat");
-else
-    optionsFile = runOptions();
-end
+%% INITIALIZE options and variables needed to run this function
 
-
-if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
-    optionsFile = setup_configFiles(optionsFile,cohortNo);
-    [~,optionsFile] = get_informedPriors_from_pilotData(optionsFile.cohort(cohortNo).priorsFromCohort,cohortNo,...
-        [],optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,0);
-    informedPriors=1; % flag for using informed priors
-else
-    optionsFile = setup_configFiles(optionsFile,cohortNo);
-    informedPriors=0;
-end
-
-addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 disp('************************************** SETUP_SIMULATIONS **************************************');
 disp('*');
 disp('*');
 
+% load or run options for running this function
+if exist('optionsFile.mat','file')==2
+    load('optionsFile.mat');
+else
+    optionsFile = runOptions();
+end
+
+% prespecify variables needed for running this function
+nTasks   = numel(optionsFile.cohort(cohortNo).testTask);
+nModels  = numel(optionsFile.model.space);
+nSamples = optionsFile.simulations.nSamples;
+sim.agent = struct();
+sim.input = struct();
+s.task    = struct();
+
+%% get modeling specifications
+% add toolbox path
+addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
+
+% if responses to the task in this cohort should be simulated using informed priors,
+% run getInformedPriors.m with the settings prespecified in the optionsFile
+if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
+    optionsFile = setup_configFiles(optionsFile,cohortNo);
+    disp('get priors from pilot data...');
+    % input aguments: priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle
+    [~,optionsFile] = get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
+        cohortNo,optionsFile.cohort(cohortNo).priorsFromSubCohort,...
+        optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
+        optionsFile.cohort(cohortNo).priorsFromRepetition,0);
+
+else % otherwise just set up the configfiles for the models in the modelspace
+    optionsFile = setup_configFiles(optionsFile,cohortNo);
+end
+
+
 %% GENERATE synthetic agents using default priors from toolbox
-sim.agent  = struct();
-sim.input  = struct();
-s.task     = struct();
 
-
-for iAgent = 1:optionsFile.simulations.nSamples
-    for iModel = 1:length(optionsFile.model.space)
+for iAgent = 1:nSamples
+    for iModel = 1:nModels
         % sample free parameter values
         input.prc.transInp = optionsFile.modelSpace(iModel).prc_config.priormus;
         input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus;
@@ -87,8 +99,7 @@ for iAgent = 1:optionsFile.simulations.nSamples
         % simulate predictions for SNR calculation
         stable = 0;
 
-        for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-            optionsFile.cohort(cohortNo).testTask(iTask).inputs
+        for iTask = 1:nTasks
             disp(['Simulating with input sequence from ', optionsFile.cohort(cohortNo).testTask(iTask).name,'...   ']);
 
             while stable == 0
@@ -127,52 +138,55 @@ for iAgent = 1:optionsFile.simulations.nSamples
                     optionsFile.rng.idx = 1;
                 end
             end
-        end
-    end
-end
+        end % END TASK loop
+    end % END MODEL loop
+end % END AGENTS loop
 
 %% PLOT predictions
-for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-    for iModel = 1:numel(optionsFile.model.space)
-        for iAgent = 1:optionsFile.simulations.nSamples
+if optionsFile.doCreatePlots
+    for iTask = 1:nTasks
+        for iModel = 1:nModels
+            for iAgent = 1:nSamples
 
-            if any(strcmp('muhat',fieldnames(sim.agent(iAgent,iModel).task(iTask).data.traj)))
-                plot(sim.agent(iAgent,iModel).task(iTask).data.traj.muhat(:,1), 'color', optionsFile.col.tnub);
-                ylabel('$\hat{\mu}_{1}$', 'Interpreter', 'Latex')
-            else
-                plot(sim.agent(iAgent,iModel).task(iTask).data.traj.vhat(:,1), 'color', optionsFile.col.tnub);
-                ylabel('v_hat')
+                if any(strcmp('muhat',fieldnames(sim.agent(iAgent,iModel).task(iTask).data.traj)))
+                    plot(sim.agent(iAgent,iModel).task(iTask).data.traj.muhat(:,1), 'color', optionsFile.col.tnub);
+                    ylabel('$\hat{\mu}_{1}$', 'Interpreter', 'Latex')
+                else
+                    plot(sim.agent(iAgent,iModel).task(iTask).data.traj.vhat(:,1), 'color', optionsFile.col.tnub);
+                    ylabel('v_hat')
+                end
+
+                hold on;
             end
 
+            %Create figure of trajectory
+            ylim([-0.1 1.1])
+            plot(sim.agent(1).task(iTask).data.u,'o','Color','b');
+            % plot(optionsFile.task.probStr,'Color','b');
+            xlabel('Trials');
+            ylabel('Reward Probability');
+            txt = ['Simulation results from',num2str(nSamples),'with ', optionsFile.model.prc{iModel}];
+            title(txt)
+            hold on
+            set(gcf, 'color', 'none');   %transparent background
+            set(gca, 'color', 'none');   %transparent background
+            xticks(0:40:numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs))
             hold on;
+
+            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.cohort(priorCohort).taskPrefix, optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel},'_predictions']);
+            save([figdir,'.fig'])
+            print(figdir, '-dpng');
+            close;
         end
-
-        %Create figure of trajectory
-        ylim([-0.1 1.1])
-        plot(sim.agent(1).task(iTask).data.u,'o','Color','b');
-        % plot(optionsFile.task.probStr,'Color','b');
-        xlabel('Trials');
-        ylabel('Reward Probability');
-        txt = ['Simulation results (n=50) using ', optionsFile.model.prc{iModel}];
-        title(txt)
-        hold on
-        set(gcf, 'color', 'none');   %transparent background
-        set(gca, 'color', 'none');   %transparent background
-        xticks([0 40 80 120 160 200 240 280])
-        hold on;
-
-        figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.model.space{iModel},'_predictions', optionsFile.cohort(cohortNo).testTask(iTask).name]);
-        save([figdir,'.fig'])
-        print(figdir, '-dpng');
-        close;
-
         % reset rng state idx
         optionsFile.rng.idx = 1;
 
         %% SAVE model simulation specs as struct
-        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim'], '-struct', 'sim');
-    end
-end
-disp('simulated data successfully created.')
+        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(priorCohort).taskPrefix,optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel},'_sim'], '-struct', 'sim');
+    
+    end % END TASK loop
+end % END CREATE PLOTS loop
+
+disp('simulated data successfully for cohort ',optionsFile.cohort(cohortNo).name,' created.')
 
 end

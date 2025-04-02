@@ -182,7 +182,7 @@ for iLargeFile = 1:sum(isLargeFile)
             %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
 
             % create savepath and filename as a .mat file
-            if optionsFile.cohort(cohortNo).taskRepetitions==0
+            if optionsFile.cohort(cohortNo).taskRepetitions==1
                 if isempty(optionsFile.cohort(cohortNo).conditions)
                     saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                         currTask,'.mat'];
@@ -323,7 +323,7 @@ for iFile = 1:length(isLargeFile) %for each file in the data dir
                 %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
 
                 % create savepath and filename as a .mat file
-                if optionsFile.cohort(cohortNo).taskRepetitions==0
+                if optionsFile.cohort(cohortNo).taskRepetitions==1
                     if isempty(optionsFile.cohort(cohortNo).conditions)
                         saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                             currTask,'.mat'];

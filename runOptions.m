@@ -8,19 +8,21 @@ function optionsFile = runOptions()
 %
 %  OUTPUT:    optionsFile.mat
 %
-% Original: 30/5/2023; Katharina Wellstein
-% Amended:  23/2/2024; Nicholas Burton
+% Original: 2025, Katharina Wellstein, https://github.com/kwellstein
+%           and Nicholas Burton,
 % -------------------------------------------------------------------------
-% Copyright (C) 2024 - need to fill in details
+% Copyright (C) 2025 - need to fill in details
 %
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
 % terms of the GPL (either version 3 or, at your option, any later version).
 %
-% This program is distributed in the hope that it will be useful, but
-% WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-% or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-% for more details: <http://www.gnu.org/licenses/>
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
@@ -29,82 +31,23 @@ function optionsFile = runOptions()
 %% what steps to do?
 optionsFile.doOptions        = 1;
 optionsFile.doMakeDir        = 0;
+optionsFile.doCreatePlots    = 1;
 optionsFile.doSimulations    = 1;
 optionsFile.setupModels      = 1;
 optionsFile.doGetData        = 0;
 optionsFile.doExcludeData    = 1;
 optionsFile.doModelInversion = 1;
-optionsFile.doParamRecovery  = 1;
-optionsFile.doParamInvestig  = 1;
+optionsFile.doSimModelFitCheck = 1;
+optionsFile.doParamFitCheck  = 1;
 optionsFile.doBMS            = 1;
 
 %% SPECIFY PATHS
 if optionsFile.doOptions == 1
 
-    %% SPECIFY COHORT DATASET info
-    % Each group represents an individual experiment/cohort
-    optionsFile.cohort(1).name = '2023_UCMS';
-    optionsFile.cohort(1).conditions = [];
-    optionsFile.cohort(1).subCohorts = {'treatment','control'};
-    optionsFile.cohort(1).taskRepetitions  = 1;
-    optionsFile.cohort(1).priorsFromCohort = [];
-    optionsFile.cohort(1).priorsFromTask   = [];
-    optionsFile.cohort(1).priorsFromCondition = [];
-
-    optionsFile.cohort(2).name = '2024_HGFPilot';
-    optionsFile.cohort(2).conditions = [];
-    optionsFile.cohort(2).subCohorts = [];
-    optionsFile.cohort(2).taskRepetitions = 3;
-    optionsFile.cohort(2).priorsFromCohort = [];
-    optionsFile.cohort(2).priorsFromTask   = [];
-    optionsFile.cohort(2).priorsFromCondition = [];
-
-    optionsFile.cohort(3).name = '5HT';
-    optionsFile.cohort(3).conditions = {'5mg','10mg','saline'};
-    optionsFile.cohort(3).subCohorts = [];
-    optionsFile.cohort(3).taskRepetitions     = 1;
-    optionsFile.cohort(3).priorsFromCohort    = 2;
-    optionsFile.cohort(3).priorsFromTask      = 1;
-    optionsFile.cohort(3).priorsFromCondition = [];
-
-    % Identify which mouseIDs are male, female and their experimental group
-    optionsFile.cohort(1).treatment.maleMice   = {'372','382','392','402','412','422'};
-    optionsFile.cohort(1).treatment.femaleMice = {'432','442','452','462','472','482'};
-    optionsFile.cohort(1).control.maleMice     = {'369','370','374','375','215','217'};
-    optionsFile.cohort(1).control.femaleMice   = {'411','426','433','434','501','506'};
-    optionsFile.cohort(2).treatment.maleMice   = [];
-    optionsFile.cohort(2).treatment.femaleMice = [];
-    optionsFile.cohort(2).control.maleMice     = {'1.1','1.2','2.1','3.1','3.2','3.3'};
-    optionsFile.cohort(2).control.femaleMice   = {'4.2','5.1','5.2','5.3','5.4','5.5'};
-    optionsFile.cohort(3).treatment.maleMice   = {'1.1','1.2','1.3','1.4','2.1','2.2','2.3','2.4','3.1','3.2','3.3','3.4'}; 
-    optionsFile.cohort(3).treatment.femaleMice = {'4.1','4.2','4.3','4.4','5.1','5.2','5.3','5.4','6.1','6.2','6.3','6.4'};
-    optionsFile.cohort(3).control.maleMice     = [];
-    optionsFile.cohort(3).control.femaleMice   = [];
-
-    for cohortNo = 1:numel(optionsFile.cohort)
-        % collate mouseIDs
-        optionsFile.cohort(cohortNo).mouseIDs = [optionsFile.cohort(cohortNo).treatment.maleMice, optionsFile.cohort(cohortNo).treatment.femaleMice,...
-            optionsFile.cohort(cohortNo).control.maleMice, optionsFile.cohort(cohortNo).control.femaleMice];
-
-        % sample sizes
-        optionsFile.cohort(cohortNo).nSize = numel(optionsFile.cohort(cohortNo).mouseIDs);
-    end
-    
-
     %% SPECIFY TASK and data file info
     % specify the task name prefix and task name extension
-    % '2023_UCMS' COHORT
-    optionsFile.cohort(1).taskPrefix        = 'NJB_HGF_';
-    optionsFile.cohort(1).trainTask(1).name = []; % @NICK: any?
-    optionsFile.cohort(1).testTask(1).name  = 'ABA2_R';
-    % optionsFile.cohort(1).testTask(2).name  = 'ABA1_L';
-    optionsFile.cohort(1).nTrials           = 180;  % trials
-    optionsFile.cohort(1).trialDuration     = 20;   % in seconds
-    optionsFile.cohort(1).totalTaskDuration = optionsFile.cohort(1).nTrials*optionsFile.cohort(1).trialDuration; % in seconds
-    optionsFile.cohort(1).exclCriteria(1).name   = 'nOmissions';
-    optionsFile.cohort(1).exclCriteria(1).cutoff = 0.3;
-    optionsFile.cohort(1).exclCriteria(2).name   = 'nConsecutiveOmissions';
-    optionsFile.cohort(1).exclCriteria(2).cutoff = 20;
+    optionsFile = specifyDatasetSpecifics(optionsFile);
+
     % optionsFile.cohort(1).dataFile.taskNameLocation        = 13;  % taskNameMSN
     optionsFile.cohort(1).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(1).dataFile.choiceOffset              = 615; % Choice H
@@ -119,19 +62,6 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
     optionsFile.cohort(1).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
 
-    % '2024_HGF' COHORT
-    optionsFile.cohort(2).taskPrefix        = 'NJB_HGF_';
-    optionsFile.cohort(2).trainTask(1).name = 'TrainingTask_RL';
-    optionsFile.cohort(2).trainTask(2).name = 'TrainingTask_LL - Copy';
-    optionsFile.cohort(2).testTask(1).name  = 'TestTaskA';
-    optionsFile.cohort(2).testTask(2).name  = 'TestTaskB';
-    optionsFile.cohort(2).nTrials           = 280;  % total task trials
-    optionsFile.cohort(2).trialDuration     = 13;   % in seconds
-    optionsFile.cohort(2).totalTaskDuration = optionsFile.cohort(2).nTrials*optionsFile.cohort(2).trialDuration; % in seconds
-    optionsFile.cohort(2).exclCriteria(1).name   = 'nOmissions';
-    optionsFile.cohort(2).exclCriteria(1).cutoff = 0.3;
-    optionsFile.cohort(2).exclCriteria(2).name   = 'nConsecutiveOmissions';
-    optionsFile.cohort(2).exclCriteria(2).cutoff = 20;
     % optionsFile.cohort(2).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(2).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(2).dataFile.choiceOffset              = 615; % Choice H
@@ -146,18 +76,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
     optionsFile.cohort(2).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
 
-    % '5HT' COHORT
-    optionsFile.cohort(3).taskPrefix        = 'NJB_HGF_';
-    optionsFile.cohort(3).trainTask(1).name = 'TrainingTask_RL';
-    optionsFile.cohort(3).trainTask(2).name = 'TrainingTask_LL';
-    optionsFile.cohort(3).testTask(1).name  = 'TestTaskA';
-    optionsFile.cohort(3).nTrials           = 280;   % total task trials
-    optionsFile.cohort(3).trialDuration     = 13;   % in seconds
-    optionsFile.cohort(3).totalTaskDuration = optionsFile.cohort(3).nTrials*optionsFile.cohort(3).trialDuration; % in seconds
-    optionsFile.cohort(3).exclCriteria(1).name   = 'nOmissions';
-    optionsFile.cohort(3).exclCriteria(1).cutoff = 0.3;
-    optionsFile.cohort(3).exclCriteria(2).name   = 'nConsecutiveOmissions';
-    optionsFile.cohort(3).exclCriteria(2).cutoff = 20;
+
     % optionsFile.cohort(3).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(3).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(3).dataFile.choiceOffset              = 615; % Choice H
@@ -272,7 +191,7 @@ end
 if optionsFile.doGetData == 1
 
     if exist('optionsFile.mat','file')==2
-        load("optionsFile.mat");
+        load('optionsFile.mat');
     elseif exist('optionsFile')
         disp('getting and formatting data...');
     else

@@ -43,7 +43,7 @@ diary on
 disp('initialising options...');
 
 if exist('optionsFile.mat','file')==2
-    load("optionsFile.mat");
+    load('optionsFile.mat');
 else
     optionsFile = runOptions();
 end
@@ -57,15 +57,17 @@ if optionsFile.doSimulations == 1
     sim_data_modelinversion(cohortNo);
 end
 
+if optionsFile.doSimModelFitCheck == 1
+    computeModelIdentifiability(cohortNo);
+end
+
 %% Get and process data
 if optionsFile.optionsFile.doGetData == 1
     disp('preparing to extract raw data from .txt files in dataToAnalyseDir...');
-    getData(optionsFile,cohortNo); % Extract data from raw files in dataToAnalyse Dir
-    excludeData(cohortNo); % create tables thats include info regarding mice meeting exclusion criteria
-
-    disp('...now allocating groups, sex, and taskRepetition counts...');
-    getGroupsAndTaskRepetition(optionsFile,cohortNo); % Take getData output .mat file and fill in groups and taskRepetition info
+    getData(optionsFile,cohortNo); 
+    excludeData(optionsFile,cohortNo,'all','updateDataInfo',[]);
 end
+
 %% Extract model based quantities
 % Fit mouse choice data using the following models for comparison
 if optionsFile.optionsFile.doModelInversion == 1
@@ -77,20 +79,15 @@ end
 % parameter recovery
 if optionsFile.optionsFile.doParamRecovery == 1
     disp('preparing for parameter recovery to task data...');
-    parameter_recovery(cohortNo);
+    parameterRecovery(cohortNo);
 end
 
-% @NICK TO DO, clean up
-% data plots
-% getMouseTaskPerformance
-% investigateParameters
-% plotByTreatmentGroup
 
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
 
 if optionsFile.optionsFile.doBMS == 1
-     disp('preparing for Bayesian Model Comparison and model identifiability...');
+     disp('preparing for Bayesian Model Comparison..');
     performBMS(cohortNo)
 end
 

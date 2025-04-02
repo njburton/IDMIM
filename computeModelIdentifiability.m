@@ -1,12 +1,55 @@
 function computeModelIdentifiability(cohortNo)
 
-%% INITIALIZE Variables for running this function
-% specifications for this analysis
+%% sim_data_modelinversion
+%  Invert simulated agents with models in the modelspace. This step will be
+%  executed if optionsFile.doSimulations = 1;
+%
+%   SYNTAX:       sim_data_modinversion
+%
+%   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
+%                            corresponds to what number in the
+%                            optionsFile.cohort(cohortNo).name struct. This
+%                            allows to run the pipeline and its functions for different
+%                            cohorts whose expcifications have been set in runOptions.m
+%
+% Original: 29-10-2021; Alex Hess
+% Amended:  30-05-2025; Katharina V. Wellstein
+
+% -------------------------------------------------------------------------
+%
+% This file is released under the terms of the GNU General Public Licence
+% (GPL), version 3. You can redistribute it and/or modify it under the
+% terms of the GPL (either version 3 or, at your option, any later version).
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% _________________________________________________________________________
+% =========================================================================
+
+%% INITIALIZE options and variables needed to run this function
+
+disp('************************************** INVERT SIMULATED RESPONSES **************************************');
+disp('*');
+disp('*');
+
+% load or run options for running this function
 if exist('optionsFile.mat','file')==2
     load('optionsFile.mat');
 else
     optionsFile = runOptions();
 end
+
+% prespecify variables needed for running this function
+nTasks   = numel(optionsFile.cohort(cohortNo).testTask);
+nModels  = numel(optionsFile.model.space);
+nSamples = optionsFile.simulations.nSamples;
+
 
 %% LOAD simulated responses and inverted simulated responses
 % and save simulated response data into rec.param.{}.simAgent struct and paramete values for recovery into
@@ -14,29 +57,28 @@ end
 % model space and inverted with all the models in the model space. For
 % model identifiability we are saving into the following structure: agent(m_in,iAgent,m_est)
 
-for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
-    for iAgent = 1:optionsFile.simulations.nSamples
-        for m_in = 1:numel(optionsFile.model.space)
+for iTask = 1:nTasks
+    for iAgent = 1:nSamples
+        for m_in = 1:nModels
             modelIn = optionsFile.dataFiles.rawFitFile{m_in};
             simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},...
                 '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
-
-            for m_est = 1:numel(optionsFile.model.space)
+            for m_est = 1:nModels
                 modelEst = optionsFile.dataFiles.rawFitFile{m_est};
                 % load results from simulated agents' model inversion
                 rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.paths.cohort(cohortNo).simulations, ...
-                    ['simAgent_', num2str(iAgent),'_model_in_',modelIn,'_model_est_',modelEst,...
-                    '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'.mat']));
+                    ['simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']));
 
                 % LME
                 rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
-            end
-        end
-    end
-end
 
-%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ %%
-%% MODEL IDENTIFIABILITY (LME Winner classification)
+            end % END ESTIMATING MODEL loop
+        end % END GENERATING MODEL loop
+    end % END AGENT loop
+end % END TASK loop
+
+%% LME Winner classification)
 
 for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
     class.LMEwinner = NaN(size(optionsFile.model.space, 2), size(optionsFile.model.space, 2));
@@ -55,52 +97,56 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
 
     % chance threshold (inv binomial distr)
     class.chancethr = binoinv(0.9, optionsFile.simulations.nSamples, 1/size(optionsFile.model.space, 2)) / optionsFile.simulations.nSamples;
-
-    % save to struct
     rec.class = class;
 
-    %% PLOT MODEL IDENTIFIABILITY
-    label_x = {optionsFile.model.names{1} optionsFile.model.names{2} optionsFile.model.names{3}};
-    figure('color',[1 1 1],'name','model identifiability');
+    % save to struct
+    saveDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,'Model_Identifiability _',...
+            optionsFile.cohort(cohortNo).name,'_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
+    save(saveDir,'-struct','rec');
 
-    numlabels = size(rec.class.percLMEwinner, 1); % number of labels
+    if optionsFile.doCreatePlots
+        %% PLOT MODEL IDENTIFIABILITY
+        label_x = {optionsFile.model.names{1} optionsFile.model.names{2} optionsFile.model.names{3}};
+        figure('color',[1 1 1],'name','model identifiability');
 
-    % plot colors
-    imagesc(rec.class.percLMEwinner);
-    title(sprintf('Balanced Accuracy: %.2f%%', 100*trace(rec.class.LMEwinner)/sum(rec.class.LMEwinner(:))));
-    ylabel('Output Class'); xlabel('Target Class');
+        numlabels = size(rec.class.percLMEwinner, 1); % number of labels
 
-    % set colormap
-    colormap(flipud(gray));
+        % plot colors
+        imagesc(rec.class.percLMEwinner);
+        title(sprintf('Balanced Accuracy: %.2f%%', 100*trace(rec.class.LMEwinner)/sum(rec.class.LMEwinner(:))));
+        ylabel('Output Class'); xlabel('Target Class');
 
-    % Create strings from the matrix values and remove spaces
-    textStrings = num2str([100*rec.class.percLMEwinner(:), rec.class.LMEwinner(:)], '%.1f%%\n%d\n');
-    textStrings = strtrim(cellstr(textStrings));
+        % set colormap
+        colormap(flipud(gray));
 
-    % Create x and y coordinates for the strings and plot them
-    [x,y]       = meshgrid(1:numlabels);
-    hStrings    = text(x(:),y(:),textStrings(:), 'HorizontalAlignment','center');
+        % Create strings from the matrix values and remove spaces
+        textStrings = num2str([100*rec.class.percLMEwinner(:), rec.class.LMEwinner(:)], '%.1f%%\n%d\n');
+        textStrings = strtrim(cellstr(textStrings));
 
-    % Get the middle value of the color range
-    midValue    = mean(get(gca,'CLim'));
+        % Create x and y coordinates for the strings and plot them
+        [x,y]       = meshgrid(1:numlabels);
+        hStrings    = text(x(:),y(:),textStrings(:), 'HorizontalAlignment','center');
 
-    % Choose white or black for the text color of the strings so they can be seen over the background color
-    textColors  = repmat(rec.class.percLMEwinner(:) > midValue,1,3);
-    set(hStrings,{'Color'},num2cell(textColors,2));
+        % Get the middle value of the color range
+        midValue    = mean(get(gca,'CLim'));
 
-    % Setting the axis labels
-    set(gca,'XTick',1:numlabels,...
-        'XTickLabel',label_x,...
-        'YTick',1:numlabels,...
-        'YTickLabel',label_x,...
-        'TickLength',[0 0]);
+        % Choose white or black for the text color of the strings so they can be seen over the background color
+        textColors  = repmat(rec.class.percLMEwinner(:) > midValue,1,3);
+        set(hStrings,{'Color'},num2cell(textColors,2));
 
-    figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,'Model_Identifiability _',...
-        optionsFile.cohort(cohortNo).name,'_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
-    save([figDir,'.fig'])
-    print(figDir, '-dpng');
+        % Setting the axis labels
+        set(gca,'XTick',1:numlabels,...
+            'XTickLabel',label_x,...
+            'YTick',1:numlabels,...
+            'YTickLabel',label_x,...
+            'TickLength',[0 0]);
+
+        figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,'Model_Identifiability _',...
+            optionsFile.cohort(cohortNo).name,'_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
+        save([figDir,'.fig'])
+        print(figDir, '-dpng');
+    end % END TASK Loop
 end
-
 close all;
 
 end

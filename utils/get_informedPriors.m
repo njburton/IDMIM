@@ -1,4 +1,4 @@
-function [priors,optionsFile] = get_informedPriors_from_pilotData(priorCohort,currCohort,subCohort,iTask,iCondition,optionsHandle)
+function [priors,optionsFile] = get_informedPriors(priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle)
 
 %% get_informedPriors_from_pilotData
 %  Parameter recovery analysis based on simulations. This step will be
@@ -28,13 +28,17 @@ function [priors,optionsFile] = get_informedPriors_from_pilotData(priorCohort,cu
 %
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
+get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
+                            cohortNo,optionsFile.cohort(cohortNo).priorsFromSubCohort,...
+                            optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
+                            optionsFile.cohort(cohortNo).priorsFromRepetition,0);
 % _________________________________________________________________________
 % =========================================================================
 
 %% INITIALIZE Variables for running this function
 
 if exist('optionsFile.mat','file')==2
-    load("optionsFile.mat");
+    load('optionsFile.mat');
 else
     optionsFile = runOptions();
 end
@@ -49,31 +53,16 @@ disp('*');
 % rec.param.{}.est
 currTask = optionsFile.cohort(priorCohort).testTask(iTask).name;
 
-if isempty(subCohort)
-    mouseIDs  = optionsFile.cohort(priorCohort).mouseIDs;
-    nSize     = optionsFile.cohort(priorCohort).nSize;
-elseif isempty(iCondition)
-    mouseIDs  = [optionsFile.cohort(priorCohort).(subCohort).maleMice,...
-                    optionsFile.cohort(priorCohort).(subCohort).femaleMice];
-    nSize     = numel(mouseIDs);
-else
-    condition = optionsFile.cohort(priorCohort).conditions{iCondition};
-    mouseIDs  = optionsFile.cohort(priorCohort).mouseIDs;
-    nSize     = optionsFile.cohort(priorCohort).nSize;
-end
+[mouseIDs,nSize] = getSampleSpecs(optionsFile,currCohort,priorCohort);
 
 for iMouse = 1:nSize
     currMouse = mouseIDs{iMouse};
     for m_est = 1:numel(optionsFile.model.space)
+        loadName = getFileName(optionsFile.cohort(priorCohort).taskPrefix,currTask,...
+                    subCohort,iCondition,iRep,optionsFile.cohort(priorCohort).taskRepetitions,[]);
         % load results from real data model inversion
-        if isempty(optionsFile.cohort(priorCohort).conditions)
             rec.est(iMouse,m_est).task(iTask).data =  load([char(optionsFile.paths.cohort(priorCohort).results),...
-                'mouse',char(currMouse),'_',currTask,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
-        else
-            rec.est(iMouse,m_est).task(iTask).data = load([char(optionsFile.paths.cohort(priorCohort).results),...
-                'mouse',char(currMouse),'_',currTask,'_condition_',condition,'_',...
-                optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
-        end
+                'mouse',char(currMouse),loadName,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
     end
 end
 
