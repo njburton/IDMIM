@@ -47,7 +47,8 @@ if optionsFile.doOptions == 1
     %% SPECIFY TASK and data file info
     % specify the task name prefix and task name extension
     optionsFile = specifyDatasetSpecifics(optionsFile);
-
+    
+    optionsFile.cohort(1).dataFile.missedTrialCode           = 3;
     % optionsFile.cohort(1).dataFile.taskNameLocation        = 13;  % taskNameMSN
     optionsFile.cohort(1).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(1).dataFile.choiceOffset              = 615; % Choice H
@@ -62,6 +63,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(1).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
     optionsFile.cohort(1).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
 
+    optionsFile.cohort(2).dataFile.missedTrialCode          = 3;
     % optionsFile.cohort(2).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(2).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(2).dataFile.choiceOffset              = 615; % Choice H
@@ -76,7 +78,7 @@ if optionsFile.doOptions == 1
     optionsFile.cohort(2).dataFile.TrialStartTimeMarker = {'I:','I'}; % TrialStartTime
     optionsFile.cohort(2).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % RecepticalBeamBreak
 
-
+    optionsFile.cohort(3).dataFile.missedTrialCode          = 3;
     % optionsFile.cohort(3).dataFile.taskNameLocation          = 13;  % taskNameMSN
     optionsFile.cohort(3).dataFile.outcomeOffset             = 332; % Outcome G
     optionsFile.cohort(3).dataFile.choiceOffset              = 615; % Choice H

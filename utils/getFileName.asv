@@ -32,40 +32,27 @@ function fileName = getFileName(taskPrefix,currTask,subCohort,currCondition,iRep
 if isempty(otherFileType)
     if nReps==1
         if isempty(currCondition)
-            fileName = [];
+            fileName = [taskPrefix,currTask];
         else
-            fileName = ['_',currCondition];
+            fileName = [taskPrefix,currTask,'_',currCondition];
         end
 
     else
-        fileName = ['_',currCondition,'_rep',num2str(iRep)];
+        fileName = [taskPrefix,currTask,'_',currCondition,'_rep',num2str(iRep)];
     end
 
 else % if getting name for another file than datafile
     if nReps==1
         if isempty(currCondition)
-            fileName = ['_',otherFileType];
+            fileName = [taskPrefix,currTask,'_',otherFileType];
         else
-            fileName = ['_',currCondition,'_',otherFileType];
+            fileName = [taskPrefix,currTask,'_',currCondition,'_',otherFileType];
         end
 
     else
-        fileName = ['_',currCondition,'_',otherFileType,'_rep',num2str(iRep)];
+        fileName = [taskPrefix,currTask,'_',currCondition,'_',otherFileType,'_rep',num2str(iRep)];
     end
 end
 
-if isempty(subCohort)
-    if contains(currTask,taskPrefix)
-        fileName = [currTask,fileName];
-    else
-        fileName = [taskPrefix,currTask,fileName];
-    end
-else
-    if contains(currTask,taskPrefix)
-        fileName = [currTask,'_',subCohort,fileName];
-    else
-        fileName = [taskPrefix,currTask,'_',subCohort,fileName];
-    end
-end
-
+subCohort
 end

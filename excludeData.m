@@ -143,10 +143,11 @@ for iTask = 1:nTasks
                         MouseInfoTable.numConsecNans = numConsecNans;
                     end
 
-                    % create savepath and filename as a .mat file
-                    saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep);
+                    % create savepath and filename as a .mat file 
+                    % inputs: taskPrefix,currTask,subCohort,currCondition,iRep,nReps,otherFileType
+                    saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
                     savePath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        saveName,'_info.mat'];
+                        saveName,'.mat'];
                     save(savePath,'MouseInfoTable');
                 end
             end

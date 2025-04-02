@@ -13,7 +13,7 @@ end
 nSize  = optionsFile.cohort(cohortNo).nSize;
 nTasks = numel(optionsFile.cohort(cohortNo).testTask);
 
-for iMouse  = 1:nSize
+for iMouse  = 6:nSize
     currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
     for iCondition = 1:nConditions
         if isempty(optionsFile.cohort(cohortNo).conditions) % if the cohort had different conditions
