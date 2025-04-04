@@ -120,39 +120,36 @@ for iLargeFile = 1:sum(isLargeFile)
             MouseInfoTable.TaskDate  = currTaskDate;
             MouseInfoTable.Chamber   = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)-3))));
 
-            % get mouse sex and add to mouse info table
-            if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
-                MouseInfoTable.Sex = 'male';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'treatment';
-                else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
-                end
-            elseif sum(strcmp(optionsFile.cohort(cohortNo).control.maleMice,currMouse))
-                MouseInfoTable.Sex = 'male';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'control';
-                else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
-                end
-            elseif sum(strcmp(optionsFile.cohort(cohortNo).treatment.femaleMice,currMouse))
-                MouseInfoTable.Sex = 'female';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'treatment';
-                else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
-                end
-            elseif sum(strcmp(optionsFile.cohort(cohortNo).control.femaleMice,currMouse))
-                MouseInfoTable.Sex = 'female';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'control';
-                else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
-                end
-            else
-                disp('Current mouseID not found!')
-            end
+            if isempty(optionsFile.cohort(cohortNo).conditions) % if there arent any different conditions
 
+                % get mouse sex and add to mouse info table
+                if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
+                    MouseInfoTable.Sex = 'male';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'treatment';
+                    end
+                elseif sum(strcmp(optionsFile.cohort(cohortNo).control.maleMice,currMouse))
+                    MouseInfoTable.Sex = 'male';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'control';
+                    end
+                elseif sum(strcmp(optionsFile.cohort(cohortNo).treatment.femaleMice,currMouse))
+                    MouseInfoTable.Sex = 'female';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'treatment';
+                    end
+                elseif sum(strcmp(optionsFile.cohort(cohortNo).control.femaleMice,currMouse))
+                    MouseInfoTable.Sex = 'female';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'control';
+                    end
+                else
+                    disp('Current mouseID not found!')
+                end
+
+            else
+                currCondition = cell2mat(largeMEDPCFile.Var2(startIDs(iStartIDs)-4));
+            end
 
             ExperimentTaskTable.Outcome     = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
                 optionsFile.cohort(cohortNo).dataFile.outcomeOffset+1):...
@@ -268,51 +265,41 @@ for iFile = 1:length(isLargeFile) %for each file in the data dir
                 ExperimentTaskTable.ResponseTime(:)   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
                 % ExperimentTaskTable.RecepticalBeamBreak(:)   = cell2mat(regMEDPCFile(RBBIdx:RBBIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %Receptical beambreak
 
-                % get mouse sex and add to mouse info table
-                if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
-                    MouseInfoTable.Sex = 'male';
-                    if isempty(optionsFile.cohort(cohortNo).conditions)
-                        currCondition = 'treatment';
-                    else
-                        currCondition = regMEDPCFile{conditionIdx,2};
-                        if ismissing(string(regMEDPCFile(conditionIdx,2)))
-                            currCondition = 'none';
-                        end
-                    end
-                elseif sum(strcmp(optionsFile.cohort(cohortNo).control.maleMice,currMouse))
-                    MouseInfoTable.Sex = 'male';
-                    if isempty(optionsFile.cohort(cohortNo).conditions)
-                        currCondition = 'control';
-                    else
-                        currCondition = regMEDPCFile{conditionIdx,2};
-                        if ismissing(string(regMEDPCFile(conditionIdx,2)))
-                            currCondition = 'none';
-                        end
-                    end
-                elseif sum(strcmp(optionsFile.cohort(cohortNo).treatment.femaleMice,currMouse))
-                    MouseInfoTable.Sex = 'female';
-                    if isempty(optionsFile.cohort(cohortNo).conditions)
-                        currCondition = 'treatment';
-                    else
-                        currCondition = regMEDPCFile{conditionIdx,2};
-                        if ismissing(string(regMEDPCFile(conditionIdx,2)))
-                            currCondition = 'none';
-                        end
-                    end
-                elseif sum(strcmp(optionsFile.cohort(cohortNo).control.femaleMice,currMouse))
-                    MouseInfoTable.Sex = 'female';
-                    if isempty(optionsFile.cohort(cohortNo).conditions)
-                        currCondition = 'control';
-                    else
-                        currCondition = regMEDPCFile{conditionIdx,2};
-                        if ismissing(string(regMEDPCFile(conditionIdx,2)))
-                            currCondition = 'none';
-                        end
-                    end
-                else
-                    disp('Current mouseID not found!')
-                end
 
+                if isempty(optionsFile.cohort(cohortNo).conditions) % if there arent any different conditions
+                    if ismissing(string(regMEDPCFile(conditionIdx,2)))
+                        % get mouse sex and add to mouse info table
+                        if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
+                            MouseInfoTable.Sex = 'male';
+                            if isempty(optionsFile.cohort(cohortNo).conditions)
+                                currCondition = 'treatment';
+                            end
+                        elseif sum(strcmp(optionsFile.cohort(cohortNo).control.maleMice,currMouse))
+                            MouseInfoTable.Sex = 'male';
+                            if isempty(optionsFile.cohort(cohortNo).conditions)
+                                currCondition = 'control';
+                            end
+                        elseif sum(strcmp(optionsFile.cohort(cohortNo).treatment.femaleMice,currMouse))
+                            MouseInfoTable.Sex = 'female';
+                            if isempty(optionsFile.cohort(cohortNo).conditions)
+                                currCondition = 'treatment';
+                            end
+                        elseif sum(strcmp(optionsFile.cohort(cohortNo).control.femaleMice,currMouse))
+                            MouseInfoTable.Sex = 'female';
+                            if isempty(optionsFile.cohort(cohortNo).conditions)
+                                currCondition = 'control';
+                            end
+                        else
+                            disp('Current mouseID not found!')
+                        end
+
+                    else
+                        currCondition = cell2mat(regMEDPCFile(conditionIdx,2));
+                        if ismissing(string(regMEDPCFile(conditionIdx,2)))
+                            currCondition = 'missing';
+                        end
+                    end
+                end
 
                 MouseInfoTable.Condition= currCondition;
                 % find where in tasks vector the current task is placed and
@@ -359,10 +346,10 @@ for iFile = 1:length(isLargeFile) %for each file in the data dir
             end
         end
     end
-end
 
-if optionsFile.cohort(cohortNo).taskRepetitions>1
-    getTaskRepetitions(cohortNo);
-end
-disp('all txt files read and saved as .mat files');
+    disp('all txt files read and saved as .mat files');
+
+    if optionsFile.cohort(cohortNo).taskRepetitions>1
+        getTaskRepetitions(cohortNo);
+    end
 end
