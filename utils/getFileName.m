@@ -38,7 +38,11 @@ if isempty(otherFileType)
         end
 
     else
-        fileName = ['_',currCondition,'_rep',num2str(iRep)];
+        if isempty(currCondition)
+            fileName = ['_rep',num2str(iRep)];
+        else
+            fileName = ['_',currCondition,'_rep',num2str(iRep)];
+        end
     end
 
 else % if getting name for another file than datafile
@@ -50,7 +54,12 @@ else % if getting name for another file than datafile
         end
 
     else
-        fileName = ['_',currCondition,'_',otherFileType,'_rep',num2str(iRep)];
+        if isempty(currCondition)
+            fileName = ['_',otherFileType,'_rep',num2str(iRep)];
+        else
+            fileName = ['_',currCondition,'_',otherFileType,'_rep',num2str(iRep)];
+        end
+
     end
 end
 

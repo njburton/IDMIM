@@ -62,10 +62,13 @@ if optionsFile.doSimModelFitCheck == 1
 end
 
 %% Get and process data
-if optionsFile.optionsFile.doGetData == 1
+if optionsFile.doGetData == 1
     disp('preparing to extract raw data from .txt files in dataToAnalyseDir...');
     getData(optionsFile,cohortNo); 
-    excludeData(optionsFile,cohortNo,'all','updateDataInfo',[]);
+end
+
+if optionsFile.doPrepData == 1
+    prepDataFiles(cohortNo);
 end
 
 %% Extract model based quantities

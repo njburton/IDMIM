@@ -30,11 +30,12 @@ function optionsFile = runOptions()
 
 %% what steps to do?
 optionsFile.doOptions        = 1;
-optionsFile.doMakeDir        = 0;
+optionsFile.doMakeDir        = 1;
 optionsFile.doCreatePlots    = 1;
 optionsFile.doSimulations    = 1;
 optionsFile.setupModels      = 1;
-optionsFile.doGetData        = 0;
+optionsFile.doGetData        = 1;
+optionsFile.doPrepData       = 1;
 optionsFile.doExcludeData    = 1;
 optionsFile.doModelInversion = 1;
 optionsFile.doSimModelFitCheck = 1;

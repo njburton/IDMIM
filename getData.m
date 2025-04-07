@@ -9,10 +9,11 @@ function getData(cohortNo)
 %                            allows to run the pipeline and its functions for different
 %                            cohorts whose expcifications have been set in runOptions.m
 %
-% Authors: Katharina Wellstein (30/5/2023), Nicholas Burton (23/2/2024)
+% Coded by: Katharina Wellstein, https://github.com/kwellstein
+%           Nicholas Burton
 % -------------------------------------------------------------------------
 %
-% Copyright (C) 2024 - need to fill in details
+% Copyright (C) 2025
 %
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
@@ -227,7 +228,7 @@ for iFile = 1:length(isLargeFile) %for each file in the data dir
         if size(regMEDPCFile,1)>optionsFile.cohort(cohortNo).nTrials
             % skip if file is not identified as regMEDPCFile or if the tasknames are
             % not found in the specified place
-            if isLargeFile(iFile,1)
+            if isLargeFile(iFile,1)==1
                 continue
             else
 
@@ -359,10 +360,6 @@ for iFile = 1:length(isLargeFile) %for each file in the data dir
             end
         end
     end
-end
-
-if optionsFile.cohort(cohortNo).taskRepetitions>1
-    getTaskRepetitions(cohortNo);
 end
 disp('all txt files read and saved as .mat files');
 end

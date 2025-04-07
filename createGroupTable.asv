@@ -85,6 +85,11 @@ for iCondition = 1:nConditions
                     disp(['following file ',['mouse',currMouse,'_',loadName],' not loaded.']);
                     if rowIdx>=nSize
                         rowIdx = rowIdx+1;
+                        for iLogic = logIdx
+                            groupTable(rowIdx,iLogic) = 'true';
+                        end
+                    else
+                        groupTable(iMouse,iLogic) = true;
                     end
                 end
             end % END MOUSE Loop

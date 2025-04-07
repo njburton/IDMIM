@@ -1,4 +1,4 @@
-function [priors,optionsFile] = get_informedPriors(priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle)
+function [priors,optionsFile] = get_informedPriors(priorCohort,subCohort,iTask,iCondition,iRep,optionsHandle)
 
 %% get_informedPriors_from_pilotData
 %  Parameter recovery analysis based on simulations. This step will be
@@ -28,10 +28,6 @@ function [priors,optionsFile] = get_informedPriors(priorCohort,currCohort,subCoh
 %
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
-get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
-                            cohortNo,optionsFile.cohort(cohortNo).priorsFromSubCohort,...
-                            optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
-                            optionsFile.cohort(cohortNo).priorsFromRepetition,0);
 % _________________________________________________________________________
 % =========================================================================
 
@@ -53,7 +49,7 @@ disp('*');
 % rec.param.{}.est
 currTask = optionsFile.cohort(priorCohort).testTask(iTask).name;
 
-[mouseIDs,nSize] = getSampleSpecs(optionsFile,currCohort,priorCohort);
+[mouseIDs,nSize] = getSampleSpecs(optionsFile,priorCohort,subCohort);
 
 for iMouse = 1:nSize
     currMouse = mouseIDs{iMouse};
@@ -62,7 +58,7 @@ for iMouse = 1:nSize
                     subCohort,iCondition,iRep,optionsFile.cohort(priorCohort).taskRepetitions,[]);
         % load results from real data model inversion
             rec.est(iMouse,m_est).task(iTask).data =  load([char(optionsFile.paths.cohort(priorCohort).results),...
-                'mouse',char(currMouse),loadName,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
+                'mouse',char(currMouse),'_',loadName,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
     end
 end
 

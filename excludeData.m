@@ -1,4 +1,4 @@
-function [exclArray,optionsFile] = excludeData(optionsFile,cohortNo,subCohort,fExecution,exclMode)
+function [inclArray,optionsFile] = excludeData(optionsFile,cohortNo,subCohort,fExecution,exclMode)
 
 %% excludeData
 %  excludeData analysis analyses the datasets for exclusion criteria being
@@ -17,7 +17,7 @@ function [exclArray,optionsFile] = excludeData(optionsFile,cohortNo,subCohort,fE
 %            fExecution: string, function execution, i.e. {'excludeData','updateDataInfo'},mode in which
 %                           this function should run.
 %                           'updateDataInfo' updates the dataInfo Tables
-%                           with the info on exclusion criteria 
+%                           with the info on exclusion criteria
 %                           'excludeData', determines what data should be excluded
 %                           and checks if data info table are up-to-date
 %           exclMode:    cell of strings, {'withinConditions','withinSubCohorts','withinTasks','withinReps',
@@ -70,7 +70,7 @@ end
 %% INITIALIZE
 disp([' ====== excludeData function running in ',fExecution,' mode ====== ']);
 
-exclArray  = ones(1,nSize);
+inclArray  = ones(1,nSize);
 inclIDMatrix = ones(nReps,nConditions*nSize,nTasks);
 
 
@@ -86,276 +86,283 @@ for iTask = 1:nTasks
 
                 try
                     % load trial-by-trial data file
-                    loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,'',currTask,subCohort,currCondition,iRep,nReps);
+                    loadExpName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,[]);
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        loadName,'.mat']);
+                         loadExpName,'.mat']);
                     % load mouse info file
-                    loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,'info',currTask,subCohort,currCondition,iRep,nReps);
+                    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,'info');
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        loadName]);
-                catch
-                    disp(['mouse dataset',currMouse,' not loaded']);
-                    exclArray(iMouse) = 0;
-                end
+                        loadInfoName]);
 
-                % create vector of indices with NaNs
-                NaNrows     = find(isnan(ExperimentTaskTable.Choice));
-                % create vector of differences between indices with NaNs (a 1
-                % means there are two indices in a row with a NaN)
-                NaNDiffs    = [NaNrows;optionsFile.cohort(cohortNo).nTrials+1]-[0;NaNrows];
-                consecNaNs  = zeros(1,numel(NaNDiffs));
-                consecNaNs(NaNDiffs==1) = 1;
-                f           = find(diff([0,consecNaNs,0]==1));
-                NaNIdx      = f(1:2:end-1);
-                nConsecNaNs = f(2:2:end)-NaNIdx;
-                if ~isempty(NaNrows)
-                    numNaNs       = numel(NaNrows);
-                else
-                    numNaNs       = 0;
-                end
-                if ~isempty(nConsecNaNs)
-                    numConsecNans = max(nConsecNaNs);
-                else
-                    numConsecNans = 0;
-                end
 
-                if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*optionsFile.cohort(cohortNo).exclCriteria(1).cutoff
-                    exclCrit1_met       = true;
-                    exclArray(iMouse) = 0;
+                    % create vector of indices with NaNs
+                    NaNrows     = find(isnan(ExperimentTaskTable.Choice));
+                    % create vector of differences between indices with NaNs (a 1
+                    % means there are two indices in a row with a NaN)
+                    NaNDiffs    = [NaNrows;optionsFile.cohort(cohortNo).nTrials+1]-[0;NaNrows];
+                    consecNaNs  = zeros(1,numel(NaNDiffs));
+                    consecNaNs(NaNDiffs==1) = 1;
+                    f           = find(diff([0,consecNaNs,0]==1));
+                    NaNIdx      = f(1:2:end-1);
+                    nConsecNaNs = f(2:2:end)-NaNIdx;
 
-                    % Exclude datasets with specific no. of consecutive omissions
-                elseif any(nConsecNaNs>optionsFile.cohort(cohortNo).exclCriteria(2).cutoff)
-                    exclCrit2_met       = true;
-                    exclArray(iMouse) = 0;
-                else
-                    exclCrit1_met = false;
-                    exclCrit2_met = false;
-                end
-
-                % update mouseInfoTables with exclusion criteria info
-                if strcmp(fExecution,'updateDataInfo')
-                    if ~isfield(table2struct(MouseInfoTable),'exclCrit1_met')
-                        MouseInfoTable = addvars(MouseInfoTable,exclCrit1_met,numNaNs,exclCrit2_met,numConsecNans);
+                    if ~isempty(NaNrows)
+                        numNaNs       = numel(NaNrows);
                     else
-                        MouseInfoTable.exclCrit1_met = exclCrit1_met;
-                        MouseInfoTable.numNaNs       = numNaNs;
-                        MouseInfoTable.exclCrit2_met = exclCrit2_met;
-                        MouseInfoTable.numConsecNans = numConsecNans;
+                        numNaNs       = 0;
                     end
 
-                    % create savepath and filename as a .mat file 
-                    % inputs: taskPrefix,currTask,subCohort,currCondition,iRep,nReps,otherFileType
-                    saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
-                    savePath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                        saveName,'.mat'];
-                    save(savePath,'MouseInfoTable');
+                    if ~isempty(nConsecNaNs)
+                        numConsecNans = max(nConsecNaNs);
+                    else
+                        numConsecNans = 0;
+                    end
+
+                    if numel(NaNrows)>optionsFile.cohort(cohortNo).nTrials*optionsFile.cohort(cohortNo).exclCriteria(1).cutoff
+                        exclCrit1_met = true;
+                    else
+                        exclCrit1_met = false;
+                    end
+
+                        % Exclude datasets with specific no. of consecutive omissions
+                   if any(nConsecNaNs>optionsFile.cohort(cohortNo).exclCriteria(2).cutoff)
+                        exclCrit2_met = true;
+                   else
+                        exclCrit2_met = false;
+                   end
+
+                  if any([exclCrit2_met,exclCrit1_met],'all')
+                      inclArray(iMouse) = 0;
+                  end
+
+                    % update mouseInfoTables with exclusion criteria info
+                    if strcmp(fExecution,'updateDataInfo')
+                        if ~isfield(table2struct(MouseInfoTable),'exclCrit1_met')
+                            MouseInfoTable = addvars(MouseInfoTable,exclCrit1_met,numNaNs,exclCrit2_met,numConsecNans);
+                        else
+                            MouseInfoTable.exclCrit1_met = exclCrit1_met;
+                            MouseInfoTable.numNaNs       = numNaNs;
+                            MouseInfoTable.exclCrit2_met = exclCrit2_met;
+                            MouseInfoTable.numConsecNans = numConsecNans;
+                        end
+
+                        % create savepath and filename as a .mat file
+                        saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,'info');
+                        savePath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                            saveName,'.mat'];
+                        save(savePath,'MouseInfoTable');
+                    end
+
+                    catch
+                        disp(['mouse dataset',currMouse,' not loaded']);
+                        inclArray(iMouse) = 0;
                 end
             end
 
             if iCondition == 1
-                inclIDMatrix(iRep,iCondition:nSize,iTask) = exclArray;
+                inclIDMatrix(iRep,iCondition:nSize,iTask) = inclArray;
                 conditionIdx = iCondition+nSize;
-                exclArray  = ones(1,nSize);
+                inclArray  = ones(1,nSize);
             else
-                inclIDMatrix(iRep,conditionIdx:(conditionIdx+nSize-1),iTask) = exclArray;
+                inclIDMatrix(iRep,conditionIdx:(conditionIdx+nSize-1),iTask) = inclArray;
                 conditionIdx = conditionIdx+nSize;
-                exclArray  = ones(1,nSize);
+                inclArray  = ones(1,nSize);
             end
         end
     end
 end
 
 if strcmp(fExecution,'excludeData')
-exclMode = cell2mat(exclMode);
-exclArray = struct();
-switch exclMode
+    exclMode = cell2mat(exclMode);
+    inclArray = struct();
+    switch exclMode
 
-    case 'withinConditionswithinSubCohortswithinTaskswithinReps'
-        i = 1;
-        for iCondition=1:nConditions
-            for iTask=1:nTasks
-                for iRep=1:nReps
-                    if iCondition==1
-                        exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
-                        condIdx = iCondition+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
+        case 'withinConditionswithinSubCohortswithinTaskswithinReps'
+            i = 1;
+            for iCondition=1:nConditions
+                for iTask=1:nTasks
+                    for iRep=1:nReps
+                        if iCondition==1
+                            inclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
+                            condIdx = iCondition+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
+                        else
+                            inclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
+                            condIdx = condIdx+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
                         end
-                        i = i +1;
-                    else
-                        exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
-                        condIdx = condIdx+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
-                        end
-                        i = i +1;
                     end
                 end
             end
-        end
 
-    case 'acrossConditionsacrossSubCohortsacrossTasksacrossReps'
-        i = 1;
-        for iCondition=1:nConditions
-            for iTask=1:nTasks
-                for iRep=1:nReps
-                    if iCondition==1
-                        exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
-                        condIdx = iCondition+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
+        case 'acrossConditionsacrossSubCohortsacrossTasksacrossReps'
+            i = 1;
+            for iCondition=1:nConditions
+                for iTask=1:nTasks
+                    for iRep=1:nReps
+                        if iCondition==1
+                            inclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
+                            condIdx = iCondition+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
+                        else
+                            inclArray(i).ID = [inclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
+                            unique(inclArray(i).ID)
+                            condIdx = condIdx+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
                         end
-                        i = i +1;
-                    else
-                        exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
-                        unique(exclArray(i).ID)
-                        condIdx = condIdx+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
-                        end
-                        i = i +1;
                     end
                 end
             end
-        end
 
-    case 'withinConditionsacrossSubCohortsacrossTasksacrossReps'
-        i = 1;
-        j = 1;
-        for iCondition=1:nConditions
-            for iTask=1:nTasks
-                for iRep=1:nReps
-                    if i==1 && iCondition==1
-                        exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
-                        condIdx = iCondition+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
+        case 'withinConditionsacrossSubCohortsacrossTasksacrossReps'
+            i = 1;
+            j = 1;
+            for iCondition=1:nConditions
+                for iTask=1:nTasks
+                    for iRep=1:nReps
+                        if i==1 && iCondition==1
+                            inclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
+                            condIdx = iCondition+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
+                        elseif i<=j % across everything else
+                            inclArray(i).ID = [inclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
+                            unique(inclArray(i).ID)
+                            condIdx = condIdx+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
+                        elseif i>j % within conditions
+                            inclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
+                            condIdx = condIdx+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
                         end
-                        i = i +1;
-                    elseif i<=j % across everything else
-                        exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
-                        unique(exclArray(i).ID)
-                        condIdx = condIdx+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
-                        end
-                        i = i +1;
-                    elseif i>j % within conditions
-                        exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
-                        condIdx = condIdx+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
-                        end
-                        i = i +1;
                     end
                 end
+                j = j+1;
             end
-            j = j+1;
-        end
 
-    case 'withinConditionswithinSubCohortsacrossTasksacrossReps'
-        i = 1;
-        j = 1;
-        for iCondition=1:nConditions
-            for iTask=1:nTasks
-                for iRep=1:nReps
-                    if i==1 && iCondition==1
-                        exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
-                        condIdx = iCondition+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
+        case 'withinConditionswithinSubCohortsacrossTasksacrossReps'
+            i = 1;
+            j = 1;
+            for iCondition=1:nConditions
+                for iTask=1:nTasks
+                    for iRep=1:nReps
+                        if i==1 && iCondition==1
+                            inclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
+                            condIdx = iCondition+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
+                        elseif i<=j % across everything else
+                            inclArray(i).ID = [inclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
+                            unique(inclArray(i).ID)
+                            condIdx = condIdx+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
+                        elseif i>j % within conditions
+                            inclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
+                            condIdx = condIdx+nSize;
+                            if isempty(inclArray(i).ID)
+                                inclArray(i).ID = 0;
+                            end
+                            i = i +1;
                         end
-                        i = i +1;
-                    elseif i<=j % across everything else
-                        exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
-                        unique(exclArray(i).ID)
-                        condIdx = condIdx+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
-                        end
-                        i = i +1;
-                    elseif i>j % within conditions
-                        exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
-                        condIdx = condIdx+nSize;
-                        if isempty(exclArray(i).ID)
-                            exclArray(i).ID = 0;
-                        end
-                        i = i +1;
                     end
                 end
+                j = j+1;
             end
-            j = j+1;
-        end
-        % case 'withinConditionswithinSubCohortswithinTasksacrossReps'
-        %              i = 1;
-        %     j = 1;
-        %     for iCondition=1:nConditions
-        %         for iTask=1:nTasks
-        %             for iRep=1:nReps
-        %                 if i==1 && iCondition==1
-        %                     exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
-        %                     condIdx = iCondition+nSize;
-        %                     if isempty(exclArray(i).ID)
-        %                         exclArray(i).ID = 0;
-        %                     end
-        %                     i = i +1;
-        %                 elseif i<=j % across everything else
-        %                     exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
-        %                     unique(exclArray(i).ID)
-        %                     condIdx = condIdx+nSize;
-        %                     if isempty(exclArray(i).ID)
-        %                         exclArray(i).ID = 0;
-        %                     end
-        %                     i = i +1;
-        %                 elseif i>j % within conditions
-        %                     exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
-        %                     condIdx = condIdx+nSize;
-        %                     if isempty(exclArray(i).ID)
-        %                         exclArray(i).ID = 0;
-        %                     end
-        %                     i = i +1;
-        %                 end
-        %             end
-        %         end
-        %     end
-        %
-        %
-        % case 'withinConditionsacrossSubCohortswithinTasksacrossReps'
-        %             i = 1;
-        %     for iCondition=1:nConditions
-        %         for iTask=1:nTasks
-        %             for iRep=1:nReps
-        %                 if i==1 && iCondition==1
-        %                     exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
-        %                     condIdx = iCondition+nSize;
-        %                     if isempty(exclArray(i).ID)
-        %                         exclArray(i).ID = 0;
-        %                     end
-        %                     i = i +1;
-        %                 elseif i<=nConditions % within conditions
-        %                     exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
-        %                     condIdx = condIdx+nSize;
-        %                     if isempty(exclArray(i).ID)
-        %                         exclArray(i).ID = 0;
-        %                     end
-        %                     i = i +1;
-        %                 elseif i>nConditions % across everything else
-        %                     exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
-        %                     unique(exclArray(i).ID)
-        %                     condIdx = condIdx+nSize;
-        %                     if isempty(exclArray(i).ID)
-        %                         exclArray(i).ID = 0;
-        %                     end
-        %                     i = i +1;
-        %                 end
-        %             end
-        %         end
-        %     end
-        %
-        % case 'acrossConditionsacrossSubCohortswithinTasksacrossReps'
-        %
-        % case 'acrossConditionsacrossSubCohortsacrossTaskswithinReps'
-end
+            % case 'withinConditionswithinSubCohortswithinTasksacrossReps'
+            %              i = 1;
+            %     j = 1;
+            %     for iCondition=1:nConditions
+            %         for iTask=1:nTasks
+            %             for iRep=1:nReps
+            %                 if i==1 && iCondition==1
+            %                     exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
+            %                     condIdx = iCondition+nSize;
+            %                     if isempty(exclArray(i).ID)
+            %                         exclArray(i).ID = 0;
+            %                     end
+            %                     i = i +1;
+            %                 elseif i<=j % across everything else
+            %                     exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
+            %                     unique(exclArray(i).ID)
+            %                     condIdx = condIdx+nSize;
+            %                     if isempty(exclArray(i).ID)
+            %                         exclArray(i).ID = 0;
+            %                     end
+            %                     i = i +1;
+            %                 elseif i>j % within conditions
+            %                     exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
+            %                     condIdx = condIdx+nSize;
+            %                     if isempty(exclArray(i).ID)
+            %                         exclArray(i).ID = 0;
+            %                     end
+            %                     i = i +1;
+            %                 end
+            %             end
+            %         end
+            %     end
+            %
+            %
+            % case 'withinConditionsacrossSubCohortswithinTasksacrossReps'
+            %             i = 1;
+            %     for iCondition=1:nConditions
+            %         for iTask=1:nTasks
+            %             for iRep=1:nReps
+            %                 if i==1 && iCondition==1
+            %                     exclArray(i).ID = find(inclIDMatrix(iRep,iCondition:nSize,iTask)==0);
+            %                     condIdx = iCondition+nSize;
+            %                     if isempty(exclArray(i).ID)
+            %                         exclArray(i).ID = 0;
+            %                     end
+            %                     i = i +1;
+            %                 elseif i<=nConditions % within conditions
+            %                     exclArray(i).ID = find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0);
+            %                     condIdx = condIdx+nSize;
+            %                     if isempty(exclArray(i).ID)
+            %                         exclArray(i).ID = 0;
+            %                     end
+            %                     i = i +1;
+            %                 elseif i>nConditions % across everything else
+            %                     exclArray(i).ID = [exclArray(i-1).ID,find(inclIDMatrix(iRep,condIdx:(condIdx+nSize-1),iTask)==0)];
+            %                     unique(exclArray(i).ID)
+            %                     condIdx = condIdx+nSize;
+            %                     if isempty(exclArray(i).ID)
+            %                         exclArray(i).ID = 0;
+            %                     end
+            %                     i = i +1;
+            %                 end
+            %             end
+            %         end
+            %     end
+            %
+            % case 'acrossConditionsacrossSubCohortswithinTasksacrossReps'
+            %
+            % case 'acrossConditionsacrossSubCohortsacrossTaskswithinReps'
+    end
 
 end
 end
