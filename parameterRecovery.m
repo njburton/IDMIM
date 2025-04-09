@@ -1,4 +1,4 @@
-function [] = parameterRecovery(cohortNo,subCohort)
+function [] = parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep)
 
 %% parameter_recovery
 %  Parameter recovery analysis based on simulations. This step will be
@@ -46,199 +46,183 @@ else
 end
 
 % prespecify variables needed for running this function
-nTasks  = numel(optionsFile.cohort(cohortNo).testTask);
-nReps   = optionsFile.cohort(cohortNo).taskRepetitions;
-nModels = numel(optionsFile.model.space);
-iExcl = 1;
-iInclMouse = 1;
+nModels  = numel(optionsFile.model.space);
+nReps    = optionsFile.cohort(cohortNo).taskRepetitions;
+currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
 
-if numel(optionsFile.cohort(cohortNo).conditions)==0
-    nConditions   = 1;
+if isempty(optionsFile.cohort(cohortNo).conditions)
     currCondition = [];
 else
-    nConditions = numel(optionsFile.cohort(cohortNo).conditions);
+    currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
 end
-optionsFile = setup_configFiles(optionsFile,cohortNo);
 
-%% exclude datasets
-if optionsFile.doExcludeData==1
-    [exclArray,~] = excludeData(optionsFile,cohortNo,subCohort,'excludeData',optionsFile.cohort(cohortNo).exclMode.ParamLevel);
+disp(['*** for ',currCondition, ' mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ***']);
+
+% check available mouse data and exclusion criteria
+[mouseIDs,nSize] = getSampleSpecs(optionsFile,cohortNo,subCohort);
+noDataArray = zeros(1,nSize);
+exclArray   = zeros(1,nSize);
+
+for iMouse = 1:nSize
+    currMouse = mouseIDs{iMouse};
+    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+        [],currCondition,iRep,nReps,'info');
+    if isfile([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',loadInfoName,'.mat'])
+    else
+        disp(['data for mouse ', currMouse,' not available']);
+        noDataArray(iMouse) = iMouse;
+    end
 end
+
+noDataArray = sort(noDataArray,'descend');
+noDataArray(noDataArray==0)=[];
+
+for i=noDataArray
+  mouseIDs(i) =[];
+end
+nSize = numel(mouseIDs);
+
+for iMouse = 1:nSize
+    currMouse = mouseIDs{iMouse};
+    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+        [],currCondition,iRep,nReps,'info');
+    load([char(optionsFile.paths.cohort(cohortNo).data),...
+        'mouse',char(currMouse),'_',loadInfoName]);
+    if any([MouseInfoTable.exclCrit2_met,MouseInfoTable.exclCrit1_met],'all')
+        disp(['mouse ', currMouse,' excluded based on exclusion criteria']);
+        exclArray(iMouse) = iMouse;
+    end
+end
+
+exclArray = sort(exclArray,'descend');
+exclArray(exclArray==0)=[];
+
+for i=exclArray
+  mouseIDs(i) =[];
+end
+nSize = numel(mouseIDs);
+
+optionsFile = setup_configFiles(optionsFile,cohortNo);
 
 %% LOAD inverted mouse data
 % and save data into rec.est struct and paramete values for recovery into
 % rec.param.{}.est
-[mouseIDs,nSize] = getSampleSpecs(optionsFile,cohortNo,subCohort);
+for iMouse = 1:nSize
+    currMouse = mouseIDs{iMouse};
+    loadDataName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+        [],currCondition,iRep,nReps,[]);
 
-for iCondition = 1:nConditions
-    if nConditions>1 % if there is more than one condition get condition name string
-        currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
-    end
-    for iTask = 1:nTasks
-        currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
-        for iRep = 1:nReps
-            for iMouse = 1:nSize
-                currMouse = mouseIDs{iMouse};
-                if ~any(exclArray(iExcl).ID==iMouse)
-                for m_est = 1:nModels
-                    % load results from real data model inversion
-                    loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
-                        [],currCondition,iRep,optionsFile.cohort(priorCohort).taskRepetitions,[]);
-                    rec.est(iInclMouse,m_est).task(iTask,iRep).data =  load([char(optionsFile.paths.cohort(cohortNo).results),...
-                        'mouse',char(currMouse),'_',loadName,'_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
-                end  % END MODELS Loop
+    for iModel = 1:nModels
+        % load results from real data model inversion
+        rec.est(iMouse,iModel).task(iTask,iRep).data =  load([char(optionsFile.paths.cohort(cohortNo).results),...
+            'mouse',char(currMouse),'_',loadDataName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat']);
 
-                % param values in transformed space (assumption of Gaussian prior)
-                rec.param(iTask,iRep).prc(m_est).estAgent(iInclMouse,:) = rec.est(iInclMouse,m_est).task(iTask,iRep).data.est.p_prc.ptrans(optionsFile.modelSpace(m_est).prc_idx);
-                rec.param(iTask,iRep).obs(m_est).estAgent(iInclMouse,:) = rec.est(iInclMouse,m_est).task(iTask,iRep).data.est.p_obs.ptrans(optionsFile.modelSpace(m_est).obs_idx);
-                
-                iInclMouse = iInclMouse+1;
-                else
-                    disp(['mouse ',currMouse,' data not loaded based on exclusion criteria '])
-                end
-                iExcl = iExcl+1;
-            end % END MOUSE Loop
-        end % END REPETITIONS Loop
-    end  % END TASKS Loop
-end % END CONDITIONS Loop
+        % param values in transformed space (assumption of Gaussian prior)
+        rec.param(iTask,iRep).prc(iModel).estAgent(iMouse,:) = rec.est(iMouse,iModel).task(iTask,iRep).data.est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
+        rec.param(iTask,iRep).obs(iModel).estAgent(iMouse,:) = rec.est(iMouse,iModel).task(iTask,iRep).data.est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
 
-%% LOAD simulated responses and inverted simulated responses
-% and save simulated response data into rec.param.{}.simAgent struct and paramete values for recovery into
-% rec.param.{}.estAgent. The data were simulated with all models in the
-% model space and inverted with all the models in the model space.
-
-for iTask = 1:nTasks
-    for iAgent = 1:nSize
-        for m_in = 1:nModels
-            simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},...
-                '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
-            rec.param(iTask).prc(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).input.prc.transInp(optionsFile.modelSpace(m_in).prc_idx);
-            rec.param(iTask).obs(m_in).simAgent(iAgent,:) = simResp.agent(iAgent,m_in).task(iTask).input.obs.transInp(optionsFile.modelSpace(m_in).obs_idx);
-        end % END MODELS Loop
-    end % END SIMULATED AGENTS Loop
-end % END TASKS Loop
+        % load simulated responses with current model
+        simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},...
+            '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
+        rec.param(iTask).prc(iModel).simAgent(iMouse,:) = simResp.agent(iMouse,iModel).task(iTask).input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx);
+        rec.param(iTask).obs(iModel).simAgent(iMouse,:) = simResp.agent(iMouse,iModel).task(iTask).input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx);
+    end  % END MODELS Loop
+end % END MOUSE Loop
 
 %% CALCULATE Pearson's Correlation Coefficient
 
-% Perceptual Model
-for iTask = 1:nTasks
-    for iRep = 1:nReps
-        for m = 1:nModels
-            for p = 1:length(optionsFile.modelSpace(m).prc_idx)
-                [prc_coef,prc_p] = corr(rec.param(iTask).prc(m).simAgent(:,p),...
-                    rec.param(iTask,iRep).prc(m).estAgent(:,p));
-                rec.param(iTask,iRep).prc(m).pcc(p)  = diag(prc_coef);
-                rec.param(iTask,iRep).prc(m).pval(p) = diag(prc_p);
-            end
-        end % END MODELS Loop
-    end % END REPETITIONS Loop
-end % END TASKS Loop
+for iModel = 1:nModels
+    % Perceptual Model parameters
+    for pRec = 1:length(optionsFile.modelSpace(iModel).prc_idx)
+        [prc_coef,prc_p] = corr(rec.param(iTask).prc(iModel).simAgent(:,pRec),...
+            rec.param(iTask,iRep).prc(iModel).estAgent(:,pRec));
+        rec.param(iTask,iRep).prc(iModel).pcc(pRec)  = diag(prc_coef);
+        rec.param(iTask,iRep).prc(iModel).pval(pRec) = diag(prc_p);
 
-% Observational Model
-for iTask = 1:nTasks
-    for iRep = 1:nReps
-        for m = 1:nModels
-            for p = 1:length(optionsFile.modelSpace(m).obs_idx)
-                [obs_coef,obs_p] = corr(rec.param(iTask).obs(m_in).simAgent(:,p),...
-                    rec.param(iTask,iRep).obs(m_in).estAgent(:,p));
-                rec.param(iTask,iRep).obs(m).pcc(p)  = diag(obs_coef);
-                rec.param(iTask,iRep).obs(m).pval(p) = diag(obs_p);
-            end
-        end % END MODELS Loop
-    end % END REPETITIONS Loop
-end % END TASKS Loop
+        % Observational Model parameters
+        for pObs= 1:length(optionsFile.modelSpace(iModel).obs_idx)
+            [obs_coef,obs_p] = corr(rec.param(iTask).obs(iModel).simAgent(:,pObs),...
+                rec.param(iTask,iRep).obs(iModel).estAgent(:,pObs));
+            rec.param(iTask,iRep).obs(iModel).pcc(pObs)  = diag(obs_coef);
+            rec.param(iTask,iRep).obs(iModel).pval(pObs) = diag(obs_p);
+        end
+    end
+end % END MODELS Loop
 
 %% PLOT correlation plot
 if optionsFile.doCreatePlots == 1
-    for iCondition = 1:nConditions
-        if nConditions>1 % if there is more than one condition get condition name string
-            currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
+    for iModel = 1:nModels
+        tiledlayout('flow');
+        figure('Color',[1,1,1],'pos',[10 10 1050 500]);
+        % Perceptual Model
+        for pPrc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
+            nexttile;
+            scatter(rec.param(iTask).prc(iModel).simAgent(:,pPrc),rec.param(iTask,iRep).prc(iModel).estAgent(:,pPrc),'filled');
+            lsline;
+            ylim([(min(rec.param(iTask,iRep).prc(iModel).estAgent(:,pPrc))-0.1) (max(rec.param(iTask,iRep).prc(iModel).estAgent(:,pPrc))+0.1)]);
+            [t,~] = title([optionsFile.model.space{iModel},' ',optionsFile.modelSpace(iModel).free_expnms_mu_prc{pPrc},'rho = ' num2str(rec.param(iTask,iRep).prc(iModel).pcc(pPrc))]);
+            t.FontSize = 18;
+            xlabel('simulated data')
+            ylabel('estimated data')
+            hold on;
         end
-        for iTask = 1:nTasks
-            for iRep = 1:nReps
-                for m = 1:nModels
-                    t = tiledlayout('flow');
-                    figure('Color',[1,1,1],'pos',[10 10 1050 500]);
-                    % Perceptual Model
-                    for pPrc = 1:size(optionsFile.modelSpace(m).prc_idx,2)
-                        nexttile;
-                        scatter(rec.param(iTask).prc(m).simAgent(:,pPrc),rec.param(iTask,iRep).prc(m).estAgent(:,pPrc),'filled');
-                        lsline;
-                        ylim([(min(rec.param(iTask,iRep).prc(m).estAgent(:,pPrc))-0.1) (max(rec.param(iTask,iRep).prc(m).estAgent(:,pPrc))+0.1)]);
-                        [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_prc{pPrc},'rho = ' num2str(rec.param(iTask,iRep).prc(m).pcc(pPrc))]);
-                        t.FontSize = 18;
-                        xlabel('simulated data')
-                        ylabel('estimated data')
-                        hold on;
-                    end
 
-                    % Observational Model
-                    for pObs = 1:size(optionsFile.modelSpace(m).obs_idx,2)
-                        nexttile;
-                        scatter(rec.param(iTask).obs(m).simAgent(:,pObs),rec.param(iTask,iRep).obs(m).estAgent(:,pObs),'filled');
-                        lsline;
-                        ylim([(min(rec.param(iTask,iRep).obs(m).estAgent(:,pObs))-0.1) (max(rec.param(iTask,iRep).obs(m).estAgent(:,pObs))+0.1)]);
-                        [t,s] = title([optionsFile.model.space{m},' ',optionsFile.modelSpace(m).free_expnms_mu_obs{pObs},'rho = ' num2str(rec.param(iTask,iRep).obs(m).pcc(pObs))]);
-                        t.FontSize = 18;
-                        hold on;
-                        xlabel('simulated data')
-                        ylabel('estimated data')
-                        hold on;
-                    end
+        % Observational Model
+        for pObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
+            nexttile;
+            scatter(rec.param(iTask).obs(iModel).simAgent(:,pObs),rec.param(iTask,iRep).obs(iModel).estAgent(:,pObs),'filled');
+            lsline;
+            ylim([(min(rec.param(iTask,iRep).obs(iModel).estAgent(:,pObs))-0.1) (max(rec.param(iTask,iRep).obs(iModel).estAgent(:,pObs))+0.1)]);
+            [t,~] = title([optionsFile.model.space{iModel},' ',optionsFile.modelSpace(iModel).free_expnms_mu_obs{pObs},'rho = ' num2str(rec.param(iTask,iRep).obs(iModel).pcc(pObs))]);
+            t.FontSize = 18;
+            hold on;
+            xlabel('simulated data')
+            ylabel('estimated data')
+            hold on;
+        end
 
-                    saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
-                    figTitle = getFigTitle(optionsFile,cohortNo,subCohort,currCondition);
-                    sgtitle([optionsFile.modelSpace(m).name,figTitle,optionsFile.cohort(cohortNo).testTask(iTask).name], 'FontSize', 18);
+        saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
+        figTitle = getFigTitle(optionsFile,cohortNo,subCohort,currCondition);
+        sgtitle([optionsFile.modelSpace(iModel).name,figTitle,optionsFile.cohort(cohortNo).testTask(iTask).name], 'FontSize', 18);
 
-                    figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim ,'Parameter_recovery',...
-                        optionsFile.modelSpace(m).name,saveName,optionsFile.cohort(cohortNo).testTask(iTask).name]);
+        figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim ,'Parameter_recovery',...
+            optionsFile.modelSpace(iModel).name,saveName,optionsFile.cohort(cohortNo).testTask(iTask).name]);
 
-                    print(figDir, '-dpng');
-                    save([figDir,'.fig'])
-                    close all;
-                end % END MODELS Loop
-            end % END REPETITIONS Loop
-        end % END TASKS Loop
-    end % END CONDITIONS Loop
+        print(figDir, '-dpng');
+        save([figDir,'.fig'])
+        close all;
+    end % END MODELS Loop
 
     %% PLOT PRIORS AND POSTERIORS
-    for iCondition = 1:nConditions
-        if nConditions>1 % if there is more than one condition get condition name string
-            currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
+    for iModel = 1:nModels
+        % perceptual model
+        for j = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
+            hgf_plot_param_pdf(optionsFile.modelSpace(iModel).free_expnms_mu_prc,rec.est(:,iModel),optionsFile.modelSpace(iModel).prc_idx(j),j,iTask,'prc');
+
+            saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
+            figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,[saveName,'prc_priors_posteriors',...
+                char(optionsFile.model.space{iModel}),'_',optionsFile.modelSpace(iModel).free_expnms_mu_prc{j}]);
+            print(figdir, '-dpng');
+            close;
         end
-        for iTask = 1:nTasks
-            for iRep = 1:nReps
-                for m = 1:nModels
-                    % perceptual model
-                    for j = 1:size(optionsFile.modelSpace(m).prc_idx,2)
-                        hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).prc_idx(j),j,t,'prc');
 
-                        saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
-                        figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'prc_priors_posteriors',...
-                            char(optionsFile.model.space{m}),'_',optionsFile.modelSpace(m).free_expnms_mu_prc{j});
-                        print(figdir, '-dpng');
-                        close;
-                    end
+        % observational model
+        for k = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
+            hgf_plot_param_pdf(optionsFile.modelSpace(iModel).free_expnms_mu_prc,rec.est(:,iModel),optionsFile.modelSpace(iModel).obs_idx(k),k,iTask,'obs');
 
-                    % observational model
-                    for k = 1:size(optionsFile.modelSpace(m).obs_idx,2)
-                        hgf_plot_param_pdf(optionsFile.modelSpace(m).free_expnms_mu_prc,rec.est(:,m),optionsFile.modelSpace(m).obs_idx(k),k,t,'obs');
-
-                        saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
-                        figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'obs_priors_posteriors_model_',...
-                            char(optionsFile.model.space{m}),'_',optionsFile.modelSpace(m).free_expnms_mu_obs{k});
-                        print(figdir, '-dpng');
-                        close;
-                    end
-                end % END MODELS Loop
-            end % END REPETITIONS Loop
-        end % END TASKS Loop
-    end % END CONDITIONS Loop
+            saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
+            figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,[saveName,'obs_priors_posteriors_model_',...
+                char(optionsFile.model.space{iModel}),'_',optionsFile.modelSpace(iModel).free_expnms_mu_obs{k}]);
+            print(figdir, '-dpng');
+            close;
+        end
+    end % END MODELS Loop
 end
 close all
 
 %% SAVE results as struct
-save_path = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'recoveryData.mat']);
+groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,'param_recovery');
+save_path = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,groupSaveName,'.mat']);
 save(save_path, '-struct', 'rec');
 
 disp('recovery analysis complete.')

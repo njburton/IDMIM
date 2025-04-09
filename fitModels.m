@@ -129,7 +129,7 @@ for iCondition = 1:nConditions
                 end % END MODEL loop
                 % create savepath and filename as a .mat file
                 groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
-                    [],currCondition,iRep,optionsFile.cohort(priorCohort).taskRepetitions,[]);
+                    [],currCondition,iRep,nReps,[]);
                 savePath = [optionsFile.paths.cohort(cohortNo).groupLevel,groupSaveName,'_',...
                     optionsFile.model.space{iModel},'_',optionsFile.dataFiles.fittedData];
 

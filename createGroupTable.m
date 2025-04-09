@@ -42,49 +42,56 @@ for iCondition = 1:nConditions
                 % load results from real data model inversion
                 loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,'info');
                 try
-                load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                    loadName,'.mat']);
+                    load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        loadName,'.mat']);
 
-                if iCondition==1
-                    if iTask ==1
-                        if iRep ==1
-                            rowIdx = nSize;
-                            if iMouse==1
-                                varNames = MouseInfoTable.Properties.VariableNames;
-                                for i=1:numel(varNames)
-                                    if size(MouseInfoTable.(i),2)>1
-                                        varTypes{i} = 'string';
-                                        logIdx(i) = 0;
-                                    elseif double(MouseInfoTable.(i))
-                                        varTypes{i} = 'double';
-                                        logIdx(i) = 0;
-                                    elseif islogical(MouseInfoTable.(i))
-                                        varTypes{i} = 'logical';
-                                        logIdx(i) = i;
+                    if iCondition==1
+                        if iTask ==1
+                            if iRep ==1
+                                rowIdx = nSize;
+                                if iMouse==1
+                                    varNames = MouseInfoTable.Properties.VariableNames;
+                                    for i=1:numel(varNames)
+                                        if size(MouseInfoTable.(i),2)>1
+                                            varTypes{i} = 'string';
+                                            logIdx(i) = 0;
+                                        elseif double(MouseInfoTable.(i))
+                                            varTypes{i} = 'double';
+                                            logIdx(i) = 0;
+                                        elseif islogical(MouseInfoTable.(i))
+                                            varTypes{i} = 'logical';
+                                            logIdx(i) = i;
+                                        end
                                     end
-                                end
-                               logIdx = logIdx(logIdx~=0);
-                                sz = [nTasks*nConditions*nSize*nReps  size(varNames,2)];
-                                groupTable = table('Size',sz,'VariableTypes',varTypes,'VariableNames',varNames);
-                            end % END MOUSE Statement
-                            groupTable(iMouse,:) = MouseInfoTable(:,:);
-                        else % >1 REPETITIONS
+                                    logIdx = logIdx(logIdx~=0);
+                                    sz = [nTasks*nConditions*nSize*nReps  size(varNames,2)];
+                                    groupTable = table('Size',sz,'VariableTypes',varTypes,'VariableNames',varNames);
+                                end % END MOUSE Statement
+                                groupTable(iMouse,:) = MouseInfoTable(:,:);
+                            else % >1 REPETITIONS
+                                rowIdx = rowIdx+1;
+                                groupTable(rowIdx,:) = MouseInfoTable(:,:);
+                            end % END REPETITIONS Statement
+                        else % >1 TASKS
                             rowIdx = rowIdx+1;
                             groupTable(rowIdx,:) = MouseInfoTable(:,:);
-                        end % END REPETITIONS Statement
-                    else % >1 TASKS
+                        end % END TASKS Statement
+                    else % >1 CONDITIONS
                         rowIdx = rowIdx+1;
                         groupTable(rowIdx,:) = MouseInfoTable(:,:);
-                    end % END TASKS Statement
-                else % >1 CONDITIONS
-                        rowIdx = rowIdx+1;
-                        groupTable(rowIdx,:) = MouseInfoTable(:,:);
-                end % END CONDITIONS Statement
+                    end % END CONDITIONS Statement
 
                 catch
                     disp(['following file ',['mouse',currMouse,'_',loadName],' not loaded.']);
-                    if rowIdx>=nSize
+                    if rowIdx>nSize
                         rowIdx = rowIdx+1;
+                        for iLogic = logIdx
+                            groupTable{rowIdx,iLogic} = true;
+                        end
+                    else
+                        for iLogic = logIdx
+                            groupTable{iMouse,iLogic} = true;
+                        end
                     end
                 end
             end % END MOUSE Loop

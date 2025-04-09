@@ -1,4 +1,4 @@
-function prepDataFiles
+function prepDataFiles(cohortNo)
 %% getData - Process and extract experimental task data from MED-PC files
 %
 % SYNTAX:  getData(cohortNo)
@@ -44,7 +44,7 @@ else
     getTaskRepetitions(cohortNo,'getRepNumber');
 end
 
-excludeData(optionsFile,cohortNo,[],'updateDataInfo',[]);
+getExcludeData(optionsFile,cohortNo);
 
 createGroupTable(cohortNo);
 

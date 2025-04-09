@@ -82,7 +82,14 @@ end
 % parameter recovery
 if optionsFile.optionsFile.doParamRecovery == 1
     disp('preparing for parameter recovery to task data...');
-    parameterRecovery(cohortNo);
+    
+    for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+        for iCondition = 1:nConditions
+            for iRep=1:nReps
+                parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep);
+            end
+        end
+    end
 end
 
 
