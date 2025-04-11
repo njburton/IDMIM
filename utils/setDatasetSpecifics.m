@@ -1,4 +1,4 @@
-function optionsFile = specifyDatasetSpecifics(optionsFile)
+function optionsFile = setDatasetSpecifics(optionsFile)
 
 
 %% SPECIFY COHORT DATASET info
@@ -11,12 +11,12 @@ optionsFile.cohort(1).treatment.maleMice   = {'372','382','392','402','412','422
 optionsFile.cohort(1).treatment.femaleMice = {'432','442','452','462','472','482'};
 optionsFile.cohort(1).control.maleMice     = {'369','370','374','375','215','217'};
 optionsFile.cohort(1).control.femaleMice   = {'411','426','433','434','501','506'};
-optionsFile.cohort(1).conditions          = [];
-optionsFile.cohort(1).subCohorts          = {'treatment','control'};
-optionsFile.cohort(1).taskRepetitions     = 1;
-optionsFile.cohort(1).priorsFromCohort    = [];
-optionsFile.cohort(1).priorsFromTask      = [];
-optionsFile.cohort(1).priorsFromCondition = [];
+optionsFile.cohort(1).conditions           = [];
+optionsFile.cohort(1).subCohorts           = {'treatment','control'};
+optionsFile.cohort(1).taskRepetitions      = 1;
+optionsFile.cohort(1).priorsFromCohort     = [];
+optionsFile.cohort(1).priorsFromTask       = [];
+optionsFile.cohort(1).priorsFromCondition  = [];
 optionsFile.cohort(1).priorsFromRepetition = [];
 optionsFile.cohort(1).priorsFromSubCohort  = [];
 optionsFile.cohort(1).taskPrefix          = 'NJB_HGF_';

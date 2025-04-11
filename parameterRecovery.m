@@ -56,7 +56,7 @@ else
     currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
 end
 
-disp(['*** for ',currCondition, ' mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ***']);
+disp(['********for ',currCondition, ' mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ********']);
 
 % check available mouse data and exclusion criteria
 [mouseIDs,nSize] = getSampleSpecs(optionsFile,cohortNo,subCohort);

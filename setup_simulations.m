@@ -3,7 +3,7 @@ function [] = setup_simulations(cohortNo)
 %% setup_simulations
 %  Simulat synthetic agents using priors determined from pilot dataset
 %
-%   SYNTAX:       setup_simulations
+%   SYNTAX:       setup_simulations(cohortNo)
 %
 %   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
 %                            corresponds to what number in the
@@ -12,8 +12,9 @@ function [] = setup_simulations(cohortNo)
 %                            cohorts whose expcifications have been set in runOptions.m
 %
 % Original: Katharina V. Wellstein
+%           https://github.com/kwellstein
 % -------------------------------------------------------------------------
-% Copyright (C) 2025, Katharina V. Wellstein
+% Copyright (C) 2025
 %
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
@@ -51,22 +52,25 @@ sim.agent = struct();
 sim.input = struct();
 s.task    = struct();
 
-%% get modeling specifications
+disp(['******** for mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ********']);
+
+%% GET MODELING SPECIFICATIONS
 % add toolbox path
 addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 
 % if responses to the task in this cohort should be simulated using informed priors,
 % run getInformedPriors.m with the settings prespecified in the optionsFile
 if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
+    % set up the configfiles for the models in the modelspace
     optionsFile = setup_configFiles(optionsFile,cohortNo);
-    disp('get priors from pilot data...');
-    % input aguments: priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle
-    [~,optionsFile] = get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
-        cohortNo,optionsFile.cohort(cohortNo).priorsFromSubCohort,...
-        optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
-        optionsFile.cohort(cohortNo).priorsFromRepetition,0);
+    disp(['>>>>>>>>> get priors from data in ',char(optionsFile.cohort(optionsFile.cohort(cohortNo).priorsFromCohort).name), '.... ']);
 
-else % otherwise just set up the configfiles for the models in the modelspace
+    [~,optionsFile] = get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
+        optionsFile.cohort(cohortNo).priorsFromSubCohort,...
+        optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
+        optionsFile.cohort(cohortNo).priorsFromRepetition);
+
+else % otherwise only set up the configfiles for the models in the modelspace
     optionsFile = setup_configFiles(optionsFile,cohortNo);
 end
 
@@ -100,7 +104,8 @@ for iAgent = 1:nSamples
         stable = 0;
 
         for iTask = 1:nTasks
-            disp(['Simulating with input sequence from ', optionsFile.cohort(cohortNo).testTask(iTask).name,'...   ']);
+            currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;            
+            disp('Simulating responses...   ');
 
             while stable == 0
                 try %sim = tapas_simModel(inputs, prc_model, prc_pvec, obs_model, obs_pvec)
@@ -137,10 +142,15 @@ for iAgent = 1:nSamples
                 if optionsFile.rng.idx == (length(optionsFile.rng.settings.State)+1)
                     optionsFile.rng.idx = 1;
                 end
+                 
             end
         end % END TASK loop
     end % END MODEL loop
 end % END AGENTS loop
+
+%% SAVE model simulation specs as struct
+disp(['Simulated responses with input sequence from ', currTask,'...   ']);
+save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(cohortNo).taskPrefix,optionsFile.dataFiles.simResponses], '-struct', 'sim');
 
 %% PLOT predictions
 if optionsFile.doCreatePlots
@@ -173,20 +183,17 @@ if optionsFile.doCreatePlots
             xticks(0:40:numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs))
             hold on;
 
-            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.cohort(priorCohort).taskPrefix, optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel},'_predictions']);
+            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.cohort(cohortNo).taskPrefix, optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel},'_predictions']);
             save([figdir,'.fig'])
             print(figdir, '-dpng');
             close;
         end
         % reset rng state idx
         optionsFile.rng.idx = 1;
-
-        %% SAVE model simulation specs as struct
-        save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(priorCohort).taskPrefix,optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel},'_sim'], '-struct', 'sim');
     
     end % END TASK loop
 end % END CREATE PLOTS loop
 
-disp('simulated data successfully for cohort ',optionsFile.cohort(cohortNo).name,' created.')
+disp(['simulated data for cohort ',optionsFile.cohort(cohortNo).name,'  successfully created.'])
 
 end

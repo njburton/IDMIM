@@ -12,11 +12,9 @@ function [] = simData_fitModels(cohortNo)
 %                            allows to run the pipeline and its functions for different
 %                            cohorts whose expcifications have been set in runOptions.m
 %
-% Original: 29-10-2021; Alex Hess
-% Amended:  30-11-2021; Sandra Iglesias
-% Amended:  30-05-2023; Katharina V. Wellstein
-%       and 11-11-2024; for Nicholas Burton
+% Coded by: 30-04-2025; Katharina V. Wellstein
 % -------------------------------------------------------------------------
+% Copyright (C) 2025
 %
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
@@ -46,54 +44,56 @@ else
     optionsFile = runOptions();
 end
 
+disp(['******** for mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ********']);
+
 % prespecify variables needed for running this function
 nTasks   = numel(optionsFile.cohort(cohortNo).testTask);
 nModels  = numel(optionsFile.model.space);
 nSamples = optionsFile.simulations.nSamples;
 
-%% SPECIFY modeling settings
-% add toolbox path
+% specify  modeling settings add toolbox path
 addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
+strct              = optionsFile.hgf.opt_config;
+strct.maxStep      = inf;
+strct.nRandInit    = optionsFile.rng.nRandInit;
+strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 % if responses to the task in this cohort should be simulated using informed priors,
 % run getInformedPriors.m with the settings prespecified in the optionsFile
 if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
+
+    % set up the configfiles for the models in the modelspace
     optionsFile = setup_configFiles(optionsFile,cohortNo);
-    disp('get priors from pilot data...');
+    disp(['>>>>>>>>> get priors from data in ',char(optionsFile.cohort(optionsFile.cohort(cohortNo).priorsFromCohort).name), '.... ']);
+
     % input aguments: priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle
     [~,optionsFile] = get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
-        cohortNo,optionsFile.cohort(cohortNo).priorsFromSubCohort,...
+        optionsFile.cohort(cohortNo).priorsFromSubCohort,...
         optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
-        optionsFile.cohort(cohortNo).priorsFromRepetition,0);
+        optionsFile.cohort(cohortNo).priorsFromRepetition);
 
 else % otherwise just set up the configfiles for the models in the modelspace
     optionsFile = setup_configFiles(optionsFile,cohortNo);
 end
 
-strct              = optionsFile.hgf.opt_config;
-strct.maxStep      = inf;
-strct.nRandInit    = optionsFile.rng.nRandInit;
-strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
-                
+sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(cohortNo).taskPrefix,optionsFile.dataFiles.simResponses]);      
 %%  MODEL INVERSION
 % looping across tasks, samples, models that created the simulated behaviour (gen model | m_in) 
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
 for iTask = 1:nTasks
     for iSample = 1:nSamples 
         for m_in = 1:nModels
-            sim = load(fullfile([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim']));
-
             for m_est = 1:nModels
-                if m_est == 3 && m_in ==3
-                    strct.maxStep  = 1000;
+                if strcmp(optionsFile.model.space{m_est},'RW') && strcmp(optionsFile.model.space{m_in},'RW')
+                    strct.maxStep  = 1000; % special setting for the RW model due to issue with opt algorithm
                 end
 
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
                 est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
-                    optionsFile.cohort(cohortNo).testTask(iTask).inputs,...                  % input sequence
+                    optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
                     optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
                     optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
-                    strct); % seed for multistart
+                    strct); % settings and seed for multistart
 
                 if optionsFile.doCreatePlots
                     % Plot standard trajectory plot

@@ -53,13 +53,18 @@ addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 % set up config files for models in model space
 optionsFile = setup_configFiles(optionsFile,cohortNo);
 
+% optimization settings
+strct              = eval(char(optionsFile.model.opt_config));
+strct.maxStep      = inf;
+strct.nRandInit    = optionsFile.rng.nRandInit;
+strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
+
 %% INVERT MODELS with data
 % by looping though conditions, tasks, repetitions, mice, and models
 
 for iCondition = 1:nConditions
-    disp(['fitting iteration', num2str(iCondition),'........']);
-
     if nConditions>1 % if there is more than one condition get condition name string
+            disp(['* condition ', char(currCondition),'.']);
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
 
@@ -68,6 +73,7 @@ for iCondition = 1:nConditions
         disp(['* task  ', char(currTask),'.']);
 
         for iRep = 1:nReps
+            disp(['* repetition  ', num2str(iRep),'.']);
             % get informed priors in case that was specified for this cohort
             if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
                 % input aguments: priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle
@@ -89,13 +95,7 @@ for iCondition = 1:nConditions
                         load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                             loadName,'.mat']);
 
-                        disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')']);
-
-                        % optimization settings
-                        strct              = eval(char(optionsFile.model.opt_config));
-                        strct.maxStep      = inf;
-                        strct.nRandInit    = optionsFile.rng.nRandInit;
-                        strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
+                        disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
 
                         %% model fit
                         est = tapas_fitModel(ExperimentTaskTable.Choice, ...
@@ -124,9 +124,9 @@ for iCondition = 1:nConditions
 
                     catch
                         modelInv.allMice(iMouse,iModel).est = [];
-                        disp(['mouse ', char(currMouse), ' not loaded'])
+                        disp(['mouse ', char(saveName), ' not loaded...'])
                     end
-                end % END MODEL loop
+   
                 % create savepath and filename as a .mat file
                 groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
                     [],currCondition,iRep,nReps,[]);
@@ -134,6 +134,7 @@ for iCondition = 1:nConditions
                     optionsFile.model.space{iModel},'_',optionsFile.dataFiles.fittedData];
 
                 save(savePath, '-struct', 'modelInv','allMice');
+                end % END MODEL loop
             end % END MOUSE loop
         end % END REPETITION loop
     end % END TASK loop
