@@ -1,4 +1,4 @@
-function [] = parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep)
+function [] = parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep,nReps)
 
 %% parameter_recovery
 %  Parameter recovery analysis based on simulations. This step will be
@@ -47,7 +47,6 @@ end
 
 % prespecify variables needed for running this function
 nModels  = numel(optionsFile.model.space);
-nReps    = optionsFile.cohort(cohortNo).taskRepetitions;
 currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
 
 if isempty(optionsFile.cohort(cohortNo).conditions)
@@ -59,7 +58,7 @@ end
 disp(['********for ',currCondition, ' mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ********']);
 
 % check available mouse data and exclusion criteria
-[mouseIDs,nSize] = getSampleSpecs(optionsFile,cohortNo,subCohort);
+[mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,subCohort);
 noDataArray = zeros(1,nSize);
 exclArray   = zeros(1,nSize);
 

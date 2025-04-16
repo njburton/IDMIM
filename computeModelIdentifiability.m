@@ -57,18 +57,16 @@ nSamples = optionsFile.simulations.nSamples;
 % model space and inverted with all the models in the model space. For
 % model identifiability we are saving into the following structure: agent(m_in,iAgent,m_est)
 
-for iTask = 1:nTasks
+for iTask = 1:1%nTasks
     for iAgent = 1:nSamples
         for m_in = 1:nModels
             modelIn = optionsFile.dataFiles.rawFitFile{m_in};
-            simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{m_in},...
-                '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
             for m_est = 1:nModels
                 modelEst = optionsFile.dataFiles.rawFitFile{m_est};
                 % load results from simulated agents' model inversion
                 rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.paths.cohort(cohortNo).simulations, ...
-                    ['simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']));
+                     ['simAgent_', num2str(iAgent),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_', modelIn,...
+                        '_model_est_',modelEst,'.mat']));
 
                 % LME
                 rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
@@ -100,8 +98,8 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
     rec.class = class;
 
     % save to struct
-    saveDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,'Model_Identifiability _',...
-            optionsFile.cohort(cohortNo).name,'_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
+    saveDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).taskPrefix,...
+            optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
     save(saveDir,'-struct','rec');
 
     if optionsFile.doCreatePlots
@@ -141,8 +139,8 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
             'YTickLabel',label_x,...
             'TickLength',[0 0]);
 
-        figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,'Model_Identifiability _',...
-            optionsFile.cohort(cohortNo).name,'_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
+        figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).taskPrefix,...
+            optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
         save([figDir,'.fig'])
         print(figDir, '-dpng');
     end % END TASK Loop

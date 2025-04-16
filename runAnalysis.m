@@ -53,6 +53,19 @@ else
     optionsFile = runOptions();
 end
 
+if isempty(optionsFile.cohort(cohortNo).subCohorts)
+    nSubCohorts = 1;
+else
+    nSubCohorts = numel(optionsFile.cohort(cohortNo).subCohorts);
+end
+
+if isempty(optionsFile.cohort(cohortNo).conditions)
+    nConditions = 1;
+else
+    nConditions = numel(optionsFile.cohort(cohortNo).conditions);
+end
+
+nReps    = optionsFile.cohort(cohortNo).taskRepetitions;
 %% Simulate synthetic agents
 % create agents that act like a specific model would expect them to act and then fit models
 if optionsFile.doSimulations == 1
@@ -65,11 +78,10 @@ end
 if optionsFile.doSimModelFitCheck == 1
     computeModelIdentifiability(cohortNo);
 end
-
 %% Get and process data
 if optionsFile.doGetData == 1
     disp('preparing to extract raw data from .txt files in dataToAnalyseDir...');
-    getData(optionsFile,cohortNo); 
+    getData(optionsFile,cohortNo);
 end
 
 if optionsFile.doPrepData == 1
@@ -87,23 +99,43 @@ end
 % parameter recovery
 if optionsFile.optionsFile.doParamRecovery == 1
     disp('preparing for parameter recovery to task data...');
-    
-    for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-        for iCondition = 1:nConditions
-            for iRep=1:nReps
-                parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep);
+
+    for iSubCohort = 1:nSubCohorts
+        if isempty(optionsFile.cohort(cohortNo).subCohorts)
+            subCohort = [];
+        else
+            subCohort = optionsFile.cohort(cohortNo).subCohorts{iSubCohort};
+        end
+        for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+            for iCondition = 1:nConditions
+                for iRep=1:nReps
+                    parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep,nReps);
+                end
             end
         end
     end
 end
 
-
 %% Bayesian Model Comparison and Model Identifiability
 % (compare different model fits to see which explains the data the best)
 
 if optionsFile.optionsFile.doBMS == 1
-     disp('preparing for Bayesian Model Comparison..');
-    performBMS(cohortNo)
+    disp('preparing for Bayesian Model Comparison..');
+
+    for iSubCohort = 1:nSubCohorts
+        if isempty(optionsFile.cohort(cohortNo).subCohorts)
+            subCohort = [];
+        else
+            subCohort = optionsFile.cohort(cohortNo).subCohorts{iSubCohort};
+        end
+        for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
+            for iCondition = 1:nConditions
+                for iRep=1:nReps
+                    performBMS(cohortNo,subCohort,iTask,iCondition,iRep);
+                end
+            end
+        end
+    end
 end
 
 disp('pipeline finished.');

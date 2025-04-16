@@ -133,8 +133,7 @@ for iAgent = 1:nSamples
 
                 end
                 % save simulation input
-                s.task(iTask).data = data;
-                sim.agent(iAgent,iModel).task(iTask).data  = s.task(iTask).data;
+                sim.agent(iAgent,iModel).task(iTask).data  = data;
                 sim.agent(iAgent,iModel).task(iTask).input = input;
 
                 % Update the rng state idx
@@ -183,7 +182,8 @@ if optionsFile.doCreatePlots
             xticks(0:40:numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs))
             hold on;
 
-            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.cohort(cohortNo).taskPrefix, optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel},'_predictions']);
+            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).groupSim),optionsFile.cohort(cohortNo).taskPrefix,...
+            optionsFile.cohort(cohortNo).name,'_predictions_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_',optionsFile.model.space{iModel}]);
             save([figdir,'.fig'])
             print(figdir, '-dpng');
             close;

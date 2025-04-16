@@ -100,7 +100,9 @@ for iCondition = 1:nConditions
 end % END CONDITIONS Loop
 IDs = string(mouseIDCol');
 groupTable = addvars(groupTable,IDs);
-save([optionsFile.paths.cohort(cohortNo).groupLevel,'groupInfoTable.mat'],'groupTable');
-writetable(groupTable,[optionsFile.paths.cohort(cohortNo).groupLevel,'groupInfoTable.csv']);
+save([optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).taskPrefix,...
+            optionsFile.cohort(cohortNo).name,'_groupInfoTable.mat'],'groupTable');
+writetable(groupTable,[optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).taskPrefix,...
+            optionsFile.cohort(cohortNo).name,'_groupInfoTable.csv']);
 
 end
