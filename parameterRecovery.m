@@ -48,6 +48,7 @@ end
 % prespecify variables needed for running this function
 nModels  = numel(optionsFile.model.space);
 currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
+[mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,subCohort);
 
 if isempty(optionsFile.cohort(cohortNo).conditions)
     currCondition = [];
@@ -57,8 +58,9 @@ end
 
 disp(['********for ',currCondition, ' mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ********']);
 
+
+%% EXCLUDE MICE from this analysis
 % check available mouse data and exclusion criteria
-[mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,subCohort);
 noDataArray = zeros(1,nSize);
 exclArray   = zeros(1,nSize);
 
@@ -121,8 +123,7 @@ for iMouse = 1:nSize
         rec.param(iTask,iRep).obs(iModel).estAgent(iMouse,:) = rec.est(iMouse,iModel).task(iTask,iRep).data.est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
 
         % load simulated responses with current model
-        simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.model.space{iModel},...
-            '_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_sim.mat']);
+        simResp = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(cohortNo).taskPrefix,optionsFile.dataFiles.simResponses]);
         rec.param(iTask).prc(iModel).simAgent(iMouse,:) = simResp.agent(iMouse,iModel).task(iTask).input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx);
         rec.param(iTask).obs(iModel).simAgent(iMouse,:) = simResp.agent(iMouse,iModel).task(iTask).input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx);
     end  % END MODELS Loop

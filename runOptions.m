@@ -204,8 +204,6 @@ optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
 optionsFile.dataFiles.simResponses     = 'sim.mat';
 optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
 optionsFile.dataFiles.fittedData       = 'modelInv.mat';
-optionsFile.dataFiles.dataBaseFileName = 'rawDataFileInfo.mat';
-optionsFile.dataFiles.dataBaseName     = 'dataInfoTable';
 
 %% SAVE options file
 save([optionsFile.paths.projDir,'optionsFile.mat'],'optionsFile');

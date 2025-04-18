@@ -140,6 +140,7 @@ end
 
 disp('pipeline finished.');
 diary off
-save([optionsFile.optionsFile.paths.diaryDir,filesep,optionsFile.optionsFile.fileName.fullDiaryName,'.txt'])
+save([optionsFile.optionsFile.paths.diaryDir,filesep,optionsFile.cohort(cohortNo).taskPrefix,...
+    char(optionsFile.cohort(cohortNo).name),'_diary.txt'])
 
 end
