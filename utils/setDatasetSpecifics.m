@@ -30,9 +30,6 @@ optionsFile.cohort(1).exclCriteria(1).name   = 'nOmissions';
 optionsFile.cohort(1).exclCriteria(1).cutoff = 0.3;
 optionsFile.cohort(1).exclCriteria(2).name   = 'nConsecutiveOmissions';
 optionsFile.cohort(1).exclCriteria(2).cutoff = 30;
-optionsFile.cohort(1).exclMode.ModelLevel    = {'withinConditions','withinSubCohorts','withinTasks','withinReps'};
-optionsFile.cohort(1).exclMode.ParamLevel    = {'withinConditions','withinSubCohorts','withinTasks','withinReps'};
-% or replace with any of the following: 'acrossConditions','acrossSubCohorts','acrossTasks','acrossReps'
 
 %% '2024_HGF' COHORT
 optionsFile.cohort(2).name = '2024_HGFPilot';
@@ -60,9 +57,6 @@ optionsFile.cohort(2).exclCriteria(1).name   = 'nOmissions';
 optionsFile.cohort(2).exclCriteria(1).cutoff = 0.3;
 optionsFile.cohort(2).exclCriteria(2).name   = 'nConsecutiveOmissions';
 optionsFile.cohort(2).exclCriteria(2).cutoff = 30;
-optionsFile.cohort(2).exclMode.ModelLevel    = {'withinConditions','withinSubCohorts','withinTasks','withinReps'};
-optionsFile.cohort(2).exclMode.ParamLevel    = {'withinConditions','withinSubCohorts','withinTasks','withinReps'};
-% or replace with any of the following: 'acrossConditions','acrossSubCohorts','acrossTasks','acrossReps'
 
 %% '5HT' COHORT
 optionsFile.cohort(3).name = '5HT';
@@ -89,9 +83,6 @@ optionsFile.cohort(3).exclCriteria(1).name = 'nOmissions';
 optionsFile.cohort(3).exclCriteria(1).cutoff = 0.3;
 optionsFile.cohort(3).exclCriteria(2).name = 'nConsecutiveOmissions';
 optionsFile.cohort(3).exclCriteria(2).cutoff = 30;
-optionsFile.cohort(3).exclMode.ModelLevel = {'withinConditions','withinSubCohorts','withinTasks','withinReps'};
-optionsFile.cohort(3).exclMode.ParamLevel = {'withinConditions','withinSubCohorts','withinTasks','withinReps'};
-% or replace with any of the following: 'acrossConditions','acrossSubCohorts','acrossTasks','acrossReps'
 
 for cohortNo = 1:numel(optionsFile.cohort)
     % collate mouseIDs

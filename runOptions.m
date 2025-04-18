@@ -35,9 +35,9 @@ function optionsFile = runOptions()
 % =========================================================================
 
 %% what steps to do
-optionsFile.doOptions        = 1;
+optionsFile.doOptions        = 1; % = 1 to do this, = 0 to skip this 
 optionsFile.doMakeDir        = 1;
-optionsFile.doCreatePlots    = 1;
+optionsFile.doCreatePlots    = 1; % set this to 0 if you are running this on cluster
 optionsFile.doSimulations    = 1;
 optionsFile.setupModels      = 1;
 optionsFile.doGetData        = 1;
@@ -47,7 +47,6 @@ optionsFile.doModelInversion = 1;
 optionsFile.doSimModelFitCheck = 1;
 optionsFile.doParamFitCheck  = 1;
 optionsFile.doBMS            = 1;
-
 
 
 %% SPECIFY COHORT Specific settings and information
@@ -200,10 +199,10 @@ optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(2).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
 
-%% SPECIFY FILENAMES
-optionsFile.dataFiles.simResponses     = 'sim.mat';
-optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};
-optionsFile.dataFiles.fittedData       = 'modelInv.mat';
+%% SPECIFY FILENAME endings
+optionsFile.dataFiles.simResponses     = 'sim.mat'; % simulated responses file
+optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};  % single model fit files
+optionsFile.dataFiles.fittedData       = 'modelInv.mat'; % collated model fit files
 
 %% SAVE options file
 save([optionsFile.paths.projDir,'optionsFile.mat'],'optionsFile');
