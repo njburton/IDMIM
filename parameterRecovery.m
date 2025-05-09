@@ -8,9 +8,26 @@ function [] = parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep,nReps)
 %
 %   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
 %                            corresponds to what number in the
-%                            optionsFile.cohort(cohortNo).name struct. This
-%                            allows to run the pipeline and its functions for different
-%                            cohorts whose expcifications have been set in runOptions.m
+%                            optionsFile.cohort(cohortNo).name struct.
+%
+%       subCohort: string, {'control','treatment'} OR [], if you are running this 
+%                           function for all subCohorts use [], otherwise specify using the appropriate string 
+%
+%       iTask: integer, task number see optionsFile for what task
+%                            corresponds to what number.
+%
+%       iCondition: integer, condition number. See optionsFile for what what place in the cell {cond1, cond2...}
+%                            the condition that you want to run this function for in appears. If you are calling
+%                            this function from the runAnalysis.m or another wrapper function, loop through
+%                            conditions there.
+%                            
+%       iRep:       integer, repetition number. iRep= 1 if the current Task is not repeated more than once in this cohort.    
+%
+%       nReps:      integer, number or repetitions this cohort has. nReps = 1 if the current Task is not repeated more than once in this cohort.
+%                            This is needed for the getFileName.m function.
+%
+%       >>!! NOTE: All the above variables are saved inf the optionsFile struct and specifed here: setDatasetSpecifics.m << !!
+%
 %
 % Coded by: 2025; Katharina V. Wellstein,
 %           katharina.wellstein@newcastle.edu.au
@@ -109,7 +126,7 @@ optionsFile = setup_configFiles(optionsFile,cohortNo);
 % and save data into rec.est struct and paramete values for recovery into
 % rec.param.{}.est
 for iMouse = 1:nSize
-    currMouse = mouseIDs{iMouse};
+    currMouse    = mouseIDs{iMouse};
     loadDataName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
         [],currCondition,iRep,nReps,[]);
 
@@ -134,7 +151,8 @@ end % END MOUSE Loop
 for iModel = 1:nModels
     % Perceptual Model parameters
     for pRec = 1:length(optionsFile.modelSpace(iModel).prc_idx)
-        [prc_coef,prc_p] = corr(rec.param(iTask).prc(iModel).simAgent(:,pRec),...
+        O
+        thn[prc_coef,prc_p] = corr(rec.param(iTask).prc(iModel).simAgent(:,pRec),...
             rec.param(iTask,iRep).prc(iModel).estAgent(:,pRec));
         rec.param(iTask,iRep).prc(iModel).pcc(pRec)  = diag(prc_coef);
         rec.param(iTask,iRep).prc(iModel).pval(pRec) = diag(prc_p);

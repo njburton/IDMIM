@@ -8,9 +8,22 @@ function performBMS(cohortNo,subCohort,iTask,iCondition,iRep)
 %
 %   IN: cohortNo:  integer, cohort number, see optionsFile for what cohort
 %                            corresponds to what number in the
-%                            optionsFile.cohort(cohortNo).name struct. This
-%                            allows to run the pipeline and its functions for different
-%                            cohorts whose expcifications have been set in runOptions.m
+%                            optionsFile.cohort(cohortNo).name struct.
+%
+%       subCohort: string, {'control','treatment'} OR [], if you are running this 
+%                           function for all subCohorts use [], otherwise specify using the appropriate string 
+%
+%       iTask: integer, task number see optionsFile for what task
+%                            corresponds to what number.
+%
+%       iCondition: integer, condition number. See optionsFile for what what place in the cell {cond1, cond2...}
+%                            the condition that you want to run this function for in appears. If you are calling
+%                            this function from the runAnalysis.m or another wrapper function, loop through
+%                            conditions there.
+%                            
+%       iRep:       integer, repetition number. iRep= 1 if the current Task is not repeated more than once in this cohort.    
+%
+%       >>!! NOTE: All the above variables are saved inf the optionsFile struct and specifed here: setDatasetSpecifics.m << !!
 %
 % Original: 29-05-2024; Katharina V. Wellstein,
 %           katharina.wellstein@newcastle.edu.au
