@@ -64,6 +64,7 @@ strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 for iCondition = 1:nConditions
     if nConditions>1 % if there is more than one condition get condition name string
+        currCondition = iCondition;
             disp(['* condition ', char(currCondition),'.']);
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
@@ -76,11 +77,11 @@ for iCondition = 1:nConditions
             disp(['* repetition  ', num2str(iRep),'.']);
             % get informed priors in case that was specified for this cohort
             if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
-                % input aguments: priorCohort,currCohort,subCohort,iTask,iCondition,iRep,optionsHandle
+                % input aguments: (priorCohort,subCohort,iTask,iCondition,iRep)
                 [~,optionsFile] = get_informedPriors(optionsFile.cohort(cohortNo).priorsFromCohort,...
                     optionsFile.cohort(cohortNo).priorsFromSubCohort,...
                     optionsFile.cohort(cohortNo).priorsFromTask,optionsFile.cohort(cohortNo).priorsFromCondition,...
-                    optionsFile.cohort(cohortNo).priorsFromRepetition,0);
+                    optionsFile.cohort(cohortNo).priorsFromRepetition);
             end
 
             for iMouse  = 1:nSize

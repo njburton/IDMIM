@@ -1,6 +1,7 @@
 # IDMIM
 
-
+## check cohort specfici details
+1) 'setDatasetSpecifics'
 
 ## organize data 
 1) move 'dataFolderStructure' wherever you would like to save the data to. All data will be saved into that folderstructure.
