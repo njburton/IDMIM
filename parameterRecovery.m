@@ -151,8 +151,7 @@ end % END MOUSE Loop
 for iModel = 1:nModels
     % Perceptual Model parameters
     for pRec = 1:length(optionsFile.modelSpace(iModel).prc_idx)
-        O
-        thn[prc_coef,prc_p] = corr(rec.param(iTask).prc(iModel).simAgent(:,pRec),...
+        [prc_coef,prc_p] = corr(rec.param(iTask).prc(iModel).simAgent(:,pRec),...
             rec.param(iTask,iRep).prc(iModel).estAgent(:,pRec));
         rec.param(iTask,iRep).prc(iModel).pcc(pRec)  = diag(prc_coef);
         rec.param(iTask,iRep).prc(iModel).pval(pRec) = diag(prc_p);

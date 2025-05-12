@@ -1,36 +1,82 @@
-# IDMIM
+IDMIM (Impaired Decision-Making In Mice)
+###Overview###
+IDMIM is a MATLAB pipeline for analysing behavioural data from rodent operant decision-making tasks using computational models. 
+It implements hierarchical Gaussian filter (HGF) models and other reinforcement learning models to characterise learning 
+parameters from choice data.
 
-## check cohort specfici details
-1) 'setDatasetSpecifics'
+Prerequisites:
+- MATLAB R2019b or newer
+- TAPAS Toolbox for HGF models
+- Input data from MED-PC in text format
 
-## organize data 
-1) move 'dataFolderStructure' wherever you would like to save the data to. All data will be saved into that folderstructure.
-2) move MEDPC txt files into 'dataFolderStructure/data/raw/'
-3) rename subfolders in 'dataFolderStructure/data/' and 'dataFolderStructure/results/' using the names you use for your cohorts (mouse experiments/studies) and delete any unused template files
+Installation:
+1) Clone or download this repository
+2) Add the repository and its subfolders to your MATLAB path
+3) Download and install the TAPAS toolbox
 
-
-## get pipeline ready
-1) open the runOptions.m function and specify your settings:
-    * the MEDPC file settings should work as they are if they are built as instructed below (---TO ADD)
-    * the path of your data folder in the paths section
-    * the model space and everything that goes with that
-    * the name endings you want to give your files
-
-2) open setDatasetSpecifics.m and specify everything related to your cohort(s). Delete all lines containing cohorts you do not need. E.g. if you are processing 2 instead of 3 cohorts, fill in the info for the 2 cohorts and delete everything containing optionsFile.cohort(3)
-
-3) specify what you want to run in runOptions. This can be changed at any time
-
-4) run this function by entering runOptions into command line or pressing the green triangle play button when you open runOptions.m in MATLAB
-
-
-## RUN analysis
-
-use runAnalysis(1) in the command line to run the analysis pipeline with the steps you specified before for cohort 1.
-
-all steps can be run seperately too, you will just need to specify the input arguments manually. 
-For example: you can parameterRecovery(cohortNo,subCohort,iTask,iCondition,iRep,nReps) if you fill in the information for each one of these input arguments as you had specified them in the optionsfile. YOu can also read each functions descriptions if you are having trouble.
+Data Organisation:
+1) Create a data folder structure using the provided template:
+/path/to/data/
+├── raw/
+│   ├── cohort1/
+│   ├── cohort2/
+│   └── cohort3/
+├── cohort1/
+├── cohort2/
+└── cohort3/
+2) Place your MED-PC text files in the appropriate raw/cohortX/ folder
+3) Rename the cohort folders according to your experimental cohorts (e.g., "2023_UCMS", "2024_HGFPilot")
 
 
-## CHANGING what to analyise etc
- 
- if you want to change what you want to analyse (change the steps), or change settings in the options. Manually change that in the runOptions.m function and run the function again via commandline or by pressing the green triangle play button when you open runOptions.m in MATLAB
+###Configuration###
+Setting Up Cohort Details
+1) Open setDatasetSpecifics.m
+2) Edit the cohort-specific details for each of your cohorts:
+    - Mouse IDs and group assignments
+    - Task names and parameters
+    - Conditions and task repetitions
+    - File structure information
+
+Configuring Analysis Options
+1) Open runOptions.m and set the following:
+    - Data paths: Specify where your data is stored
+    - Model space: Choose which computational models to use
+    - Analysis steps: Enable/disable different analysis components
+    - File naming conventions: Set naming patterns for output files
+2) Run the function to generate your optionsFile.mat
+
+
+###Running the Analysis###
+Full Pipeline
+- Run the complete analysis pipeline for a specific cohort:
+- runAnalysis(cohortNo)  % Where cohortNo is the cohort number (e.g., 1, 2, or 3)
+
+Individual Components
+You can run specific components of the pipeline separately:
+- Extract data from MED-PC files
+- getData(cohortNo)
+
+Fit computational models to behavioural data:
+fitModels(cohortNo)  % Where cohortNo is the cohort number (e.g., 1, 2, or 3)
+
+Perform parameter recovery analysis:
+parameterRecovery(cohortNo, subCohort, iTask, iCondition, iRep, nReps);
+
+Perform Bayesian Model Selection:
+performBMS(cohortNo, subCohort, iTask, iCondition, iRep)
+
+Creating Summary Tables for Statistical Analysis
+
+
+Model fit results (.mat files with model parameters)
+Summary tables (.csv files for statistical analysis)
+Diagnostic plots (parameter recovery, model comparison)
+
+
+###Troubleshooting###
+File not found errors: Make sure your path structure matches what's specified in optionsFile
+Model fitting errors: Check your data format and ensure all required columns are present
+Memory issues: For large datasets, consider processing cohorts individually
+
+License:
+This project is licensed under the GPL v3 License - see the LICENSE file for details
