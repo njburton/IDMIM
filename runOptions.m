@@ -114,7 +114,7 @@ optionsFile.cohort(3).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % Recepti
 % reorganize data and results folders
 disp('setting new paths...');
 % hardcoded, change to data directory of choice
-optionsFile.paths.saveDir    = 'C:\Users\c3200098\Desktop\thesisData\'; %'/Volumes/Samsung_T5/SNG/projects/IDMIM/'; 
+optionsFile.paths.saveDir    = 'C:\Users\c3200098\Desktop\thesisData\'; %'/Volumes/Samsung_T5/SNG/projects/IDMIM/'; %
 optionsFile.paths.projDir    = [pwd,filesep];
 optionsFile.paths.utilsDir   = [optionsFile.paths.projDir,'utils',filesep];
 optionsFile.paths.toolboxDir = [optionsFile.paths.projDir,'toolboxes',filesep];

@@ -1,4 +1,4 @@
-function [] = hgf_plot_param_pdf(paramNames,data,i,j,t,type)
+function [] = hgf_plot_param_pdf(paramNames,data,i,j,t,iRep,type)
 
 %% hgf_plot_param_pdf
 %  plots prior predictive distributions of the priors generated from the
@@ -16,12 +16,13 @@ function [] = hgf_plot_param_pdf(paramNames,data,i,j,t,type)
 %            pilot:      model space specifications which were the basis
 %                        for inverting the pilot dataset (default priors)
 %            i:          looping index for the current model being
-%                        processed (see above)
+%                        processed (see above)                          
+%            iRep:       integer, repetition number. iRep= 1 if the current Task is not repeated more than once in this cohort.    
 %            type:       string specifying if the model being processed is
 %                        a perceptual ('prc') or observational ('obs') model
 %
 % Original: 29-10-2021; Alex Hess
-% Amended:  30-05-2023; Katharina V. Wellstein
+% Amended:  30-04-2025; Katharina V. Wellstein
 % -------------------------------------------------------------------------
 % Copyright (C) 2023 TNU, Institute for Biomedical Engineering, University of Zurich and ETH Zurich.
 %
@@ -42,18 +43,18 @@ function [] = hgf_plot_param_pdf(paramNames,data,i,j,t,type)
 
 %% PLOTTING Priors for PERCEPTUAL Models
 
-if strcmp(type, 'prc')
-     priorMu  = data(1,1).task(1,t).data.est.c_prc.priormus(i);
-     priorSa  = data(1,1).task(1,t).data.est.c_prc.priorsas(i);
+if strcmp(type, 'prc') %rec.est(iMouse,iModel).task(iTask,iRep).data
+     priorMu  = data(1,1).task(t,iRep).data.est.c_prc.priormus(i);
+     priorSa  = data(1,1).task(t,iRep).data.est.c_prc.priorsas(i);
     for n = 1:numel(data)
-        posteriorMus(n,1) = data(n,1).task(1,t).data.est.p_prc.ptrans(i);
+        posteriorMus(n,1) = data(n,1).task(t,iRep).data.est.p_prc.ptrans(i);
     end
 
 elseif strcmp(type, 'obs')
-     priorMu  = data(1,1).task(1,t).data.est.c_obs.priormus(i);
-     priorSa  = data(1,1).task(1,t).data.est.c_obs.priorsas(i);
+     priorMu  = data(1,1).task(t,iRep).data.est.c_obs.priormus(i);
+     priorSa  = data(1,1).task(t,iRep).data.est.c_obs.priorsas(i);
     for n = 1:numel(data)
-        posteriorMus(n,1) = data(n,1).task(1,t).data.est.p_obs.ptrans(i);
+        posteriorMus(n,1) = data(n,1).task(t,iRep).data.est.p_obs.ptrans(i);
     end
 end
 

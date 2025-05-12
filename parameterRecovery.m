@@ -213,8 +213,8 @@ if optionsFile.doCreatePlots == 1
     %% PLOT PRIORS AND POSTERIORS
     for iModel = 1:nModels
         % perceptual model
-        for j = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
-            hgf_plot_param_pdf(optionsFile.modelSpace(iModel).free_expnms_mu_prc,rec.est(:,iModel),optionsFile.modelSpace(iModel).prc_idx(j),j,iTask,'prc');
+        for j = 1:size(optionsFile.modelSpace(iModel).prc_idx,2) %rec.est(iMouse,iModel).task(iTask,iRep).data
+            hgf_plot_param_pdf(optionsFile.modelSpace(iModel).free_expnms_mu_prc,rec.est(:,iModel),optionsFile.modelSpace(iModel).prc_idx(j),j,iTask,iRep,'prc');
 
             saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
             figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,[saveName,'prc_priors_posteriors',...
@@ -225,7 +225,7 @@ if optionsFile.doCreatePlots == 1
 
         % observational model
         for k = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
-            hgf_plot_param_pdf(optionsFile.modelSpace(iModel).free_expnms_mu_prc,rec.est(:,iModel),optionsFile.modelSpace(iModel).obs_idx(k),k,iTask,'obs');
+            hgf_plot_param_pdf(optionsFile.modelSpace(iModel).free_expnms_mu_prc,rec.est(:,iModel),optionsFile.modelSpace(iModel).obs_idx(k),k,iTask,iRep,'obs');
 
             saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
             figdir   = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel,[saveName,'obs_priors_posteriors_model_',...

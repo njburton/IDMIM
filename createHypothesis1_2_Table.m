@@ -85,7 +85,7 @@ RQ1_2_dataTable = table('Size', [nSize, 4], ...
 
         end
 
-        % Load model fit results to get omega2
+        % Load model fit results to get omega2 
         loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], iRep, nReps, []);
         fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
                   loadName, '_', optionsFile.dataFiles.rawFitFile{iModel}, '.mat'];
