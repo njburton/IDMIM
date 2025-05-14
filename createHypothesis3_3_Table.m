@@ -1,0 +1,184 @@
+function createHypothesis3_3_Table
+
+% Load options file
+if exist('optionsFile.mat','file')==2
+    load('optionsFile.mat');
+else
+    optionsFile = runOptions();
+end
+
+% Prespecify variables needed
+iModel = 2;
+iTask = 1;
+iRep = 1;
+nReps = 1;
+cohortNo = 3;
+subCohort = [];
+currTask = optionsFile.cohort(cohortNo).testTask(1).name;
+[mouseIDs, nSize] = getSampleVars(optionsFile, cohortNo, subCohort);
+
+% Define the trial phases
+phaseNames = {'stable1', 'volatile1', 'stable2', 'volatile2', 'stable3', 'volatile3', 'stable4'};
+phaseRanges = {1:40, 41:80, 81:120, 121:160, 161:200, 201:240, 241:280};
+numPhases = length(phaseNames);
+
+%% EXCLUDE MICE from this analysis
+% Check available mouse data and exclusion criteria
+noDataArray = zeros(1, nSize);
+exclArray = zeros(1, nSize);
+
+for iMouse = 1:nSize
+    currMouse = mouseIDs{iMouse};
+    % Check if data exists for any condition
+    hasData = false;
+    for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], optionsFile.cohort(cohortNo).conditions{iCond}, iRep, nReps, 'info');
+        if isfile([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'])
+            hasData = true;
+            break;
+        end
+    end
+    if ~hasData
+        disp(['Data for mouse ', currMouse, ' not available in any condition']);
+        noDataArray(iMouse) = iMouse;
+    end
+end
+
+noDataArray = sort(noDataArray, 'descend');
+noDataArray(noDataArray == 0) = [];
+
+for i = noDataArray
+    mouseIDs(i) = [];
+end
+nSize = numel(mouseIDs);
+
+for iMouse = 1:nSize
+    currMouse = mouseIDs{iMouse};
+    for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], optionsFile.cohort(cohortNo).conditions{iCond}, iRep, nReps, 'info');
+        if isfile([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'])
+            load([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName]);
+            if any([MouseInfoTable.exclCrit2_met, MouseInfoTable.exclCrit1_met], 'all')
+                disp(['Mouse ', currMouse, ' excluded based on exclusion criteria']);
+                exclArray(iMouse) = iMouse;
+                break;
+            end
+        end
+    end
+end
+
+exclArray = sort(exclArray, 'descend');
+exclArray(exclArray == 0) = [];
+
+for i = exclArray
+    mouseIDs(i) = [];
+end
+nSize = numel(mouseIDs);
+
+% Create variable names for each condition and phase
+varNames = {'ID', 'sex'};
+varTypes = {'string', 'string'};
+
+% Add columns for each condition and phase
+for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+    condition = optionsFile.cohort(cohortNo).conditions{iCond};
+    for iPhase = 1:numPhases
+        colName = ['psi_', condition, '_', phaseNames{iPhase}];
+        varNames{end+1} = colName;
+        varTypes{end+1} = 'double';
+    end
+end
+
+% Create table with one row per mouse
+RQ3_3_dataTable = table('Size', [nSize, length(varNames)], ...
+    'VariableTypes', varTypes, ...
+    'VariableNames', varNames);
+
+% Populate the table
+for iMouse = 1:nSize
+    currMouse = mouseIDs{iMouse};
+    
+    % Set ID
+    RQ3_3_dataTable.ID(iMouse) = currMouse;
+    
+    % Get basic info (sex) from the first available condition file
+    for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], optionsFile.cohort(cohortNo).conditions{iCond}, iRep, nReps, 'info');
+        infoPath = [char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'];
+        
+        if isfile(infoPath)
+            load(infoPath, 'MouseInfoTable');
+            RQ3_3_dataTable.sex(iMouse) = MouseInfoTable.Sex;
+            break;
+        end
+    end
+    
+    % Get precision weights (psi) for each condition and phase
+    for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+        condition = optionsFile.cohort(cohortNo).conditions{iCond};
+        loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], condition, iRep, nReps, []);
+        fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
+                  loadName, '_', optionsFile.dataFiles.rawFitFile{iModel}, '.mat'];
+        
+        if isfile(fitPath)
+            load(fitPath, 'est');
+            
+            % Check if est.traj.psi exists
+            if isfield(est.traj, 'psi')
+                % Calculate mean psi for each phase
+                for iPhase = 1:numPhases
+                    colName = ['psi_', condition, '_', phaseNames{iPhase}];
+                    phaseTrials = phaseRanges{iPhase};
+                    
+                    % Make sure the psi data has enough trials
+                    if size(est.traj.psi, 1) >= max(phaseTrials)
+                        % Calculate mean precision weight for this phase
+                        % Using column 2 for level 2 precision weights
+                        RQ3_3_dataTable.(colName)(iMouse) = mean(est.traj.psi(phaseTrials, 2), 'omitnan');
+                    else
+                        warning('Not enough trials for mouse %s in condition %s', currMouse, condition);
+                        RQ3_3_dataTable.(colName)(iMouse) = NaN;
+                    end
+                end
+            else
+                warning('est.traj.psi not found for mouse %s in condition %s', currMouse, condition);
+                % Set all phases to NaN for this condition if psi is missing
+                for iPhase = 1:numPhases
+                    colName = ['psi_', condition, '_', phaseNames{iPhase}];
+                    RQ3_3_dataTable.(colName)(iMouse) = NaN;
+                end
+            end
+        else
+            % If fit file doesn't exist, set all phases to NaN for this condition
+            for iPhase = 1:numPhases
+                colName = ['psi_', condition, '_', phaseNames{iPhase}];
+                RQ3_3_dataTable.(colName)(iMouse) = NaN;
+            end
+        end
+    end
+end
+
+% Remove any rows where all psi values are NaN (excluding ID and sex columns)
+allNanRows = true(nSize, 1);
+for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+    condition = optionsFile.cohort(cohortNo).conditions{iCond};
+    for iPhase = 1:numPhases
+        colName = ['psi_', condition, '_', phaseNames{iPhase}];
+        allNanRows = allNanRows & isnan(RQ3_3_dataTable.(colName));
+    end
+end
+
+if any(allNanRows)
+    RQ3_3_dataTable(allNanRows, :) = [];
+    fprintf('Removed %d rows with missing precision weight values across all conditions.\n', sum(allNanRows));
+end
+
+% Save table as both .mat and .csv
+savePath = [optionsFile.paths.cohort(cohortNo).groupLevel, optionsFile.cohort(cohortNo).taskPrefix, ...
+    optionsFile.cohort(cohortNo).name, '_RQ3_3_dataTable'];
+
+save([savePath, '.mat'], 'RQ3_3_dataTable');
+writetable(RQ3_3_dataTable, [savePath, '.csv']);
+
+disp(['Table saved to: ', savePath, '.csv']);
+end

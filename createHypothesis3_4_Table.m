@@ -102,9 +102,9 @@ for iMouse = 1:nSize
     
     if isfile(fitPath)
         load(fitPath, 'est');
-        RQ3_4_dataTable.omega2_saline(iMouse) = est.p_prc.om(2);
+        RQ3_4_dataTable.priorPrecision_saline(iMouse) = est.traj.sahat(1,2); %first precision estimate of omega2
     else
-        RQ3_4_dataTable.omega2_saline(iMouse) = NaN;
+        RQ3_4_dataTable.priorPrecision_saline(iMouse) = NaN;
     end
     
     % 5mg condition
@@ -114,9 +114,9 @@ for iMouse = 1:nSize
     
     if isfile(fitPath)
         load(fitPath, 'est');
-        RQ3_4_dataTable.omega2_5mg(iMouse) = est.p_prc.om(2);
+        RQ3_4_dataTable.priorPrecision_5mg(iMouse) = est.traj.sahat(1,2);
     else
-        RQ3_4_dataTable.omega2_5mg(iMouse) = NaN;
+        RQ3_4_dataTable.priorPrecision_5mg(iMouse) = NaN;
     end
     
     % 10mg condition
@@ -126,16 +126,16 @@ for iMouse = 1:nSize
     
     if isfile(fitPath)
         load(fitPath, 'est');
-        RQ3_4_dataTable.omega2_10mg(iMouse) = est.p_prc.om(2);
+        RQ3_4_dataTable.priorPrecision_10mg(iMouse) = est.traj.sahat(1,2);
     else
-        RQ3_4_dataTable.omega2_10mg(iMouse) = NaN;
+        RQ3_4_dataTable.priorPrecision_10mg(iMouse) = NaN;
     end
 end
 
-% Remove any rows with ALL NaN values across omega2 columns
-allNanRows = isnan(RQ3_4_dataTable.omega2_saline) & ...
-             isnan(RQ3_4_dataTable.omega2_5mg) & ...
-             isnan(RQ3_4_dataTable.omega2_10mg);
+% Remove any rows with ALL NaN values across priorPrecision columns
+allNanRows = isnan(RQ3_4_dataTable.priorPrecision_saline) & ...
+             isnan(RQ3_4_dataTable.priorPrecision_5mg) & ...
+             isnan(RQ3_4_dataTable.priorPrecision_10mg);
 
 if any(allNanRows)
     RQ3_4_dataTable(allNanRows, :) = [];
