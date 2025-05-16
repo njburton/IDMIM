@@ -1,5 +1,18 @@
 function fitModels(cohortNo)
-%% fitModels
+
+% fitModels - Fit computational models to mouse behavioural data
+%
+% This function fits multiple computational models to choice data from 
+% behavioural experiments. It processes data across conditions, tasks, 
+% repetitions, and individual mice, applying hierarchical Gaussian filter (HGF) 
+% models and Rescorla-Wagner models (RW) to quantify learning parameters. 
+% The function systematically loops through the dataset, creating individual
+% model fits for each mouse and experimental condition while handling informed 
+% priors if specified. Model fitting results are saved individually and also 
+% compiled into group-level files for further analysis. The function supports 
+% visualisation of model trajectories when enabled in the optionsFile.
+%
+% -------------------------------------------------------------------------
 %
 %  SYNTAX:  fitModels(cohortNo)
 %
@@ -9,10 +22,12 @@ function fitModels(cohortNo)
 %                            allows to run the pipeline and its functions for different
 %                            cohorts whose expcifications have been set in runOptions.m
 %
-% Original: 30/5/2023; Katharina Wellstein
-% Amended: 23/2/2024; Nicholas Burton
 % -------------------------------------------------------------------------
 %
+% Original: 30/5/2023; Katharina Wellstein
+% Amended: 23/2/2024; Nicholas Burton
+%
+% -------------------------------------------------------------------------
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
 % terms of the GPL (either version 3 or, at your option, any later version).
@@ -25,8 +40,7 @@ function fitModels(cohortNo)
 %
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
-% _________________________________________________________________________
-% =========================================================================
+% -------------------------------------------------------------------------
 
 %% INITIALIZE options and variables needed to run this function
 if exist('optionsFile.mat','file')==2
@@ -65,7 +79,7 @@ strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 for iCondition = 1:nConditions
     if nConditions>1 % if there is more than one condition get condition name string
         currCondition = iCondition;
-            disp(['* condition ', char(currCondition),'.']);
+        disp(['* condition ', char(currCondition),'.']);
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
 
@@ -127,14 +141,14 @@ for iCondition = 1:nConditions
                         modelInv.allMice(iMouse,iModel).est = [];
                         disp(['mouse ', char(saveName), ' not loaded...'])
                     end
-   
-                % create savepath and filename as a .mat file
-                groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
-                    [],currCondition,iRep,nReps,[]);
-                savePath = [optionsFile.paths.cohort(cohortNo).groupLevel,groupSaveName,'_',...
-                    optionsFile.model.space{iModel},'_',optionsFile.dataFiles.fittedData];
 
-                save(savePath, '-struct', 'modelInv','allMice');
+                    % create savepath and filename as a .mat file
+                    groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                        [],currCondition,iRep,nReps,[]);
+                    savePath = [optionsFile.paths.cohort(cohortNo).groupLevel,groupSaveName,'_',...
+                        optionsFile.model.space{iModel},'_',optionsFile.dataFiles.fittedData];
+
+                    save(savePath, '-struct', 'modelInv','allMice');
                 end % END MODEL loop
             end % END MOUSE loop
         end % END REPETITION loop

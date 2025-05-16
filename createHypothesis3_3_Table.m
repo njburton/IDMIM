@@ -1,5 +1,39 @@
 function createHypothesis3_3_Table
 
+% createHypothesis3_3_Table - Extract precision weights on prediction errors across treatment conditions
+%
+% This function extracts precision weights on prediction errors (psi) from fitted models
+% across three treatment conditions (saline, 5mg, 10mg) for each mouse. It breaks down the
+% prediction error precision weights into seven task phases (stable and volatile periods) for each
+% treatment condition, allowing for analysis of how drug treatment affects precision weights 
+% during different volatility contexts. The resulting data table contains one row per mouse with
+% precision weights from all phases and conditions, enabling statistical comparison of treatment
+% effects on precision-weighted prediction errors. The output is saved as both .mat and .csv files.
+%
+% No input arguments required; configuration is loaded from optionsFile.mat.
+% Output: Data table saved to the group-level results directory.
+%
+% ------------------------------------------------------------------------- 
+%
+% Coded by: 2025; Nicholas J. Burton,
+%           nicholasjburton91@gmail.com.au
+%           https://github.com/njburton
+%
+% -------------------------------------------------------------------------
+% This file is released under the terms of the GNU General Public Licence
+% (GPL), version 3. You can redistribute it and/or modify it under the
+% terms of the GPL (either version 3 or, at your option, any later version).
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details:
+% <http://www.gnu.org/licenses/>
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% -------------------------------------------------------------------------
+
 % Load options file
 if exist('optionsFile.mat','file')==2
     load('optionsFile.mat');
