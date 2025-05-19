@@ -145,51 +145,65 @@ if optionsFile.doCreatePlots
     % Create figure
     pos0 = get(0,'screenSize');
     pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
-    figure('position',pos,...
-        'color',[1 1 1],...
-        'name','BMS all');
 
+%Plotting details
+%Create figure
+figure('WindowState','maximized','Name','BMS all','Color',[1 1 1]);
 
     % plot BMS results
-    hold on; subplot(1,3,1); bar(1, res.BMS.exp_r(1),'FaceColor',[0,0.6902,0.9412],'EdgeColor',[0,0.6902,0.9412]);
-    hold on; subplot(1,3,1); bar(2, res.BMS.exp_r(2),'FaceColor',[0.4392,0.1882,0.6275],'EdgeColor',[0.4392,0.1882,0.6275]);
-    hold on; subplot(1,3,1); bar(3, res.BMS.exp_r(3),'FaceColor',[0.1490,0.1490,0.1490],'EdgeColor',[0.1490,0.1490,0.1490]);
-    ylabel ('posterior probability', 'FontSize', 15); ylim([0 1]);
+    hold on; subplot(1,3,1); bar(1, res.BMS.exp_r(1),'FaceColor',[0.266666666666667 0.447058823529412 0.768627450980392],'EdgeColor',[0.149 0.149 0.149]);
+    hold on; subplot(1,3,1); bar(2, res.BMS.exp_r(2),'FaceColor',[0.929411764705882 0.490196078431373 0.192156862745098],'EdgeColor',[0.149 0.149 0.149]);
+    hold on; subplot(1,3,1); bar(3, res.BMS.exp_r(3),'FaceColor',[0.43921568627451 0.67843137254902 0.27843137254902],'EdgeColor',[0.149 0.149 0.149]);
+    ylabel ('Posterior probability', 'FontSize', 14,'FontName','Arial'); ylim([0 1]);
+
     set(gca, 'XTick', []);
     set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 13);
     ax1       = subplot(1,3,1);
     ax1.YTick = [0 0.25 0.5 0.75 1.0];
+    ax1.GridLineStyle = ":";
+    ax1.XTick = [];
+    ax1.YGrid ="on";
+    ax1.YTick = [0 0.25 0.5 0.75 1];
     h_leg     = legend(optionsFile.model.names{1},optionsFile.model.names{2},optionsFile.model.names{3}, 'Location', 'northeast');
     set(h_leg,'box','off','FontSize', 13);
-    set(gca, 'color', 'none');
+    set(gca, 'color','none');
 
-    hold on; subplot(1,3,2); bar(1, res.BMS.xp(1),'FaceColor',[0,0.6902,0.9412],'EdgeColor',[0,0.6902,0.9412]);
-    hold on; subplot(1,3,2); bar(2, res.BMS.xp(2),'FaceColor',[0.4392,0.1882,0.6275],'EdgeColor',[0.4392,0.1882,0.6275]);
-    hold on; subplot(1,3,2); bar(3, res.BMS.xp(3),'FaceColor',[0.1490,0.1490,0.1490],'EdgeColor',[0.1490,0.1490,0.1490]);
-    ylabel('exceedance probability', 'FontSize', 15);
+    hold on; subplot(1,3,2); bar(1, res.BMS.xp(1),'FaceColor',[0.266666666666667 0.447058823529412 0.768627450980392],'EdgeColor',[0.149 0.149 0.149]);
+    hold on; subplot(1,3,2); bar(2, res.BMS.xp(2),'FaceColor',[0.929411764705882 0.490196078431373 0.192156862745098],'EdgeColor',[0.149 0.149 0.149]);
+    hold on; subplot(1,3,2); bar(3, res.BMS.xp(3),'FaceColor',[0.43921568627451 0.67843137254902 0.27843137254902],'EdgeColor',[0.149 0.149 0.149]);
+    ylabel('Exceedance probability', 'FontSize', 14,'FontName','Arial'); ylim([0 1]);
     set(gca, 'XTick', []);
     set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 13);
     ax2 = subplot(1,3,2);
     ax2.YTick = [0 0.25 0.5 0.75 1.0];
+    ax2.GridLineStyle = ":";
+    ax2.XTick = [];
+    ax2.YGrid ="on";
+    ax2.YTick = [0 0.25 0.5 0.75 1];
     % h_leg2 = legend(optionsFile.model.names{1},optionsFile.model.names{2},optionsFile.model.names{3}, 'Location', 'northeast');
     % set(h_leg2,'box','off','FontSize', 13);
     set(gca, 'color', 'none');
 
-    hold on; subplot(1,3,3); bar(1, res.BMS.pxp(1),'FaceColor',[0,0.6902,0.9412],'EdgeColor',[0,0.6902,0.9412]);
-    hold on; subplot(1,3,3); bar(2, res.BMS.pxp(2),'FaceColor',[0.4392,0.1882,0.6275],'EdgeColor',[0.4392,0.1882,0.6275]);
-    hold on; subplot(1,3,3); bar(3, res.BMS.pxp(3),'FaceColor',[0.1490,0.1490,0.1490],'EdgeColor',[0.1490,0.1490,0.1490]);
-    ylabel('protected exceedance probability', 'FontSize', 15);
+    hold on; subplot(1,3,3); bar(1, res.BMS.pxp(1),'FaceColor',[0.266666666666667 0.447058823529412 0.768627450980392],'EdgeColor',[0.149 0.149 0.149]);
+    hold on; subplot(1,3,3); bar(2, res.BMS.pxp(2),'FaceColor',[0.929411764705882 0.490196078431373 0.192156862745098],'EdgeColor',[0.149 0.149 0.149]);
+    hold on; subplot(1,3,3); bar(3, res.BMS.pxp(3),'FaceColor',[0.43921568627451 0.67843137254902 0.27843137254902],'EdgeColor',[0.149 0.149 0.149]);
+    ylabel('Protected exceedance probability', 'FontSize', 14,'FontName','Arial'); ylim([0 1]);
     set(gca, 'XTick', []);
     set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 13);
     ax2       = subplot(1,3,3);
     ax2.YTick = [0 0.25 0.5 0.75 1.0];
+    ax2.GridLineStyle = ":";
+    ax2.XTick = [];
+    ax2.YGrid ="on";
+    ax2.YTick = [0 0.25 0.5 0.75 1];
     % h_leg2    = legend(optionsFile.model.names{1},optionsFile.model.names{2},optionsFile.model.names{3}, 'Location', 'northeast');
     % set(h_leg2,'box','off','FontSize', 13);
 
-    sgtitle('Bayesian Model Selection', 'FontSize', 18);
-    set(gcf, 'color', 'none');
+    sgtitle(['Bayesian Model Selection results of ',subCohort,currCondition,currTask,' repetition ',num2str(iRep),' group'], 'FontSize', 18,'FontName','Arial');
+    set(gcf, 'color', 'white');
     set(gca, 'color', 'none');
 
+%Save plot
     saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
 
     figdir = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'_BMS']);
