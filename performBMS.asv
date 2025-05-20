@@ -251,5 +251,6 @@ if optionsFile.doCreatePlots
     close all;
 
 end
-disp(['Bayesian Model Selection of ',char(optionsFile.cohort(cohortNo).name), ' complete and plots successfully saved to ', optionsFile.paths.cohort(cohortNo).groupLevel,'.']);
+
 end
+disp(['Bayesian Model Selection of ',, ' complete and plots successfully saved to ', optionsFile.paths.cohort(cohortNo).groupLevel,'.']);

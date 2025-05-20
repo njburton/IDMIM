@@ -1,6 +1,4 @@
 %%PLot input sequences
-%% PLOTTING
-
 % load or run options for running this function
 if exist('optionsFile.mat','file')==2
     load('optionsFile.mat');
@@ -8,12 +6,14 @@ else
     optionsFile = runOptions();
 end
 
-%Study 1: UCMS ABA_R
+%% Study 1: UCMS ABA_R
 % Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2023_UCMS\NJB_HGF_ABA2_R.txt");
 % Y2 = [0.8*ones(1,60),0.5*ones(1,10),0.65*ones(1,5),0.3*ones(1,8),0.45*ones(1,12),...
 %         0.75*ones(1,6),0.55*ones(1,11),0.25*ones(1,8),0.8*ones(1,60)];
 % currTask = optionsFile.cohort(1).testTask(1).name;
-%Study 2 & 3: TrainingTask_RL
+
+%% Study 2 & 3: 
+% TrainingTask_RL
 % Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2024_HGFPilot\NJB_HGF_TrainingTask_RL.txt");
 % Y2 = [0.8*ones(1,140),0.2*ones(1,140)]; TrainingTask_RL
 % currTask = optionsFile.cohort(2).trainTask(1).name;
@@ -24,6 +24,8 @@ Y2 = [0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40),0.7*ones(1,20)
          0.3*ones(1,20),0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40)];
 currTask = optionsFile.cohort(2).testTask(1).name;
             
+
+
 % Create figure
 figure1 = figure('WindowState','maximized','Color',[1 1 1]);
 
