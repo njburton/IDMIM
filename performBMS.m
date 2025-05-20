@@ -206,11 +206,11 @@ if optionsFile.doCreatePlots
     %Save plot
     saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
     figdir = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'_BMS']);
-    print(figdir, '-dpng');
+    print(figdir, '-dpng', '-r300'); % Higher resolution for publication (300 dpi)
     close all;
 
 
-    % Create a new figure for the grouped plot
+    %% Create a new figure for the GROUPED plot
     figure('WindowState','maximized','Name','BMS Grouped','Color',[1 1 1]);
 
     % Define data for grouped bar plot
@@ -246,8 +246,61 @@ if optionsFile.doCreatePlots
 
     % Save grouped plot
     figdir_grouped = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'_BMS_Grouped']);
-    print(figdir_grouped, '-dpng');
+    print(figdir_grouped, '-dpng', '-r300');
 
+    close all;
+
+    %% Subject-Level Model Comparison Heatmap
+    figure('WindowState', 'maximized', 'Name', 'Subject-Level Model Comparison', 'Color', [1 1 1]);
+
+    % Normalise LME per subject to make values comparable
+    % Subtract the maximum LME value for each subject (row)
+    normalised_lme = res.LME - max(res.LME, [], 2);
+
+    % Create subject IDs for y-axis labels
+    if ~isempty(mouseIDs) && length(mouseIDs) == size(res.LME, 1)
+        subject_labels = mouseIDs;
+    else
+        subject_labels = cellstr(strcat('Subject ', num2str((1:size(res.LME, 1))')));
+    end
+
+    % Create the heatmap
+    h = heatmap(optionsFile.model.names, subject_labels, normalised_lme);
+
+    % Customise the heatmap appearance
+    h.Title = ['Subject-Level Model Comparison - ', subCohort, currCondition, currTask, ' Rep.', num2str(iRep)];
+    h.XLabel = 'Model';
+    h.YLabel = 'Subject ID';
+    h.ColorbarVisible = 'on';
+
+    % Using a diverging colormap where:
+    % - Best model (0) is dark blue
+    % - Slightly worse models are lighter blue
+    % - Much worse models are white to red
+    colormap(flipud(brewermap(64, '-RdBu')));  % Use ColorBrewer's Red-Blue diverging map (flipped using "-" infront of RdBu)
+
+    % Set custom colorbar limits to highlight differences better
+    max_diff = max(abs(min(normalised_lme(:))), 1);  % Max difference or at least 1
+    h.ColorLimits = [-max_diff, 0];  % Scale from most negative value to 0
+
+    % Format cell labels with 1 decimal place
+    h.CellLabelFormat = '%.1f';
+
+    % Adjust font size and appearance for better readability
+    h.FontSize = 12;
+    h.FontName = 'Arial';
+
+    % Add grid lines for clearer separation
+    h.GridVisible = 'on';
+
+    % Add a descriptive note about the values
+    annotation('textbox', [0.15, 0.01, 0.7, 0.03], ...
+        'String', 'Values show log evidence difference from best model per subject. 0 = best model (blue), more negative = worse fit (white to red).', ...
+        'EdgeColor', 'none', 'HorizontalAlignment', 'center', 'FontSize', 12, 'FontName', 'Arial');
+
+    % Save the subject-level comparison plot with higher resolution for publication
+    figdir_subject = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel, saveName, '_Subject_Level_Comparison']);
+    print(figdir_subject, '-dpng', '-r300');
     close all;
 
 end
