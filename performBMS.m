@@ -143,11 +143,11 @@ end
 
 if optionsFile.doCreatePlots
     % Create figure
-    pos0 = get(0,'screenSize');
-    pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
+    %     pos0 = get(0,'screenSize');
+    %     pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
 
     %Plotting details
-    %Create figure
+
     figure('WindowState','maximized','Name','BMS individual','Color',[1 1 1]);
 
     % plot BMS results
@@ -213,34 +213,22 @@ if optionsFile.doCreatePlots
     %% Create a new figure for the GROUPED plot
     figure('WindowState','maximized','Name','BMS Grouped','Color',[1 1 1]);
 
-    % Define data for grouped bar plot
     data = [res.BMS.exp_r; res.BMS.xp; res.BMS.pxp]';
 
-    % Create a grouped bar chart
+    % Create grouped bar chart
     h = bar(data, 'grouped');
-
-    % Set bar colors to match original plot
     h(1).FaceColor = [0.266666666666667 0.447058823529412 0.768627450980392]; % Blue for posterior probability
     h(2).FaceColor = [0.929411764705882 0.490196078431373 0.192156862745098]; % Orange for exceedance probability
     h(3).FaceColor = [0.43921568627451 0.67843137254902 0.27843137254902];   % Green for protected exceedance probability
 
-    % Add grid, title, axis labels
     grid on;
     xlabel('Model', 'FontSize', 14, 'FontName', 'Arial');
     ylabel('Probability', 'FontSize', 14, 'FontName', 'Arial');
     title(['Grouped BMS parameters for ',subCohort,currCondition,currTask,' repetition ',num2str(iRep)], 'FontSize', 18, 'FontName', 'Arial');
-
-    % Add x-tick labels (model names)
     set(gca, 'XTickLabel', optionsFile.model.names, 'FontSize', 13);
-
-    % Set y-axis limits
     ylim([0 1]);
     set(gca, 'YTick', [0 0.25 0.5 0.75 1.0]);
-
-    % Add legend
     legend('Posterior probability', 'Exceedance probability', 'Protected exceedance probability', 'Location', 'best', 'FontSize', 13, 'Box', 'off');
-
-    % Customize appearance
     set(gca, 'Box', 'off');
     set(gcf, 'color', 'white');
 
@@ -257,17 +245,14 @@ if optionsFile.doCreatePlots
     % Subtract the maximum LME value for each subject (row)
     normalised_lme = res.LME - max(res.LME, [], 2);
 
-    % Create subject IDs for y-axis labels
     if ~isempty(mouseIDs) && length(mouseIDs) == size(res.LME, 1)
         subject_labels = mouseIDs;
     else
         subject_labels = cellstr(strcat('Subject ', num2str((1:size(res.LME, 1))')));
     end
 
-    % Create the heatmap
+    % Create  heatmap
     h = heatmap(optionsFile.model.names, subject_labels, normalised_lme);
-
-    % Customise the heatmap appearance
     h.Title = ['Subject-Level Model Comparison - ', subCohort, currCondition, currTask, ' Rep.', num2str(iRep)];
     h.XLabel = 'Model';
     h.YLabel = 'Subject ID';
@@ -279,30 +264,23 @@ if optionsFile.doCreatePlots
     % - Much worse models are white to red
     colormap(flipud(brewermap(64, '-RdBu')));  % Use ColorBrewer's Red-Blue diverging map (flipped using "-" infront of RdBu)
 
-    % Set custom colorbar limits to highlight differences better
     max_diff = max(abs(min(normalised_lme(:))), 1);  % Max difference or at least 1
     h.ColorLimits = [-max_diff, 0];  % Scale from most negative value to 0
 
-    % Format cell labels with 1 decimal place
-    h.CellLabelFormat = '%.1f';
-
-    % Adjust font size and appearance for better readability
+    h.CellLabelFormat = '%.1f';     % Format cell labels with 1 decimal place
     h.FontSize = 12;
     h.FontName = 'Arial';
-
-    % Add grid lines for clearer separation
     h.GridVisible = 'on';
 
-    % Add a descriptive note about the values
     annotation('textbox', [0.15, 0.01, 0.7, 0.03], ...
         'String', 'Values show log evidence difference from best model per subject. 0 = best model (blue), more negative = worse fit (white to red).', ...
         'EdgeColor', 'none', 'HorizontalAlignment', 'center', 'FontSize', 12, 'FontName', 'Arial');
 
-    % Save the subject-level comparison plot with higher resolution for publication
+    % Save the subject-level comparison plot
     figdir_subject = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel, saveName, '_Subject_Level_Comparison']);
     print(figdir_subject, '-dpng', '-r300');
     close all;
 
 end
-disp(['Bayesian Model Selection of ',char(optionsFile.cohort(cohortNo).name), ' complete and plots successfully saved to ', optionsFile.paths.cohort(cohortNo).groupLevel,'.']);
+disp(['*** Bayesian Model Selection of ',char(optionsFile.cohort(cohortNo).name), ' complete and plots successfully saved to ', optionsFile.paths.cohort(cohortNo).groupLevel,'. ***']);
 end
