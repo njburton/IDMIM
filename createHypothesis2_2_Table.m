@@ -8,6 +8,7 @@ function createHypothesis2_2_Table
 % and learning rate (alpha) from the Rescorla-Wagner model. The resulting data table contains
 % one row per mouse with parameters from all models and repetitions, allowing for
 % statistical analysis of how these parameters change with repeated task exposure.
+% Exclusion criteria are applied per-repetition rather than per-mouse.
 % The output is saved as both .mat and .csv files.
 %
 % No input arguments required; configuration is loaded from optionsFile.mat.
@@ -54,16 +55,23 @@ subCohort = [];
 currTask = optionsFile.cohort(cohortNo).testTask(1).name;
 [mouseIDs, nSize] = getSampleVars(optionsFile, cohortNo, subCohort);
 
-%% EXCLUDE MICE from this analysis
-% Check available mouse data and exclusion criteria
+%% EXCLUDE MICE that have NO data files at all
+% Only exclude mice that have no data files for any repetition
 noDataArray = zeros(1, nSize);
-exclArray = zeros(1, nSize);
 
 for iMouse = 1:nSize
     currMouse = mouseIDs{iMouse};
-    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], 1, nReps, 'info');
-    if ~isfile([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'])
-        disp(['Data for mouse ', currMouse, ' not available']);
+    % Check if data exists for any repetition
+    hasData = false;
+    for iRep = 1:nReps
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], iRep, nReps, 'info');
+        if isfile([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'])
+            hasData = true;
+            break;
+        end
+    end
+    if ~hasData
+        disp(['Data for mouse ', currMouse, ' not available in any repetition']);
         noDataArray(iMouse) = iMouse;
     end
 end
@@ -76,23 +84,7 @@ for i = noDataArray
 end
 nSize = numel(mouseIDs);
 
-for iMouse = 1:nSize
-    currMouse = mouseIDs{iMouse};
-    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], 1, nReps, 'info');
-    load([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName]);
-    if any([MouseInfoTable.exclCrit2_met, MouseInfoTable.exclCrit1_met], 'all')
-        disp(['Mouse ', currMouse, ' excluded based on exclusion criteria']);
-        exclArray(iMouse) = iMouse;
-    end
-end
-
-exclArray = sort(exclArray, 'descend');
-exclArray(exclArray == 0) = [];
-
-for i = exclArray
-    mouseIDs(i) = [];
-end
-nSize = numel(mouseIDs);
+fprintf('Total mice with at least some data: %d\n', nSize);
 
 % Create table with one row per mouse and columns for each parameter/repetition
 RQ2_2_dataTable = table('Size', [nSize, 2+12], ...  % 2 basic columns + 12 parameter columns (4 parameters x 3 reps)
@@ -111,71 +103,114 @@ RQ2_2_dataTable = table('Size', [nSize, 2+12], ...  % 2 basic columns + 12 param
 for iMouse = 1:nSize
     currMouse = mouseIDs{iMouse};
 
-    % Load basic info from rep 1 (for ID and sex)
-    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], 1, nReps, 'info');
-    infoPath = [char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'];
+    % Load basic info from first available repetition (for ID and sex)
+    for iRep = 1:nReps
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], iRep, nReps, 'info');
+        infoPath = [char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'];
 
-    if isfile(infoPath)
-        load(infoPath, 'MouseInfoTable');
-        RQ2_2_dataTable.ID(iMouse) = currMouse;
-        RQ2_2_dataTable.sex(iMouse) = MouseInfoTable.Sex;
-    else
+        if isfile(infoPath)
+            load(infoPath, 'MouseInfoTable');
+            RQ2_2_dataTable.ID(iMouse) = currMouse;
+            RQ2_2_dataTable.sex(iMouse) = MouseInfoTable.Sex;
+            break;
+        end
+    end
+    
+    % If no info file found, still set ID
+    if isempty(RQ2_2_dataTable.ID(iMouse)) || ismissing(RQ2_2_dataTable.ID(iMouse))
         RQ2_2_dataTable.ID(iMouse) = currMouse;
         RQ2_2_dataTable.sex(iMouse) = "";
     end
 
-    % For each repetition, extract parameters from all three models
+    % For each repetition, check exclusion criteria and extract parameters
     for iRep = 1:nReps
-        % Get file name for this repetition
-        loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], iRep, nReps, []);
-
-        % Extract HGF 2-level omega2
-        hgf2_col = ['HGF2_omega2_rep', num2str(iRep)];
-        fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
-            loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF2}, '.mat'];
-
-        if isfile(fitPath)
-            load(fitPath, 'est');
-            RQ2_2_dataTable.(hgf2_col)(iMouse) = est.p_prc.om(2);
-        else
-            RQ2_2_dataTable.(hgf2_col)(iMouse) = NaN;
+        % Check exclusion criteria for this specific repetition
+        shouldExcludeThisRep = false;
+        
+        % Load info file to check exclusion criteria
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], iRep, nReps, 'info');
+        infoPath = [char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'];
+        
+        if isfile(infoPath)
+            load(infoPath, 'MouseInfoTable');
+            
+            % Check if exclusion criteria fields exist and if criteria are met
+            if isfield(table2struct(MouseInfoTable), 'exclCrit1_met') && ...
+               isfield(table2struct(MouseInfoTable), 'exclCrit2_met')
+                
+                if MouseInfoTable.exclCrit1_met || MouseInfoTable.exclCrit2_met
+                    shouldExcludeThisRep = true;
+                    disp(['Mouse ', currMouse, ' excluded for repetition ', num2str(iRep), ' based on exclusion criteria']);
+                end
+            end
         end
 
-        % Extract HGF 3-level omega2 and omega3
-        hgf3_omega2_col = ['HGF3_omega2_rep', num2str(iRep)];
-        hgf3_omega3_col = ['HGF3_omega3_rep', num2str(iRep)];
-        fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
-            loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF3}, '.mat'];
+        % Only extract parameters if this mouse-repetition combination should not be excluded
+        if ~shouldExcludeThisRep
+            % Get file name for this repetition
+            loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], [], iRep, nReps, []);
 
-        if isfile(fitPath)
-            load(fitPath, 'est');
-            RQ2_2_dataTable.(hgf3_omega2_col)(iMouse) = est.p_prc.om(2);
-            RQ2_2_dataTable.(hgf3_omega3_col)(iMouse) = est.p_prc.om(3);
-        else
-            RQ2_2_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
-            RQ2_2_dataTable.(hgf3_omega3_col)(iMouse) = NaN;
-        end
+            % Extract HGF 2-level omega2
+            hgf2_col = ['HGF2_omega2_rep', num2str(iRep)];
+            fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
+                loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF2}, '.mat'];
 
-        % Extract Rescorla-Wagner alpha parameter
-        rw_col = ['RW_alpha_rep', num2str(iRep)];
-        fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
-            loadName, '_', optionsFile.dataFiles.rawFitFile{model_RW}, '.mat'];
+            if isfile(fitPath)
+                load(fitPath, 'est');
+                RQ2_2_dataTable.(hgf2_col)(iMouse) = est.p_prc.om(2);
+            else
+                RQ2_2_dataTable.(hgf2_col)(iMouse) = NaN;
+            end
 
-        if isfile(fitPath)
-            load(fitPath, 'est');
-            if isfield(est.p_prc, 'al')
-                RQ2_2_dataTable.(rw_col)(iMouse) = est.p_prc.al;
+            % Extract HGF 3-level omega2 and omega3
+            hgf3_omega2_col = ['HGF3_omega2_rep', num2str(iRep)];
+            hgf3_omega3_col = ['HGF3_omega3_rep', num2str(iRep)];
+            fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
+                loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF3}, '.mat'];
+
+            if isfile(fitPath)
+                load(fitPath, 'est');
+                RQ2_2_dataTable.(hgf3_omega2_col)(iMouse) = est.p_prc.om(2);
+                RQ2_2_dataTable.(hgf3_omega3_col)(iMouse) = est.p_prc.om(3);
+            else
+                RQ2_2_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
+                RQ2_2_dataTable.(hgf3_omega3_col)(iMouse) = NaN;
+            end
+
+            % Extract Rescorla-Wagner alpha parameter
+            rw_col = ['RW_alpha_rep', num2str(iRep)];
+            fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
+                loadName, '_', optionsFile.dataFiles.rawFitFile{model_RW}, '.mat'];
+
+            if isfile(fitPath)
+                load(fitPath, 'est');
+                if isfield(est.p_prc, 'al')
+                    RQ2_2_dataTable.(rw_col)(iMouse) = est.p_prc.al;
+                else
+                    RQ2_2_dataTable.(rw_col)(iMouse) = NaN;
+                end
             else
                 RQ2_2_dataTable.(rw_col)(iMouse) = NaN;
             end
         else
+            % Set all parameters to NaN for this excluded repetition
+            hgf2_col = ['HGF2_omega2_rep', num2str(iRep)];
+            hgf3_omega2_col = ['HGF3_omega2_rep', num2str(iRep)];
+            hgf3_omega3_col = ['HGF3_omega3_rep', num2str(iRep)];
+            rw_col = ['RW_alpha_rep', num2str(iRep)];
+            
+            RQ2_2_dataTable.(hgf2_col)(iMouse) = NaN;
+            RQ2_2_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
+            RQ2_2_dataTable.(hgf3_omega3_col)(iMouse) = NaN;
             RQ2_2_dataTable.(rw_col)(iMouse) = NaN;
         end
     end
 end
 
-% Remove any rows with ALL NaN values across parameter columns
-allNanRows = true(nSize, 1);
+% Only remove rows where ALL parameters across ALL repetitions are NaN
+% (i.e., mice that have no valid data for any repetition)
+allNanRows = true(height(RQ2_2_dataTable), 1);
+
 for iRep = 1:nReps
     hgf2_col = ['HGF2_omega2_rep', num2str(iRep)];
     hgf3_omega2_col = ['HGF3_omega2_rep', num2str(iRep)];
@@ -183,16 +218,21 @@ for iRep = 1:nReps
     rw_col = ['RW_alpha_rep', num2str(iRep)];
 
     % Check if all parameters are NaN for this repetition
-    allNanRows = allNanRows & isnan(RQ2_2_dataTable.(hgf2_col)) & ...
+    repAllNaN = isnan(RQ2_2_dataTable.(hgf2_col)) & ...
         isnan(RQ2_2_dataTable.(hgf3_omega2_col)) & ...
         isnan(RQ2_2_dataTable.(hgf3_omega3_col)) & ...
         isnan(RQ2_2_dataTable.(rw_col));
+    
+    % If any repetition has valid data, don't mark row for removal
+    allNanRows = allNanRows & repAllNaN;
 end
 
 if any(allNanRows)
+    fprintf('Removing %d mice with no valid parameter values across all repetitions.\n', sum(allNanRows));
     RQ2_2_dataTable(allNanRows, :) = [];
-    fprintf('Removed %d rows with no parameter values across all repetitions.\n', sum(allNanRows));
 end
+
+fprintf('Final table contains %d mice.\n', height(RQ2_2_dataTable));
 
 % Save table as both .mat and .csv
 savePath = [optionsFile.paths.cohort(cohortNo).groupLevel, optionsFile.cohort(cohortNo).taskPrefix, ...

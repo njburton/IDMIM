@@ -71,23 +71,24 @@ else
 end
 
 %% Study 1: UCMS ABA_R
-Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2023_UCMS\NJB_HGF_ABA2_R.txt");
-Y2 = [0.8*ones(1,60),0.5*ones(1,10),0.65*ones(1,5),0.3*ones(1,8),0.45*ones(1,12),...
-        0.75*ones(1,6),0.55*ones(1,11),0.25*ones(1,8),0.8*ones(1,60)];
-currTask = optionsFile.cohort(1).testTask(1).name;
+% Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2023_UCMS\NJB_HGF_ABA2_R.txt");
+% Y2 = [0.8*ones(1,60),0.5*ones(1,10),0.65*ones(1,5),0.3*ones(1,8),0.45*ones(1,12),...
+%         0.75*ones(1,6),0.55*ones(1,11),0.25*ones(1,8),0.8*ones(1,60)];
+% currTask = optionsFile.cohort(1).testTask(1).name;
 
-% Study 2 & 3: 
-%TrainingTask_RL
+%% Study 2 & 3: 
+% TrainingTask_RL
 % Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2024_HGFPilot\NJB_HGF_TrainingTask_RL.txt");
-% Y2 = [0.8*ones(1,140),0.2*ones(1,140)];
+% Y2 = [0.8*ones(1,140),0.2*ones(1,140)]; TrainingTask_RL
 % currTask = optionsFile.cohort(2).trainTask(1).name;
 
-% %TestTask A
-% Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2024_HGFPilot\NJB_HGF_TestTaskA.txt");
-% Y2 = [0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40),0.7*ones(1,20),...
-%          0.3*ones(1,20),0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40)];
-% currTask = optionsFile.cohort(2).testTask(1).name;
+%TestTask A
+Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2024_HGFPilot\NJB_HGF_TestTaskA.txt");
+Y2 = [0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40),0.7*ones(1,20),...
+         0.3*ones(1,20),0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40)];
+currTask = optionsFile.cohort(2).testTask(1).name;
             
+
 
 % Create figure
 figure1 = figure('WindowState','maximized','Color',[1 1 1]);
@@ -119,9 +120,9 @@ xlabel('Trial','FontName','Arial');
 title('Task structure of TestTask A','FontSize',26,'FontName','Arial');
 
 % Uncomment the following line to preserve the X-limits of the axes
-xlim(axes1,[-10 190]);
+% xlim(axes1,[-10 290]);
 % Uncomment the following line to preserve the Y-limits of the axes
-ylim(axes1,[-0.1 1.1]);
+% ylim(axes1,[-0.1 1.1]);
 hold(axes1,'off');
 % Set the remaining axes properties
 set(axes1,'ClippingStyle','rectangle','FontName','Arial','FontSize',24,...
@@ -217,6 +218,8 @@ annotation(figure1,'rectangle',...
     'Color','none',...
     'FaceColor',[0 0.447058823529412 0.741176470588235],...
     'FaceAlpha',0.05);
+
+
 
 % Save figure
 savePath = fullfile([optionsFile.paths.saveDir,'results\2024_HGFPilot\plots\taskStructure']);

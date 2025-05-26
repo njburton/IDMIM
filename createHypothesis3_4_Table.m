@@ -8,7 +8,8 @@ function createHypothesis3_4_Table
 % prior precision, 3-level HGF omega2 prior precision, and 3-level HGF omega3 prior precision).
 % The resulting data table contains one row per mouse with all prior precision parameters
 % across conditions, allowing for statistical analysis of how drug treatment affects
-% the precision of volatility estimates. The output is saved as both .mat and .csv files.
+% the precision of volatility estimates. Exclusion criteria are applied per-condition 
+% rather than per-mouse. The output is saved as both .mat and .csv files.
 %
 % No input arguments required; configuration is loaded from optionsFile.mat.
 % Output: Data table saved to the group-level results directory.
@@ -17,7 +18,6 @@ function createHypothesis3_4_Table
 %
 % Coded by: 2025; Nicholas J. Burton,
 %           nicholasjburton91@gmail.com.au
-%           https://github.com/njburton
 %
 % -------------------------------------------------------------------------
 % This file is released under the terms of the GNU General Public Licence
@@ -54,10 +54,9 @@ subCohort = [];
 currTask = optionsFile.cohort(cohortNo).testTask(1).name;
 [mouseIDs, nSize] = getSampleVars(optionsFile, cohortNo, subCohort);
 
-%% EXCLUDE MICE from this analysis
-% Check available mouse data and exclusion criteria
+%% EXCLUDE MICE that have NO data files at all
+% Only exclude mice that have no data files for any condition
 noDataArray = zeros(1, nSize);
-exclArray = zeros(1, nSize);
 
 for iMouse = 1:nSize
     currMouse = mouseIDs{iMouse};
@@ -84,28 +83,7 @@ for i = noDataArray
 end
 nSize = numel(mouseIDs);
 
-for iMouse = 1:nSize
-    currMouse = mouseIDs{iMouse};
-    for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
-        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], optionsFile.cohort(cohortNo).conditions{iCond}, iRep, nReps, 'info');
-        if isfile([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'])
-            load([char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName]);
-            if any([MouseInfoTable.exclCrit2_met, MouseInfoTable.exclCrit1_met], 'all')
-                disp(['Mouse ', currMouse, ' excluded based on exclusion criteria']);
-                exclArray(iMouse) = iMouse;
-                break;
-            end
-        end
-    end
-end
-
-exclArray = sort(exclArray, 'descend');
-exclArray(exclArray == 0) = [];
-
-for i = exclArray
-    mouseIDs(i) = [];
-end
-nSize = numel(mouseIDs);
+fprintf('Total mice with at least some data: %d\n', nSize);
 
 % Create table with one row per mouse and columns for each parameter/condition
 RQ3_4_dataTable = table('Size', [nSize, 2+9], ...  % 2 basic columns + 9 parameter columns (3 parameters x 3 conditions)
@@ -136,86 +114,122 @@ for iMouse = 1:nSize
         end
     end
 
-    % Get prior precision values for each condition
-    conditions = {'saline', '5mg', '10mg'};
+    % Get prior precision values for each condition - using actual conditions from optionsFile
+    for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+        currCondition = optionsFile.cohort(cohortNo).conditions{iCond};
 
-    for iCond = 1:length(conditions)
-        currCondition = conditions{iCond};
-
-        % Get file name base for this condition
-        loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], currCondition, iRep, nReps, []);
-
-        % HGF 2-level - prior precision of omega2
-        hgf2_col = ['HGF2_priorPrec_omega2_', currCondition];
-        fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
-            loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF2}, '.mat'];
-
-        if isfile(fitPath)
-            load(fitPath, 'est');
-            if isfield(est.traj, 'sahat') && size(est.traj.sahat, 2) >= 2
-                RQ3_4_dataTable.(hgf2_col)(iMouse) = est.traj.sahat(1, 2);  % First precision estimate of omega2
-            else
-                warning('Prior precision field est.traj.sahat(1,2) not found for mouse %s in condition %s (HGF2)', currMouse, currCondition);
-                RQ3_4_dataTable.(hgf2_col)(iMouse) = NaN;
+        % Check exclusion criteria for this specific condition
+        shouldExcludeThisCondition = false;
+        
+        % Load info file to check exclusion criteria
+        loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], currCondition, iRep, nReps, 'info');
+        infoPath = [char(optionsFile.paths.cohort(cohortNo).data), 'mouse', char(currMouse), '_', loadInfoName, '.mat'];
+        
+        if isfile(infoPath)
+            load(infoPath, 'MouseInfoTable');
+            
+            % Check if exclusion criteria fields exist and if criteria are met
+            if isfield(table2struct(MouseInfoTable), 'exclCrit1_met') && ...
+               isfield(table2struct(MouseInfoTable), 'exclCrit2_met')
+                
+                if MouseInfoTable.exclCrit1_met || MouseInfoTable.exclCrit2_met
+                    shouldExcludeThisCondition = true;
+                    disp(['Mouse ', currMouse, ' excluded for condition ', currCondition, ' based on exclusion criteria']);
+                end
             end
-        else
-            RQ3_4_dataTable.(hgf2_col)(iMouse) = NaN;
         end
 
-        % HGF 3-level - load file once for both omega2 and omega3
-        fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
-            loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF3}, '.mat'];
+        % Only extract parameters if this mouse-condition combination should not be excluded
+        if ~shouldExcludeThisCondition
+            % Get file name base for this condition
+            loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix, currTask, [], currCondition, iRep, nReps, []);
 
-        if isfile(fitPath)
-            load(fitPath, 'est');
+            % HGF 2-level - prior precision of omega2
+            hgf2_col = ['HGF2_priorPrec_omega2_', currCondition];
+            fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
+                loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF2}, '.mat'];
 
-            % HGF 3-level - prior precision of omega2
-            hgf3_omega2_col = ['HGF3_priorPrec_omega2_', currCondition];
-            if isfield(est.traj, 'sahat') && size(est.traj.sahat, 2) >= 2
-                RQ3_4_dataTable.(hgf3_omega2_col)(iMouse) = est.traj.sahat(1, 2);  % First precision estimate of omega2
+            if isfile(fitPath)
+                load(fitPath, 'est');
+                if isfield(est.traj, 'sahat') && size(est.traj.sahat, 2) >= 2
+                    RQ3_4_dataTable.(hgf2_col)(iMouse) = est.traj.sahat(1, 2);  % First precision estimate of omega2
+                else
+                    warning('Prior precision field est.traj.sahat(1,2) not found for mouse %s in condition %s (HGF2)', currMouse, currCondition);
+                    RQ3_4_dataTable.(hgf2_col)(iMouse) = NaN;
+                end
             else
-                warning('Prior precision field est.traj.sahat(1,2) not found for mouse %s in condition %s (HGF3)', currMouse, currCondition);
-                RQ3_4_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
+                RQ3_4_dataTable.(hgf2_col)(iMouse) = NaN;
             end
 
-            % HGF 3-level - prior precision of omega3
-            hgf3_omega3_col = ['HGF3_priorPrec_omega3_', currCondition];
-            if isfield(est.traj, 'sahat') && size(est.traj.sahat, 2) >= 3
-                RQ3_4_dataTable.(hgf3_omega3_col)(iMouse) = est.traj.sahat(1, 3);  % First precision estimate of omega3
+            % HGF 3-level - load file once for both omega2 and omega3
+            fitPath = [char(optionsFile.paths.cohort(cohortNo).results), 'mouse', char(currMouse), '_', ...
+                loadName, '_', optionsFile.dataFiles.rawFitFile{model_HGF3}, '.mat'];
+
+            if isfile(fitPath)
+                load(fitPath, 'est');
+
+                % HGF 3-level - prior precision of omega2
+                hgf3_omega2_col = ['HGF3_priorPrec_omega2_', currCondition];
+                if isfield(est.traj, 'sahat') && size(est.traj.sahat, 2) >= 2
+                    RQ3_4_dataTable.(hgf3_omega2_col)(iMouse) = est.traj.sahat(1, 2);  % First precision estimate of omega2
+                else
+                    warning('Prior precision field est.traj.sahat(1,2) not found for mouse %s in condition %s (HGF3)', currMouse, currCondition);
+                    RQ3_4_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
+                end
+
+                % HGF 3-level - prior precision of omega3
+                hgf3_omega3_col = ['HGF3_priorPrec_omega3_', currCondition];
+                if isfield(est.traj, 'sahat') && size(est.traj.sahat, 2) >= 3
+                    RQ3_4_dataTable.(hgf3_omega3_col)(iMouse) = est.traj.sahat(1, 3);  % First precision estimate of omega3
+                else
+                    warning('Prior precision field est.traj.sahat(1,3) not found for mouse %s in condition %s', currMouse, currCondition);
+                    RQ3_4_dataTable.(hgf3_omega3_col)(iMouse) = NaN;
+                end
             else
-                warning('Prior precision field est.traj.sahat(1,3) not found for mouse %s in condition %s', currMouse, currCondition);
+                % If file doesn't exist, set both HGF3 parameters to NaN
+                hgf3_omega2_col = ['HGF3_priorPrec_omega2_', currCondition];
+                hgf3_omega3_col = ['HGF3_priorPrec_omega3_', currCondition];
+                RQ3_4_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
                 RQ3_4_dataTable.(hgf3_omega3_col)(iMouse) = NaN;
             end
         else
-            % If file doesn't exist, set both HGF3 parameters to NaN
+            % Set all parameters to NaN for this excluded condition
+            hgf2_col = ['HGF2_priorPrec_omega2_', currCondition];
             hgf3_omega2_col = ['HGF3_priorPrec_omega2_', currCondition];
             hgf3_omega3_col = ['HGF3_priorPrec_omega3_', currCondition];
+            
+            RQ3_4_dataTable.(hgf2_col)(iMouse) = NaN;
             RQ3_4_dataTable.(hgf3_omega2_col)(iMouse) = NaN;
             RQ3_4_dataTable.(hgf3_omega3_col)(iMouse) = NaN;
         end
     end
 end
 
-% Remove any rows with ALL NaN values across parameter columns
-allNanRows = true(nSize, 1);
-conditions = {'saline', '5mg', '10mg'};
+% Only remove rows where ALL parameters across ALL conditions are NaN
+% (i.e., mice that have no valid data for any condition)
+allNanRows = true(height(RQ3_4_dataTable), 1);
 
-for iCond = 1:length(conditions)
-    currCondition = conditions{iCond};
+for iCond = 1:length(optionsFile.cohort(cohortNo).conditions)
+    currCondition = optionsFile.cohort(cohortNo).conditions{iCond};
     hgf2_col = ['HGF2_priorPrec_omega2_', currCondition];
     hgf3_omega2_col = ['HGF3_priorPrec_omega2_', currCondition];
     hgf3_omega3_col = ['HGF3_priorPrec_omega3_', currCondition];
 
     % Check if all parameters are NaN for this condition
-    allNanRows = allNanRows & isnan(RQ3_4_dataTable.(hgf2_col)) & ...
+    conditionAllNaN = isnan(RQ3_4_dataTable.(hgf2_col)) & ...
         isnan(RQ3_4_dataTable.(hgf3_omega2_col)) & ...
         isnan(RQ3_4_dataTable.(hgf3_omega3_col));
+    
+    % If any condition has valid data, don't mark row for removal
+    allNanRows = allNanRows & conditionAllNaN;
 end
 
 if any(allNanRows)
+    fprintf('Removing %d mice with no valid prior precision values across all conditions.\n', sum(allNanRows));
     RQ3_4_dataTable(allNanRows, :) = [];
-    fprintf('Removed %d rows with no prior precision values across all conditions.\n', sum(allNanRows));
 end
+
+fprintf('Final table contains %d mice.\n', height(RQ3_4_dataTable));
 
 % Save table as both .mat and .csv
 savePath = [optionsFile.paths.cohort(cohortNo).groupLevel, optionsFile.cohort(cohortNo).taskPrefix, ...
