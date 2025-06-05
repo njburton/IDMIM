@@ -1,5 +1,7 @@
 function [] = simData_fitModels(cohortNo)
 
+% WARNING: This function will take 24-48 hours to complete depending on your system and number of samples.
+
 %% simData_fitModels
 %  Invert simulated agents with models in the modelspace. This step will be
 %  executed if optionsFile.doSimulations = 1;
@@ -117,6 +119,6 @@ for iTask = 1:nTasks
     end % END SAMPLE loop
 end % END TASK loop
 
-disp('model inversion of simulated responses for cohort ',optionsFile.cohort(cohortNo).name,' complete.')
+disp(['model inversion of simulated responses for cohort ',optionsFile.cohort(cohortNo).name,' complete.'])
 
 end

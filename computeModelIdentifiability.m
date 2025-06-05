@@ -65,8 +65,8 @@ for iTask = 1:1%nTasks
                 modelEst = optionsFile.dataFiles.rawFitFile{m_est};
                 % load results from simulated agents' model inversion
                 rec.sim.task(iTask).agent(m_in,iAgent,m_est).data = load(fullfile(optionsFile.paths.cohort(cohortNo).simulations, ...
-                     ['simAgent_', num2str(iAgent),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_', modelIn,...
-                        '_model_est_',modelEst,'.mat']));
+                    ['simAgent_', num2str(iAgent),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_', modelIn,...
+                    '_model_est_',modelEst,'.mat']));
 
                 % LME
                 rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
@@ -99,52 +99,109 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
 
     % save to struct
     saveDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).taskPrefix,...
-            optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
+        optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
     save(saveDir,'-struct','rec');
 
     if optionsFile.doCreatePlots
-        %% PLOT MODEL IDENTIFIABILITY
+        %% PLOT MODEL IDENTIFIABILITY with consistent styling
         label_x = {optionsFile.model.names{1} optionsFile.model.names{2} optionsFile.model.names{3}};
-        figure('color',[1 1 1],'name','model identifiability');
+
+        % Create figure with consistent positioning
+        pos0 = get(0,'screenSize');
+        pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
+        figure('WindowState','maximized','Name','Model Identifiability','Color',[1 1 1],'Position',pos);
 
         numlabels = size(rec.class.percLMEwinner, 1); % number of labels
 
-        % plot colors
+        % Create the heatmap
         imagesc(rec.class.percLMEwinner);
-        title(sprintf('Balanced Accuracy: %.2f%%', 100*trace(rec.class.LMEwinner)/sum(rec.class.LMEwinner(:))));
-        ylabel('Output Class'); xlabel('Target Class');
 
-        % set colormap
-        colormap(flipud(gray));
+        % Set color limits to ensure full 0-1 range
+        caxis([0 1]);
+
+        % Set title and labels with Arial font
+        title(sprintf('Balanced Accuracy: %.2f%%', 100*trace(rec.class.LMEwinner)/sum(rec.class.LMEwinner(:))), ...
+            'FontSize', 18, 'FontName', 'Arial');
+        ylabel('Output Class', 'FontSize', 14, 'FontName', 'Arial');
+        xlabel('Target Class', 'FontSize', 14, 'FontName', 'Arial');
+
+        % Set colormap using ColorBrewer's Red-Blue diverging map
+        colormap(flipud(brewermap(64, '-RdBu'))); % Use ColorBrewer's Red-Blue diverging map (flipped using "-" infront of RdBu)
+
+        % Set colorbar with proper tick marks
+        cb = colorbar('FontSize', 20, 'FontName', 'Arial');
+
+        % Set colorbar ticks to include 0 and 1
+        cb.Ticks = [0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0];
+        cb.TickLabels = {'0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0'};
 
         % Create strings from the matrix values and remove spaces
         textStrings = num2str([100*rec.class.percLMEwinner(:), rec.class.LMEwinner(:)], '%.1f%%\n%d\n');
         textStrings = strtrim(cellstr(textStrings));
 
         % Create x and y coordinates for the strings and plot them
-        [x,y]       = meshgrid(1:numlabels);
-        hStrings    = text(x(:),y(:),textStrings(:), 'HorizontalAlignment','center');
+        [x,y] = meshgrid(1:numlabels);
+        hStrings = text(x(:),y(:),textStrings(:), 'HorizontalAlignment','center', ...
+            'FontSize', 20, 'FontName', 'Arial');
 
-        % Get the middle value of the color range
-        midValue    = mean(get(gca,'CLim'));
+        % Get the color limits and create better contrast for text
+        cLimits = get(gca,'CLim');
+        cRange = cLimits(2) - cLimits(1);
 
-        % Choose white or black for the text color of the strings so they can be seen over the background color
-        textColors  = repmat(rec.class.percLMEwinner(:) > midValue,1,3);
+        % Define thresholds for better text contrast with RdBu colormap
+        % For RdBu: values close to 0 (dark red) and 1 (dark blue) need white text
+        % Values in the middle (light colors) need black text
+        textColors = zeros(numel(rec.class.percLMEwinner(:)), 3);
+
+        for i = 1:numel(rec.class.percLMEwinner(:))
+            value = rec.class.percLMEwinner(i);
+            % Normalize the value to 0-1 range
+            normalizedValue = (value - cLimits(1)) / cRange;
+
+            % Use white text for dark colors (very low and very high values)
+            % Use black text for light colors (middle values)
+            if normalizedValue < 0.3 || normalizedValue > 0.7
+                textColors(i,:) = [1 1 1]; % White text
+            else
+                textColors(i,:) = [0 0 0]; % Black text
+            end
+        end
+
         set(hStrings,{'Color'},num2cell(textColors,2));
 
-        % Setting the axis labels
+        % Setting the axis labels and formatting
         set(gca,'XTick',1:numlabels,...
             'XTickLabel',label_x,...
             'YTick',1:numlabels,...
             'YTickLabel',label_x,...
-            'TickLength',[0 0]);
+            'TickLength',[0 0],...
+            'FontSize', 22, ...
+            'FontName', 'Arial', ...
+            'box', 'off');
 
+        % Set grid properties to match BMS style
+        set(gca, 'GridLineStyle', ':', ...
+            'GridAlpha', 0.2, ...
+            'color', 'none');
+
+        % Make figure background transparent
+        set(gcf, 'color', 'white');
+
+        % Save figure
         figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).taskPrefix,...
             optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
-        save([figDir,'.fig'])
+
+        % Save as .fig and .png
+        savefig([figDir,'.fig']);
         print(figDir, '-dpng');
+
+        % Close the current figure
+        close(gcf);
     end % END TASK Loop
 end
+% Close any remaining figures
 close all;
+disp(['*** Bayesian Model Identifiability of ',char(optionsFile.cohort(cohortNo).name), ' complete and plot successfully saved to ', figDir]);
+
 
 end

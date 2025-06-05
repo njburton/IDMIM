@@ -31,7 +31,7 @@ function performBMS(cohortNo,subCohort,iTask,iCondition,iRep)
 % -------------------------------------------------------------------------
 % This file is released under the terms of the GNU General Public Licence
 % (GPL), version 3. You can redistribute it and/or modify it under the
-% terms of the GPL (either version 3 or, at your option, any later version).
+% terms of the GPL (either version 3 or, at your option, any later version.
 %
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -43,6 +43,9 @@ function performBMS(cohortNo,subCohort,iTask,iCondition,iRep)
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 % _________________________________________________________________________
 % =========================================================================
+
+%% Suppress SPM/FieldTrip path warnings
+warning('off', 'MATLAB:rmpath:DirNotFound');
 
 %% INITIALIZE Variables for running this function
 
@@ -74,6 +77,28 @@ addpath(genpath([optionsFile.paths.toolboxDir,'spm']));
 optionsFile = setup_configFiles(optionsFile,cohortNo);
 
 disp(['*** for ',currCondition, ' mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort ***']);
+
+%% Create study-specific title prefix
+if cohortNo == 1
+    studyPrefix = 'Study 1: ';
+    if ~isempty(subCohort)
+        % Capitalise first letter of subCohort
+        subCohortFormatted = [upper(subCohort(1)), lower(subCohort(2:end))];
+        titlePrefix = [studyPrefix, subCohortFormatted, ' '];
+    else
+        titlePrefix = studyPrefix;
+    end
+elseif cohortNo == 2
+    % For cohort 2, include repetition number
+    titlePrefix = ['Repetition ', num2str(iRep), ' '];
+else
+    % For cohort 3 and other cohorts, use existing format with conditions
+    if ~isempty(currCondition)
+        titlePrefix = [currCondition, ' '];
+    else
+        titlePrefix = '';
+    end
+end
 
 %% EXCLUDE MICE from this analysis
 % check available mouse data and exclusion criteria
@@ -142,22 +167,34 @@ end
 [res.BMS.alpha,res.BMS.exp_r,res.BMS.xp,res.BMS.pxp,res.BMS.bor] = spm_BMS(res.LME);
 
 if optionsFile.doCreatePlots
+    % Create figure title based on cohort and condition
+    if cohortNo == 3
+        % For cohort 3, create study-specific titles with capitalized condition
+        conditionFormatted = [upper(currCondition(1)), lower(currCondition(2:end))];
+        bms_title = sprintf('Study 3: %s Bayesian Model Selection', conditionFormatted);
+        subject_title_prefix = sprintf('Study 3: %s Subject-level Model Comparison', conditionFormatted);
+    else
+        % For other cohorts, use existing format
+        bms_title = ['Bayesian Model Selection results of ',subCohort,currCondition,currTask,' repetition ',num2str(iRep),' group'];
+        subject_title_prefix = [titlePrefix]; % Assuming titlePrefix is defined elsewhere
+    end
+
     % Create figure
-    %     pos0 = get(0,'screenSize');
-    %     pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
+    pos0 = get(0,'screenSize');
+    pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
 
     %Plotting details
-
-    figure('WindowState','maximized','Name','BMS individual','Color',[1 1 1]);
+    %Create figure
+    figure('WindowState','maximized','Name','BMS all','Color',[1 1 1]);
 
     % plot BMS results
     hold on; subplot(1,3,1); bar(1, res.BMS.exp_r(1),'FaceColor',[0.266666666666667 0.447058823529412 0.768627450980392],'EdgeColor',[0.149 0.149 0.149]);
     hold on; subplot(1,3,1); bar(2, res.BMS.exp_r(2),'FaceColor',[0.929411764705882 0.490196078431373 0.192156862745098],'EdgeColor',[0.149 0.149 0.149]);
     hold on; subplot(1,3,1); bar(3, res.BMS.exp_r(3),'FaceColor',[0.43921568627451 0.67843137254902 0.27843137254902],'EdgeColor',[0.149 0.149 0.149]);
-    ylabel ('Posterior probability', 'FontSize', 14,'FontName','Arial'); ylim([0 1]);
+    ylabel ('Posterior probability', 'FontSize', 22,'FontName','Arial'); ylim([0 1]);
 
     set(gca, 'XTick', []);
-    set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 13);
+    set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 22);
     ax1       = subplot(1,3,1);
     ax1.YTick = [0 0.25 0.5 0.75 1.0];
     ax1.GridLineStyle = ":";
@@ -165,77 +202,53 @@ if optionsFile.doCreatePlots
     ax1.YGrid ="on";
     ax1.YTick = [0 0.25 0.5 0.75 1];
     h_leg     = legend(optionsFile.model.names{1},optionsFile.model.names{2},optionsFile.model.names{3}, 'Location', 'northeast');
-    set(h_leg,'box','off','FontSize', 13);
+    set(h_leg,'box','off','FontSize', 22);
     set(gca, 'color','none');
 
     hold on; subplot(1,3,2); bar(1, res.BMS.xp(1),'FaceColor',[0.266666666666667 0.447058823529412 0.768627450980392],'EdgeColor',[0.149 0.149 0.149]);
     hold on; subplot(1,3,2); bar(2, res.BMS.xp(2),'FaceColor',[0.929411764705882 0.490196078431373 0.192156862745098],'EdgeColor',[0.149 0.149 0.149]);
     hold on; subplot(1,3,2); bar(3, res.BMS.xp(3),'FaceColor',[0.43921568627451 0.67843137254902 0.27843137254902],'EdgeColor',[0.149 0.149 0.149]);
-    ylabel('Exceedance probability', 'FontSize', 14,'FontName','Arial'); ylim([0 1]);
+    ylabel('Exceedance probability', 'FontSize', 22,'FontName','Arial'); ylim([0 1]);
     set(gca, 'XTick', []);
-    set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 13);
+    set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 22);
     ax2 = subplot(1,3,2);
     ax2.YTick = [0 0.25 0.5 0.75 1.0];
     ax2.GridLineStyle = ":";
     ax2.XTick = [];
     ax2.YGrid ="on";
     ax2.YTick = [0 0.25 0.5 0.75 1];
-    % h_leg2 = legend(optionsFile.model.names{1},optionsFile.model.names{2},optionsFile.model.names{3}, 'Location', 'northeast');
-    % set(h_leg2,'box','off','FontSize', 13);
     set(gca, 'color', 'none');
 
     hold on; subplot(1,3,3); bar(1, res.BMS.pxp(1),'FaceColor',[0.266666666666667 0.447058823529412 0.768627450980392],'EdgeColor',[0.149 0.149 0.149]);
     hold on; subplot(1,3,3); bar(2, res.BMS.pxp(2),'FaceColor',[0.929411764705882 0.490196078431373 0.192156862745098],'EdgeColor',[0.149 0.149 0.149]);
     hold on; subplot(1,3,3); bar(3, res.BMS.pxp(3),'FaceColor',[0.43921568627451 0.67843137254902 0.27843137254902],'EdgeColor',[0.149 0.149 0.149]);
-    ylabel('Protected exceedance probability', 'FontSize', 14,'FontName','Arial'); ylim([0 1]);
+    ylabel('Protected exceedance probability', 'FontSize', 22,'FontName','Arial'); ylim([0 1]);
     set(gca, 'XTick', []);
-    set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 13);
+    set(gca,'box','off'); get(gca, 'YTick'); set(gca, 'FontSize', 22);
     ax2       = subplot(1,3,3);
     ax2.YTick = [0 0.25 0.5 0.75 1.0];
     ax2.GridLineStyle = ":";
     ax2.XTick = [];
     ax2.YGrid ="on";
     ax2.YTick = [0 0.25 0.5 0.75 1];
-    % h_leg2    = legend(optionsFile.model.names{1},optionsFile.model.names{2},optionsFile.model.names{3}, 'Location', 'northeast');
-    % set(h_leg2,'box','off','FontSize', 13);
 
-    sgtitle(['Bayesian Model Selection results of ',subCohort,currCondition,currTask,' repetition ',num2str(iRep),' group'], 'FontSize', 18,'FontName','Arial');
+    % Use the cohort-specific title
+    sgtitle(bms_title, 'FontSize', 22,'FontName','Arial');
     set(gcf, 'color', 'white');
     set(gca, 'color', 'none');
 
     %Save plot
     saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,subCohort,currCondition,iRep,nReps,[]);
-    figdir = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'_BMS']);
-    print(figdir, '-dpng', '-r300'); % Higher resolution for publication (300 dpi)
-    close all;
+    figdir = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel, [saveName, '_BMS']);
 
+    % Check if directory exists, create if needed
+    [filepath, ~, ~] = fileparts(figdir);
+    if ~exist(filepath, 'dir')
+        mkdir(filepath);
+    end
 
-    %% Create a new figure for the GROUPED plot
-    figure('WindowState','maximized','Name','BMS Grouped','Color',[1 1 1]);
-
-    data = [res.BMS.exp_r; res.BMS.xp; res.BMS.pxp]';
-
-    % Create grouped bar chart
-    h = bar(data, 'grouped');
-    h(1).FaceColor = [0.266666666666667 0.447058823529412 0.768627450980392]; % Blue for posterior probability
-    h(2).FaceColor = [0.929411764705882 0.490196078431373 0.192156862745098]; % Orange for exceedance probability
-    h(3).FaceColor = [0.43921568627451 0.67843137254902 0.27843137254902];   % Green for protected exceedance probability
-
-    grid on;
-    xlabel('Model', 'FontSize', 14, 'FontName', 'Arial');
-    ylabel('Probability', 'FontSize', 14, 'FontName', 'Arial');
-    title(['Grouped BMS parameters for ',subCohort,currCondition,currTask,' repetition ',num2str(iRep)], 'FontSize', 18, 'FontName', 'Arial');
-    set(gca, 'XTickLabel', optionsFile.model.names, 'FontSize', 13);
-    ylim([0 1]);
-    set(gca, 'YTick', [0 0.25 0.5 0.75 1.0]);
-    legend('Posterior probability', 'Exceedance probability', 'Protected exceedance probability', 'Location', 'best', 'FontSize', 13, 'Box', 'off');
-    set(gca, 'Box', 'off');
-    set(gcf, 'color', 'white');
-
-    % Save grouped plot
-    figdir_grouped = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel,saveName,'_BMS_Grouped']);
-    print(figdir_grouped, '-dpng', '-r300');
-
+    print(figdir, '-dpng', '-r300');
+    savefig([figdir, '.fig']);
     close all;
 
     %% Subject-Level Model Comparison Heatmap
@@ -251,36 +264,64 @@ if optionsFile.doCreatePlots
         subject_labels = cellstr(strcat('Subject ', num2str((1:size(res.LME, 1))')));
     end
 
-    % Create  heatmap
+    % Set standardized color range based on cohort
+    switch cohortNo
+        case 1
+            standardized_min = -7;
+        case 2
+            standardized_min = -12;
+        case 3
+            standardized_min = -14;
+        otherwise
+            % Fallback for any other cohorts
+            min_value = min(normalised_lme(:));
+            standardized_min = -ceil(abs(min_value));
+    end
+
+    % Create heatmap title based on cohort
+    if cohortNo == 3
+        conditionFormatted = [upper(currCondition(1)), lower(currCondition(2:end))];
+        heatmap_title = sprintf('Study 3: %s Subject-level Model Comparison', conditionFormatted);
+    else
+        heatmap_title = [titlePrefix, 'Subject-level Model Comparison'];
+    end
+
+    % Create heatmap with standardised color limits
     h = heatmap(optionsFile.model.names, subject_labels, normalised_lme);
-    h.Title = ['Subject-Level Model Comparison - ', subCohort, currCondition, currTask, ' Rep.', num2str(iRep)];
+    h.Title = heatmap_title;
     h.XLabel = 'Model';
     h.YLabel = 'Subject ID';
     h.ColorbarVisible = 'on';
 
-    % Using a diverging colormap where:
-    % - Best model (0) is dark blue
-    % - Slightly worse models are lighter blue
-    % - Much worse models are white to red
-    colormap(flipud(brewermap(64, '-RdBu')));  % Use ColorBrewer's Red-Blue diverging map (flipped using "-" infront of RdBu)
+    % Using a diverging colormap
+    colormap(flipud(brewermap(64, '-RdBu')));
 
-    max_diff = max(abs(min(normalised_lme(:))), 1);  % Max difference or at least 1
-    h.ColorLimits = [-max_diff, 0];  % Scale from most negative value to 0
+    % Set standardised color limits for consistent comparison across cohorts
+    h.ColorLimits = [standardized_min, 0];
 
-    h.CellLabelFormat = '%.1f';     % Format cell labels with 1 decimal place
-    h.FontSize = 12;
+    h.CellLabelFormat = '%.1f';
+    h.FontSize = 22;
     h.FontName = 'Arial';
     h.GridVisible = 'on';
 
-    annotation('textbox', [0.15, 0.01, 0.7, 0.03], ...
-        'String', 'Values show log evidence difference from best model per subject. 0 = best model (blue), more negative = worse fit (white to red).', ...
-        'EdgeColor', 'none', 'HorizontalAlignment', 'center', 'FontSize', 12, 'FontName', 'Arial');
-
     % Save the subject-level comparison plot
-    figdir_subject = fullfile([optionsFile.paths.cohort(cohortNo).groupLevel, saveName, '_Subject_Level_Comparison']);
+    figdir_subject = fullfile(optionsFile.paths.cohort(cohortNo).groupLevel, [saveName, '_Subject_Level_Comparison']);
+
+    % Check if directory exists, create if needed
+    [filepath, ~, ~] = fileparts(figdir_subject);
+    if ~exist(filepath, 'dir')
+        mkdir(filepath);
+    end
+
     print(figdir_subject, '-dpng', '-r300');
+    savefig([figdir_subject, '.fig']);
     close all;
 
+    disp(['*** Bayesian Model Selection of ',char(optionsFile.cohort(cohortNo).name), ' complete and plots successfully saved to ', optionsFile.paths.cohort(cohortNo).groupLevel,'. ***']);
+
 end
-disp(['*** Bayesian Model Selection of ',char(optionsFile.cohort(cohortNo).name), ' complete and plots successfully saved to ', optionsFile.paths.cohort(cohortNo).groupLevel,'. ***']);
+
+%% Restore warnings
+warning('on', 'MATLAB:rmpath:DirNotFound');
+
 end

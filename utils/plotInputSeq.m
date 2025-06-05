@@ -1,4 +1,4 @@
-function plotInputSeq()
+function plotInputSeq(cohortNo)
 %% plotInputSeq - Visualize task structure and reward probability sequences
 %
 % This function creates publication-quality plots showing the structure of
@@ -6,40 +6,20 @@ function plotInputSeq()
 % the reward probability sequences across trials, highlighting stable and
 % volatile phases where reward contingencies change. The plots show both
 % the actual rewarding lever assignments (binary sequence) and the underlying
-% reward probability structure, making it easy to identify periods of 
+% reward probability structure, making it easy to identify periods of
 % environmental stability versus volatility.
 %
-% SYNTAX: plotInputSeq()
+% SYNTAX: plotInputSeq(cohortNo)
 %
-% INPUT: None (reads from optionsFile.mat and input sequence files)
+% INPUT:
+%   cohortNo - Integer specifying which cohort to plot (1, 2, or 3)
+%              1: UCMS cohort (ABA2_R task)
+%              2: HGF Pilot cohort (TestTaskA)
+%              3: 5HT cohort (TestTaskA)
 %
-% OUTPUT: 
+% OUTPUT:
 %   - Publication-ready figure (.fig and .png formats)
 %   - Console confirmation of save location
-%
-% The function supports multiple experimental paradigms:
-%   - UCMS ABA_R: Chronic stress paradigm with reward probability changes
-%   - TrainingTask_RL: Training task with high-to-low reward probability
-%   - TestTaskA: Complex task with alternating stable/volatile phases
-%
-% FEATURES:
-%   - Color-coded stable (blue) and volatile (red) phases
-%   - Annotated reward probabilities for each phase
-%   - Professional formatting with Arial font and appropriate sizing
-%   - Automatic file saving with task-specific naming
-%   - Grid lines and legends for clarity
-%
-% DEPENDENCIES:
-%   - optionsFile.mat (experiment configuration)
-%   - Input sequence files in .txt format
-%   - MATLAB plotting toolbox
-%
-% NOTES:
-%   - Modify the commented sections to switch between different tasks
-%   - File paths are currently hardcoded and should be updated for your system
-%   - Figure is maximized and uses high-resolution settings for publication
-%
-% See also: genInputSeq, runOptions, setDatasetSpecifics
 %
 % Coded by: 2025; Nicholas J. Burton,
 %           nicholasjburton91@gmail.com.au
@@ -62,42 +42,73 @@ function plotInputSeq()
 % =========================================================================
 
 %% LOAD CONFIGURATION
-% load or run options for running this function
-
 if exist('optionsFile.mat','file')==2
     load('optionsFile.mat');
 else
     optionsFile = runOptions();
 end
 
-%% Study 1: UCMS ABA_R
-Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2023_UCMS\NJB_HGF_ABA2_R.txt");
-Y2 = [0.8*ones(1,60),0.5*ones(1,10),0.65*ones(1,5),0.3*ones(1,8),0.45*ones(1,12),...
-        0.75*ones(1,6),0.55*ones(1,11),0.25*ones(1,8),0.8*ones(1,60)];
-currTask = optionsFile.cohort(1).testTask(1).name;
+%% GET TASK-SPECIFIC DATA BASED ON COHORT
+switch cohortNo
+    case 1 % UCMS ABA_R
+        Y1 = readmatrix(fullfile(optionsFile.paths.inputsDir, ...
+            optionsFile.cohort(cohortNo).name, ...
+            [optionsFile.cohort(cohortNo).taskPrefix, ...
+            optionsFile.cohort(cohortNo).testTask(1).name, '.txt']));
+        Y2 = [0.8*ones(1,60),0.5*ones(1,10),0.65*ones(1,5),0.3*ones(1,8),...
+            0.45*ones(1,12),0.75*ones(1,6),0.55*ones(1,11),0.25*ones(1,8),...
+            0.8*ones(1,60)];
+        currTask = optionsFile.cohort(cohortNo).testTask(1).name;
+        taskTitle = sprintf('Study %d: Task Structure', cohortNo);
 
-% Study 2 & 3: 
-%TrainingTask_RL
-% Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2024_HGFPilot\NJB_HGF_TrainingTask_RL.txt");
-% Y2 = [0.8*ones(1,140),0.2*ones(1,140)];
-% currTask = optionsFile.cohort(2).trainTask(1).name;
+    case {2, 3} % HGF Pilot and 5HT cohorts - TestTaskA
+        Y1 = readmatrix(fullfile(optionsFile.paths.inputsDir, ...
+            optionsFile.cohort(cohortNo).name, ...
+            [optionsFile.cohort(cohortNo).taskPrefix, ...
+            optionsFile.cohort(cohortNo).testTask(1).name, '.txt']));
+        Y2 = [0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),...
+            0.2*ones(1,40),0.7*ones(1,20),0.3*ones(1,20),...
+            0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),...
+            0.2*ones(1,40)];
+        currTask = optionsFile.cohort(cohortNo).testTask(1).name;
+        taskTitle = sprintf('Study %d: Task Structure', cohortNo);
 
-% %TestTask A
-% Y1 = readmatrix("C:\Users\c3200098\Desktop\projects\IDMIM\utils\inputSequences\2024_HGFPilot\NJB_HGF_TestTaskA.txt");
-% Y2 = [0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40),0.7*ones(1,20),...
-%          0.3*ones(1,20),0.8*ones(1,40),0.3*ones(1,20),0.7*ones(1,20),0.2*ones(1,40)];
-% currTask = optionsFile.cohort(2).testTask(1).name;
-            
+    otherwise
+        error('Invalid cohort number. Please specify 1, 2, or 3.');
+end
 
-% Create figure
+%% CREATE FIGURE
 figure1 = figure('WindowState','maximized','Color',[1 1 1]);
-
-% Create axes
 axes1 = axes('Parent',figure1);
 hold(axes1,'on');
 
-% Create plot
-plot(Y1,'SeriesIndex',1,'DisplayName','Rewarding lever',...
+% Add blue shading for stable phases
+if cohortNo == 2 || cohortNo == 3
+    stable_phase_ranges = [1 40; 81 120; 161 200; 241 280];
+    for i = 1:size(stable_phase_ranges, 1)
+        phase_start = stable_phase_ranges(i, 1);
+        phase_end = stable_phase_ranges(i, 2);
+        patch([phase_start phase_end phase_end phase_start], ...
+            [-0.1 -0.1 1.1 1.1], ...
+            [0 0.447058823529412 0.741176470588235], ...
+            'FaceAlpha', 0.1, 'EdgeColor', 'none', ...
+            'HandleVisibility', 'off');
+    end
+elseif cohortNo == 1
+    stable_phase_ranges = [1 60; 121 180];
+    for i = 1:size(stable_phase_ranges, 1)
+        phase_start = stable_phase_ranges(i, 1);
+        phase_end = stable_phase_ranges(i, 2);
+        patch([phase_start phase_end phase_end phase_start], ...
+            [-0.1 -0.1 1.1 1.1], ...
+            [0 0.447058823529412 0.741176470588235], ...
+            'FaceAlpha', 0.1, 'EdgeColor', 'none', ...
+            'HandleVisibility', 'off');
+    end
+end
+
+% Plot rewarding lever assignments
+h_lever = plot(Y1,'SeriesIndex',1,'DisplayName','Rewarding lever',...
     'MarkerFaceColor',[0 0.447058823529412 0.741176470588235],...
     'MarkerEdgeColor',[0 0.447058823529412 0.741176470588235],...
     'MarkerSize',20,...
@@ -105,124 +116,126 @@ plot(Y1,'SeriesIndex',1,'DisplayName','Rewarding lever',...
     'LineWidth',1.4,...
     'LineStyle','none');
 
-% Create stairs
-stairs(Y2,'DisplayName','Reward probability','LineWidth',2,'LineStyle','-.',...
+% Plot reward probability structure
+h_prob = stairs(Y2,'DisplayName','Reward probability','LineWidth',2,'LineStyle','-.',...
     'Color',[1 0 0]);
 
-% Create ylabel
-ylabel('Reward probability (%)','FontName','Arial');
+% Create the legend immediately after plotting
+leg = legend('show', 'FontSize', 18, 'EdgeColor', 'none');
+set(leg, 'Position', [0.735373260796898,0.743835507480257,0.162890628091991,0.079508641059661]);
 
-% Create xlabel
-xlabel('Trial','FontName','Arial');
+% Formatting
+ylabel('Reward probability','FontName','Arial','FontSize',24);
+xlabel('Trial','FontName','Arial','FontSize',24);
+title(taskTitle,'FontSize',26,'FontName','Arial');
 
-% Create title
-title('Task structure of TestTask A','FontSize',26,'FontName','Arial');
+% Set cohort-specific axis limits
+if cohortNo == 1
+    xlim(axes1, [0, 180]);
+    set(axes1, 'XTick', 0:20:180);
+else % cohortNo == 2 or 3
+    xlim(axes1, [0, 280]);
+    set(axes1, 'XTick', 0:40:280);
+end
 
-% Uncomment the following line to preserve the X-limits of the axes
-xlim(axes1,[-10 190]);
-% Uncomment the following line to preserve the Y-limits of the axes
-ylim(axes1,[-0.1 1.1]);
+ylim(axes1, [-0.1, 1.1]);
 hold(axes1,'off');
-% Set the remaining axes properties
+
+% Set remaining axes properties
 set(axes1,'ClippingStyle','rectangle','FontName','Arial','FontSize',24,...
-    'GridAlpha',0.2,'GridLineStyle','--','MinorGridColor',...
+    'GridAlpha',0.2,'GridLineStyle',':','MinorGridColor',...
     [0.149019607843137 0.149019607843137 0.149019607843137],'XGrid','on',...
-    'XTick',[0 40 80 120 160 200 240 280],'YTick',...
-    [0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1]);
-% Create legend
-legend1 = legend(axes1,'show');
-set(legend1,...
-    'Position',[0.720008678314176 0.740865745627672 0.148307294410964 0.0730291592637097],...
-    'FontSize',16,...
-    'EdgeColor','none');
+    'YTick',[0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1]);
 
-% Create textbox
-annotation(figure1,'textbox',...
-    [0.155557291666667 0.897138228941682 0.0516041666666665 0.0291576673866017],...
-    'Color',[0 0.447058823529412 0.741176470588235],...
-    'String','Stable',...
-    'LineStyle','none',...
-    'FontWeight','bold',...
-    'FontName','Arial',...
-    'FitBoxToText','off');
+% Add phase labels
+addPhaseLabels(axes1, cohortNo);
 
-% Create textbox
-annotation(figure1,'textbox',...
-    [0.157901041666666 0.704103671706263 0.0385833333333331 0.0475161987041008],...
-    'Color',[0.635294117647059 0.0784313725490196 0.184313725490196],...
-    'String','0.8',...
-    'LineStyle','none',...
-    'FontName','Arial',...
-    'FitBoxToText','off');
+% Add probability value labels
+addProbabilityLabels(axes1, Y2);
 
-% Create textbox
-annotation(figure1,'textbox',...
-    [0.313630208333331 0.638768898488115 0.0385833333333331 0.0475161987041008],...
-    'Color',[0.635294117647059 0.0784313725490196 0.184313725490196],...
-    'String','0.7',...
-    'LineStyle','none',...
-    'FontName','Arial',...
-    'FitBoxToText','off');
+%% SAVE FIGURE
+savePath = fullfile(optionsFile.paths.cohort(cohortNo).plots, 'taskStructure');
+if ~exist(savePath, 'dir')
+    mkdir(savePath);
+end
 
-% Create textbox
-annotation(figure1,'textbox',...
-    [0.261026041666666 0.369600431965441 0.038583333333333 0.0475161987041008],...
-    'Color',[0.635294117647059 0.0784313725490196 0.184313725490196],...
-    'String','0.3',...
-    'LineStyle','none',...
-    'FontName','Arial',...
-    'FitBoxToText','off');
+figdir = fullfile(savePath, [currTask, '_TrajPlot']);
+savefig(figure1, figdir);
+print(figdir, '-dpng');
 
-% Create textbox
-annotation(figure1,'textbox',...
-    [0.366104166666663 0.303725701943835 0.0385833333333331 0.047516198704101],...
-    'Color',[0.635294117647059 0.0784313725490196 0.184313725490196],...
-    'String','0.2',...
-    'LineStyle','none',...
-    'FontName','Arial',...
-    'FitBoxToText','off');
+disp(['Plot of ', currTask, ' successfully saved to ', savePath, '.']);
 
-% Create textbox
-annotation(figure1,'textbox',...
-    [0.259203124999999 0.903887688984875 0.0354583333333334 0.0237580993520508],...
-    'Color',[0.635294117647059 0.0784313725490196 0.184313725490196],...
-    'String','Volatile',...
-    'LineStyle','none',...
-    'FitBoxToText','off');
+end
 
-% Create rectangle
-annotation(figure1,'rectangle',...
-    [0.362500001984959 0.115010802223045 0.103645833333333 0.815604751619871],...
-    'Color','none',...
-    'FaceColor',[0 0.447058823529412 0.741176470588235],...
-    'FaceAlpha',0.05);
+%% HELPER FUNCTIONS
+function addPhaseLabels(axes1, cohortNo)
+% Add phase labels centered above the first instance of each phase type
 
-% Create rectangle
-annotation(figure1,'rectangle',...
-    [0.775651043651624 0.117980564642052 0.103645833333333 0.815604751619871],...
-    'Color','none',...
-    'FaceColor',[0 0.447058823529412 0.741176470588235],...
-    'FaceAlpha',0.05);
+switch cohortNo
+    case 1 % UCMS cohort - ABA2_R task
+        % First stable phase - center at trial 30
+        text(axes1, 30, 1.05, 'Stable', ...
+            'Color', [0 0.447058823529412 0.741176470588235], ...
+            'FontWeight', 'bold', 'FontSize', 16, ...
+            'HorizontalAlignment', 'center', 'HandleVisibility', 'off');
 
-% Create rectangle
-annotation(figure1,'rectangle',...
-    [0.569010418651624 0.116630672633412 0.103645833333333 0.815604751619871],...
-    'Color','none',...
-    'FaceColor',[0 0.447058823529412 0.741176470588235],...
-    'FaceAlpha',0.05);
+        % First volatile phase - center at trial 90
+        text(axes1, 90, 1.05, 'Volatile', ...
+            'Color', [0.635294117647059 0.0784313725490196 0.184313725490196], ...
+            'FontWeight', 'bold', 'FontSize', 16, ...
+            'HorizontalAlignment', 'center', 'HandleVisibility', 'off');
 
-% Create rectangle
-annotation(figure1,'rectangle',...
-    [0.156119793651626 0.115280780624773 0.103645833333333 0.815604751619871],...
-    'Color','none',...
-    'FaceColor',[0 0.447058823529412 0.741176470588235],...
-    'FaceAlpha',0.05);
+    case {2, 3} % HGF Pilot and 5HT cohorts - TestTaskA structure
+        % First stable phase - center at trial 20
+        text(axes1, 20, 1.05, 'Stable', ...
+            'Color', [0 0.447058823529412 0.741176470588235], ...
+            'FontWeight', 'bold', 'FontSize', 16, ...
+            'HorizontalAlignment', 'center', 'HandleVisibility', 'off');
 
-% Save figure
-savePath = fullfile([optionsFile.paths.saveDir,'results\2024_HGFPilot\plots\taskStructure']);
-figdir = fullfile([savePath,filesep, currTask, '_TrajPlot']);
-save([figdir,'.fig'])
-print([figdir,'.png'], '-dpng')
+        % First volatile phase - center at trial 60
+        text(axes1, 60, 1.05, 'Volatile', ...
+            'Color', [0.635294117647059 0.0784313725490196 0.184313725490196], ...
+            'FontWeight', 'bold', 'FontSize', 16, ...
+            'HorizontalAlignment', 'center', 'HandleVisibility', 'off');
+end
+end
 
-disp(['Plot of ',currTask,' successfully saved to ',savePath,'.']);
+%% Add probability value labels above the red dotted line
+% Only shows each unique probability value once (first occurrence)
+function addProbabilityLabels(axes1, Y2)
+
+% Find where probability changes
+changePoints = [1, find(diff(Y2) ~= 0) + 1];
+
+% Track which probabilities have already been labeled
+labeledProbs = [];
+
+for i = 1:length(changePoints)
+    startPos = changePoints(i);
+
+    % Find end position
+    if i < length(changePoints)
+        endPos = changePoints(i+1) - 1;
+    else
+        endPos = length(Y2);
+    end
+
+    % Get probability value
+    probValue = Y2(startPos);
+
+    % Only add label if this probability hasn't been labeled yet
+    if ~ismember(probValue, labeledProbs)
+        % Calculate middle position
+        middlePos = round((startPos + endPos) / 2);
+
+        % Create label
+        text(axes1, middlePos, probValue + 0.01, num2str(probValue), ...
+            'Color', [0.8 0 0], 'FontSize', 12, 'FontWeight', 'bold', ...
+            'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', ...
+            'HandleVisibility', 'off');
+
+        % Add this probability to the labeled list
+        labeledProbs = [labeledProbs, probValue];
+    end
+end
 end
