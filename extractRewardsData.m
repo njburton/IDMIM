@@ -218,8 +218,8 @@ function createRewardRaincloudPlots(dataTable, optionsFile, cohortNo, groupingVa
 
 % Determine plot title and group order based on grouping
 if strcmp(groupingVar, 'subCohort')
-    plotTitle = 'Treatment vs Control';
-    groupNames = {'Control', 'Treatment'};  % Control first (left side) with capital letters
+    plotTitle = 'UCMS vs Control';
+    groupNames = {'Control', 'UCMS'};  % Control first (left side) with capital letters
 elseif strcmp(groupingVar, 'single')
     plotTitle = 'All Mice';
     groupNames = {'all_mice'};
@@ -345,6 +345,8 @@ for iGroup = 1:nGroups
     if strcmp(groupName, 'Control')
         dataGroupName = 'control';
     elseif strcmp(groupName, 'Treatment')
+        dataGroupName = 'treatment';
+    elseif strcmp(groupName, 'UCMS')
         dataGroupName = 'treatment';
     elseif strcmp(groupName, 'Saline')
         dataGroupName = 'saline';

@@ -187,20 +187,20 @@ if ~isempty(treatmentData)
 end
 
 % Format plot appearance
-set(gca, 'XTick', [1.05, 1.75], 'XTickLabel', {'Control', 'Treatment'}, 'FontName', 'Arial', 'FontSize', 20);
+set(gca, 'XTick', [1.05, 1.75], 'XTickLabel', {'Control', 'UCMS'}, 'FontName', 'Arial', 'FontSize', 20);
 ylabel('\omega_2 (Reward predictability parameter)', 'FontSize', 20, 'FontName', 'Arial', 'Interpreter', 'tex');
-title('HGF 2-Level Model: Treatment vs Control', 'FontSize', 24, 'FontName', 'Arial');
+title('2-level eHGF Model: UCMS vs Control', 'FontSize', 24, 'FontName', 'Arial');
 set(get(gca,'Title'), 'Position', get(get(gca,'Title'), 'Position') + [0 0.2 0]); % Move title up
 grid on; set(gca, 'GridAlpha', 0.3,'GridLineStyle', ':');
-xlim([0.5, 2.3]);
+xlim([0.7, 2]);
 
 % Create custom legend with invisible lines to show marker styles
 % Square markers for males, triangle markers for females
-p1 = line(NaN, NaN, 'Marker', 's', 'MarkerSize', 10, 'MarkerFaceColor', col.control.male, 'MarkerEdgeColor', 'black', 'LineStyle', 'none', 'LineWidth', 0.5);
-p2 = line(NaN, NaN, 'Marker', '^', 'MarkerSize', 10, 'MarkerFaceColor', col.control.female, 'MarkerEdgeColor', 'black', 'LineStyle', 'none', 'LineWidth', 0.5);
-p3 = line(NaN, NaN, 'Marker', 's', 'MarkerSize', 10, 'MarkerFaceColor', col.treatment.male, 'MarkerEdgeColor', col.treatment.edge, 'LineStyle', 'none', 'LineWidth', 0.5);
-p4 = line(NaN, NaN, 'Marker', '^', 'MarkerSize', 10, 'MarkerFaceColor', col.treatment.female, 'MarkerEdgeColor', col.treatment.edge, 'LineStyle', 'none', 'LineWidth', 0.5);
-lgd = legend([p1, p2, p3, p4], {'Control Male', 'Control Female', 'Treatment Male', 'Treatment Female'}, 'FontSize', 13, 'FontName', 'Arial', 'EdgeColor', 'white');
+p1 = line(NaN, NaN, 'Marker', 's', 'MarkerSize', 14, 'MarkerFaceColor', col.control.male, 'MarkerEdgeColor', 'black', 'LineStyle', 'none', 'LineWidth', 0.5);
+p2 = line(NaN, NaN, 'Marker', '^', 'MarkerSize', 14, 'MarkerFaceColor', col.control.female, 'MarkerEdgeColor', 'black', 'LineStyle', 'none', 'LineWidth', 0.5);
+p3 = line(NaN, NaN, 'Marker', 's', 'MarkerSize', 14, 'MarkerFaceColor', col.treatment.male, 'MarkerEdgeColor', col.treatment.edge, 'LineStyle', 'none', 'LineWidth', 0.5);
+p4 = line(NaN, NaN, 'Marker', '^', 'MarkerSize', 14, 'MarkerFaceColor', col.treatment.female, 'MarkerEdgeColor', col.treatment.edge, 'LineStyle', 'none', 'LineWidth', 0.5);
+lgd = legend([p1, p2, p3, p4], {'Control Male', 'Control Female', 'UCMS Male', 'UCMS Female'}, 'FontSize', 16, 'FontName', 'Arial', 'EdgeColor', 'white');
 lgd.Position = [0.763554686314116 0.740129589632828 0.132682294038435 0.145788336933045]; % Position legend in top-right
 
 hold off;
@@ -246,7 +246,7 @@ disp(['Raincloud plot saved to: ', savePath]);
 
             % Plot individual point with jitter, positioned left of violin
             h = scatter(xPos - 0.2 + jitter(iSexMarker), data(iSexMarker), ...
-                110, pointColour, 'filled', markerShape); % Marker size = 110
+                270, pointColour, 'filled', markerShape); % Marker size = 110
             h.MarkerFaceAlpha = 0.9;                       % High opacity for visibility
             h.MarkerEdgeColor = colours.edge;              % Edge color (black or dark orange)
             h.LineWidth = 0.5;                             % Thin edge line

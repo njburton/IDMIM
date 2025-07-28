@@ -104,8 +104,23 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
 
     if optionsFile.doCreatePlots
         %% PLOT MODEL IDENTIFIABILITY with consistent styling
-        label_x = {optionsFile.model.names{1} optionsFile.model.names{2} optionsFile.model.names{3}};
+        % Create a mapping for model name modifications
+        % Add more mappings as needed in the future:
+        % nameMapping('Your New Model Name') = 'Desired Display Name';
+        nameMapping = containers.Map();
+        nameMapping('eHGF 3-level') = '3-level eHGF';
+        nameMapping('eHGF 2-level') = '2-level eHGF';
 
+        % Apply the mapping
+        label_x = cell(1, length(optionsFile.model.names));
+        for i = 1:length(optionsFile.model.names)
+            originalName = optionsFile.model.names{i};
+            if isKey(nameMapping, originalName)
+                label_x{i} = nameMapping(originalName);
+            else
+                label_x{i} = originalName; % Keep original if no mapping exists
+            end
+        end
         % Create figure with consistent positioning
         pos0 = get(0,'screenSize');
         pos = [1,pos0(4)/2,pos0(3)/1.2,pos0(4)/1.2];
@@ -126,7 +141,7 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
         xlabel('Target Class', 'FontSize', 14, 'FontName', 'Arial');
 
         % Set colormap using ColorBrewer's Red-Blue diverging map
-        colormap(flipud(brewermap(64, '-RdBu'))); % Use ColorBrewer's Red-Blue diverging map (flipped using "-" infront of RdBu)
+        colormap(flipud(gray))
 
         % Set colorbar with proper tick marks
         cb = colorbar('FontSize', 20, 'FontName', 'Arial');
@@ -148,21 +163,16 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
         cLimits = get(gca,'CLim');
         cRange = cLimits(2) - cLimits(1);
 
-        % Define thresholds for better text contrast with RdBu colormap
-        % For RdBu: values close to 0 (dark red) and 1 (dark blue) need white text
-        % Values in the middle (light colors) need black text
+        % Define thresholds for better text contrast with grayscale colormap
         textColors = zeros(numel(rec.class.percLMEwinner(:)), 3);
 
         for i = 1:numel(rec.class.percLMEwinner(:))
             value = rec.class.percLMEwinner(i);
-            % Normalize the value to 0-1 range
-            normalizedValue = (value - cLimits(1)) / cRange;
 
-            % Use white text for dark colors (very low and very high values)
-            % Use black text for light colors (middle values)
-            if normalizedValue < 0.3 || normalizedValue > 0.7
+            % Use white text only for the darkest areas
+            if value > 0.7  % Only the darkest 30% get white text
                 textColors(i,:) = [1 1 1]; % White text
-            else
+            else  % Everything else gets black text
                 textColors(i,:) = [0 0 0]; % Black text
             end
         end
@@ -200,7 +210,7 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
     end % END TASK Loop
 end
 % Close any remaining figures
-close all;
+%close all;
 disp(['*** Bayesian Model Identifiability of ',char(optionsFile.cohort(cohortNo).name), ' complete and plot successfully saved to ', figDir]);
 
 
