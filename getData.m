@@ -71,8 +71,16 @@ if isempty(tasks); error(['Task name is empty. Check optionsFile.cohort',num2str
 
 %% check for large files where multiple mice are saved into a single raw MED-PC file
 allFiles = dir(fullfile(optionsFile.paths.cohort(cohortNo).rawData,'*.*'));
-allFiles = allFiles(3:end); %removes Unix subfolder pointers "." and ".."
 
+% find hidden file and folder names starting with "."
+delIdx = zeros(numel(allFiles),1);
+
+for iDelete = 1: numel(allFiles)
+    delIdx(iDelete) = startsWith(allFiles(iDelete).name,'.');
+end
+
+allFiles = allFiles(delIdx==0); %removes Unix subfolder pointers "." and ".."
+nFiles   = length(allFiles);
 % initialize logical array indicating if the current file is a large file containing multiple mouse files
 isLargeFile = zeros(length(allFiles),1);
 
@@ -215,12 +223,8 @@ end %end of processing LARGE MEDPC file
 
 %% create individual mouse tables from regular sized (<70,000 bytes) MEDPC files
 disp(' ============== extracting from single mouse MEDPC output files ==================');
-for iFile = 1:length(isLargeFile) %for each file in the data dir
+for iFile = 1:nFiles %for each file in the data dir
     fileName     = string(allFiles(iFile).name);
-    if startsWith(fileName,'._')
-        fileName  = erase(fileName ,'._');
-    end
-
     regMEDPCFile = readcell(fullfile(optionsFile.paths.cohort(cohortNo).rawData, fileName));
     currTask     = cell2mat(regMEDPCFile(10,2));  %TrialCode
 

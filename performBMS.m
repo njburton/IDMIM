@@ -166,13 +166,6 @@ end
 %% PERFORM rfx BMS
 [res.BMS.alpha,res.BMS.exp_r,res.BMS.xp,res.BMS.pxp,res.BMS.bor] = spm_BMS(res.LME);
 
-%VBA toolbox code here
-%Use wiki to help costruct LME array in correct orientation 
-%1st test to do check that counterbalancing worked, if no effects collapse across sex
-%2nd test, check theres no effect of sex, if no difference between sex, collapse across conditions
-% create 3-dimensional array with rows (mice), cols (model) and, 3d (condition/group/sex/counterbalancing)
-
-
 if optionsFile.doCreatePlots
     % Create figure title based on cohort and condition
     if cohortNo == 3
