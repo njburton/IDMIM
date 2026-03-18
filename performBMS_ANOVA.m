@@ -73,9 +73,11 @@ optionsFile = setup_configFiles(optionsFile,cohortNo);
 if isempty(optionsFile.cohort(cohortNo).conditions)
     nGroups = size(optionsFile.cohort(cohortNo).subCohorts,2);
     groups  = optionsFile.cohort(cohortNo).subCohorts;
+    effect = 'bwtGroups';
 else
     nGroups = size(optionsFile.cohort(cohortNo).conditions,2);
     groups  = optionsFile.cohort(cohortNo).conditions;
+    effect = 'withinGroups';
 end
 
 %% EXCLUDE MICE from this analysis
@@ -83,8 +85,11 @@ end
 
 % check for what mice no data is available
 for iGroup = 1:nGroups
-
+if strcmp(effect,'bwtGroups')
     [mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,groups{iGroup});
+else
+    [mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,'all');
+end
     noDataArray = zeros(1,nSize);
     exclArray   = zeros(1,nSize);
 
@@ -140,7 +145,7 @@ for iGroup = 1:nGroups
     for i=exclArray
         mouseIDs(i) =[];
     end
-
+ if strcmp(effect,'bwtGroups')
     if iGroup == 1
         allMouseIDs = char(mouseIDs);
         groupArray  = ones(numel(mouseIDs),1);
@@ -148,11 +153,18 @@ for iGroup = 1:nGroups
         allMouseIDs = [allMouseIDs; char(mouseIDs)];
         groupArray  = [groupArray; iGroup*ones(numel(mouseIDs),1)];
     end
-
+ else
+     if iGroup == 1
+         groupArray  = ones(numel(mouseIDs),1)';
+     else
+        groupArray = [groupArray iGroup*ones(numel(mouseIDs),1)'];
+     end
+     allMouseIDs = char(mouseIDs);
+ end
 end
 
 % update sample size
-nSize = numel(groupArray);
+nSize = size(allMouseIDs,1);
 
 %% LOAD mice
 for iGroup = 1:nGroups
@@ -169,48 +181,40 @@ for iGroup = 1:nGroups
             end
             load([char(optionsFile.paths.cohort(cohortNo).results),...
                 'mouse',char(currMouse),'_',loadName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat']);
+            
+            if strcmp(effect,'bwtGroups')
+                res(iGroup).LME(iModel,iMouse)              = est.optim.LME;
+                res(iGroup).prc_param(iModel,iMouse).ptrans = est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
+                res(iGroup).obs_param(iModel,iMouse).ptrans = est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
 
-            res.LME(iMouse,iModel)   = est.optim.LME;
-            res.prc_param(iMouse,iModel).ptrans = est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
-            res.obs_param(iMouse,iModel).ptrans = est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
+            elseif strcmp(effect,'withinGroups')
+                res.LME(iModel,iMouse,iGroup)              = est.optim.LME;
+                res.prc_param(iModel,iMouse,iGroup).ptrans = est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
+                res.obs_param(iModel,iMouse,iGroup).ptrans = est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
+            end
         end
     end
 end
 
 %% PERFORM rfx BMS ANOVA
-[logBFM1,FM1] = spm_bms_anova(res.LME(:,1),groupArray,'jzs');
-[logBFM2,FM2] = spm_bms_anova(res.LME(:,2),groupArray,'jzs');
-[logBFM3,FM3] = spm_bms_anova(res.LME(:,3),groupArray,'jzs');
-
-[res.BMS.alpha,res.BMS.exp_r,res.BMS.xp,res.BMS.pxp,res.BMS.bor] = spm_BMS(res.LME(1:9,:));
 
 
-%% Create study-specific title prefix
-if cohortNo == 1
-    studyPrefix = 'Study 1: ';
-    if ~isempty(subCohort)
-        % Capitalise first letter of subCohort
-        subCohortFormatted = [upper(subCohort(1)), lower(subCohort(2:end))];
-        titlePrefix = [studyPrefix, subCohortFormatted, ' '];
-    else
-        titlePrefix = studyPrefix;
-    end
-elseif cohortNo == 2
-    % For cohort 2, include repetition number
-    titlePrefix = ['Repetition ', num2str(iRep), ' '];
-else
-    % For cohort 3 and other cohorts, use existing format with conditions
-    if ~isempty(currCondition)
-        titlePrefix = [currCondition, ' '];
-    else
-        titlePrefix = '';
-    end
+
+if strcmp(effect,'bwtGroups')
+    for g = 1:nGroups
+        LMEs{g} = res(g).LME(:,groupArray==g); 
+    end % get LMEs for current group
+
+        [h,p] = VBA_groupBMC_btwGroups(LMEs,[]);  
+elseif strcmp(effect,'withinGroups')
+        [ep,out] = VBA_groupBMC_btwConds(res.LME,[]);
 end
 
+%% save figures
+% if strcmp(effect,'bwtGroups')
+% figTitle = getFigTitle(optionsFile,cohortNo,subCohort,[]);
+% else
+%     figTitle = getFigTitle(optionsFile,cohortNo,subCohort,[]);
+% end
 
-%VBA toolbox code here
-%Use wiki to help costruct LME array in correct orientation
-%1st test to do check that counterbalancing worked, if no effects collapse across sex
-%2nd test, check theres no effect of sex, if no difference between sex, collapse across conditions
-% create 3-dimensional array with rows (mice), cols (model) and, 3d (condition/group/sex/counterbalancing)
 end
