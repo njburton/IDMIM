@@ -2,14 +2,14 @@ function fitModels(cohortNo)
 
 % fitModels - Fit computational models to mouse behavioural data
 %
-% This function fits multiple computational models to choice data from 
-% behavioural experiments. It processes data across conditions, tasks, 
-% repetitions, and individual mice, applying hierarchical Gaussian filter (HGF) 
-% models and Rescorla-Wagner models (RW) to quantify learning parameters. 
+% This function fits multiple computational models to choice data from
+% behavioural experiments. It processes data across conditions, tasks,
+% repetitions, and individual mice, applying hierarchical Gaussian filter (HGF)
+% models and Rescorla-Wagner models (RW) to quantify learning parameters.
 % The function systematically loops through the dataset, creating individual
-% model fits for each mouse and experimental condition while handling informed 
-% priors if specified. Model fitting results are saved individually and also 
-% compiled into group-level files for further analysis. The function supports 
+% model fits for each mouse and experimental condition while handling informed
+% priors if specified. Model fitting results are saved individually and also
+% compiled into group-level files for further analysis. The function supports
 % visualisation of model trajectories when enabled in the optionsFile.
 %
 % -------------------------------------------------------------------------
@@ -83,7 +83,7 @@ for iCondition = 1:nConditions
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
 
-    for iTask = 1:nTasks
+    for iTask = 1:1%nTasks
         currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
         disp(['* task  ', char(currTask),'.']);
 
@@ -105,11 +105,9 @@ for iCondition = 1:nConditions
 
                 for iModel = 1:nModels
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
-
                     try
                         load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                             loadName,'.mat']);
-
                         disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
 
                         %% model fit

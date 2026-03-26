@@ -95,7 +95,7 @@ for iTask = 1:nTasks
                     optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
                     optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
                     optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
-                    strct); % settings and seed for multistart
+                    strct,'verbose'); % settings and seed for multistart
 
                 if optionsFile.doCreatePlots
                     % Plot standard trajectory plot

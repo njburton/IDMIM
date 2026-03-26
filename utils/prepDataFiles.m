@@ -44,7 +44,7 @@ else
     getTaskRepetitions(cohortNo,'getRepNumber');
 end
 
-getExcludeData(optionsFile,cohortNo);
+getExcludeData(optionsFile,cohortNo,'all');
 
 createGroupTable(cohortNo);
 

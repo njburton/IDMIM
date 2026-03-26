@@ -19,7 +19,7 @@ else
 
 end
 
-[mouseIDs,nSize] = getSampleSpecs(optionsFile,cohortNo,[]);
+[mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,'all');
 
 nTasks   = numel(optionsFile.cohort(cohortNo).testTask);
 nReps    = optionsFile.cohort(cohortNo).taskRepetitions;

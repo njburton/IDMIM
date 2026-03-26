@@ -1,4 +1,4 @@
-function getExcludeData(optionsFile,cohortNo)
+function getExcludeData(optionsFile,cohortNo,subCohort)
 
 %% getExcludeData gets the dataset for exclusion criteria being
 
@@ -41,7 +41,9 @@ else
 end
 
 % get sample specifics for loops
-[mouseIDs,nSize] = getSampleSpecs(optionsFile,cohortNo,subCohort);
+
+[mouseIDs,nSize] = getSampleVars(optionsFile,cohortNo,subCohort);
+
 nTasks = numel(optionsFile.cohort(cohortNo).testTask);
 nReps  = optionsFile.cohort(cohortNo).taskRepetitions;
 if isempty(optionsFile.cohort(cohortNo).conditions) % if the cohort had different conditions

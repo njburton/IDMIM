@@ -185,7 +185,7 @@ optionsFile.hgf.opt_config       = eval('tapas_quasinewton_optim_config');
 % seed for random number generator
 optionsFile.rng.idx        = 1; % Set counter for random number states
 optionsFile.rng.settings   = rng(123, 'twister');
-optionsFile.rng.nRandInit  = 100;
+optionsFile.rng.nRandInit  = 1000;
 
 %% SPECIFY MODELS and related functions
 optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW'};         % all models in modelspace
