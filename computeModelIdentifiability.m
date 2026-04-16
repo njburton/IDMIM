@@ -58,7 +58,7 @@ nSamples = optionsFile.simulations.nSamples;
 % model identifiability we are saving into the following structure: agent(m_in,iAgent,m_est)
 
 for iTask = 1:1%nTasks
-    for iAgent = 1:nSamples
+    for iAgent = 1:23%nSamples
         for m_in = 1:nModels
             modelIn = optionsFile.dataFiles.rawFitFile{m_in};
             for m_est = 1:nModels

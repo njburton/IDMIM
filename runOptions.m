@@ -48,7 +48,7 @@ optionsFile.doSimModelFitCheck = 1;
 optionsFile.doParamFitCheck  = 1;
 optionsFile.doBMS            = 1;
 
-
+addpath(genpath(pwd));
 %% SPECIFY COHORT Specific settings and information
 % specify the task name, mouseIDs, task names, conditons, exclusion criteria etc.
 optionsFile = setDatasetSpecifics(optionsFile);
@@ -153,7 +153,7 @@ end
 for d = 1:size(optionsFile.cohort,2)
     for i = 1:numel(optionsFile.cohort(d).testTask)
         inputs = readmatrix([optionsFile.paths.inputsDir,optionsFile.cohort(d).name,filesep,...
-            optionsFile.cohort(d).taskPrefix,optionsFile.cohort(d).testTask(i).name,'.txt']);
+            optionsFile.cohort(d).testTaskPrefix,optionsFile.cohort(d).testTask(i).name,'.txt']);
         if size(inputs,2)>1
             optionsFile.cohort(d).testTask(i).inputs = inputs';
         else
@@ -161,11 +161,12 @@ for d = 1:size(optionsFile.cohort,2)
         end
     end
 
+    if strcmp(optionsFile.cohort(d).trainTaskType,'inputs')
     % get training task outcome sequences
     for i = 1:numel(optionsFile.cohort(d).trainTask)
         if ~isempty(optionsFile.cohort(d).trainTask(i).name) % some cohorts may not have used a training task
             inputs = readmatrix([optionsFile.paths.inputsDir,optionsFile.cohort(d).name,filesep,...
-                optionsFile.cohort(d).taskPrefix,optionsFile.cohort(d).trainTask(i).name,'.txt']);
+                optionsFile.cohort(d).trainTaskPrefix,optionsFile.cohort(d).trainTask(i).name,'.txt']);
             if size(inputs,2)>1
                 optionsFile.cohort(d).trainTask(i).inputs = inputs';
             else
@@ -175,11 +176,12 @@ for d = 1:size(optionsFile.cohort,2)
             optionsFile.cohort(d).trainTask(i).inputs = [];
         end
     end
+    end
 end
 
 
 %% SPECIFY SIMULATION settings
-optionsFile.simulations.nSamples = 50;
+optionsFile.simulations.nSamples = 20;
 optionsFile.hgf.opt_config       = eval('tapas_quasinewton_optim_config');
 
 % seed for random number generator
@@ -188,20 +190,21 @@ optionsFile.rng.settings   = rng(123, 'twister');
 optionsFile.rng.nRandInit  = 1000;
 
 %% SPECIFY MODELS and related functions
-optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW'};         % all models in modelspace
-optionsFile.model.names       = {'eHGF 3-level','eHGF 2-level','RW'}; % names for figure titles
-optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary'};
-optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config'};
+optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW','Sutton','VKF'};  % all models in modelspace
+optionsFile.model.names       = {'eHGF 3-level','eHGF 2-level','RW','Sutton','VKF'};   % names for figure titles
+optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','tapas_sutton_k1_binary'};
+optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config','tapas_sutton_k1_binary_config'};
 optionsFile.model.obs	      = {'tapas_unitsq_sgm'};
 optionsFile.model.obs_config  = {'tapas_unitsq_sgm_config'};
 optionsFile.model.opt_config  = {'tapas_quasinewton_optim_config'};
 optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(2).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
+optionsFile.plot(3).plot_fits = @tapas_sutton_k1_binary_plotTraj;
 
 %% SPECIFY FILENAME endings
 optionsFile.dataFiles.simResponses     = 'sim.mat'; % simulated responses file
-optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit'};  % single model fit files
+optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit','SuttonFit','VKFFit'};  % single model fit files
 optionsFile.dataFiles.fittedData       = 'modelInv.mat'; % collated model fit files
 
 %% SAVE options file

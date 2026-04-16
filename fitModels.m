@@ -105,6 +105,10 @@ for iCondition = 1:nConditions
 
                 for iModel = 1:nModels
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
+                    if strcmp(optionsFile.model.space{iModel},'VKF')
+                        nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
+                        est = VKF_model_fit(optionsFile.cohort(cohortNo).testTask(iTask).inputs,ExperimentTaskTable.Choice,nTrials);
+                    else
                     try
                         load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                             loadName,'.mat']);
@@ -128,7 +132,6 @@ for iCondition = 1:nConditions
                             print([figdir,'.png'], '-dpng');
                             close all;
                         end
-
                         %Save model fit
                         save([char(optionsFile.paths.cohort(cohortNo).results),...
                             'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
@@ -139,7 +142,7 @@ for iCondition = 1:nConditions
                         modelInv.allMice(iMouse,iModel).est = [];
                         disp(['mouse ', char(saveName), ' not loaded...'])
                     end
-
+                    end
                     % create savepath and filename as a .mat file
                     groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
                         [],currCondition,iRep,nReps,[]);

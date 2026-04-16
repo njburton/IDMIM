@@ -35,8 +35,26 @@ else
     optionsFile = runOptions();
 end
 
+%% Extract task names and inputs for current cohort / dataset
+% list containing the medpcTaskNames you want to look for and extract
+% ATTENTION: The sequence with which the task types occurr here are
+% important, i.e. training Tasks come first, test Tasks second for both
+% variables
+if isempty(optionsFile.cohort(cohortNo).trainTask(1).name)
+    testTasks  = {optionsFile.cohort(cohortNo).testTask(:).name};
+    testTaskInputs = [optionsFile.cohort(cohortNo).testTask(:).inputs];
+    trainTasks = [];
+    trainTaskInputs = [];
+else
+    testTasks  = {optionsFile.cohort(cohortNo).testTask(:).name};
+    trainTasks = {optionsFile.cohort(cohortNo).trainTask(:).name};
+    testTaskInputs = [optionsFile.cohort(cohortNo).testTask(:).inputs];
+    trainTaskInputs = [];
+end
+
 
 %% Initialise Experiment Task Table
+
 taskTableVarTypes = {'double','double','double','double',...
     'double','double','double'};
 taskTableVarNames = {'RewardingLeverSide','Choice','Outcome','TrialStartTime',...
@@ -46,6 +64,15 @@ ExperimentTaskTable = table('Size',[optionsFile.cohort(cohortNo).nTrials length(
     'VariableTypes', taskTableVarTypes,...
     'VariableNames',taskTableVarNames);
 
+if ~isempty(trainTasks)
+    taskTableVarTypes = {'double','double','double','double','double'};
+taskTableVarNames = {'RewardingLeverSide','Choice','Outcome',...
+    'LeverPressTime','RecepticalBeamBreak'};
+    TrainingTaskTable = table('Size',[800 length(taskTableVarNames)],... % softcode 800 (this is the case in cohort 1)
+        'VariableTypes', taskTableVarTypes,...
+        'VariableNames',taskTableVarNames);
+end
+
 %% Initialise Mouse Info Table containing general info about the mouse
 infoTableVarTypes = {'string','string','double','string','string'};
 infoTableVarNames = {'Task','TaskDate','Chamber','Condition','Sex'};
@@ -53,21 +80,8 @@ MouseInfoTable    = table('Size',[1,length(infoTableVarNames)],...
     'VariableTypes',infoTableVarTypes,...
     'VariableNames',infoTableVarNames);
 
-%% Extract task names and inputs for current cohort / dataset
-% list containing the medpcTaskNames you want to look for and extract
-% ATTENTION: The sequence with which the task types occurr here are
-% important, i.e. training Tasks come first, test Tasks second for both
-% variables
-if isempty(optionsFile.cohort(cohortNo).trainTask(1).name)
-    tasks  = {optionsFile.cohort(cohortNo).testTask(:).name};
-    inputs = [optionsFile.cohort(cohortNo).testTask(:).inputs];
-else
-    tasks  = {optionsFile.cohort(cohortNo).trainTask(:).name, optionsFile.cohort(cohortNo).testTask(:).name};
-    inputs = [optionsFile.cohort(cohortNo).trainTask(:).inputs optionsFile.cohort(cohortNo).testTask(:).inputs];
-end
 
-
-if isempty(tasks); error(['Task name is empty. Check optionsFile.cohort',num2str(cohortNo),'if any training or testtask names have been specified.']); end
+if isempty(testTasks); error(['Task name is empty. Check optionsFile.cohort',num2str(cohortNo),'if any training or testtask names have been specified.']); end
 
 %% check for large files where multiple mice are saved into a single raw MED-PC file
 allFiles = dir(fullfile(optionsFile.paths.cohort(cohortNo).rawData,'*.*'));
@@ -110,115 +124,149 @@ for iLargeFile = 1:sum(isLargeFile)
         fileName  = erase(fileName ,'._');
     end
     largeMEDPCFile = readtable(fullfile(optionsFile.paths.cohort(cohortNo).rawData,fileName));
-    for iTask  = 1:length(tasks) %for each task name in the task list
-        startIDs = find(contains(largeMEDPCFile.Var2,tasks{iTask}));
 
-        %checkpoint to throw error if startIndices (startIDs) extract non-interger
-        %value and also before (cell above) and after( cell above)
-        for iStartIDs = 1:length(startIDs) %row index for all mentions of tasks
-            currMouse    = cell2mat(largeMEDPCFile.Var2(startIDs(iStartIDs)-6));
-            currTaskDate = extractBefore(fileName,'_');
-            currTaskDate = replace(currTaskDate,'/','-');
-            currTaskDate = char(currTaskDate);
+    if ~isempty(trainTasks)
+        tasks = [testTasks, trainTasks];
+    else
+        tasks = testTasks;
+        for iTask  = 1:length(tasks) %for each task name in the task list
+            startIDs = find(contains(largeMEDPCFile.Var2,tasks{iTask}));
 
-            currTask = tasks{iTask};
-            disp(['reading ', char(currMouse),' and ', char(tasks{iTask}) ' data from large File...'])
+            %checkpoint to throw error if startIndices (startIDs) extract non-interger
+            %value and also before (cell above) and after( cell above)
+            for iStartIDs = 1:length(startIDs) %row index for all mentions of tasks
+                currMouse    = cell2mat(largeMEDPCFile.Var2(startIDs(iStartIDs)-6));
+                currTaskDate = extractBefore(fileName,'_');
+                currTaskDate = replace(currTaskDate,'/','-');
+                currTaskDate = char(currTaskDate);
 
-            % save data to table
-            MouseInfoTable.Task      = currTask;  %TrialCode
-            MouseInfoTable.TaskDate  = currTaskDate;
-            MouseInfoTable.Chamber   = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)-3))));
+                currTask = tasks{iTask};
+                disp(['reading ', char(currMouse),' and ', char(tasks{iTask}) ' data from large File...'])
 
-            % get mouse sex and add to mouse info table
-            if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
-                MouseInfoTable.Sex = 'male';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'treatment';
+                % save data to table
+                MouseInfoTable.Task      = currTask;  %TrialCode
+                MouseInfoTable.TaskDate  = currTaskDate;
+                MouseInfoTable.Chamber   = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)-3))));
+
+                % get mouse sex and add to mouse info table
+                if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
+                    MouseInfoTable.Sex = 'male';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'treatment';
+                    else
+                        currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    end
+                elseif sum(strcmp(optionsFile.cohort(cohortNo).control.maleMice,currMouse))
+                    MouseInfoTable.Sex = 'male';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'control';
+                    else
+                        currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    end
+                elseif sum(strcmp(optionsFile.cohort(cohortNo).treatment.femaleMice,currMouse))
+                    MouseInfoTable.Sex = 'female';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'treatment';
+                    else
+                        currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    end
+                elseif sum(strcmp(optionsFile.cohort(cohortNo).control.femaleMice,currMouse))
+                    MouseInfoTable.Sex = 'female';
+                    if isempty(optionsFile.cohort(cohortNo).conditions)
+                        currCondition = 'control';
+                    else
+                        currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    end
                 else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    disp('Current mouseID not found!')
                 end
-            elseif sum(strcmp(optionsFile.cohort(cohortNo).control.maleMice,currMouse))
-                MouseInfoTable.Sex = 'male';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'control';
+
+                if iTask>numel(testTasks)
+                    TrainingTaskTable.Outcome     = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
+                        optionsFile.cohort(cohortNo).dataFile.outcomeOffset+1):...
+                        (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.outcomeOffset+...
+                        800)))); % Outcome 0=time,1=reward
+                    TrainingTaskTable.Choice      = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
+                        optionsFile.cohort(cohortNo).dataFile.choiceOffset+1):...
+                        (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.choiceOffset+...
+                        800)))); % Choice 0=left,1=right
+                    %ExperimentTaskTable.RecepticalBeamBreak = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+optionsFile.task.nTrials)));   %RecepticalBeamBreak
+                    TrainingTaskTable.LeverPressTime = str2double(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
+                        optionsFile.cohort(cohortNo).dataFile.leverPressTimeOffset+1):...
+                        (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.leverPressTimeOffset+...
+                        800)));
+                   
+                    % inputs
+                    TrainingTaskTable.RewardingLeverSide = [];
+
+                    % Data correction,replace MEDPC omission code with NaN
+                    TrainingTaskTable.Outcome(TrainingTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)        = NaN;
+                    TrainingTaskTable.LeverPressTime(TrainingTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode) = NaN;
+                    TrainingTaskTable.Choice(TrainingTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)         = NaN;
+                    %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
                 else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    ExperimentTaskTable.Outcome     = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
+                        optionsFile.cohort(cohortNo).dataFile.outcomeOffset+1):...
+                        (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.outcomeOffset+...
+                        optionsFile.cohort(cohortNo).nTrials)))); % Outcome 0=time,1=reward
+                    ExperimentTaskTable.Choice      = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
+                        optionsFile.cohort(cohortNo).dataFile.choiceOffset+1):...
+                        (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.choiceOffset+...
+                        optionsFile.cohort(cohortNo).nTrials)))); % Choice 0=left,1=right
+                    ExperimentTaskTable.TrialStartTime = transpose(0:optionsFile.cohort(cohortNo).trialDuration:...
+                        (optionsFile.cohort(cohortNo).totalTaskDuration-13)); % TrialStartTime. Last trial begins at 27 after total taskDur
+                    %ExperimentTaskTable.RecepticalBeamBreak = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+optionsFile.task.nTrials)));   %RecepticalBeamBreak
+                    ExperimentTaskTable.LeverPressTime = str2double(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
+                        optionsFile.cohort(cohortNo).dataFile.leverPressTimeOffset+1):...
+                        (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.leverPressTimeOffset+...
+                        optionsFile.cohort(cohortNo).nTrials)));
+                    ExperimentTaskTable.ResponseTime   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %time between trialStart and leverPress
+
+                    %input sequence
+                    ExperimentTaskTable.RewardingLeverSide = testTaskInputs(:,iTask); % binary input sequence for task aka. RewardingLeverSide
+
+
+                    % Data correction,replace MEDPC omission code with NaN
+                    ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)        = NaN;
+                    ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode) = NaN;
+                    ExperimentTaskTable.ResponseTime(ExperimentTaskTable.ResponseTime<=0.0)                                               = NaN;
+                    ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)         = NaN;
+                    %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
                 end
-            elseif sum(strcmp(optionsFile.cohort(cohortNo).treatment.femaleMice,currMouse))
-                MouseInfoTable.Sex = 'female';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'treatment';
+                if isempty(optionsFile.cohort(cohortNo).conditions) % if there arent any different conditions
+                    currCondition = [];
+                end
+
+                % create savepath and filename as a .mat file
+                if ~contains(currTask,optionsFile.cohort(cohortNo).taskPrefix)
+                    currTask = [optionsFile.cohort(cohortNo).taskPrefix,currTask];
+                end
+
+                saveExpName  = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,1,1,[]);
+                saveInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,1,1,'info');
+                if optionsFile.cohort(cohortNo).taskRepetitions==1
+                    saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        saveExpName,'.mat'];
+                    saveInfoPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        saveInfoName,'.mat'];
                 else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                    saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        saveExpName,'_',currTaskDate,'.mat'];
+                    saveInfoPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                        saveInfoName,'_',currTaskDate,'.mat'];
                 end
-            elseif sum(strcmp(optionsFile.cohort(cohortNo).control.femaleMice,currMouse))
-                MouseInfoTable.Sex = 'female';
-                if isempty(optionsFile.cohort(cohortNo).conditions)
-                    currCondition = 'control';
-                else
-                    currCondition = largeMEDPCFile.Var2{startIDs(iStartIDs)-4};
+                disp(['saving: ',saveExpPath]);
+                disp(['saving: ',saveInfoPath]);
+                save(saveExpPath,'ExperimentTaskTable');
+                save(saveInfoPath,'MouseInfoTable');
+
+                if ~isempty(trainTasks)
+                    save(saveExpPath,'TrainingTaskTable')
                 end
-            else
-                disp('Current mouseID not found!')
-            end
 
-
-            ExperimentTaskTable.Outcome     = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
-                optionsFile.cohort(cohortNo).dataFile.outcomeOffset+1):...
-                (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.outcomeOffset+...
-                optionsFile.cohort(cohortNo).nTrials)))); % Outcome 0=time,1=reward
-            ExperimentTaskTable.Choice      = str2num(cell2mat(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
-                optionsFile.cohort(cohortNo).dataFile.choiceOffset+1):...
-                (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.choiceOffset+...
-                optionsFile.cohort(cohortNo).nTrials)))); % Choice 0=left,1=right
-            ExperimentTaskTable.TrialStartTime = transpose(0:optionsFile.cohort(cohortNo).trialDuration:...
-                (optionsFile.cohort(cohortNo).totalTaskDuration-13)); % TrialStartTime. Last trial begins at 27 after total taskDur
-            %ExperimentTaskTable.RecepticalBeamBreak = cell2mat(largeMEDPCFile.Var2((startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+1):(startIndices(startIndicesi)+optionsFile.dataFile.recepticalBeamBreakOffset+optionsFile.task.nTrials)));   %RecepticalBeamBreak
-            ExperimentTaskTable.LeverPressTime = str2double(largeMEDPCFile.Var2((startIDs(iStartIDs)+...
-                optionsFile.cohort(cohortNo).dataFile.leverPressTimeOffset+1):...
-                (startIDs(iStartIDs)+optionsFile.cohort(cohortNo).dataFile.leverPressTimeOffset+...
-                optionsFile.cohort(cohortNo).nTrials)));
-            ExperimentTaskTable.ResponseTime   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %time between trialStart and leverPress
-
-            %input sequence
-            ExperimentTaskTable.RewardingLeverSide = inputs(:,iTask); % binary input sequence for task aka. RewardingLeverSide
-
-            % Data correction,replace MEDPC omission code with NaN
-            ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)        = NaN;
-            ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode) = NaN;
-            ExperimentTaskTable.ResponseTime(ExperimentTaskTable.ResponseTime<=0.0)                                               = NaN;
-            ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)         = NaN;
-            %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
-
-            if isempty(optionsFile.cohort(cohortNo).conditions) % if there arent any different conditions
-                currCondition = [];
-            end
-
-            % create savepath and filename as a .mat file
-            if ~contains(currTask,optionsFile.cohort(cohortNo).taskPrefix)
-                currTask = [optionsFile.cohort(cohortNo).taskPrefix,currTask];
-            end
-
-            saveExpName  = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,1,1,[]);
-            saveInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,1,1,'info');
-            if optionsFile.cohort(cohortNo).taskRepetitions==1
-                saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                    saveExpName,'.mat'];
-                saveInfoPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                    saveInfoName,'.mat'];
-            else
-                saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                    saveExpName,'_',currTaskDate,'.mat'];
-                saveInfoPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                    saveInfoName,'_',currTaskDate,'.mat'];
-            end
-            disp(['saving: ',saveExpPath]);
-            disp(['saving: ',saveInfoPath]);
-            save(saveExpPath,'ExperimentTaskTable');
-            save(saveInfoPath,'MouseInfoTable');
-
-        end %end of using startIndices to extract and save INDIVIDUAL MICE data
-    end %end of searching for each TASK NAME in list in largeMEDPCFile
+            end %end of using startIndices to extract and save INDIVIDUAL MICE data
+        end %end of searching for each TASK NAME in list in largeMEDPCFile
+    end % end task type loop
 end %end of processing LARGE MEDPC file
 
 %% create individual mouse tables from regular sized (<70,000 bytes) MEDPC files
@@ -227,6 +275,12 @@ for iFile = 1:nFiles %for each file in the data dir
     fileName     = string(allFiles(iFile).name);
     regMEDPCFile = readcell(fullfile(optionsFile.paths.cohort(cohortNo).rawData, fileName));
     currTask     = cell2mat(regMEDPCFile(10,2));  %TrialCode
+
+    if ~isempty(trainTasks)
+        tasks = [testTasks, trainTasks];
+    else
+        tasks = testTasks;
+    end
 
     if contains(currTask,tasks(:))
         if size(regMEDPCFile,1)>optionsFile.cohort(cohortNo).nTrials
@@ -265,13 +319,6 @@ for iFile = 1:nFiles %for each file in the data dir
                 MouseInfoTable.TaskDate  = currTaskDate;
                 MouseInfoTable.Chamber   = cell2mat(regMEDPCFile(7,2));
 
-                % save arrays into table
-                ExperimentTaskTable.Choice(:)         = cell2mat(regMEDPCFile(choiceIdx:choiceIdx+optionsFile.cohort(cohortNo).nTrials-1,2));   %Choice_ABA1
-                ExperimentTaskTable.Outcome(:)        = cell2mat(regMEDPCFile(outcomeIdx:outcomeIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %Outcome_ABA1
-                ExperimentTaskTable.LeverPressTime(:) = cell2mat(regMEDPCFile(lPressTIdx:lPressTIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %LeverPressTime_ABA1
-                ExperimentTaskTable.TrialStartTime(:) = transpose(0:optionsFile.cohort(cohortNo).trialDuration:(optionsFile.cohort(cohortNo).totalTaskDuration-optionsFile.cohort(cohortNo).trialDuration));
-                ExperimentTaskTable.ResponseTime(:)   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
-                % ExperimentTaskTable.RecepticalBeamBreak(:)   = cell2mat(regMEDPCFile(RBBIdx:RBBIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %Receptical beambreak
 
                 % get mouse sex and add to mouse info table
                 if sum(strcmp(optionsFile.cohort(cohortNo).treatment.maleMice,currMouse))
@@ -320,34 +367,58 @@ for iFile = 1:nFiles %for each file in the data dir
 
 
                 MouseInfoTable.Condition= currCondition;
-                % find where in tasks vector the current task is placed and
-                % extracting index to be used to extract corresponding inputs
-                idx = zeros(1,numel(tasks));
-                for t = 1:numel(tasks)
-                    idx(t) = strcmp([optionsFile.cohort(cohortNo).taskPrefix tasks{t}],currTask);
+
+
+                if find(strcmp(currTask,tasks))>numel(testTasks)
+
+                    % save arrays into table
+                    TrainingTaskTable.Choice(:)         = cell2mat(regMEDPCFile(choiceIdx:choiceIdx+800-1,2)); 
+                    TrainingTaskTable.Outcome(:)        = cell2mat(regMEDPCFile(outcomeIdx:outcomeIdx+800-1,2)); 
+                    TrainingTaskTable.LeverPressTime(:) = cell2mat(regMEDPCFile(lPressTIdx:lPressTIdx+800-1,2)); %LeverPressTim
+                    % TrainingTaskTable.RecepticalBeamBreak(:)   = cell2mat(regMEDPCFile(RBBIdx:RBBIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %Receptical beambreak
+startIdx = find(contains(dataFileDescrCol,optionsFile.cohort(cohortNo).dataFile.RLSMarker{1}))+2;
+                    TrainingTaskTable.RewardingLeverSide = cell2mat(regMEDPCFile(startIdx:startIdx+800-1,2)); 
+                    % Data correction,replace MEDPC omission code with NaN
+                    TrainingTaskTable.Outcome(TrainingTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)        = NaN;
+                    TrainingTaskTable.LeverPressTime(TrainingTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode) = NaN;
+                    TrainingTaskTable.Choice(TrainingTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)         = NaN;
+                    %TrainingTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
+                else
+                    % save arrays into table
+                    ExperimentTaskTable.Choice(:)         = cell2mat(regMEDPCFile(choiceIdx:choiceIdx+optionsFile.cohort(cohortNo).nTrials-1,2));   %Choice_ABA1
+                    ExperimentTaskTable.Outcome(:)        = cell2mat(regMEDPCFile(outcomeIdx:outcomeIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %Outcome_ABA1
+                    ExperimentTaskTable.LeverPressTime(:) = cell2mat(regMEDPCFile(lPressTIdx:lPressTIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %LeverPressTime_ABA1
+                    ExperimentTaskTable.TrialStartTime(:) = transpose(0:optionsFile.cohort(cohortNo).trialDuration:(optionsFile.cohort(cohortNo).totalTaskDuration-optionsFile.cohort(cohortNo).trialDuration));
+                    ExperimentTaskTable.ResponseTime(:)   = ExperimentTaskTable.LeverPressTime - ExperimentTaskTable.TrialStartTime; %ResponseTime
+                    % ExperimentTaskTable.RecepticalBeamBreak(:)   = cell2mat(regMEDPCFile(RBBIdx:RBBIdx+optionsFile.cohort(cohortNo).nTrials-1,2)); %Receptical beambreak
+
+                    % find where in tasks vector the current task is placed and
+                    % extracting index to be used to extract corresponding inputs
+                    idx = zeros(1,numel(testTasks));
+                    for t = 1:numel(testTasks)
+                        idx(t) = strcmp([optionsFile.cohort(cohortNo).testTaskPrefix testTasks{t}],currTask);
+                    end
+                    ExperimentTaskTable.RewardingLeverSide = testTaskInputs(:,idx==1); % binary input sequence for task aka. RewardingLeverSide
+
+                    % Data correction,replace MEDPC omission code with NaN
+                    ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)        = NaN;
+                    ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode) = NaN;
+                    ExperimentTaskTable.ResponseTime(ExperimentTaskTable.ResponseTime<=0.0)                                               = NaN;
+                    ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)         = NaN;
+                    %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
+
                 end
-
-                %input sequence
-                ExperimentTaskTable.RewardingLeverSide = inputs(:,idx==1); % binary input sequence for task aka. RewardingLeverSide
-
-                % Data correction,replace MEDPC omission code with NaN
-                ExperimentTaskTable.Outcome(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)        = NaN;
-                ExperimentTaskTable.LeverPressTime(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode) = NaN;
-                ExperimentTaskTable.ResponseTime(ExperimentTaskTable.ResponseTime<=0.0)                                               = NaN;
-                ExperimentTaskTable.Choice(ExperimentTaskTable.Choice==optionsFile.cohort(cohortNo).dataFile.missedTrialCode)         = NaN;
-                %ExperimentTaskTable.RecepticalBeamBreak(ExperimentTaskTable.RecepticalBeamBreak<0) = NaN;
-
                 % create savepath and filename as a .mat file
-                if ~contains(currTask,optionsFile.cohort(cohortNo).taskPrefix)
-                    currTask = [optionsFile.cohort(cohortNo).taskPrefix,currTask];
+                if ~contains(currTask,optionsFile.cohort(cohortNo).testTaskPrefix)
+                    currTask = [optionsFile.cohort(cohortNo).testTaskPrefix,currTask];
                 end
 
                 if isempty(optionsFile.cohort(cohortNo).conditions) % if there arent any different conditions
                     currCondition = [];
                 end
 
-                saveExpName  = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,1,1,[]);
-                saveInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,1,1,'info');
+                saveExpName  = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,[],currCondition,1,1,[]);
+                saveInfoName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,[],currCondition,1,1,'info');
                 if optionsFile.cohort(cohortNo).taskRepetitions==1
                     saveExpPath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                         saveExpName,'.mat'];
@@ -361,6 +432,11 @@ for iFile = 1:nFiles %for each file in the data dir
                 end
                 save(saveExpPath,'ExperimentTaskTable');
                 save(saveInfoPath,'MouseInfoTable');
+
+                if ~isempty(trainTasks)
+                    save(saveExpPath,'TrainingTaskTable')
+                end
+
             end
         end
     end
