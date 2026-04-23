@@ -47,8 +47,8 @@ c.model = 'tapas_unitsq_sgm';
 % Sufficient statistics of Gaussian parameter priors
 
 % Zeta
-c.logzemu = log(24);
-c.logzesa = 2;
+c.logzemu = log(48);
+c.logzesa = 1;
 
 % Gather prior settings in vectors
 c.priormus = [

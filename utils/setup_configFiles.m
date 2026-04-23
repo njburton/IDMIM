@@ -11,7 +11,7 @@ if optionsFile.setupModels == 1
 
     modelSpace = struct();
     for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
-        for iModel = 1:numel(optionsFile.model.space)
+        for iModel = 1:numel(optionsFile.model.space)-1
             modelSpace(iModel,iTask).prc           = optionsFile.model.prc{iModel};
             modelSpace(iModel,iTask).prc_config    = eval(optionsFile.model.prc_config{iModel});
             pr = priorPrep(optionsFile.cohort(cohortNo).testTask(iTask).inputs);

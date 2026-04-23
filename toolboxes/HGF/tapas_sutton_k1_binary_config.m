@@ -62,19 +62,19 @@ c.model = 'tapas_sutton_k1_binary';
 
 % mu
 c.logmumu = log(1);
-c.logmusa = 10^2;
+c.logmusa = 100;
 
 % Rhat
-c.logRhatmu = log(1);
+c.logRhatmu = 1;
 c.logRhatsa = 0;
 
 % Initial vhat
-c.logitvhat_1mu = tapas_logit(0.5, 1);
-c.logitvhat_1sa = 4^2;
+c.logitvhat_1mu = 0.05;
+c.logitvhat_1sa = 16;
 
 % Initial h
-c.logh_1mu = log(0.005);
-c.logh_1sa = 4^2;
+c.logh_1mu = 0.05;
+c.logh_1sa = 16;
 
 % Gather prior settings in vectors
 c.priormus = [
