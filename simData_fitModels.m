@@ -78,40 +78,46 @@ else % otherwise just set up the configfiles for the models in the modelspace
     optionsFile = setup_configFiles(optionsFile,cohortNo);
 end
 
-sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.cohort(cohortNo).taskPrefix,optionsFile.dataFiles.simResponses]);      
+sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles.simResponses]);
 %%  MODEL INVERSION
-% looping across tasks, samples, models that created the simulated behaviour (gen model | m_in) 
+% looping across tasks, samples, models that created the simulated behaviour (gen model | m_in)
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
 for iTask = 1:nTasks
-    for iSample = 1:nSamples 
+    for iSample = 1:nSamples
         for m_in = 1:nModels
-            for m_est = 1:nModels
+            for m_est = 5:nModels
                 if strcmp(optionsFile.model.space{m_est},'RW') && strcmp(optionsFile.model.space{m_in},'RW')
                     strct.maxStep  = 1000; % special setting for the RW model due to issue with opt algorithm
                 end
 
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
-                est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
-                    optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
-                    optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
-                    optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
-                    strct,'verbose'); % settings and seed for multistart
 
-                if optionsFile.doCreatePlots
-                    % Plot standard trajectory plot
-                    optionsFile.plot(m_est).plot_fits(est);
-                    figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),...
-                        'simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                        '_model_est_',optionsFile.dataFiles.rawFitFile{m_est}]);
-                    save([figdir,'.fig']);
-                    print([figdir,'.png'], '-dpng');
-                    close all;
+                if strcmp(optionsFile.model.space{m_est},'VKF')
+                    nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
+                    est = sim_fitModel_VKF(optionsFile.cohort(cohortNo).testTask(iTask).inputs,sim.agent(iSample,m_in).task(iTask).data.y,nTrials,optionsFile,cohortNo,iTask,m_in,m_est,iSample);
+                else
+
+                    est = tapas_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
+                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
+                        optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
+                        optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
+                        strct,'verbose'); % settings and seed for multistart
+
+                    if optionsFile.doCreatePlots
+                        % Plot standard trajectory plot
+                        optionsFile.plot(m_est).plot_fits(est);
+                        figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),...
+                            'simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                            '_model_est_',optionsFile.dataFiles.rawFitFile{m_est}]);
+                        save([figdir,'.fig']);
+                        print([figdir,'.png'], '-dpng');
+                        close all;
+                    end
                 end
-
                 %% SAVE model fit
                 savePath = fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
                     ['simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                        '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
+                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
                 save(savePath, '-struct', 'est');
 
             end % END ESTIMATING MODEL loop

@@ -1,4 +1,4 @@
-function est = VKF_model_fit(u,y,nTrials,opts,cohortNo,iTask,m_in,m_est,iSample)
+function est = sim_fitModel_VKF(u,y,nTrials,opts,cohortNo,iTask,m_in,m_est,iSample)
 
 nt = length(y);
 
@@ -6,20 +6,46 @@ nt = length(y);
 assert(all(ismember(y, [0 1])), 'Outcome y must be binary (0 or 1)');
 assert(length(u) == nTrials, 'Input and output must have same number of trials');
 
+%% --- Estimate VKF parameters using fmincon ---
+lux = @(x) 1./(1 + exp(-x));  % Sigmoid transform
+
+% Initial parameter guess and bounds
+init_params = [0; -2.2; log(0.1)];         % [lambda, v0, omega]
+lb = [-5; -5; log(1e-3)];                  % Lower bounds
+ub = [5; 5; log(10)];                      % Upper bounds
+
+negloglik = @(p) vkf_likelihood(p, y);     % Objective
+
+settings = optimoptions('fmincon', 'Display', 'iter', ...
+    'Algorithm', 'interior-point', 'MaxIterations', 300, ...
+    'OptimalityTolerance', 1e-6, 'StepTolerance', 1e-6);
+
+[opt_params, nll] = fmincon(negloglik, init_params, [], [], [], [], lb, ub, [], settings);
+
+% Transform to true VKF values
+lambda = lux(opt_params(1));
+v0     = 10 * lux(opt_params(2));
+omega  = exp(opt_params(3));
+
+fprintf('\nEstimated VKF Parameters:\n');
+fprintf('  lambda = %.4f\n', lambda);
+fprintf('  v0     = %.4f\n', v0);
+fprintf('  omega  = %.4f\n', omega);
+
 %% --- Define VKF parameters manually ---
-lambda = 0.4;   % Volatility learning rate (between 0 and 1)
-v0     = 0.1;   % Initial volatility
-omega  = 0.1;   % Observation noise variance
+% lambda = 0.4;   % Volatility learning rate (between 0 and 1)
+% v0     = 0.1;   % Initial volatility
+% omega  = 0.1;   % Observation noise variance
 
 %% --- Run VKF using your provided function ---
 [dv, lr, vol, um] = vkf_bin(y, lambda, v0, omega);
 
 % Derived metrics
-est.belief_median   = dv;
-est.belief_variance = lr.^2;
-est.vol_median      = median(vol);
-est.lr_median       = median(lr);
-est.predicted_prob  = um;
+est.prc.belief_median   = dv;
+est.prc.belief_variance = lr.^2;      
+est.prc.vol_median      = median(vol);
+est.prc.lr_median       = median(lr);
+est.prc.predicted_prob  = um;
 
 %% --- Display summary statistics ---
 fprintf('--- VKF Summary ---\n');
@@ -37,10 +63,10 @@ figure('Name', 'VKF Real Data Output', 'Position', [100 100 1000 900]);
 % Panel 1: Belief and uncertainty
 subplot(3,1,1);
 yyaxis left;
-plot(t, belief_median, 'b-', 'LineWidth', 2);
+plot(t, est.belief_median, 'b-', 'LineWidth', 2);
 ylabel('Belief (mean)');
 yyaxis right;
-plot(t, belief_variance, 'r--', 'LineWidth', 2);
+plot(t, est.belief_variance, 'r--', 'LineWidth', 2);
 ylabel('Uncertainty (variance)');
 xlabel('Trial');
 title('Belief and Uncertainty');
@@ -63,7 +89,7 @@ legend('Volatility', 'Learning Rate');
 % Panel 3: Predicted vs observed outcomes
 subplot(3,1,3);
 plot(t, y, 'ko', 'MarkerSize', 4); hold on;
-plot(t, predicted_prob, 'b-', 'LineWidth', 2);
+plot(t, est.predicted_prob, 'b-', 'LineWidth', 2);
 xlabel('Trial'); ylabel('Binary / Probability');
 title('Observed Outcomes vs. Predicted Probabilities');
 legend('Observed', 'Predicted P(y=1)');
@@ -174,6 +200,13 @@ title('EKF: Observed vs Predicted Outcomes');
 legend('Location', 'best');
 grid on;
 
+est.traj.muX =     muX;
+est.traj.SigmaX = SigmaX;
+est.traj.um     = um;
+est.traj.lr     = lr;       % learning rate
+est.traj.jac    = jac;
+est.iop
+
 % Save
-saveas(gcf, 'ekf_spirl_matched_vba.png');
+saveas(gcf, 'ekf_matched_vba.png');
 fprintf('\n✅ EKF (VBA-like) plot saved: ekf_spirl_matched_vba.png\n');

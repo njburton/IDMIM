@@ -186,7 +186,7 @@ optionsFile.hgf.opt_config       = eval('tapas_quasinewton_optim_config');
 
 % seed for random number generator
 optionsFile.rng.idx        = 1; % Set counter for random number states
-optionsFile.rng.settings   = rng(123, 'twister');
+optionsFile.rng.settings   = rng(123, 'twister');1
 optionsFile.rng.nRandInit  = 1000;
 
 %% SPECIFY MODELS and related functions
@@ -200,7 +200,7 @@ optionsFile.model.opt_config  = {'tapas_quasinewton_optim_config'};
 optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(2).plot_fits = @tapas_ehgf_binary_plotTraj;
 optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
-optionsFile.plot(3).plot_fits = @tapas_sutton_k1_binary_plotTraj;
+optionsFile.plot(4).plot_fits = @tapas_sutton_k1_binary_plotTraj;
 
 %% SPECIFY FILENAME endings
 optionsFile.dataFiles.simResponses     = 'sim.mat'; % simulated responses file
