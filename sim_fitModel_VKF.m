@@ -1,4 +1,4 @@
-function est = sim_fitModel_VKF(u,y,nTrials,opts,cohortNo,iTask,m_in,m_est,iSample)
+function est = sim_fitModel_VKF(u,Y,nTrials,opts,cohortNo,iTask,m_in,m_est,iSample)
 
 nt = length(y);
 
@@ -7,38 +7,61 @@ assert(all(ismember(y, [0 1])), 'Outcome y must be binary (0 or 1)');
 assert(length(u) == nTrials, 'Input and output must have same number of trials');
 
 %% --- Estimate VKF parameters using fmincon ---
-lux = @(x) 1./(1 + exp(-x));  % Sigmoid transform
+lambda = .1;
+v0 = 1;
+sigma = 1;
+% simcat = 'comp_gen';
+np   = 10000; % number of times particle filter is run
+nsim = 1000; % number of times simulations are run
+nchunk = 50;
+ii = 1:nchunk;
 
-% Initial parameter guess and bounds
-init_params = [0; -2.2; log(0.1)];         % [lambda, v0, omega]
-lb = [-5; -5; log(1e-3)];                  % Lower bounds
-ub = [5; 5; log(10)];                      % Upper bounds
+tx_sim = struct('lambda',lambda,'v0',v0,'sigma',sigma);
+rbpf_model = @(y)rbpf_vkf_lin(y,lambda,v0,sigma,np);
+N = nTrials*2;
+for n=1:nsim
+[Y(:,n),x(:,n),z(:,n)] = gen_vkf_lin(tx_sim,N);
+end
 
-negloglik = @(p) vkf_likelihood(p, y);     % Objective
+simData.y = Y;
+simData.x = x;
+simData.z = z;
+rng(0);
+randnum = randperm(nsim);
 
-settings = optimoptions('fmincon', 'Display', 'iter', ...
-    'Algorithm', 'interior-point', 'MaxIterations', 300, ...
-    'OptimalityTolerance', 1e-6, 'StepTolerance', 1e-6);
+pf(1:nsim) = deal(struct('m',[],'v',[],'c',[]));
 
-[opt_params, nll] = fmincon(negloglik, init_params, [], [], [], [], lb, ub, [], settings);
+for i = ii
+    nn = (i-1)*(nsim/nchunk) + (1:(nsim/nchunk));
+    for j = 1:length(nn)
+        n = nn(j);
+        Y = simData.y(:,n);
+        rng(randnum(n));
+        [mpf,vpf,cpf] = rbpf_model(Y);
+        pf(j) = struct('m',mpf,'v',vpf,'c',cpf);
+    end
+end
 
-% Transform to true VKF values
-lambda = lux(opt_params(1));
-v0     = 10 * lux(opt_params(2));
-omega  = exp(opt_params(3));
+pf(1:nsim) = deal(struct('m',[],'v',[],'c',[]));
 
-fprintf('\nEstimated VKF Parameters:\n');
-fprintf('  lambda = %.4f\n', lambda);
-fprintf('  v0     = %.4f\n', v0);
-fprintf('  omega  = %.4f\n', omega);
-
-%% --- Define VKF parameters manually ---
-% lambda = 0.4;   % Volatility learning rate (between 0 and 1)
-% v0     = 0.1;   % Initial volatility
-% omega  = 0.1;   % Observation noise variance
-
-%% --- Run VKF using your provided function ---
-[dv, lr, vol, um] = vkf_bin(y, lambda, v0, omega);
+% [mE, sE, CC, nans, dxstat] = VKF_comp_pf(simData,tx_sim, pf)
+% [mm, temp,vm] = model(Y)
+% 
+% choice   = Y;
+% outcome  = u;
+% 
+% outcome(:,1:2) = 2*outcome(:,1:2) - 1;
+% outcome(:,3:4) = 2*outcome(:,3:4) + 1;
+% outcome(choice==2) = -outcome(choice==2);
+% 
+% outcome(outcome==-1) = 0;
+% 
+% dv  = vkf_bin(outcome,lambda,v0,omega);
+% 
+% Y  = choice==1;
+% 
+% [loglik, beta] = VKF_fit_responses(v,Y,params);
+% MLE = mle(v,Y,params);
 
 % Derived metrics
 est.prc.belief_median   = dv;
@@ -46,6 +69,8 @@ est.prc.belief_variance = lr.^2;
 est.prc.vol_median      = median(vol);
 est.prc.lr_median       = median(lr);
 est.prc.predicted_prob  = um;
+est.optim.LL            = loglik;
+est.optim.beta          = beta;
 
 %% --- Display summary statistics ---
 fprintf('--- VKF Summary ---\n');
@@ -54,7 +79,7 @@ fprintf('Mean Belief          : %.4f\n', median(est.belief_median));
 fprintf('Mean Variance        : %.4f\n', median(est.belief_variance));
 fprintf('Mean Volatility      : %.4f\n', median(vol));
 fprintf('Mean Learning Rate   : %.4f\n', median(lr));
-fprintf('Prediction Accuracy  : %.2f%%\n', 100 * median((est.predicted_prob > 0.5) == y));
+fprintf('Prediction Accuracy  : %.2f%%\n', 100 * median((est.predicted_prob > 0.5) == Y));
 
 %% --- Plot: 3 informative VKF panels ---
 t = 1:nt;
@@ -88,7 +113,7 @@ legend('Volatility', 'Learning Rate');
 
 % Panel 3: Predicted vs observed outcomes
 subplot(3,1,3);
-plot(t, y, 'ko', 'MarkerSize', 4); hold on;
+plot(t, Y, 'ko', 'MarkerSize', 4); hold on;
 plot(t, est.predicted_prob, 'b-', 'LineWidth', 2);
 xlabel('Trial'); ylabel('Binary / Probability');
 title('Observed Outcomes vs. Predicted Probabilities');
@@ -110,9 +135,9 @@ close all;
 
 
 %% === Load your binary data ===
-y = SPIRL(1).y(:,1);        % 301x1 binary outcome
-nt = length(y);
-assert(all(ismember(y, [0 1])));
+Y = SPIRL(1).y(:,1);        % 301x1 binary outcome
+nt = length(Y);
+assert(all(ismember(Y, [0 1])));
 
 %% === EKF Parameters (match VBA priors) ===
 mu0     = 0;        % Initial mean
@@ -143,7 +168,7 @@ for t = 1:nt
 
     % Observation prediction
     p = gx;
-    e = y(t) - p;
+    e = Y(t) - p;
 
     % Innovation variance
     S = dgdx^2 * sig_pred + 1/sigma_obs;
@@ -193,7 +218,7 @@ grid on;
 
 % Panel 3: Predicted vs Observed
 subplot(3,1,3);
-plot(t, y, 'ko', 'MarkerSize', 4, 'DisplayName', 'Observed'); hold on;
+plot(t, Y, 'ko', 'MarkerSize', 4, 'DisplayName', 'Observed'); hold on;
 plot(t, um, 'b-', 'LineWidth', 2, 'DisplayName', 'Predicted P(y=1)');
 xlabel('Trial'); ylabel('Probability / Binary');
 title('EKF: Observed vs Predicted Outcomes');
