@@ -182,7 +182,7 @@ end
 
 %% SPECIFY SIMULATION settings
 optionsFile.simulations.nSamples = 20;
-optionsFile.hgf.opt_config       = eval('tapas_quasinewton_optim_config');
+optionsFile.hgf.opt_config       = eval('quasinewton_optim_config');
 
 % seed for random number generator
 optionsFile.rng.idx        = 1; % Set counter for random number states
@@ -190,21 +190,21 @@ optionsFile.rng.settings   = rng(123, 'twister');1
 optionsFile.rng.nRandInit  = 1000;
 
 %% SPECIFY MODELS and related functions
-optionsFile.model.space       = {'HGF_3LVL','HGF_2LVL','RW','Sutton','VKF'};  % all models in modelspace
+optionsFile.model.space       = {'uhgf_3L','uhgf_2L','rw','sutton','VKF'};  % all models in modelspace
 optionsFile.model.names       = {'eHGF 3-level','eHGF 2-level','RW','Sutton','VKF'};   % names for figure titles
-optionsFile.model.prc         = {'tapas_ehgf_binary','tapas_ehgf_binary','tapas_rw_binary','tapas_sutton_k1_binary'};
-optionsFile.model.prc_config  = {'tapas_ehgf_binary_config_3LVL','tapas_ehgf_binary_config_2LVL','tapas_rw_binary_config','tapas_sutton_k1_binary_config'};
-optionsFile.model.obs	      = {'tapas_unitsq_sgm'};
-optionsFile.model.obs_config  = {'tapas_unitsq_sgm_config'};
-optionsFile.model.opt_config  = {'tapas_quasinewton_optim_config'};
-optionsFile.plot(1).plot_fits = @tapas_ehgf_binary_plotTraj;
-optionsFile.plot(2).plot_fits = @tapas_ehgf_binary_plotTraj;
-optionsFile.plot(3).plot_fits = @tapas_rw_binary_plotTraj;
-optionsFile.plot(4).plot_fits = @tapas_sutton_k1_binary_plotTraj;
+optionsFile.model.prc         = {'uhgf_binary','uhgf_binary','rw_binary','sutton_k1_binary'};
+optionsFile.model.prc_config  = {'uhgf_3L_binary_config','uhgf_2L_binary_config','rw_binary_config','sutton_k1_binary_config'};
+optionsFile.model.obs	      = {'unitsq_sgm'};
+optionsFile.model.obs_config  = {'unitsq_sgm_config'};
+optionsFile.model.opt_config  = {'quasinewton_optim_config'};
+optionsFile.plot(1).plot_fits = @uhgf_binary_plotTraj;
+optionsFile.plot(2).plot_fits = @uhgf_binary_plotTraj;
+optionsFile.plot(3).plot_fits = @rw_binary_plotTraj;
+optionsFile.plot(4).plot_fits = @sutton_k1_binary_plotTraj;
 
 %% SPECIFY FILENAME endings
 optionsFile.dataFiles.simResponses     = 'sim.mat'; % simulated responses file
-optionsFile.dataFiles.rawFitFile       = {'eHGF_3LVLFit','eHGF_2LVLFit','RWFit','SuttonFit','VKFFit'};  % single model fit files
+optionsFile.dataFiles.rawFitFile       = {'uHGF_3LFit','uHGF_2LFit','RWFit','SuttonFit','VKFFit'};  % single model fit files
 optionsFile.dataFiles.fittedData       = 'modelInv.mat'; % collated model fit files
 
 %% SAVE options file
