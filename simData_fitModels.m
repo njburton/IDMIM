@@ -104,8 +104,7 @@ for iTask = 1:nTasks
                     est = fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
                         optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
                         optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
-                        optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
-                        'verbose'); 
+                        optionsFile.modelSpace(m_est,iTask).obs_config); 
 
                     if optionsFile.doCreatePlots
                         % Plot standard trajectory plot
