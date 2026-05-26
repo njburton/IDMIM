@@ -47,6 +47,7 @@ optionsFile.doModelInversion = 1;
 optionsFile.doSimModelFitCheck = 1;
 optionsFile.doParamFitCheck  = 1;
 optionsFile.doBMS            = 1;
+optionsFile.doRunOnCluster   = 1;
 
 addpath(genpath(pwd));
 %% SPECIFY COHORT Specific settings and information
@@ -111,10 +112,14 @@ optionsFile.cohort(3).dataFile.RecepticalBeamBreakMarker = {'J:','J'}; % Recepti
 
 
 %% SPECIFY PATHS
+if optionsFile.doRunOnCluster
+    optionsFile.paths.saveDir    = '/cluster/home/kwellste/IDMIM/';
+else
 % reorganize data and results folders
 disp('setting new paths...');
 % hardcoded, change to data directory of choice
 optionsFile.paths.saveDir    = '/Volumes/Samsung_T5/SNG/projects/IDMIM/'; %
+end
 optionsFile.paths.projDir    = [pwd,filesep];
 optionsFile.paths.utilsDir   = [optionsFile.paths.projDir,'utils',filesep];
 optionsFile.paths.toolboxDir = [optionsFile.paths.projDir,'toolboxes',filesep];
@@ -192,7 +197,7 @@ optionsFile.rng.nRandInit  = 1000;
 %% SPECIFY MODELS and related functions
 optionsFile.model.space       = {'uhgf_3L','uhgf_2L','rw','sutton','VKF'};  % all models in modelspace
 optionsFile.model.names       = {'eHGF 3-level','eHGF 2-level','RW','Sutton','VKF'};   % names for figure titles
-optionsFile.model.prc         = {'uhgf_binary','uhgf_binary','rw_binary','sutton_k1_binary'};
+optionsFile.model.prc         = {'uhgf_3L_binary','uhgf_2L_binary','rw_binary','sutton_k1_binary'};
 optionsFile.model.prc_config  = {'uhgf_3L_binary_config','uhgf_2L_binary_config','rw_binary_config','sutton_k1_binary_config'};
 optionsFile.model.obs	      = {'unitsq_sgm'};
 optionsFile.model.obs_config  = {'unitsq_sgm_config'};

@@ -197,9 +197,6 @@ for iGroup = 1:nGroups
 end
 
 %% PERFORM rfx BMS ANOVA
-
-
-
 if strcmp(effect,'bwtGroups')
     for g = 1:nGroups
         LMEs{g} = res(g).LME(:,groupArray==g); 
@@ -211,10 +208,7 @@ elseif strcmp(effect,'withinGroups')
 end
 
 %% save figures
-% if strcmp(effect,'bwtGroups')
-% figTitle = getFigTitle(optionsFile,cohortNo,subCohort,[]);
-% else
-%     figTitle = getFigTitle(optionsFile,cohortNo,subCohort,[]);
-% end
+figTitle = getFigTitle(optionsFile,cohortNo,subCohort,[]);
+savefig(figTitle);
 
 end

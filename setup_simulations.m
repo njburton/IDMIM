@@ -59,7 +59,7 @@ disp(['******** for mice in ', char(optionsFile.cohort(cohortNo).name), ' cohort
 
 %% GET MODELING SPECIFICATIONS
 % add toolbox path
-addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
+addpath(genpath([optionsFile.paths.toolboxDir,'hgf-toolbox']));
 
 % if responses to the task in this cohort should be simulated using informed priors,
 % run getInformedPriors.m with the settings prespecified in the optionsFile
@@ -116,29 +116,15 @@ for iAgent = 1:nSamples
                 disp(['Simulating responses using the ',optionsFile.model.space{iModel},' for ',currTask, 'task...   ']);
 
                 while stable == 0
-                    try %sim = tapas_simModel(inputs, prc_model, prc_pvec, obs_model, obs_pvec)
-                        data = simModel(optionsFile.cohort(cohortNo).testTask(iTask).inputs,...
-                            optionsFile.modelSpace(iModel).prc,...
-                            input.prc.nativeInp,...
-                            optionsFile.modelSpace(iModel).obs,...
-                            input.obs.nativeInp,...
-                            optionsFile.rng.settings.State(optionsFile.rng.idx, 1));
-                        stable = 1;
+                    %sim = simModel(inputs, prc_model, prc_pvec, obs_model, obs_pvec)
+                    data = simModel(optionsFile.cohort(cohortNo).testTask(iTask).inputs,...
+                        optionsFile.modelSpace(iModel).prc,...
+                        input.prc.nativeInp,...
+                        optionsFile.modelSpace(iModel).obs,...
+                        input.obs.nativeInp);
 
-                    catch
-                        fprintf('simulation failed for Model %1.0f, synth. Sub %1.0f \n', [iModel, iAgent]);
-                        fprintf('Prc Param Values: \n');
-                        input.prc.nativeInp
-                        fprintf('Obs Param Values: \n');
-                        input.obs.nativeInp
-                        % re-sample prc param values
-                        for j = 1:size(optionsFile.modelSpace(iModel,iTask).prc_idx,2)
-                            input.prc.transInp(optionsFile.modelSpace(iModel,iTask).prc_idx(j)) = ...
-                                normrnd(optionsFile.modelSpace(iModel,iTask).prc_config.priormus(optionsFile.modelSpace(iModel,iTask).prc_idx(j)),...
-                                abs(sqrt(optionsFile.modelSpace(iModel,iTask).prc_config.priorsas(optionsFile.modelSpace(iModel,iTask).prc_idx(j)))));
-                        end
-                        input.prc.nativeInp = optionsFile.modelSpace(iModel,iTask).prc_config.transp_prc_fun(c, input.prc.transInp);
-                    end
+                    stable = 1;
+
                 end
                 % save simulation input
                 sim.agent(iAgent,iModel).task(iTask).data  = data;
@@ -157,7 +143,7 @@ for iAgent = 1:nSamples
                 disp(['Simulating responses using the VKF for ',currTask,' task...   ']);
 
                 % True VKF parameters (used for generation)
-                u = optionsFile.cohort(cohortNo).testTask(iTask).inputs; 
+                u = optionsFile.cohort(cohortNo).testTask(iTask).inputs;
                 nPhases = 3;
                 lambda_true(1) = VBA_sigmoid(mean(u(1:60)));  % Volatility learning rate (0-1, higher = faster volatility change)
                 lambda_true(2) = VBA_sigmoid(mean(u(61:120)));
@@ -165,8 +151,8 @@ for iAgent = 1:nSamples
                 v0_true = 0.5;       % Initial volatility
                 omega_true = 0.2;    % Observation noise variance (0-1)
 
-                
-               nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
+
+                nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
                 % Generate y using VKF generative model
                 %   y        - Generated binary observations (nTrials x 1)
                 %   x        - Hidden state beliefs (nTrials x 1)

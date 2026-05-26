@@ -83,13 +83,9 @@ sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles
 % looping across tasks, samples, models that created the simulated behaviour (gen model | m_in)
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
 for iTask = 1:nTasks
-    for iSample = 1:nSamples
+    for iSample = 10:nSamples
         for m_in = 1:nModels
             for m_est =1:nModels
-                if strcmp(optionsFile.model.space{m_est},'RW') && strcmp(optionsFile.model.space{m_in},'RW')
-                    strct.maxStep  = 1000; % special setting for the RW model due to issue with opt algorithm
-                end
-
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
@@ -128,7 +124,7 @@ for iTask = 1:nTasks
                 savePath = fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
                     ['simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
                     '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
-                save(savePath, '-struct', 'est');
+                save(savePath,'est');
 
             end % END ESTIMATING MODEL loop
         end % END GENERATING MODEL loop

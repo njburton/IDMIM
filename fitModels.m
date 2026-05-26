@@ -68,10 +68,10 @@ addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 optionsFile = setup_configFiles(optionsFile,cohortNo);
 
 % optimization settings
-strct              = eval(char(optionsFile.model.opt_config));
-strct.maxStep      = inf;
-strct.nRandInit    = optionsFile.rng.nRandInit;
-strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
+% strct              = eval(char(optionsFile.model.opt_config));
+% strct.maxStep      = inf;
+% strct.nRandInit    = optionsFile.rng.nRandInit;
+% strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 %% INVERT MODELS with data
 % by looping though conditions, tasks, repetitions, mice, and models
@@ -83,7 +83,7 @@ for iCondition = 1:nConditions
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
 
-    for iTask = 1:1%nTasks
+    for iTask = 1:nTasks
         currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
         disp(['* task  ', char(currTask),'.']);
 
@@ -118,8 +118,7 @@ for iCondition = 1:nConditions
                         est = fitModel(ExperimentTaskTable.Choice, ...
                             optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
                             optionsFile.model.prc_config{iModel}, ...
-                            optionsFile.model.obs_config{1}, ... % all perceptual models use the same observational model
-                            strct); % info for optimization and multistart
+                            optionsFile.model.obs_config{1});
 
                         if optionsFile.doCreatePlots
                             % Plot standard trajectory plot
