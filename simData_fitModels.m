@@ -80,8 +80,8 @@ sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles
 %%  MODEL INVERSION
 % looping across tasks, samples, models that created the simulated behaviour (gen model | m_in)
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
-for iTask = 1:nTasks
-    for iSample = 10:nSamples
+for iTask = 2:nTasks
+    for iSample = 1:9%nSamples
         for m_in = 1:nModels
             for m_est =1:nModels
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
