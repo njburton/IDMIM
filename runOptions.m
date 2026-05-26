@@ -187,7 +187,7 @@ end
 
 %% SPECIFY SIMULATION settings
 optionsFile.simulations.nSamples = 20;
-optionsFile.hgf.opt_config       = eval('quasinewton_optim_config');
+optionsFile.hgf.opt_config       = 'quasinewton_optim_config';
 
 % seed for random number generator
 optionsFile.rng.idx        = 1; % Set counter for random number states
