@@ -56,11 +56,7 @@ nModels  = numel(optionsFile.model.space);
 nSamples = optionsFile.simulations.nSamples;
 
 % specify  modeling settings add toolbox path
-addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
-strct              = optionsFile.hgf.opt_config;
-strct.maxStep      = inf;
-strct.nRandInit    = optionsFile.rng.nRandInit;
-strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
+addpath(genpath([optionsFile.paths.toolboxDir,'hgf-toolbox']));
 
 % if responses to the task in this cohort should be simulated using informed priors,
 % run getInformedPriors.m with the settings prespecified in the optionsFile
@@ -109,7 +105,7 @@ for iTask = 1:nTasks
                         optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
                         optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
                         optionsFile.modelSpace(m_est,iTask).obs_config,...         % Obs fitting model
-                        strct,'verbose'); % settings and seed for multistart
+                        'verbose'); 
 
                     if optionsFile.doCreatePlots
                         % Plot standard trajectory plot
