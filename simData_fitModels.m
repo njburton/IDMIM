@@ -38,6 +38,7 @@ function [] = simData_fitModels(cohortNo)
 disp('************************************** INVERT SIMULATED RESPONSES **************************************');
 disp('*');
 disp('*');
+addpath(genpath(pwd));
 
 % load or run options for running this function
 if exist('optionsFile.mat','file')==2
