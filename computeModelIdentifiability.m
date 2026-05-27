@@ -58,7 +58,7 @@ nSamples = optionsFile.simulations.nSamples;
 % model identifiability we are saving into the following structure: agent(m_in,iAgent,m_est)
 
 for iTask = 1:1%nTasks
-    for iAgent = 1:23%nSamples
+    for iAgent = 1:nSamples
         for m_in = 1:nModels
             modelIn = optionsFile.dataFiles.rawFitFile{m_in};
             for m_est = 1:nModels
@@ -69,7 +69,7 @@ for iTask = 1:1%nTasks
                     '_model_est_',modelEst,'.mat']));
 
                 % LME
-                rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.optim.LME;
+                rec.task(iTask).model(m_in).LME(iAgent,m_est) = rec.sim.task(iTask).agent(m_in,iAgent,m_est).data.est.optim.LME;
 
             end % END ESTIMATING MODEL loop
         end % END GENERATING MODEL loop
@@ -98,7 +98,7 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
     rec.class = class;
 
     % save to struct
-    saveDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).taskPrefix,...
+    saveDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).testTaskPrefix,...
         optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
     save(saveDir,'-struct','rec');
 

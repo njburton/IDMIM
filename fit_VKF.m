@@ -1,4 +1,4 @@
-function [params_fit,model_quantities,optim] = fit_VKF(y, nRestarts, varargin)
+function [params_fit,model_quantities,optim] = fit_VKF(c,y, nRestarts, varargin)
     % Maximum Likelihood Estimation for Volatile Kalman Filter (Binary Responses)
     %
     % Fits VKF parameters (lambda, v0, omega) to binary response data using
@@ -72,7 +72,12 @@ function [params_fit,model_quantities,optim] = fit_VKF(y, nRestarts, varargin)
     
     parse(p, varargin{:});
     opts = p.Results;
-    
+
+    % Estimate mode of posterior parameter distribution (MAP estimate)
+    n_prcpars = length(c.c_prc.priormus);
+    n_obspars = length(c.c_obs.priormus);
+
+
     % Validate input
     assert(isvector(y) && all(ismember(y(:), [0, 1])), ...
         'Input y must be a binary vector (0 or 1)');
@@ -90,307 +95,252 @@ function [params_fit,model_quantities,optim] = fit_VKF(y, nRestarts, varargin)
     if isempty(opts.init)
         x0_log = [log(0.2), log(0.3), log(0.2)];  % Default initial guess
     elseif isstruct(opts.init)
-        x0_log = [log(opts.init.lambda), log(opts.init.v0), log(opts.init.omega)];
-    else
-        x0_log = log(opts.init(:));
+        x0_log = [log(c.c_prc.lambda_mu), log(c.c_obs.v0_mu), log(c.c_obs.omega_mu)];
     end
     
     % Compute initial log-likelihood
-    ll_init = compute_ll_vkf(y, x0_log);
-    
-    if opts.verbose
-        fprintf('\nInitial parameters (log-space):\n');
-        fprintf('  lambda: %.4f (exp: %.4f)\n', x0_log(1), exp(x0_log(1)));
-        fprintf('  v0:     %.4f (exp: %.4f)\n', x0_log(2), exp(x0_log(2)));
-        fprintf('  omega:  %.4f (exp: %.4f)\n', x0_log(3), exp(x0_log(3)));
-        fprintf('Initial log-likelihood: %.4f\n\n', ll_init);
-    end
-    
-    %% Fit with optional multiple restarts
-    best_ll = -Inf;
-    best_x = x0_log;
-    all_results = {};
-    
-    for restart = 1:nRestarts
-        if nRestarts > 1 && opts.verbose
-            fprintf('--- Restart %d of %d ---\n', restart, nRestarts);
-        end
-        
-        % Random initial guess for restarts
-        if restart > 1
-            x0_log = opts.lb + (opts.ub - opts.lb) .* rand(1, 3);
-        end
-        
-        % Run optimization
-        [x_fit, ll, exitflag, output, grad, hess] = optimize_vkf(...
-            y, x0_log, opts.method, opts.lb, opts.ub, opts.verbose);
-        
-        all_results{restart} = struct('x', x_fit, 'll', ll, 'exitflag', exitflag, ...
-            'output', output, 'grad', grad, 'hess', hess);
-        
-        if ll > best_ll
-            best_ll = ll;
-            best_x = x_fit;
-        end
-    end
-    
-    % Use best result
-    x_fit = best_x;
-    ll_fit = best_ll;
-    
-    %% Convert from log-space
-    params_fit = struct(...
-        'lambda', exp(x_fit(1)), ...
-        'v0', exp(x_fit(2)), ...
-        'omega', exp(x_fit(3)));
-    
-    %% Compute diagnostics
-    [~, ~, ~, ~, grad_fit] = optimize_vkf(y, x_fit, opts.method, opts.lb, opts.ub, false);
-    
-    optim = struct(...
-        'exitflag', all_results{end}.exitflag, ...
-        'iterations', all_results{end}.output.iterations, ...
-        'gradient', grad_fit, ...
-        'initial_ll', ll_init, ...
-        'll_improvement', ll_fit - ll_init);
-    
-    %% Compute Hessian and confidence intervals
-    if opts.hessian
-        hess = compute_hessian_numerical(y, x_fit);
-        optim.hessian = hess;
-        
-        % Standard errors from inverse Hessian
-        try
-            inv_hess = inv(hess);
-            se = sqrt(diag(inv_hess));
-            optim.se = se;
-            
-            % 95% Confidence intervals (on original scale using delta method)
-            z_crit = 1.96;
-            
-            % For log-normal parameters: CI = exp(log(param) ± z * SE / param)
-            params_orig = exp(x_fit);
-            optim.ci_lower = params_orig .* exp(-z_crit * se ./ params_orig);
-            optim.ci_upper = params_orig .* exp(z_crit * se ./ params_orig);
-            
-            % Condition number
-            optim.condition_number = cond(hess);
-        catch
-            if opts.verbose
-                warning('Could not invert Hessian - singular or ill-conditioned');
-            end
-            optim.se = NaN(3, 1);
-            optim.ci_lower = NaN(3, 1);
-            optim.ci_upper = NaN(3, 1);
-            optim.condition_number = NaN;
-        end
-    end
-    
-    %% Display results
-    if opts.verbose
-        fprintf('\n=== FITTED PARAMETERS ===\n');
-        fprintf('Lambda (volatility):     %.4f\n', params_fit.lambda);
-        fprintf('v0 (initial volatility): %.4f\n', params_fit.v0);
-        fprintf('Omega (obs. noise):      %.4f\n', params_fit.omega);
-        fprintf('\nFinal log-likelihood: %.4f\n', ll_fit);
-        fprintf('Improvement over initial: %.4f\n\n', optim.ll_improvement);
-        
-        if opts.hessian && ~isnan(optim.se(1))
-            fprintf('=== STANDARD ERRORS & 95%% CI ===\n');
-            fprintf('Lambda:  SE=%.4f, CI=[%.4f, %.4f]\n', ...
-                optim.se(1), optim.ci_lower(1), optim.ci_upper(1));
-            fprintf('v0:      SE=%.4f, CI=[%.4f, %.4f]\n', ...
-                optim.se(2), optim.ci_lower(2), optim.ci_upper(2));
-            fprintf('Omega:   SE=%.4f, CI=[%.4f, %.4f]\n', ...
-                optim.se(3), optim.ci_lower(3), optim.ci_upper(3));
-            fprintf('Hessian condition number: %.2e\n\n', optim.condition_number);
-        end
-        
-        % Model fit 
-        [dv, lr, vol, um] = vkf_bin(y, params_fit.lambda, params_fit.v0, params_fit.omega);
+    negll_init = compute_ll_vkf(y, c);
 
-        % Compute information criteria
-        optim.BIC = -2 * ll_fit + 3 * log(length(y));
-        optim.AIC = -2 * ll_fit + 2 * 3;
-        optim.LL = ll_fit;
-        % Approximate log model evidence using Laplace approximation
-        % LME ≈ log(likelihood) - 0.5 * n_params * log(n_trials)
-        optim.LME = ll_fit - 0.5 * 3 * log(length(y));
-        model_quantities.dv = dv;
-        model_quantities.lr = lr;
-        model_quantities.vol = vol;
-        model_quantities.um = um;
-        fprintf('Log model evidence: %.2f%%\n',  optim.LME);
-    end
-    
-end
+    % Calculate the log-prior of the perceptual parameters.
+% Only parameters that are neither NaN nor fixed (non-zero prior variance) are relevant.
+prc_idx = c.c_prc.priorsas;
+prc_idx(isnan(prc_idx)) = 0;
+prc_idx = find(prc_idx);
 
-%% ========== OPTIMIZATION ROUTINES ==========
+logPrcPriors = -1/2.*log(8*atan(1).*c.c_prc.priorsas(prc_idx)) - 1/2.*(x0_log(prc_idx) - c.c_prc.priormus(prc_idx)).^2./c.c_prc.priorsas(prc_idx);
+logPrcPrior  = sum(logPrcPriors);
 
-function [x_fit, ll_fit, exitflag, output, grad, hess] = optimize_vkf(...
-    y, x0, method, lb, ub, verbose)
-    % Run optimization using specified method
-    
-    switch lower(method)
-        case 'fmincon'
-            obj_fcn = @(x) compute_ll_vkf(y, x);
-            
-            options = optimoptions('fmincon', ...
-                'Algorithm', 'interior-point', ...
-                'Display', iif(verbose, 'iter', 'off'), ...
-                'MaxIterations', 1000, ...
-                'TolFun', 1e-8, ...
-                'TolX', 1e-8, ...
-                'SpecifyObjectiveGradient', false);
-            
-            [x_fit, ll_fit, exitflag, output] = fmincon(...
-                obj_fcn, x0, [], [], [], [], lb, ub, [], options);
-            
-        case 'bfgs'
-            obj_fcn = @(x) compute_ll_vkf(y, x);
-            
-            options = optimoptions('fminunc', ...
-                'Algorithm', 'quasi-newton', ...
-                'Display', iif(verbose, 'iter', 'off'), ...
-                'MaxIterations', 1000, ...
-                'TolFun', 1e-8, ...
-                'TolX', 1e-8);
-            
-            [x_fit, ll_fit, exitflag, output] = fminunc(...
-                obj_fcn, x0, options);
-            
-        case 'ga'
-            obj_fcn = @(x) compute_ll_vkf(y, x);
-            
-            options = optimoptions('ga', ...
-                'Display', iif(verbose, 'iter', 'off'), ...
-                'MaxGenerations', 200, ...
-                'PopulationSize', 50);
-            
-            [x_fit, ll_fit, exitflag, output] = ga(...
-                obj_fcn, 3, [], [], [], [], lb, ub, [], options);
-            
-        case 'pso'
-            obj_fcn = @(x) compute_ll_vkf(y, x);
-            
-            options = optimoptions('particleswarm', ...
-                'Display', iif(verbose, 'iter', 'off'), ...
-                'MaxIterations', 500, ...
-                'SwarmSize', 50);
-            
-            [x_fit, ll_fit, exitflag] = particleswarm(...
-                obj_fcn, 3, lb, ub, options);
-            
-            output = struct('iterations', [], 'funcCount', []);
-            
-        otherwise
-            error('Unknown optimization method: %s', method);
-    end
-    
-    % Compute gradient and Hessian at solution
-    [~, grad] = compute_ll_vkf(y, x_fit);
-    hess = compute_hessian_numerical(y, x_fit);
-end
+% Calculate the log-prior of the observation parameters.
+% Only parameters that are neither NaN nor fixed (non-zero prior variance) are relevant.
+obs_idx = c.c_obs.priorsas;
+obs_idx(isnan(obs_idx)) = 0;
+obs_idx = find(obs_idx);
 
-%% ========== LOG-LIKELIHOOD FUNCTIONS ==========
+logObsPriors = -1/2.*log(8*atan(1).*c.c_obs.priorsas(obs_idx)) - 1/2.*(x0_log(obs_idx) - c.c_obs.priormus(obs_idx)).^2./c.c_obs.priorsas(obs_idx);
+logObsPrior  = sum(logObsPriors);
+opt_algo    = eval(c.optim.optalgo);
+negLogJoint = -(logLl + logPrcPrior + logObsPrior);
+init = [c.c_prc.priormus, c.c_obs.priormus];
 
-function [ll, grad] = compute_ll_vkf(y, log_params)
-    % Compute negative log-likelihood for VKF
-    %
-    % Returns negative LL for minimization
-    
-    % Convert from log-space
-    lambda = exp(log_params(1));
-    v0 = exp(log_params(2));
-    omega = exp(log_params(3));
-    
-    % Bounds check
-    if lambda < 0.01 || lambda > 0.99 || v0 < 0.01 || v0 > 5 || omega < 0.01 || omega > 2
-        ll = 1e10;
-        grad = NaN(3, 1);
-        return;
-    end
-    
-    % Run VKF
-    [~, ~, ~, p_pred] = vkf_bin(y, lambda, v0, omega);
-    
-    % Ensure probabilities are in valid range
-    p_pred = max(min(p_pred, 1 - 1e-10), 1e-10);
-    
-    % Bernoulli log-likelihood
-    ll_bernoulli = sum(y .* log(p_pred) + (1 - y) .* log(1 - p_pred));
-    
-    % Return negative LL (for minimization) and gradient if requested
-    ll = -ll_bernoulli;
-    
-    if nargout > 1
-        % Numerical gradient
-        h = 1e-6;
-        grad = zeros(3, 1);
-        for i = 1:3
-            x_plus = log_params;
-            x_plus(i) = x_plus(i) + h;
-            ll_plus = compute_ll_vkf(y, x_plus);
-            
-            x_minus = log_params;
-            x_minus(i) = x_minus(i) - h;
-            ll_minus = compute_ll_vkf(y, x_minus);
-            
-            grad(i) = (ll_plus - ll_minus) / (2 * h);
+% Determine indices of parameters to optimize (i.e., those that are not fixed or NaN)
+opt_idx = [c.c_prc.priorsas, c.c_obs.priorsas];
+opt_idx(isnan(opt_idx)) = 0;
+opt_idx = find(opt_idx);
+
+% Check whether priors are in a region where the objective function can be evaluated
+stable = 0; nresamp = 0;
+while stable == 0
+    try
+        [dummy1, dummy2, rval, err] = nlj(init);
+        if rval ~= 0
+            rethrow(err);
+        end
+        stable = 1;
+    catch
+        disp('Warning: priors in unstable region for this startpoint.')
+        disp('Re-sampling startpoints...')
+        % Get standard deviations of parameter priors
+        priorsds = sqrt([c.c_prc.priorsas, c.c_obs.priorsas]);
+        optsds = priorsds(opt_idx);
+        % re-sample starting points
+        init(opt_idx) = init(opt_idx) + randn(1,length(optsds)).*optsds;
+        % update re-sampling counter
+        nresamp = nresamp + 1;
+        if nresamp > 1000
+            error('tapas:hgf:StartpointUnstableRegionOfPriors', 'Model inversion aborted. No stable startpoint found for the current priors in 1000 startpoint sampling iterations.')
         end
     end
 end
 
-%% ========== HESSIAN & INFORMATION MATRIX ==========
+% Do an optimization run
+optres = optimrun(nlj, init, opt_idx, opt_algo, c.optim.c_opt);
 
-function hess = compute_hessian_numerical(y, x, h)
-    % Compute numerical Hessian matrix
-    
-    if nargin < 3
-        h = 1e-5;
-    end
-    
-    hess = zeros(3, 3);
-    
-    for i = 1:3
-        for j = 1:3
-            % f(x_i + h, x_j + h)
-            x_pp = x;
-            x_pp(i) = x_pp(i) + h;
-            x_pp(j) = x_pp(j) + h;
-            ll_pp = compute_ll_vkf(y, x_pp);
-            
-            % f(x_i + h, x_j - h)
-            x_pm = x;
-            x_pm(i) = x_pm(i) + h;
-            x_pm(j) = x_pm(j) - h;
-            ll_pm = compute_ll_vkf(y, x_pm);
-            
-            % f(x_i - h, x_j + h)
-            x_mp = x;
-            x_mp(i) = x_mp(i) - h;
-            x_mp(j) = x_mp(j) + h;
-            ll_mp = compute_ll_vkf(y, x_mp);
-            
-            % f(x_i - h, x_j - h)
-            x_mm = x;
-            x_mm(i) = x_mm(i) - h;
-            x_mm(j) = x_mm(j) - h;
-            ll_mm = compute_ll_vkf(y, x_mm);
-            
-            % Central difference approximation
-            hess(i, j) = (ll_pp - ll_pm - ll_mp + ll_mm) / (4 * h^2);
-        end
-    end
-end
+% Record optimization results
+c.optim.init            = optres.init;
+c.optim.final           = optres.final;
+c.optim.H               = optres.H;
+c.optim.Sigma           = optres.Sigma;
+c.optim.Corr            = optres.Corr;
+c.optim.trialLogLlsplit = optres.trialLogLlsplit;
+c.optim.negLl           = optres.negLl;
+c.optim.negLj           = optres.negLj;
+c.optim.LME             = optres.LME;
+c.optim.decompLME       = optres.decompLME;
+c.optim.accu            = optres.accu;
+c.optim.comp            = optres.comp;
+c.optim.iter            = optres.iter;
 
-%% ========== UTILITY FUNCTIONS ==========
+% Do further optimization runs with random initialization
+if isfield(c.optim.c_opt, 'nRandInit') && c.optim.c_opt.nRandInit > 0
 
-function result = iif(condition, true_val, false_val)
-    % Inline if-then-else
-    if condition
-        result = true_val;
+    % Set seed if provided
+    if isnan(c.optim.c_opt.seedRandInit)
+        rng('shuffle');
     else
-        result = false_val;
+        rng(c.optim.c_opt.seedRandInit)
+    end
+
+    for i = 1:c.optim.c_opt.nRandInit
+        % Use prior mean as starting value for random draw
+        init = [c.c_prc.priormus, c.c_obs.priormus];
+
+        % Get standard deviations of parameter priors
+        priorsds = sqrt([c.c_prc.priorsas, c.c_obs.priorsas]);
+        optsds = priorsds(opt_idx);
+
+        % Add random values to prior means, drawn from Gaussian with prior sd
+        init(opt_idx) = init(opt_idx) + randn(1,length(optsds)).*optsds;
+
+        % Check whether initialization point is in a region where the objective
+        % function can be evaluated
+        [dummy1, dummy2, rval, err] = nlj(init);
+        if rval ~= 0
+            rethrow(err);
+        end
+
+        % Do an optimization run
+        optres = optimrun(nlj, init, opt_idx, opt_algo, c.optim.c_opt);
+
+        % Record optimization if the LME is better than the previous record
+        if optres.LME > c.optim.LME
+            c.optim.init            = optres.init;
+            c.optim.final           = optres.final;
+            c.optim.H               = optres.H;
+            c.optim.Sigma           = optres.Sigma;
+            c.optim.Corr            = optres.Corr;
+            c.optim.trialLogLlsplit = optres.trialLogLlsplit;
+            c.optim.negLl           = optres.negLl;
+            c.optim.negLj           = optres.negLj;
+            c.optim.LME             = optres.LME;
+            c.optim.decompLME       = optres.decompLME;
+            c.optim.accu            = optres.accu;
+            c.optim.comp            = optres.comp;
+            c.optim.iter            = optres.iter;
+        end
     end
 end
+
+
+%%%%% Calculate AIC and BIC
+d = length(opt_idx);
+if ~isempty(c.y)
+    ndp = sum(~isnan(c.y(:,1)));
+else
+    ndp = sum(~isnan(c.u(:,1)));
+end
+c.optim.AIC  = 2*c.optim.negLl +2*d;
+c.optim.BIC  = 2*c.optim.negLl +d*log(ndp);
+
+
+function optres = optimrun(nlj, init, opt_idx, opt_algo, c_opt)
+% Does one run of the optimization algorithm and returns results
+
+% The objective function is now the negative log joint restricted
+% with respect to the parameters that are not optimized
+obj_fun = @(p_opt) restrictfun(nlj, init, opt_idx, p_opt);
+
+% Optimize
+disp(' ')
+disp('Optimizing...')
+optres = opt_algo(obj_fun, init(opt_idx)', c_opt);
+
+% Record initialization point
+optres.init = init;
+
+% Replace optimized values in init with arg min values
+final = init;
+final(opt_idx) = optres.argMin';
+optres.final = final;
+
+% Get the negative log-joint and negative log-likelihood
+[negLj, negLl, dummy3, dummy4, trialLogLlsplit] = nlj(final);
+
+% Calculate the covariance matrix Sigma and the log-model evidence (as approximated
+% by the negative variational free energy under the Laplace assumption).
+disp(' ')
+disp('Calculating the log-model evidence (LME)...')
+d     = length(opt_idx);
+
+% Numerical computation of the Hessian of the negative log-joint at the MAP estimate
+options.init_h    = 1;
+options.min_steps = 10;
+H = riddershessian(obj_fun, optres.argMin, options);
+
+% Use the Hessian from the optimization, if available,
+% if the numerical Hessian is not positive definite
+if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<=0)
+    if isfield(optres, 'T')
+        % Hessian of the negative log-joint at the MAP estimate
+        % (avoid asymmetry caused by rounding errors)
+        H = inv(optres.T);
+        % Parameter covariance
+        Sigma = optres.T;
+        % Ensure H and Sigma are positive semi-definite
+        H = nearest_psd(H);
+        Sigma = nearest_psd(Sigma);
+        % Parameter correlation
+        Corr = tapas_Cov2Corr(Sigma);
+        % Log-model evidence ~ negative variational free energy
+        LME = -optres.valMin + 1/2*log(1/det(H)) + d/2*log(2*pi);
+        % decomposed LME
+        decompLME.logjoint = -optres.valMin;
+        decompLME.postpredcorr = 1/2*log(1/det(H));
+        decompLME.freepars = d/2*log(2*pi);
+    else
+        disp('Warning: Cannot calculate Sigma and LME because the Hessian is not positive definite.')
+    end
+else
+    % Calculate parameter covariance
+    Sigma = inv(H);
+    % Ensure H and Sigma are positive semi-definite
+    H = nearest_psd(H);
+    Sigma = nearest_psd(Sigma);
+    % Parameter correlation
+    Corr = tapas_Cov2Corr(Sigma);
+    % Log-model evidence ~ negative variational free energy
+    LME = -optres.valMin + 1/2*log(1/det(H)) + d/2*log(2*pi);
+    % decomposed LME
+    decompLME.logjoint = -optres.valMin;
+    decompLME.postpredcorr = 1/2*log(1/det(H));
+    decompLME.freepars = d/2*log(2*pi);
+end
+
+% Record results
+optres.H = H;
+optres.Sigma = Sigma;
+optres.Corr = Corr;
+optres.trialLogLlsplit = trialLogLlsplit;
+optres.negLl = negLl;
+optres.negLj = negLj;
+optres.LME = LME;
+optres.decompLME = decompLME;
+
+% Calculate accuracy and complexity (LME = accu - comp)
+optres.accu = -negLl;
+optres.comp = optres.accu -LME;
+
+end % function optimrun
+
+function val = restrictfun(f, arg, free_idx, free_arg)
+% This is a helper function for the construction of file handles to
+% restricted functions.
+% It returns the value of a function restricted to subset of the
+% arguments of the input function handle. The input handle takes
+% *one* vector as its argument.
+% INPUT:
+%   f            The input function handle
+%   arg          The argument vector for the input function containing the
+%                fixed values of the restricted arguments (plus dummy values
+%                for the free arguments)
+%   free_idx     The index numbers of the arguments that are not restricted
+%   free_arg     The values of the free arguments
+
+% Replace the dummy arguments in arg
+arg(free_idx) = free_arg;
+
+% Evaluate
+val = f(arg);
+
+end % function val
+
+   

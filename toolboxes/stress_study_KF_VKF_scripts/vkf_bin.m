@@ -1,7 +1,9 @@
-function [dv, lr, vol, um] =vkf_bin(y,lambda,v0,omega)
+function infStates =vkf_bin(y,params)
 
 [nt,nq] = size(y);
-
+lambda  = exp(params(1));
+v0      = exp(params(2)); 
+omega   = exp(params(3));
 m       = 0*ones(1,nq);
 w       = omega*ones(1,nq);
 v       = v0*ones(1,nq);
@@ -30,5 +32,10 @@ for t  = 1:nt
     
     um(t,:)     = ux(m);
 end
+
+infStates(:,1) = normalize(dv);
+infStates(:,2) = normalize(lr);
+infStates(:,3) = normalize(vol);
+infStates(:,4) = normalize(um);
 
 end

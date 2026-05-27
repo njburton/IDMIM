@@ -80,25 +80,17 @@ sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles
 %%  MODEL INVERSION
 % looping across tasks, samples, models that created the simulated behaviour (gen model | m_in)
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
-for iTask = 2:nTasks
-    for iSample = 1:9%nSamples
+for iTask = 1:nTasks
+    for iSample = 1:nSamples
         for m_in = 1:nModels
-            for m_est =1:nModels
+            for m_est =5:nModels
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
-                    [params_fit,modelQuantities,optim] = fit_VKF(sim.agent(iSample,m_in).task(iTask).data.y,optionsFile.rng.nRandInit, 'method', 'bfgs','verbose',true) ;
+                    c = VKF_config(cohortNo,iTask);
+                    est = fitModel_VKF(sim.agent(iSample,m_in).task(iTask).data.y,...
+                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,c,'vkf_binary','vkf_binary');
 
-                    % Convert back from log-space
-                    est.p_prc.lambda = exp(params_fit.lambda); % 0<lambda<1, volatility learning rate
-                    est.p_prc.v0 = exp(params_fit.v0);         % v0>0, initial volatility
-                    est.p_prc.omega = exp(params_fit.omega);   % omega>0, noise parameter
-
-                    est.p_prc.traj.dv  = modelQuantities.dv; % volatility prediction error
-                    est.p_prc.traj.lr  = modelQuantities.lr; % volatility learning rate
-                    est.p_prc.traj.vol = modelQuantities.vol; % volatility beliefs
-                    est.p_prc.traj.muhat  = modelQuantities.um; % estimated beliefs
-                    est.optim     = optim;
                 else
 
                     est = fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses

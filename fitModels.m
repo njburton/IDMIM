@@ -106,8 +106,18 @@ for iCondition = 1:nConditions
                 for iModel = 1:nModels
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
                     if strcmp(optionsFile.model.space{iModel},'VKF')
-                        nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
-                        est = VKF_model_fit(optionsFile.cohort(cohortNo).testTask(iTask).inputs,ExperimentTaskTable.Choice,nTrials);
+                    [params_fit,modelQuantities,optim] = fit_VKF(ExperimentTaskTable.Choice,optionsFile.rng.nRandInit, 'method', 'bfgs','verbose',true) ;
+
+                    % Convert back from log-space
+                    est.p_prc.lambda = exp(params_fit.lambda); % 0<lambda<1, volatility learning rate
+                    est.p_prc.v0 = exp(params_fit.v0);         % v0>0, initial volatility
+                    est.p_prc.omega = exp(params_fit.omega);   % omega>0, noise parameter
+
+                    est.p_prc.traj.dv  = modelQuantities.dv; % volatility prediction error
+                    est.p_prc.traj.lr  = modelQuantities.lr; % volatility learning rate
+                    est.p_prc.traj.vol = modelQuantities.vol; % volatility beliefs
+                    est.p_prc.traj.muhat  = modelQuantities.um; % estimated beliefs
+                    est.optim     = optim;
                     else
                     try
                         load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
