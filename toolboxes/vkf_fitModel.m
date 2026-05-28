@@ -426,10 +426,6 @@ try
     params = [ptrans_prc, ptrans_obs];
     y = r.y;
     y(r.irr) = [];
-    disp(['params: ' num2str(params)])
-    if params(3)==3.223
-        disp('check')
-    end
     infStates = vkf_bin(y,params) ;
 
 catch err
