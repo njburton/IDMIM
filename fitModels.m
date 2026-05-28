@@ -99,7 +99,7 @@ for iCondition = 1:nConditions
                 loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],currCondition,iRep,nReps,[]);
 
-                for iModel = 5:nModels
+                for iModel = 1:4%nModels
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
                     if strcmp(optionsFile.model.space{iModel},'VKF')
                         c = vkf_config(cohortNo,iTask);
