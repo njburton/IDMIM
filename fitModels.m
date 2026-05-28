@@ -94,12 +94,12 @@ for iCondition = 1:nConditions
                     optionsFile.cohort(cohortNo).priorsFromRepetition);
             end
 
-            for iMouse  = 4:nSize
+            for iMouse  = 1:nSize
                 currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
                 loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],currCondition,iRep,nReps,[]);
 
-                for iModel = 1:nModels
+                for iModel = 5:nModels
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
                     if strcmp(optionsFile.model.space{iModel},'VKF')
                         c = vkf_config(cohortNo,iTask);

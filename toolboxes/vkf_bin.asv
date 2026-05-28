@@ -3,9 +3,9 @@ function infStates =vkf_bin(y,params)
 [nt,nq] = size(y);
 lambda  = exp(params(1));
 if lambda>1
-    lambda = 0.9999;
-elseif lambda<0
-    lambda = 0.0001;
+lambda = 0.99;
+elseif
+
 end
 
 v0      = exp(params(2)); 

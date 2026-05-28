@@ -133,14 +133,14 @@ lag = 0;
 
 for i = 1:numel(r.y)
     if ~isnan(r.y(i))
-         nanIdx(i) = 0;
+        nanIdx(i) = 0;
         idx = i-lag;
         r.traj.dv(i)  = infStates(idx,1);
         r.traj.lr(i)  = infStates(idx,2);
         r.traj.vol(i) = infStates(idx,3);
         r.traj.um(i)  = infStates(idx,4);
     else
-        nanIdx(i) = 1; 
+        nanIdx(i) = 1;
         lag = sum(nanIdx);
     end
 end
@@ -151,7 +151,7 @@ r.p_obs.ptrans = exp(ptrans_obs);
 
 transParams = [ptrans_prc,ptrans_obs];
 r.p_prc.lambda_mu = transParams(1);
-r.p_prc.v0        = transParams(2); 
+r.p_prc.v0        = transParams(2);
 r.p_prc.omega_mu  = transParams(3);
 
 omega = transParams(3);
@@ -165,7 +165,7 @@ um1 = um-1;
 um(1-um<1e-4) = um1(1-um<1e-4);
 log1mx = log(1-um);
 log1pmx = log1p(-um);
-log1mx(um<1e-4) = log1pmx(um<1e-4); 
+log1mx(um<1e-4) = log1pmx(um<1e-4);
 um = max(min(um, 1 - 1e-6), 1e-6);
 
 r.optim.logp = y.*omega.*(um -log1mx) +omega.*log1mx -log((1-um).^omega +um.^omega);
@@ -192,9 +192,9 @@ disp(' ')
 disp('Parameter estimates for the perceptual model:');
 disp(dispprc)
 
-    disp(' ')
-    disp('Parameter estimates for the observation model:');
-    disp(dispobs)
+disp(' ')
+disp('Parameter estimates for the observation model:');
+disp(dispobs)
 
 disp('Model quality:');
 disp(['    LME (more is better): ' num2str(r.optim.LME)])
@@ -237,7 +237,7 @@ else
     ignout = ign;
 end
 disp(['Ignored trials: ', num2str(ignout)])
-    
+
 % Determine irregular trials
 irr = [];
 for k = 1:size(r.y,1)
@@ -257,7 +257,7 @@ else
     irrout = irr;
 end
 disp(['Irregular trials: ', num2str(irrout)])
-    
+
 % Calculate placeholder values for configuration files
 
 % First input
@@ -333,7 +333,7 @@ while stable == 0
         if nresamp > 1000
             error('tapas:hgf:StartpointUnstableRegionOfPriors', 'Model inversion aborted. No stable startpoint found for the current priors in 1000 startpoint sampling iterations.')
         end
-      end
+    end
 end
 
 % Do an optimization run
@@ -426,6 +426,10 @@ try
     params = [ptrans_prc, ptrans_obs];
     y = r.y;
     y(r.irr) = [];
+    disp(['params: ' num2str(params)])
+    if params(3)==3.223
+        disp('check')
+    end
     infStates = vkf_bin(y,params) ;
 
 catch err
@@ -447,14 +451,13 @@ um1 = um-1;
 um(1-um<1e-4) = um1(1-um<1e-4);
 log1mx = log(1-um);
 log1pmx = log1p(-um);
-log1mx(um<1e-4) = log1pmx(um<1e-4); 
+log1mx(um<1e-4) = log1pmx(um<1e-4);
 um = max(min(um, 1 - 1e-6), 1e-6);
 
 trialLogLls = y.*omega.*(um -log1mx) +omega.*log1mx -log((1-um).^omega +um.^omega);
 trialLogLlsplit = trialLogLls;
 
 % weed out irregular trials
-trialLogLls(r.irr) = [];
 logLl = sum(trialLogLls);
 if isnan(logLl)
     negLogLl = realmax;
