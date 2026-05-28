@@ -43,7 +43,7 @@ function fitModels(cohortNo)
 % -------------------------------------------------------------------------
 
 %% INITIALIZE options and variables needed to run this function
- addpath(genpath(pwd))
+addpath(genpath(pwd))
 if exist('optionsFile.mat','file')==2
     load('optionsFile.mat');
 else
@@ -103,13 +103,20 @@ for iCondition = 1:nConditions
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
                     if strcmp(optionsFile.model.space{iModel},'VKF')
                         c = vkf_config(cohortNo,iTask);
-                         load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                                loadName,'.mat']);
-                            disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
+                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                            loadName,'.mat']);
+                        disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
 
-                            responses = ExperimentTaskTable.Choice;
-                           
+                        responses = ExperimentTaskTable.Choice;
+
                         est = vkf_fitModel(responses,optionsFile.cohort(cohortNo).testTask(iTask).inputs,c);
+                        saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                            [],currCondition,iRep,nReps,[]);
+                        save([char(optionsFile.paths.cohort(cohortNo).results),...
+                            'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
+
+                        modelInv.allMice(iMouse,iModel).est = est;
+
                         if optionsFile.doCreatePlots
                             % Plot standard trajectory plot
                             t = 1:numel(est.traj.dv);
@@ -180,7 +187,11 @@ for iCondition = 1:nConditions
                                 print([figdir,'.png'], '-dpng');
                                 close all;
                             end
+
                             %Save model fit
+                            saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                                [],currCondition,iRep,nReps,[]);
+
                             save([char(optionsFile.paths.cohort(cohortNo).results),...
                                 'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
 
