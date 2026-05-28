@@ -9,6 +9,11 @@ elseif lambda<0
 end
 
 v0      = exp(params(2)); 
+
+if v0 <0.0001
+    v0 = 0.0001;
+end
+
 omega   = exp(params(3));
 
 m       = 0*ones(1,nq);
