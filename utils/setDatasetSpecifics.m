@@ -8,9 +8,9 @@ function optionsFile = setDatasetSpecifics(optionsFile)
 optionsFile.cohort(1).name = '2023_UCMS';
 % Identify which mouseIDs are male, female and their experimental group
 optionsFile.cohort(1).treatment.maleMice   = {'372','382','392','402','412','422'};
-optionsFile.cohort(1).treatment.femaleMice = {'432','442','452','462','472','482'};
+optionsFile.cohort(1).treatment.femaleMice = {'432','462','472','482'};
 optionsFile.cohort(1).control.maleMice     = {'369','370','374','375','215','217'};
-optionsFile.cohort(1).control.femaleMice   = {'411','426','433','434','501','506'};
+optionsFile.cohort(1).control.femaleMice   = {'426','433','501','506'};
 optionsFile.cohort(1).conditions           = [];
 optionsFile.cohort(1).subCohorts           = {'treatment','control'};
 optionsFile.cohort(1).taskRepetitions      = 1;
