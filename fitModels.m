@@ -94,7 +94,7 @@ for iCondition = 1:nConditions
                     optionsFile.cohort(cohortNo).priorsFromRepetition);
             end
 
-            for iMouse  = 20:nSize
+            for iMouse  = 23:nSize
                 currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
                 loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],currCondition,iRep,nReps,[]);
