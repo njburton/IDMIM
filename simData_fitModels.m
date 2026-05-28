@@ -83,7 +83,7 @@ sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles
 for iTask = 1:nTasks
     for iSample = 1:nSamples
         for m_in = 1:nModels
-            for m_est =1:4%nModels
+            for m_est =1:nModels
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
@@ -136,7 +136,7 @@ for iTask = 1:nTasks
                         save([figdir,'.fig']);
                         print([figdir,'.png'], '-dpng');
                         close all;
-
+                    end
                     else
 
                         est = fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
