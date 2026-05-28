@@ -198,6 +198,8 @@ for iCondition = 1:nConditions
                             modelInv.allMice(iMouse,iModel).est = est;
 
                         catch
+                            saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                                [],currCondition,iRep,nReps,[]);
                             modelInv.allMice(iMouse,iModel).est = [];
                             disp(['mouse ', char(saveName), ' not loaded...'])
                         end
