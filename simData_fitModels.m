@@ -87,39 +87,85 @@ for iTask = 1:nTasks
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
-                    c = VKF_config(cohortNo,iTask);
+                    c = vkf_config(cohortNo,iTask);
                     est = fitModel_VKF(sim.agent(iSample,m_in).task(iTask).data.y,...
-                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,c,'vkf_binary','vkf_binary');
-
-                else
-
-                    est = fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
-                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
-                        optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
-                        optionsFile.modelSpace(m_est,iTask).obs_config); 
+                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,c,'vkf_bin','vkf_bin');
 
                     if optionsFile.doCreatePlots
                         % Plot standard trajectory plot
-                        optionsFile.plot(m_est).plot_fits(est);
+                        t = 1:numel(sim.agent(iSample,m_in).task(iTask).data.y);
+                        figure('Name', 'VKF Real Data Output (Estimated)', 'Position', [100 100 1000 900]);
+
+                        % Panel 1: Belief and uncertainty
+                        subplot(3,1,1);
+                        yyaxis left;
+                        plot(t, est.traj.dv, 'b-', 'LineWidth', 2);
+                        ylabel('beliefs');
+                        yyaxis right;
+                        plot(t, (est.traj.lr).^2, 'r--', 'LineWidth', 2);
+                        ylabel('Uncertainty');
+                        xlabel('Trial');
+                        title('Belief and Uncertainty');
+                        legend('Belief', 'Variance');
+                        grid on;
+
+                        % Panel 2: Volatility and learning rate
+                        subplot(3,1,2);
+                        yyaxis left;
+                        plot(t, est.traj.vol, 'm-', 'LineWidth', 2);
+                        ylabel('Volatility');
+                        yyaxis right;
+                        plot(t, est.traj.lr, 'k--', 'LineWidth', 2);
+                        ylabel('Learning Rate');
+                        xlabel('Trial');
+                        title('Volatility and Learning Rate');
+                        legend('Volatility', 'Learning Rate');
+                        grid on;
+
+                        % Panel 3: Observed vs Predicted
+                        subplot(3,1,3);
+                        plot(t, sim.agent(iSample,m_in).task(iTask).data.y, 'ko', 'MarkerSize', 4); hold on;
+                        plot(t, est.traj.um, 'b-', 'LineWidth', 2);
+                        xlabel('Trial'); ylabel('Binary / Probability');
+                        title('Observed Outcomes vs. Predicted Probabilities');
+                        legend('Observed', 'Predicted P(y=1)');
+                        grid on;
                         figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),...
                             'simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
                             '_model_est_',optionsFile.dataFiles.rawFitFile{m_est}]);
                         save([figdir,'.fig']);
                         print([figdir,'.png'], '-dpng');
                         close all;
+
+                    else
+
+                        est = fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
+                            optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
+                            optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
+                            optionsFile.modelSpace(m_est,iTask).obs_config);
+
+                        if optionsFile.doCreatePlots
+                            % Plot standard trajectory plot
+                            optionsFile.plot(m_est).plot_fits(est);
+                            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),...
+                                'simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                                '_model_est_',optionsFile.dataFiles.rawFitFile{m_est}]);
+                            save([figdir,'.fig']);
+                            print([figdir,'.png'], '-dpng');
+                            close all;
+                        end
                     end
-                end
-                %% SAVE model fit
-                savePath = fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
-                    ['simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                    '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
-                save(savePath,'est');
+                    %% SAVE model fit
+                    savePath = fullfile(char(optionsFile.paths.cohort(cohortNo).simulations),...
+                        ['simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                        '_model_est_',optionsFile.dataFiles.rawFitFile{m_est},'.mat']);
+                    save(savePath,'est');
 
-            end % END ESTIMATING MODEL loop
-        end % END GENERATING MODEL loop
-    end % END SAMPLE loop
-end % END TASK loop
+                end % END ESTIMATING MODEL loop
+            end % END GENERATING MODEL loop
+        end % END SAMPLE loop
+    end % END TASK loop
 
-disp(['model inversion of simulated responses for cohort ',optionsFile.cohort(cohortNo).name,' complete.'])
+    disp(['model inversion of simulated responses for cohort ',optionsFile.cohort(cohortNo).name,' complete.'])
 
 end

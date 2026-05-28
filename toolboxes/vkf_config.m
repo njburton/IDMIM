@@ -1,4 +1,4 @@
-function c = VKF_config(cohortNo,iTask)
+function c = vkf_config(cohortNo,iTask)
 
 addpath(genpath(pwd));
 

@@ -1,4 +1,4 @@
-function r = fitModel_VKF(responses, inputs, c, varargin)
+function r = vkf_fitModel(responses, inputs, c, varargin)
 % This is the main function for fitting the parameters of a combination of perceptual and
 % observation models, given inputs and responses.
 % USAGE:
