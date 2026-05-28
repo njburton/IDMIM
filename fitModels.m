@@ -43,6 +43,7 @@ function fitModels(cohortNo)
 % -------------------------------------------------------------------------
 
 %% INITIALIZE options and variables needed to run this function
+ addpath(genpath(pwd))
 if exist('optionsFile.mat','file')==2
     load('optionsFile.mat');
 else
@@ -67,11 +68,6 @@ addpath(genpath([optionsFile.paths.toolboxDir,'HGF']));
 % set up config files for models in model space
 optionsFile = setup_configFiles(optionsFile,cohortNo);
 
-% optimization settings
-% strct              = eval(char(optionsFile.model.opt_config));
-% strct.maxStep      = inf;
-% strct.nRandInit    = optionsFile.rng.nRandInit;
-% strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 %% INVERT MODELS with data
 % by looping though conditions, tasks, repetitions, mice, and models
@@ -100,57 +96,100 @@ for iCondition = 1:nConditions
 
             for iMouse  = 1:nSize
                 currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
-                loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],currCondition,iRep,nReps,[]);
 
                 for iModel = 1:nModels
                     disp(['* model ', optionsFile.model.space{iModel},'.']);
                     if strcmp(optionsFile.model.space{iModel},'VKF')
-                    [params_fit,modelQuantities,optim] = fit_VKF(ExperimentTaskTable.Choice,optionsFile.rng.nRandInit, 'method', 'bfgs','verbose',true) ;
+                        c = vkf_config(cohortNo,iTask);
+                         load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                                loadName,'.mat']);
+                            disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
 
-                    % Convert back from log-space
-                    est.p_prc.lambda = exp(params_fit.lambda); % 0<lambda<1, volatility learning rate
-                    est.p_prc.v0 = exp(params_fit.v0);         % v0>0, initial volatility
-                    est.p_prc.omega = exp(params_fit.omega);   % omega>0, noise parameter
-
-                    est.p_prc.traj.dv  = modelQuantities.dv; % volatility prediction error
-                    est.p_prc.traj.lr  = modelQuantities.lr; % volatility learning rate
-                    est.p_prc.traj.vol = modelQuantities.vol; % volatility beliefs
-                    est.p_prc.traj.muhat  = modelQuantities.um; % estimated beliefs
-                    est.optim     = optim;
-                    else
-                    try
-                        load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
-                            loadName,'.mat']);
-                        disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
-
-                        %% model fit
-                        est = fitModel(ExperimentTaskTable.Choice, ...
-                            optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
-                            optionsFile.model.prc_config{iModel}, ...
-                            optionsFile.model.obs_config{1});
-
+                            responses = ExperimentTaskTable.Choice;
+                           
+                        est = vkf_fitModel(responses,optionsFile.cohort(cohortNo).testTask(iTask).inputs,c);
                         if optionsFile.doCreatePlots
                             % Plot standard trajectory plot
-                            optionsFile.plot(iModel).plot_fits(est);
-                            saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
-                                [],currCondition,iRep,nReps,[]);
-                            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),...
-                                'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel}]);
+                            t = 1:numel(est.traj.dv);
+                            figure('Name', 'VKF Real Data Output (Estimated)', 'Position', [100 100 1000 900]);
+
+                            % Panel 1: Belief and uncertainty
+                            subplot(3,1,1);
+                            yyaxis left;
+                            plot(t, est.traj.dv, 'b-', 'LineWidth', 2);
+                            ylabel('beliefs');
+                            yyaxis right;
+                            plot(t, (est.traj.lr).^2, 'r--', 'LineWidth', 2);
+                            ylabel('Uncertainty');
+                            xlabel('Trial');
+                            title('Belief and Uncertainty');
+                            legend('Belief', 'Variance');
+                            grid on;
+
+                            % Panel 2: Volatility and learning rate
+                            subplot(3,1,2);
+                            yyaxis left;
+                            plot(t, est.traj.vol, 'm-', 'LineWidth', 2);
+                            ylabel('Volatility');
+                            yyaxis right;
+                            plot(t, est.traj.lr, 'k--', 'LineWidth', 2);
+                            ylabel('Learning Rate');
+                            xlabel('Trial');
+                            title('Volatility and Learning Rate');
+                            legend('Volatility', 'Learning Rate');
+                            grid on;
+
+                            % Panel 3: Observed vs Predicted
+                            subplot(3,1,3);
+                            plot(t, responses, 'ko', 'MarkerSize', 4); hold on;
+                            plot(t, est.traj.um, 'b-', 'LineWidth', 2);
+                            xlabel('Trial'); ylabel('Binary / Probability');
+                            title('Observed Outcomes vs. Predicted Probabilities');
+                            legend('Observed', 'Predicted P(y=1)');
+                            grid on;
+                            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),...
+                                'simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
+                                '_model_est_',optionsFile.dataFiles.rawFitFile{m_est}]);
                             save([figdir,'.fig']);
                             print([figdir,'.png'], '-dpng');
                             close all;
                         end
-                        %Save model fit
-                        save([char(optionsFile.paths.cohort(cohortNo).results),...
-                            'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
 
-                        modelInv.allMice(iMouse,iModel).est = est;
+                    else
+                        try
+                            load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
+                                loadName,'.mat']);
+                            disp(['* mouse ', char(currMouse), ' (',num2str(iMouse),' of ',num2str(optionsFile.cohort(cohortNo).nSize),')...']);
 
-                    catch
-                        modelInv.allMice(iMouse,iModel).est = [];
-                        disp(['mouse ', char(saveName), ' not loaded...'])
-                    end
+                            %% model fit
+                            est = fitModel(ExperimentTaskTable.Choice, ...
+                                optionsFile.cohort(cohortNo).testTask(iTask).inputs, ...
+                                optionsFile.model.prc_config{iModel}, ...
+                                optionsFile.model.obs_config{1});
+
+                            if optionsFile.doCreatePlots
+                                % Plot standard trajectory plot
+                                optionsFile.plot(iModel).plot_fits(est);
+                                saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                                    [],currCondition,iRep,nReps,[]);
+                                figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),...
+                                    'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel}]);
+                                save([figdir,'.fig']);
+                                print([figdir,'.png'], '-dpng');
+                                close all;
+                            end
+                            %Save model fit
+                            save([char(optionsFile.paths.cohort(cohortNo).results),...
+                                'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel},'.mat'], 'est');
+
+                            modelInv.allMice(iMouse,iModel).est = est;
+
+                        catch
+                            modelInv.allMice(iMouse,iModel).est = [];
+                            disp(['mouse ', char(saveName), ' not loaded...'])
+                        end
                     end
                     % create savepath and filename as a .mat file
                     groupSaveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...

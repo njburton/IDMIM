@@ -1,5 +1,6 @@
 function wrapperForCluster
 
-simData_fitModels(1)
+addpath(genpath(pwd))
+fitModels(1)
 
 end

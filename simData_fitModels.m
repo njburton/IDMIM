@@ -88,7 +88,7 @@ for iTask = 1:nTasks
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
                     c = vkf_config(cohortNo,iTask);
-                    est = fitModel_VKF(sim.agent(iSample,m_in).task(iTask).data.y,...
+                    est = vkf_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,...
                         optionsFile.cohort(cohortNo).testTask(iTask).inputs,c,'vkf_bin','vkf_bin');
 
                     if optionsFile.doCreatePlots

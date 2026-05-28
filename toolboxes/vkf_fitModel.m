@@ -119,14 +119,31 @@ ptrans = [ptrans_prc,ptrans_obs];
 % Transform MAP parameters back to their native space
 [pvec, r.p_prc] = vkf_transp(ptrans);
 y = r.y;
+y(r.irr) = [];
 infStates = vkf_bin(y, ptrans);
 
 % observations
-r.traj.dv  = infStates(:,1);
-r.traj.lr  = infStates(:,2);
-r.traj.vol = infStates(:,3);
-r.traj.um  = infStates(:,4);
+irr = r.irr;
 
+r.traj.dv(irr)  = NaN;
+r.traj.lr(irr)  = NaN;
+r.traj.vol(irr) = NaN;
+r.traj.um(irr)  = NaN;
+lag = 0;
+
+for i = 1:numel(r.y)
+    if ~isnan(r.y(i))
+         nanIdx(i) = 0;
+        idx = i-lag;
+        r.traj.dv(i)  = infStates(idx,1);
+        r.traj.lr(i)  = infStates(idx,2);
+        r.traj.vol(i) = infStates(idx,3);
+        r.traj.um(i)  = infStates(idx,4);
+    else
+        nanIdx(i) = 1; 
+        lag = sum(nanIdx);
+    end
+end
 
 % Store transformed MAP parameters
 r.p_prc.ptrans = exp(ptrans_prc);
@@ -139,6 +156,7 @@ r.p_prc.omega_mu  = transParams(3);
 
 omega = transParams(3);
 y = r.y;
+y(r.irr) = [];
 infStates = vkf_bin(y,transParams);
 
 um    = infStates(:,4);
@@ -406,7 +424,8 @@ function [negLogJoint, negLogLl, rval, err, trialLogLlsplit] = negLogJoint(r, pr
 % predictions on.
 try
     params = [ptrans_prc, ptrans_obs];
-    y = logical(r.y);
+    y = r.y;
+    y(r.irr) = [];
     infStates = vkf_bin(y,params) ;
 
 catch err

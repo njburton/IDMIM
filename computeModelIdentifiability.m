@@ -198,7 +198,7 @@ for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
         set(gcf, 'color', 'white');
 
         % Save figure
-        figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).taskPrefix,...
+        figDir = fullfile([optionsFile.paths.cohort(cohortNo).groupSim,optionsFile.cohort(cohortNo).testTaskPrefix,...
             optionsFile.cohort(cohortNo).name,'_Model_Identifiability_',optionsFile.cohort(cohortNo).testTask(iTask).name]);
 
         % Save as .fig and .png
