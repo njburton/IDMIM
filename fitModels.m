@@ -156,9 +156,8 @@ for iCondition = 1:nConditions
                             title('Observed Outcomes vs. Predicted Probabilities');
                             legend('Observed', 'Predicted P(y=1)');
                             grid on;
-                            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).simPlots),...
-                                'simAgent_', num2str(iSample),'_',optionsFile.cohort(cohortNo).testTask(iTask).name,'_model_in_',optionsFile.dataFiles.rawFitFile{m_in},...
-                                '_model_est_',optionsFile.dataFiles.rawFitFile{m_est}]);
+                            figdir = fullfile([char(optionsFile.paths.cohort(cohortNo).plots),...
+                                    'mouse',char(currMouse),'_',saveName,'_',optionsFile.dataFiles.rawFitFile{iModel}]);
                             save([figdir,'.fig']);
                             print([figdir,'.png'], '-dpng');
                             close all;

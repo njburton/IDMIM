@@ -57,7 +57,7 @@ nSamples = optionsFile.simulations.nSamples;
 % model space and inverted with all the models in the model space. For
 % model identifiability we are saving into the following structure: agent(m_in,iAgent,m_est)
 
-for iTask = 1:1%nTasks
+for iTask = 1:nTasks
     for iAgent = 1:nSamples
         for m_in = 1:nModels
             modelIn = optionsFile.dataFiles.rawFitFile{m_in};
@@ -78,7 +78,7 @@ end % END TASK loop
 
 %% LME Winner classification)
 
-for iTask = 1:1%numel(optionsFile.cohort(cohortNo).testTask)
+for iTask = 1:numel(optionsFile.cohort(cohortNo).testTask)
     class.LMEwinner = NaN(size(optionsFile.model.space, 2), size(optionsFile.model.space, 2));
     class.percLMEwinner = NaN(size(class.LMEwinner));
 
