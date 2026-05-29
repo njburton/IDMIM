@@ -119,7 +119,7 @@ ptrans = [ptrans_prc,ptrans_obs];
 ptrans = real(ptrans);
 % Transform MAP parameters back to their native space
 [pvec, r.p_prc] = vkf_transp(ptrans);
-y = r.y;
+y = r.y(:,1);
 y(r.irr) = [];
 infStates = vkf_bin(y, ptrans);
 
@@ -132,8 +132,8 @@ r.traj.vol(irr) = NaN;
 r.traj.um(irr)  = NaN;
 lag = 0;
 
-for i = 1:numel(r.y)
-    if ~isnan(r.y(i))
+for i = 1:numel(y)
+    if ~isnan(y(i))
         nanIdx(i) = 0;
         idx = i-lag;
         r.traj.dv(i)  = infStates(idx,1);
@@ -153,8 +153,8 @@ r.p_obs.ptrans = exp(ptrans_obs);
 transParams = [ptrans_prc,ptrans_obs];
 transParams = real(transParams);
 r.p_prc.lambda_mu = transParams(1);
-r.p_prc.v0        = transParams(2);
-r.p_prc.omega_mu  = transParams(3);
+r.p_obs.v0        = transParams(2);
+r.p_obs.omega_mu  = transParams(3);
 
 omega = transParams(3);
 y = r.y;
@@ -197,6 +197,7 @@ disp(dispprc)
 disp(' ')
 disp('Parameter estimates for the observation model:');
 disp(dispobs)
+r.optim.AIC = real(r.optim.AIC); r.optim.BIC = real(r.optim.BIC);
 
 disp('Model quality:');
 disp(['    LME (more is better): ' num2str(r.optim.LME)])
@@ -357,6 +358,7 @@ r.optim.comp            = optres.comp;
 r.optim.iter            = optres.iter;
 
 % Do further optimization runs with random initialization
+r.c_opt.nRandInit = 10;r.c_opt.seedRandInit=1;
 if isfield(r.c_opt, 'nRandInit') && r.c_opt.nRandInit > 0
 
     % Set seed if provided
@@ -427,7 +429,7 @@ function [negLogJoint, negLogLl, rval, err, trialLogLlsplit] = negLogJoint(r, pr
 try
     params = [ptrans_prc, ptrans_obs];
     params = real(params);
-    y = r.y;
+    y = r.y(:,1);
     y(r.irr) = [];
     infStates = vkf_bin(y,params) ;
 
@@ -495,24 +497,40 @@ function optres = optimrun(nlj, init, opt_idx, opt_algo, c_opt)
 
 % The objective function is now the negative log joint restricted
 % with respect to the parameters that are not optimized
+init(1) = exp(init(1));
+if init(1)>1
+    init(1) = 0.9999;
+elseif init(1)<0
+    init(1) = 0.0001;
+end
+init(1) = real(init(1));
+
+init(2)      = exp(init(2)); 
+if init(2) <0.0001
+    init(2) = 0.0001;
+end
+init(2)      = real(init(2));
+init(3)    = exp(init(3) );
+init(3)   = real(init(3) );
+
 obj_fun = @(p_opt) restrictfun(nlj, init, opt_idx, p_opt);
 
 % Optimize
 disp(' ')
 disp('Optimizing...')
 optres = opt_algo(obj_fun, init(opt_idx)', c_opt);
+optres.argMin = real(optres.argMin);
 
 % Record initialization point
-optres.init = init;
-
+optres.init = real(init);
 % Replace optimized values in init with arg min values
-final = init;
+final = real(init);optres.argMin = real(optres.argMin);
 final(opt_idx) = optres.argMin';
 optres.final = final;
 
 % Get the negative log-joint and negative log-likelihood
 [negLj, negLl, dummy3, dummy4, trialLogLlsplit] = nlj(final);
-
+negLj = real(negLj); negLl = real(negLl);
 % Calculate the covariance matrix Sigma and the log-model evidence (as approximated
 % by the negative variational free energy under the Laplace assumption).
 disp(' ')
@@ -523,7 +541,7 @@ d     = length(opt_idx);
 options.init_h    = 1;
 options.min_steps = 10;
 H = riddershessian(obj_fun, optres.argMin, options);
-
+H = real(H);
 % Use the Hessian from the optimization, if available,
 % if the numerical Hessian is not positive definite
 if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<=0)
@@ -531,15 +549,19 @@ if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<=0)
         % Hessian of the negative log-joint at the MAP estimate
         % (avoid asymmetry caused by rounding errors)
         H = inv(optres.T);
+        H = real(H);
         % Parameter covariance
         Sigma = optres.T;
         % Ensure H and Sigma are positive semi-definite
         H = nearest_psd(H);
+        H = real(H);
+        Sigma = real(Sigma);
         Sigma = nearest_psd(Sigma);
         % Parameter correlation
         Corr = tapas_Cov2Corr(Sigma);
         % Log-model evidence ~ negative variational free energy
         LME = -optres.valMin + 1/2*log(1/det(H)) + d/2*log(2*pi);
+        LME = real(LME);
         % decomposed LME
         decompLME.logjoint = -optres.valMin;
         decompLME.postpredcorr = 1/2*log(1/det(H));
@@ -557,6 +579,7 @@ else
     Corr = tapas_Cov2Corr(Sigma);
     % Log-model evidence ~ negative variational free energy
     LME = -optres.valMin + 1/2*log(1/det(H)) + d/2*log(2*pi);
+    LME = real(LME);
     % decomposed LME
     decompLME.logjoint = -optres.valMin;
     decompLME.postpredcorr = 1/2*log(1/det(H));

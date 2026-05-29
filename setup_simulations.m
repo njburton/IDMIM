@@ -80,120 +80,119 @@ end
 
 %% GENERATE synthetic agents using default priors from toolbox
 for iAgent = 1:nSamples
-    for iModel = 5:5%nModels
+    for iModel = 1:nModels
         if ~strcmp(optionsFile.model.space{iModel},'VKF')
 
-        % sample free parameter values
-        input.prc.transInp = optionsFile.modelSpace(iModel).prc_config.priormus;
-        % if isempty(optionsFile.cohort(cohortNo).priorsForObs)
-        %     input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus*randStart(iAgent);
-        % else
-        %     input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus;
-        % end
-        
-        for iPerc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
-            input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(iPerc)) = ...
-                normrnd(optionsFile.modelSpace(iModel).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(iPerc)),...
-                abs(sqrt(optionsFile.modelSpace(iModel).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(iPerc)))));
-        end
+            % sample free parameter values
+            input.prc.transInp = optionsFile.modelSpace(iModel).prc_config.priormus;
+            % if isempty(optionsFile.cohort(cohortNo).priorsForObs)
+            %     input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus*randStart(iAgent);
+            % else
+            %     input.obs.transInp = optionsFile.modelSpace(iModel).obs_config.priormus;
+            % end
 
-        for iObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
-            input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(iObs)) = ...
-                normrnd(optionsFile.modelSpace(iModel).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(iObs)),...
-                abs(sqrt(optionsFile.modelSpace(iModel).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(iObs)))));
-        end
+            for iPerc = 1:size(optionsFile.modelSpace(iModel).prc_idx,2)
+                input.prc.transInp(optionsFile.modelSpace(iModel).prc_idx(iPerc)) = ...
+                    normrnd(optionsFile.modelSpace(iModel).prc_config.priormus(optionsFile.modelSpace(iModel).prc_idx(iPerc)),...
+                    abs(sqrt(optionsFile.modelSpace(iModel).prc_config.priorsas(optionsFile.modelSpace(iModel).prc_idx(iPerc)))));
+            end
 
-        c.c_prc = optionsFile.modelSpace(iModel).prc_config;
-        input.prc.nativeInp = optionsFile.modelSpace(iModel).prc_config.transp_prc_fun(c, input.prc.transInp);
-        c.c_obs = optionsFile.modelSpace(iModel).obs_config;
-        input.obs.nativeInp = optionsFile.modelSpace(iModel).obs_config.transp_obs_fun(c, input.obs.transInp);
+            for iObs = 1:size(optionsFile.modelSpace(iModel).obs_idx,2)
+                input.obs.transInp(optionsFile.modelSpace(iModel).obs_idx(iObs)) = ...
+                    normrnd(optionsFile.modelSpace(iModel).obs_config.priormus(optionsFile.modelSpace(iModel).obs_idx(iObs)),...
+                    abs(sqrt(optionsFile.modelSpace(iModel).obs_config.priorsas(optionsFile.modelSpace(iModel).obs_idx(iObs)))));
+            end
 
-    % simulate predictions for SNR calculation
+            c.c_prc = optionsFile.modelSpace(iModel).prc_config;
+            input.prc.nativeInp = optionsFile.modelSpace(iModel).prc_config.transp_prc_fun(c, input.prc.transInp);
+            c.c_obs = optionsFile.modelSpace(iModel).obs_config;
+            input.obs.nativeInp = optionsFile.modelSpace(iModel).obs_config.transp_obs_fun(c, input.obs.transInp);
 
-    for iTask = 1:nTasks
-        stable = 0;
-        currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
-        disp(['Simulating responses using the ',optionsFile.model.space{iModel},' for ',currTask, 'task...   ']);
+            % simulate predictions for SNR calculation
 
-        while stable == 0
-            %sim = simModel(inputs, prc_model, prc_pvec, obs_model, obs_pvec)
-            data = simModel(optionsFile.cohort(cohortNo).testTask(iTask).inputs,...
-                optionsFile.modelSpace(iModel).prc,...
-                input.prc.nativeInp,...
-                optionsFile.modelSpace(iModel).obs,...
-                input.obs.nativeInp);
+            for iTask = 1:nTasks
+                stable = 0;
+                currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
+                disp(['Simulating responses using the ',optionsFile.model.space{iModel},' for ',currTask, 'task...   ']);
 
-            stable = 1;
+                while stable == 0
+                    %sim = simModel(inputs, prc_model, prc_pvec, obs_model, obs_pvec)
+                    data = simModel(optionsFile.cohort(cohortNo).testTask(iTask).inputs,...
+                        optionsFile.modelSpace(iModel).prc,...
+                        input.prc.nativeInp,...
+                        optionsFile.modelSpace(iModel).obs,...
+                        input.obs.nativeInp);
 
-        end
-        % save simulation input
-        sim.agent(iAgent,iModel).task(iTask).data  = data;
-        sim.agent(iAgent,iModel).task(iTask).input = input;
+                    stable = 1;
 
-        % Update the rng state idx
-        optionsFile.rng.idx     = optionsFile.rng.idx+1;
-        if optionsFile.rng.idx == (length(optionsFile.rng.settings.State)+1)
-            optionsFile.rng.idx = 1;
-        end
-    end % END TASK loop
-else % if VKF
-    
+                end
+                % save simulation input
+                sim.agent(iAgent,iModel).task(iTask).data  = data;
+                sim.agent(iAgent,iModel).task(iTask).input = input;
 
-    for iTask = 1:nTasks
-        currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
-        disp(['Simulating responses using the VKF for ',currTask,' task...   ']);
+                % Update the rng state idx
+                optionsFile.rng.idx     = optionsFile.rng.idx+1;
+                if optionsFile.rng.idx == (length(optionsFile.rng.settings.State)+1)
+                    optionsFile.rng.idx = 1;
+                end
+            end % END TASK loop
+        else % if VKF
 
-        c = vkf_config(cohortNo,iTask);
-     % sample free parameter values
-        input.prc.transInp = c.c_prc.priormus;
-        % if isempty(optionsFile.cohort(cohortNo).priorsForObs)
-        %     input.obs.transInp = c.c_prc.priormus*randStart(iAgent);
-        % else
-        %     input.obs.transInp = c.c_prc.priormus;
-        % end
-        
-            input.prc.transInp = normrnd(c.c_prc.priormus,abs(sqrt(c.c_prc.priorsas)));
+            for iTask = 1:nTasks
+                currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
+                disp(['Simulating responses using the VKF for ',currTask,' task...   ']);
 
-        for iObs = 1:size(c.c_obs.priormus,2)
-            input.obs.transInp(iObs) = normrnd(c.c_obs.priormus(iObs),abs(sqrt(c.c_obs.priorsas(iObs))));
-        end
-        
-        transInputs = [input.prc.transInp,input.obs.transInp];
-        nativeInps = vkf_transp(transInputs);
-        input.prc.nativeInp =  nativeInps(1);
-        input.obs.nativeInp =  nativeInps(2:3);
+                c = vkf_config(cohortNo,iTask);
+                % sample free parameter values
+                input.prc.transInp = c.c_prc.priormus;
+                % if isempty(optionsFile.cohort(cohortNo).priorsForObs)
+                %     input.obs.transInp = c.c_prc.priormus*randStart(iAgent);
+                % else
+                %     input.obs.transInp = c.c_prc.priormus;
+                % end
 
-        % True VKF parameters (used for generation)
-        u = optionsFile.cohort(cohortNo).testTask(iTask).inputs;
-        nPhases = 3;
-        lambda_true(1) = VBA_sigmoid(mean(u(1:60)));  % Volatility learning rate (0-1, higher = faster volatility change)
-        lambda_true(2) = VBA_sigmoid(mean(u(61:120)));
-        lambda_true(3) = VBA_sigmoid(mean(u(121:180)));
-        v0_true = 0.5;       % Initial volatility
-        omega_true = 0.2;    % Observation noise variance (0-1)
+                input.prc.transInp = normrnd(c.c_prc.priormus,abs(sqrt(c.c_prc.priorsas)));
+
+                for iObs = 1:size(c.c_obs.priormus,2)
+                    input.obs.transInp(iObs) = normrnd(c.c_obs.priormus(iObs),abs(sqrt(c.c_obs.priorsas(iObs))));
+                end
+
+                transInputs = [input.prc.transInp,input.obs.transInp];
+                nativeInps = vkf_transp(transInputs);
+                input.prc.nativeInp =  nativeInps(1);
+                input.obs.nativeInp =  nativeInps(2:3);
+
+                % True VKF parameters (used for generation)
+                u = optionsFile.cohort(cohortNo).testTask(iTask).inputs;
+                nPhases = 3;
+                lambda_true(1) = VBA_sigmoid(mean(u(1:60)));  % Volatility learning rate (0-1, higher = faster volatility change)
+                lambda_true(2) = VBA_sigmoid(mean(u(61:120)));
+                lambda_true(3) = VBA_sigmoid(mean(u(121:180)));
+                v0_true = 0.5;       % Initial volatility
+                omega_true = 0.5;    % Observation noise variance (0-1)
 
 
-        nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
-        % Generate y using VKF generative model
-        %   y        - Generated binary observations (nTrials x 1)
-        %   x        - Hidden state beliefs (nTrials x 1)
-        %   v        - Volatility trajectory (nTrials x 1)
-        %   m        - Posterior means (nTrials x 1)
-        [y, x, v, m] = gen_vkf_binary(nTrials, lambda_true, v0_true, omega_true, nPhases);
+                nTrials = numel(optionsFile.cohort(cohortNo).testTask(iTask).inputs);
+                % Generate y using VKF generative model
+                %   y        - Generated binary observations (nTrials x 1)
+                %   x        - Hidden state beliefs (nTrials x 1)
+                %   v        - Volatility trajectory (nTrials x 1)
+                %   m        - Posterior means (nTrials x 1)
+                [y, x, v, m] = gen_vkf_binary(nTrials, lambda_true, v0_true, omega_true, nPhases);
 
-        sim.agent(iAgent,iModel).task(iTask).data.y    = y;
-        sim.agent(iAgent,iModel).task(iTask).data.mu   = x;
-        sim.agent(iAgent,iModel).task(iTask).data.vol  = v;
-        sim.agent(iAgent,iModel).task(iTask).data.muhat = m;
-        sim.agent(iAgent,iModel).task(iTask).input.prc.transInp = input.prc.transInp;
-        sim.agent(iAgent,iModel).task(iTask).input.obs.transInp = input.obs.transInp;
-        sim.agent(iAgent,iModel).task(iTask).input.prc.nativeInp= input.prc.nativeInp;
-        sim.agent(iAgent,iModel).task(iTask).input.obs.nativeInp= input.obs.nativeInp;
-    end
-end % END MODEL loop
-end % END AGENTS loop
+                sim.agent(iAgent,iModel).task(iTask).data.y    = y;
+                sim.agent(iAgent,iModel).task(iTask).data.mu   = x;
+                sim.agent(iAgent,iModel).task(iTask).data.vol  = v;
+                sim.agent(iAgent,iModel).task(iTask).data.muhat = m;
+                sim.agent(iAgent,iModel).task(iTask).input.prc.transInp = input.prc.transInp;
+                sim.agent(iAgent,iModel).task(iTask).input.obs.transInp = input.obs.transInp;
+                sim.agent(iAgent,iModel).task(iTask).input.prc.nativeInp= input.prc.nativeInp;
+                sim.agent(iAgent,iModel).task(iTask).input.obs.nativeInp= input.obs.nativeInp;
+            end
+        end % END MODEL loop
+    end % END AGENTS loop
 
-%% SAVE model simulation specs as struct
-save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles.simResponses], '-struct', 'sim');
+    %% SAVE model simulation specs as struct
+    save([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles.simResponses], '-struct', 'sim');
 
 end
