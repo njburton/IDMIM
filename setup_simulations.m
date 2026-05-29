@@ -80,7 +80,7 @@ end
 
 %% GENERATE synthetic agents using default priors from toolbox
 for iAgent = 1:nSamples
-    for iModel = 5:nModels
+    for iModel = 1:nModels
         if ~strcmp(optionsFile.model.space{iModel},'VKF')
 
         % sample free parameter values
