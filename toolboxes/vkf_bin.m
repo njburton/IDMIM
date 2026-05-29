@@ -48,9 +48,14 @@ for t  = 1:nt
     um(t,:)     = ux(m);
 end
 
+dv  = real(dv);
+lr  = real(lr);
+vol = real(vol);
+um  = real(um);
 infStates(:,1) = normalize(dv);
 infStates(:,2) = normalize(lr);
 infStates(:,3) = normalize(vol);
 infStates(:,4) = normalize(um);
+
 
 end
