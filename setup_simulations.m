@@ -186,7 +186,9 @@ else % if VKF
         sim.agent(iAgent,iModel).task(iTask).data.vol  = v;
         sim.agent(iAgent,iModel).task(iTask).data.muhat = m;
         sim.agent(iAgent,iModel).task(iTask).input.prc.transInp = input.prc.transInp;
-        sim.agent(iAgent,iModel).task(iTask).input.prc.transInp = input.obs.transInp;
+        sim.agent(iAgent,iModel).task(iTask).input.obs.transInp = input.obs.transInp;
+        sim.agent(iAgent,iModel).task(iTask).input.prc.nativeInp= input.prc.nativeInp;
+        sim.agent(iAgent,iModel).task(iTask).input.obs.nativeInp= input.obs.nativeInp;
     end
 end % END MODEL loop
 end % END AGENTS loop

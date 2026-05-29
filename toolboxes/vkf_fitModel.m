@@ -116,6 +116,7 @@ ptrans_prc = r.optim.final(1:n_prcpars);
 ptrans_obs = r.optim.final(n_prcpars+1:end);
 
 ptrans = [ptrans_prc,ptrans_obs];
+ptrans = real(ptrans);
 % Transform MAP parameters back to their native space
 [pvec, r.p_prc] = vkf_transp(ptrans);
 y = r.y;
@@ -150,6 +151,7 @@ r.p_prc.ptrans = exp(ptrans_prc);
 r.p_obs.ptrans = exp(ptrans_obs);
 
 transParams = [ptrans_prc,ptrans_obs];
+transParams = real(transParams);
 r.p_prc.lambda_mu = transParams(1);
 r.p_prc.v0        = transParams(2);
 r.p_prc.omega_mu  = transParams(3);
@@ -424,6 +426,7 @@ function [negLogJoint, negLogLl, rval, err, trialLogLlsplit] = negLogJoint(r, pr
 % predictions on.
 try
     params = [ptrans_prc, ptrans_obs];
+    params = real(params);
     y = r.y;
     y(r.irr) = [];
     infStates = vkf_bin(y,params) ;

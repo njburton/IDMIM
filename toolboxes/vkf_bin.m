@@ -7,14 +7,17 @@ if lambda>1
 elseif lambda<0
     lambda = 0.0001;
 end
+lambda  = real(lambda);
 
 v0      = exp(params(2)); 
-
 if v0 <0.0001
     v0 = 0.0001;
 end
+v0      = real(v0);
 
 omega   = exp(params(3));
+omega   = real(omega);
+
 
 m       = 0*ones(1,nq);
 w       = omega*ones(1,nq);
