@@ -101,7 +101,7 @@ for iCondition = 1:nConditions
                 d = dir([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                     loadName,'.mat']);
                 if isempty(d)
-                    for iModel = 1:nModels
+                    for iModel = 5:nModels
                         disp(['* model ', optionsFile.model.space{iModel},'.']);
                         if strcmp(optionsFile.model.space{iModel},'VKF')
                             c = vkf_config(cohortNo,iTask);
