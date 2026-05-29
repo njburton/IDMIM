@@ -159,9 +159,9 @@ else % if VKF
         end
         
         transInputs = [input.prc.transInp,input.obs.transInp];
-        nativeInps = vkf_transp(transInputs);
-        input.prc.nativeInp =  nativeInps(1);
-        input.obs.nativeInp =  nativeInps(2:3);
+        input.prc.nativeInp = vkf_transp(transInputs);
+        c.c_obs = optionsFile.modelSpace(iModel).obs_config;
+        input.obs.nativeInp = vkf_transp(c, input.obs.transInp);
 
         % True VKF parameters (used for generation)
         u = optionsFile.cohort(cohortNo).testTask(iTask).inputs;

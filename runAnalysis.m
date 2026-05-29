@@ -97,7 +97,7 @@ end
 
 %% Sanity check plots
 % parameter recovery
-if optionsFile.optionsFile.doParamRecovery == 1
+if optionsFile.doParamFitCheck == 1
     disp('preparing for parameter recovery to task data...');
 
     for iSubCohort = 1:nSubCohorts

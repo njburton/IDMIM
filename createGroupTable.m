@@ -40,7 +40,7 @@ for iCondition = 1:nConditions
             for iMouse = 1:nSize
                 currMouse = mouseIDs{iMouse};
                 % load results from real data model inversion
-                loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,'info');
+                loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,[],currCondition,iRep,nReps,'info');
                 try
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                         loadName,'.mat']);
@@ -100,9 +100,9 @@ for iCondition = 1:nConditions
 end % END CONDITIONS Loop
 IDs = string(mouseIDCol');
 groupTable = addvars(groupTable,IDs);
-save([optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).taskPrefix,...
+save([optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).testTaskPrefix,...
             optionsFile.cohort(cohortNo).name,'_groupInfoTable.mat'],'groupTable');
-writetable(groupTable,[optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).taskPrefix,...
+writetable(groupTable,[optionsFile.paths.cohort(cohortNo).groupLevel,optionsFile.cohort(cohortNo).testTaskPrefix,...
             optionsFile.cohort(cohortNo).name,'_groupInfoTable.csv']);
 
 end

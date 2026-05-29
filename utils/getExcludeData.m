@@ -66,11 +66,11 @@ for iTask = 1:nTasks
 
                 try
                     % load trial-by-trial data file
-                    loadExpName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,[]);
+                    loadExpName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,[],currCondition,iRep,nReps,[]);
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                         loadExpName,'.mat']);
                     % load mouse info file
-                    loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,'info');
+                    loadInfoName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,[],currCondition,iRep,nReps,'info');
                     load([char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                         loadInfoName]);
 
@@ -122,7 +122,7 @@ for iTask = 1:nTasks
                     end
 
                     % create savepath and filename as a .mat file
-                    saveName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,[],currCondition,iRep,nReps,'info');
+                    saveName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,[],currCondition,iRep,nReps,'info');
                     savePath = [char(optionsFile.paths.cohort(cohortNo).data),'mouse',char(currMouse),'_',...
                         saveName,'.mat'];
                     save(savePath,'MouseInfoTable');
