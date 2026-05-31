@@ -132,8 +132,8 @@ r.traj.vol(irr) = NaN;
 r.traj.um(irr)  = NaN;
 lag = 0;
 
-for i = 1:numel(y)
-    if ~isnan(y(i))
+for i = 1:numel(r.y)
+    if ~isnan(r.y(i))
         nanIdx(i) = 0;
         idx = i-lag;
         r.traj.dv(i)  = infStates(idx,1);
@@ -358,7 +358,7 @@ r.optim.comp            = optres.comp;
 r.optim.iter            = optres.iter;
 
 % Do further optimization runs with random initialization
-r.c_opt.nRandInit = 10;r.c_opt.seedRandInit=1;
+r.c_opt.nRandInit = 1000;r.c_opt.seedRandInit=1;
 if isfield(r.c_opt, 'nRandInit') && r.c_opt.nRandInit > 0
 
     % Set seed if provided
