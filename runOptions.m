@@ -47,7 +47,7 @@ optionsFile.doModelInversion = 1;
 optionsFile.doSimModelFitCheck = 1;
 optionsFile.doParamFitCheck  = 1;
 optionsFile.doBMS            = 1;
-optionsFile.doRunOnCluster  = 1;
+optionsFile.doRunOnCluster  = 0;
 
 addpath(genpath(pwd));
 %% SPECIFY COHORT Specific settings and information

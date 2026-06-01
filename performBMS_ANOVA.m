@@ -96,10 +96,10 @@ end
     for iMouse = 1:nSize
         currMouse = mouseIDs{iMouse};
         if isempty(optionsFile.cohort(cohortNo).conditions)
-            loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+            loadInfoName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                 [],[],1,1,'info');
         else
-            loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+            loadInfoName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                 [],groups{iGroup},1,1,'info');
         end
 
@@ -124,10 +124,10 @@ end
     for iMouse = 1:nSize
         currMouse = mouseIDs{iMouse};
         if isempty(optionsFile.cohort(cohortNo).conditions)
-            loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+            loadInfoName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                 [],[],1,1,'info');
         else
-            loadInfoName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+            loadInfoName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                 [],groups{iGroup},1,1,'info');
         end
 
@@ -171,12 +171,21 @@ for iGroup = 1:nGroups
     for iMouse = 1:nSize
         currMouse = allMouseIDs(iMouse,:);
         for iModel = 1:nModels
+            if iModel<5
+               
+           prc_idx = optionsFile.modelSpace(iModel).prc_idx;
+           obs_idx = optionsFile.modelSpace(iModel).obs_idx;
+
+            else
+                prc_idx = 1;
+                obs_idx = 1:2;
+            end
             % load results from real data model inversion
             if isempty(optionsFile.cohort(cohortNo).conditions)
-                loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],[],1,1,[]);
             else
-                loadName = getFileName(optionsFile.cohort(cohortNo).taskPrefix,currTask,...
+                loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],groups{iGroup},1,1,[]);
             end
             load([char(optionsFile.paths.cohort(cohortNo).results),...
@@ -184,13 +193,13 @@ for iGroup = 1:nGroups
             
             if strcmp(effect,'bwtGroups')
                 res(iGroup).LME(iModel,iMouse)              = est.optim.LME;
-                res(iGroup).prc_param(iModel,iMouse).ptrans = est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
-                res(iGroup).obs_param(iModel,iMouse).ptrans = est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
+                res(iGroup).prc_param(iModel,iMouse).ptrans = est.p_prc.ptrans(prc_idx);
+                res(iGroup).obs_param(iModel,iMouse).ptrans = est.p_obs.ptrans(obs_idx);
 
             elseif strcmp(effect,'withinGroups')
                 res.LME(iModel,iMouse,iGroup)              = est.optim.LME;
-                res.prc_param(iModel,iMouse,iGroup).ptrans = est.p_prc.ptrans(optionsFile.modelSpace(iModel).prc_idx);
-                res.obs_param(iModel,iMouse,iGroup).ptrans = est.p_obs.ptrans(optionsFile.modelSpace(iModel).obs_idx);
+                res.prc_param(iModel,iMouse,iGroup).ptrans = est.p_prc.ptrans(prc_idx);
+                res.obs_param(iModel,iMouse,iGroup).ptrans = est.p_obs.ptrans(obs_idx);
             end
         end
     end

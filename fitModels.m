@@ -79,7 +79,7 @@ for iCondition = 1:nConditions
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
 
-    for iTask = 4:nTasks
+    for iTask = 1:nTasks
         currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
         disp(['* task  ', char(currTask),'.']);
 
