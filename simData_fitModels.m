@@ -80,7 +80,7 @@ sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles
 %%  MODEL INVERSION
 % looping across tasks, samples, models that created the simulated behaviour (gen model | m_in)
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
-for iTask = 1:nTasks
+for iTask = 2:nTasks
     for iSample = 1:nSamples
         for m_in = 1:nModels
             for m_est =1:nModels
