@@ -84,7 +84,7 @@ for iTask = 1:nTasks
     for iSample = 1:nSamples
         for m_in = 1:nModels
             for m_est =1:nModels
-                disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', optionsFile.modelSpace(m_in).name, ' | estimating with model: ', optionsFile.modelSpace(m_est).name]);
+                disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', 			optionsFile.modelSpace(m_in).name, ' | estimating with model: ', 				optionsFile.modelSpace(m_est).name]);
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
                     c = vkf_config(cohortNo,iTask);

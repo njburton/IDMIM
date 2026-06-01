@@ -1,4 +1,4 @@
-function fitModels(cohortNo)
+d mfunction fitModels(cohortNo)
 
 % fitModels - Fit computational models to mouse behavioural data
 %
