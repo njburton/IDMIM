@@ -79,7 +79,7 @@ for iCondition = 1:nConditions
         currCondition = optionsFile.cohort(cohortNo).conditions{iCondition};
     end
 
-    for iTask = 1:nTasks
+    for iTask = 4:nTasks
         currTask = optionsFile.cohort(cohortNo).testTask(iTask).name;
         disp(['* task  ', char(currTask),'.']);
 
@@ -94,7 +94,7 @@ for iCondition = 1:nConditions
                     optionsFile.cohort(cohortNo).priorsFromRepetition);
             end
 
-            for iMouse  = 17:nSize
+            for iMouse  = 1:nSize
                 currMouse = optionsFile.cohort(cohortNo).mouseIDs{iMouse};
                 loadName = getFileName(optionsFile.cohort(cohortNo).testTaskPrefix,currTask,...
                     [],currCondition,iRep,nReps,[]);
