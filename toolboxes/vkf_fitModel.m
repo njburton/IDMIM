@@ -536,31 +536,29 @@ H = real(H);
 % Use the Hessian from the optimization, if available,
 % if the numerical Hessian is not positive definite
 if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<0)
+    if isfield(optres, 'T')
         % Hessian of the negative log-joint at the MAP estimate
         % (avoid asymmetry caused by rounding errors)
-        newH = eye(2,2); newH(1,1) = optres.argMin(1); newH(2,2) = optres.argMin(2);
-        newH = real(newH);
+        H = inv(optres.T);
         % Parameter covariance
-        Sigma = inv(newH);
+        Sigma = optres.T;
         % Ensure H and Sigma are positive semi-definite
-        H = nearest_psd(newH);
-        H = real(H);
-        Sigma = real(Sigma);
+        H = nearest_psd(H);
         Sigma = nearest_psd(Sigma);
         % Parameter correlation
         Corr = tapas_Cov2Corr(Sigma);
         % Log-model evidence ~ negative variational free energy
         LME = -optres.valMin + 1/2*log(1/det(H)) + d/2*log(2*pi);
-        LME = real(LME);
         if LME<-0.000001
-            LME = LME/10;
-        elseif LME>10000
             LME = LME/10;
         end
         % decomposed LME
         decompLME.logjoint = -optres.valMin;
         decompLME.postpredcorr = 1/2*log(1/det(H));
         decompLME.freepars = d/2*log(2*pi);
+    else
+        disp('Warning: Cannot calculate Sigma and LME because the Hessian is not positive definite.')
+    end
 else
     % Calculate parameter covariance
     Sigma = inv(H);
