@@ -1,7 +1,5 @@
 function [] = simData_fitModels(cohortNo)
 
-% WARNING: This function will take 24-48 hours to complete depending on your system and number of samples.
-
 %% simData_fitModels
 %  Invert simulated agents with models in the modelspace. This step will be
 %  executed if optionsFile.doSimulations = 1;
@@ -75,21 +73,24 @@ if ~isempty(optionsFile.cohort(cohortNo).priorsFromCohort)
 else % otherwise just set up the configfiles for the models in the modelspace
     optionsFile = setup_configFiles(optionsFile,cohortNo);
 end
+strct.maxStep      = inf;
+strct.nRandInit    = optionsFile.rng.nRandInit;
+strct.seedRandInit = optionsFile.rng.settings.State(optionsFile.rng.idx, 1);
 
 sim = load([optionsFile.paths.cohort(cohortNo).simulations,optionsFile.dataFiles.simResponses]);
 %%  MODEL INVERSION
 % looping across tasks, samples, models that created the simulated behaviour (gen model | m_in)
 % and models that will be fitted to the simulated behaviour (estimating model | m_est)
 for iTask = 1:nTasks
-    for iSample = 2:nSamples
+    for iSample = 1:nSamples
         for m_in = 1:nModels
-            for m_est =1:4%nModels
+            for m_est =5:5%1:nModels
                 disp(['Model inversion for agent: ', num2str(iSample), ' | gen model ', 			optionsFile.modelSpace(m_in).name, ' | estimating with model: ', 				optionsFile.modelSpace(m_est).name]);
 
                 if strcmp(optionsFile.model.space{m_est},'VKF')
                     c = vkf_config(cohortNo,iTask);
                     est = vkf_fitModel(sim.agent(iSample,m_in).task(iTask).data.y,...
-                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,c,'vkf_bin','vkf_bin');
+                        optionsFile.cohort(cohortNo).testTask(iTask).inputs,c,'vkf_bin','vkf_bin',strct);
 
                     if optionsFile.doCreatePlots
                         % Plot standard trajectory plot
@@ -142,7 +143,7 @@ for iTask = 1:nTasks
                     est = fitModel(sim.agent(iSample,m_in).task(iTask).data.y,... % responses
                         optionsFile.cohort(cohortNo).testTask(iTask).inputs,...         % input sequence
                         optionsFile.modelSpace(m_est,iTask).prc_config,...         % Prc fitting model
-                        optionsFile.modelSpace(m_est,iTask).obs_config);
+                        optionsFile.modelSpace(m_est,iTask).obs_config,strct);
 
                     if optionsFile.doCreatePlots
                         % Plot standard trajectory plot

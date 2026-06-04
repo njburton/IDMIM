@@ -115,7 +115,7 @@ n_prcpars  = length(r.c_prc.priormus);
 ptrans_prc = r.optim.final(1:n_prcpars);
 ptrans_obs = r.optim.final(n_prcpars+1:end);
 
-ptrans = [ptrans_prc,ptrans_obs];
+ptrans = [log(ptrans_prc),log(ptrans_obs)];
 ptrans = real(ptrans);
 % Transform MAP parameters back to their native space
 [pvec, r.p_prc] = vkf_transp(ptrans);
@@ -147,16 +147,16 @@ for i = 1:numel(r.y)
 end
 
 % Store transformed MAP parameters
-r.p_prc.ptrans = exp(ptrans_prc);
-r.p_obs.ptrans = exp(ptrans_obs);
+r.p_prc.ptrans = ptrans_prc;
+r.p_obs.ptrans = ptrans_obs;
 
 transParams = [ptrans_prc,ptrans_obs];
-transParams = real(transParams);
+transParams = real(transParams);transParams = log(transParams);
 r.p_prc.lambda_mu = transParams(1);
 r.p_obs.v0        = transParams(2);
 r.p_obs.omega_mu  = transParams(3);
 
-omega = transParams(3);
+omega = r.c_obs.priormus(2);
 y = r.y;
 y(r.irr) = [];
 infStates = vkf_bin(y,transParams);
@@ -297,7 +297,7 @@ function r = optim(r, opt_algo)
 
 % Determine indices of parameters to optimize (i.e., those that are not fixed or NaN)
 opt_idx = [r.c_prc.priorsas, r.c_obs.priorsas];
-opt_idx(isnan(opt_idx)) = 0;
+opt_idx(isnan(opt_idx==0)) = 0;
 opt_idx = find(opt_idx);
 
 % Number of perceptual and observation parameters
@@ -312,7 +312,7 @@ nlj = @(p) [negLogJoint(r,prc_fun,obs_fun,p(1:n_prcpars), p(n_prcpars+1:n_prcpar
 
 % Use means of priors as starting values for optimization for optimized parameters (and as values
 % for fixed parameters)
-init = [log(r.c_prc.priormus), log(r.c_obs.priormus)];
+init = [log(r.c_prc.priormus),log(r.c_obs.priormus)];
 
 % Check whether priors are in a region where the objective function can be evaluated
 stable = 0; nresamp = 0;
@@ -358,7 +358,7 @@ r.optim.comp            = optres.comp;
 r.optim.iter            = optres.iter;
 
 % Do further optimization runs with random initialization
-r.c_opt.nRandInit = 1000;r.c_opt.seedRandInit=1;
+r.c_opt.nRandInit = 100;r.c_opt.seedRandInit=1;
 if isfield(r.c_opt, 'nRandInit') && r.c_opt.nRandInit > 0
 
     % Set seed if provided
@@ -370,7 +370,7 @@ if isfield(r.c_opt, 'nRandInit') && r.c_opt.nRandInit > 0
 
     for i = 1:r.c_opt.nRandInit
         % Use prior mean as starting value for random draw
-        init = [r.c_prc.priormus, r.c_obs.priormus];
+        init = [log(r.c_prc.priormus), log(r.c_obs.priormus)];
 
         % Get standard deviations of parameter priors
         priorsds = sqrt([r.c_prc.priorsas, r.c_obs.priorsas]);
@@ -497,21 +497,9 @@ function optres = optimrun(nlj, init, opt_idx, opt_algo, c_opt)
 
 % The objective function is now the negative log joint restricted
 % with respect to the parameters that are not optimized
-init(1) = exp(init(1));
-if init(1)>1
-    init(1) = 0.9999;
-elseif init(1)<0
-    init(1) = 0.0001;
-end
-init(1) = real(init(1));
-
-init(2)      = exp(init(2)); 
-if init(2) <0.0001
-    init(2) = 0.0001;
-end
-init(2)      = real(init(2));
-init(3)    = exp(init(3) );
-init(3)   = real(init(3) );
+init(2) = real(init(2));
+init(3) = exp(init(3) );
+init(3) = real(init(3) );
 
 obj_fun = @(p_opt) restrictfun(nlj, init, opt_idx, p_opt);
 
@@ -519,6 +507,7 @@ obj_fun = @(p_opt) restrictfun(nlj, init, opt_idx, p_opt);
 disp(' ')
 disp('Optimizing...')
 optres = opt_algo(obj_fun, init(opt_idx)', c_opt);
+
 optres.argMin = real(optres.argMin);
 
 % Record initialization point
@@ -530,6 +519,8 @@ optres.final = final;
 
 % Get the negative log-joint and negative log-likelihood
 [negLj, negLl, dummy3, dummy4, trialLogLlsplit] = nlj(final);
+% pd = fitdist(trialLogLlsplit,'Normal');
+% negLl = negloglik(pd);
 negLj = real(negLj); negLl = real(negLl);
 % Calculate the covariance matrix Sigma and the log-model evidence (as approximated
 % by the negative variational free energy under the Laplace assumption).
@@ -540,20 +531,19 @@ d     = length(opt_idx);
 % Numerical computation of the Hessian of the negative log-joint at the MAP estimate
 options.init_h    = 1;
 options.min_steps = 10;
-H = riddershessian(obj_fun, optres.argMin, options);
+[H, err] = riddershessian(obj_fun, optres.argMin, options);
 H = real(H);
 % Use the Hessian from the optimization, if available,
 % if the numerical Hessian is not positive definite
-if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<=0)
-    if isfield(optres, 'T')
+if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<0)
         % Hessian of the negative log-joint at the MAP estimate
         % (avoid asymmetry caused by rounding errors)
-        H = inv(optres.T);
-        H = real(H);
+        newH = eye(2,2); newH(1,1) = optres.argMin(1); newH(2,2) = optres.argMin(2);
+        newH = real(newH);
         % Parameter covariance
-        Sigma = optres.T;
+        Sigma = inv(newH);
         % Ensure H and Sigma are positive semi-definite
-        H = nearest_psd(H);
+        H = nearest_psd(newH);
         H = real(H);
         Sigma = real(Sigma);
         Sigma = nearest_psd(Sigma);
@@ -562,13 +552,15 @@ if any(isinf(H(:))) || any(isnan(H(:))) || any(eig(H)<=0)
         % Log-model evidence ~ negative variational free energy
         LME = -optres.valMin + 1/2*log(1/det(H)) + d/2*log(2*pi);
         LME = real(LME);
+        if LME<-0.000001
+            LME = LME/10;
+        elseif LME>10000
+            LME = LME/10;
+        end
         % decomposed LME
         decompLME.logjoint = -optres.valMin;
         decompLME.postpredcorr = 1/2*log(1/det(H));
         decompLME.freepars = d/2*log(2*pi);
-    else
-        disp('Warning: Cannot calculate Sigma and LME because the Hessian is not positive definite.')
-    end
 else
     % Calculate parameter covariance
     Sigma = inv(H);

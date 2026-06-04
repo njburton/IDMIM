@@ -18,10 +18,10 @@ c.c_prc.lambda_mu(2) = VBA_sigmoid(mean(u(61:120)));
 c.c_prc.lambda_sa(2) = 0.3; 
 c.c_prc.lambda_mu(3) = VBA_sigmoid(mean(u(121:180)));
 c.c_prc.lambda_sa(3) = 0.3; 
-c.c_obs.v0_mu = 0.5;       % Initial volatility
-c.c_obs.v0_sa = 0.35;   
-c.c_obs.omega_mu = 0.2;
-c.c_obs.omega_sa = 0.15;
+c.c_obs.v0_mu = 0.3;       % Initial volatility
+c.c_obs.v0_sa = 0.3;   
+c.c_obs.omega_mu = 0.5;
+c.c_obs.omega_sa = 0;
 
 c.c_prc.priormus = [mean(c.c_prc.lambda_mu)];
 c.c_prc.priorsas = [mean(c.c_prc.lambda_sa)];
